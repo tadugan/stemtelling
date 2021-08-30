@@ -12,7 +12,7 @@ function RegisterPage() {
       console.log(response);
    }
    const successResponse = (response) => {
-      console.log("Response is:", response.profileObj);
+      console.log("Response is:", response);
       dispatch({
          type: 'REGISTER',
          payload: {

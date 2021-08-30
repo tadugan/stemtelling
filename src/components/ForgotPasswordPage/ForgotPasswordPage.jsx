@@ -2,26 +2,15 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
 
+
 function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
   const errors = useSelector(store => store.errors);
   const dispatch = useDispatch();
 
-  const resetPassword = (event) => {
-    event.preventDefault();
-
-    if (username && password) {
-      dispatch({
-        type: 'LOGIN',
-        payload: {
-          username: username,
-          password: password,
-        },
-      });
-    } else {
-      dispatch({ type: 'LOGIN_INPUT_ERROR' });
-    }
-  }; // end login
+  const resetPassword = () => {
+     console.log(email);
+  }
 
   return (
     <form className="formPanel" onSubmit={resetPassword}>
@@ -48,6 +37,6 @@ function ForgotPasswordPage() {
       </div>
     </form>
   );
-}
+};
 
 export default ForgotPasswordPage;
