@@ -3,32 +3,24 @@ const pool = require('../modules/pool');
 const router = express.Router();
 var nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
-   host: 'smtp.ethereal.email',
-   port: 587,
-   secure: false,
+   service: 'Gmail',
    auth: {
-       user: 'morris.zemlak67@ethereal.email',
-       pass: 'x5JkeyvCqCVPVmp9ax'
+       user: 'Stemtelltest@gmail.com',
+       pass: 'Stemtelltesting123!'
    }
 });
 
-/**
- * GET route template
- */
-router.get('/', (req, res) => {
-  // GET route code here
-});
-
-/**
- * POST route template
- */
 router.post('/email', (req, res) => {
-   const {to, subject, text} = req.body;
    const mailData = {
-      from: 'morris.zemlak67@ethereal.email',
-      to: 'morris.zemlak67@ethereal.email',
-      subject: 'Test',
-      text: 'HELLO DID IT WORK?',
+      from: 'Stemtelltest@gmail.com',
+      to: `${req.body.email}`,
+      subject: 'STEMTelling Password Reset Request',
+      text: `Password Reset Request
+      
+      
+      
+      
+      `,
    };
    transporter.sendMail(mailData, (error, info) => {
       if (error) {

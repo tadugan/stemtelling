@@ -1,42 +1,30 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
-var nodemailer = require('nodemailer');
-
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 function ForgotPasswordPage() {
+   const history = useHistory();
    const [email, setEmail] = useState('');
    const errors = useSelector(store => store.errors);
    const dispatch = useDispatch();
-   // const transporter = nodemailer.createTransport({
-   //    service: 'gmail',
-   //    auth: {
-   //       user: 'ooebroo@gmail.com',
-   //       pass: 'insanity101'
-   //    }
-   //    });
-   const transporter = nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
-      port: 587,
-      secure: false,
-      auth: {
-          user: 'morris.zemlak67@ethereal.email',
-          pass: 'x5JkeyvCqCVPVmp9ax'
-      }
-  });
 
 
-   const resetPassword = (event) => {
+   const resetPassword = () => { // main handler for password resetting, collects data from email input and dispatches it
       event.preventDefault();
-      console.log(email);
-      transporter.sendMail({
-         from: 'morris.zemlak67@ethereal.email',
-         to: 'morris.zemlak67@ethereal.email',
-         subject: 'Test',
-         text: 'HELLO DID IT WORK?',
+      dispatch({
+         type: 'FORGOT_PASSWORD',
+         payload: {
+            email: email,
+         },
       });
-  };
+      setEmail('');
+      history.push('/reset-password-confirmation')
+   };
+   // end resetPassword handler
 
+   
   return (
     <form className="formPanel" onSubmit={resetPassword}>
       <h2>Forgot Password</h2>
