@@ -9,6 +9,14 @@ const passport = require('./strategies/user.strategy');
 
 // Route includes
 const userRouter = require('./routes/user.router');
+const stemtellRouter = require('./routes/stemtell.router');
+const classRouter = require('./routes/class.router');
+const commentRouter = require('./routes/comment.router');
+const reactionRouter = require('./routes/reaction.router');
+const interestRouter = require('./routes/interest.router');
+const stemtagRouter = require('./routes/stemtag.router');
+const notificationRouter = require('./routes/notification.router');
+
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -23,6 +31,14 @@ app.use(passport.session());
 
 /* Routes */
 app.use('/api/user', userRouter);
+app.use('/api/stemtell', stemtellRouter);
+app.use('/api/class', classRouter);
+app.use('/api/comment', commentRouter);
+app.use('/api/reaction', reactionRouter);
+app.use('/api/interesttag', interestRouter);
+app.use('/api/stemtag', stemtagRouter);
+app.use('/api/notification', notifcationRouter);
+
 
 // Serve static files
 app.use(express.static('build'));
