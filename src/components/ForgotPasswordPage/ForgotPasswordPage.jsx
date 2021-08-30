@@ -1,16 +1,41 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
+var nodemailer = require('nodemailer');
 
 
 function ForgotPasswordPage() {
-  const [email, setEmail] = useState('');
-  const errors = useSelector(store => store.errors);
-  const dispatch = useDispatch();
+   const [email, setEmail] = useState('');
+   const errors = useSelector(store => store.errors);
+   const dispatch = useDispatch();
+   // const transporter = nodemailer.createTransport({
+   //    service: 'gmail',
+   //    auth: {
+   //       user: 'ooebroo@gmail.com',
+   //       pass: 'insanity101'
+   //    }
+   //    });
+   const transporter = nodemailer.createTransport({
+      host: 'smtp.ethereal.email',
+      port: 587,
+      secure: false,
+      auth: {
+          user: 'morris.zemlak67@ethereal.email',
+          pass: 'x5JkeyvCqCVPVmp9ax'
+      }
+  });
 
-  const resetPassword = () => {
-     console.log(email);
-  }
+
+   const resetPassword = (event) => {
+      event.preventDefault();
+      console.log(email);
+      transporter.sendMail({
+         from: 'morris.zemlak67@ethereal.email',
+         to: 'morris.zemlak67@ethereal.email',
+         subject: 'Test',
+         text: 'HELLO DID IT WORK?',
+      });
+  };
 
   return (
     <form className="formPanel" onSubmit={resetPassword}>
