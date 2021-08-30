@@ -13,16 +13,7 @@ function LoginPage() {
       console.log(response);
    }
    const successResponse = (response) => {
-      console.log("Response is:", response.profileObj);
-      
-      dispatch({
-        type: 'GOOGLELOGIN',
-        payload: {
-          username: response.profileObj.name,
-          password: cryptoRandomString({length: 32, type: 'base64'}),
-          email: response.profileObj.email,
-        },
-      });
+      console.log("Response is:", response);
     }; 
 
    return (
@@ -39,7 +30,16 @@ function LoginPage() {
         >
           Register
         </button>
-        <button onClick={() => {console.log(cryptoRandomString({length: 32, type: 'base64'}))}}>Test</button>
+        <br />
+        <button
+          type="button"
+          className="btn btn_asLink"
+          onClick={() => {
+            history.push('/forgotpassword');
+          }}
+        >
+          Forgot Password?
+        </button>
         <br />
         <GoogleLogin
             // clientId="process.env.GOOGLE_CLIENT_ID"
