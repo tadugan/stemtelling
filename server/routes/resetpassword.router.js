@@ -16,7 +16,7 @@ router.post('/email', (req, res) => {
       to: `${req.body.email}`,
       subject: 'STEMTelling Password Reset Request',
       text: `Password Reset Request
-      
+Your code is ${req.body.confirmation_code}
       
       
       

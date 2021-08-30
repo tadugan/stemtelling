@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import cryptoRandomString from 'crypto-random-string';
 import axios from 'axios';
 
 function ForgotPasswordPage() {
    const history = useHistory();
+   const [inputCode, setInputCode] = useState('');
    const [email, setEmail] = useState('');
    const errors = useSelector(store => store.errors);
    const dispatch = useDispatch();
@@ -13,26 +15,27 @@ function ForgotPasswordPage() {
 
    const resetPassword = () => { // main handler for password resetting, collects data from email input and dispatches it
       event.preventDefault();
+      if (email == null || email == undefined || email == '' || email == ' ') {
+         alert('Invalid Email');
+         setEmail('');  
+         return false;
+      };
+      const newCode = cryptoRandomString({length: 32, type: 'base64'});
       dispatch({
          type: 'FORGOT_PASSWORD',
          payload: {
             email: email,
+            confirmation_code: newCode,
          },
       });
       setEmail('');
-      history.push('/reset-password-confirmation')
+      console.log("reset code is:", newCode);
    };
    // end resetPassword handler
 
    
   return (
-    <form className="formPanel" onSubmit={resetPassword}>
-      <h2>Forgot Password</h2>
-      {errors.loginMessage && (
-        <h3 className="alert" role="alert">
-          {errors.loginMessage}
-        </h3>
-      )}
+     <div className="formPanel">
       <div>
         <label htmlFor="email">
           Email:
@@ -46,9 +49,21 @@ function ForgotPasswordPage() {
         </label>
       </div>
       <div>
-        <input className="btn" type="submit" name="submit" value="Reset Password" />
+        <label htmlFor="code">
+          Code:
+          <input
+            type="text"
+            name="code"
+            required
+            value={inputCode}
+            onChange={(event) => setInputCode(event.target.value)}
+          />
+        </label>
       </div>
-    </form>
+      <div>
+         <button className="btn" onClick={resetPassword}>Reset Password</button>
+      </div>
+   </div>
   );
 };
 

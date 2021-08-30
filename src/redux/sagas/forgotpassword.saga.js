@@ -3,7 +3,7 @@ import axios from 'axios';
 
 function* forgotPassword(action) {
    try {
-      yield axios.post('/api/resetpassword/email', {email: action.payload.email});
+      yield axios.post('/api/resetpassword/email', {email: action.payload.email, confirmation_code: action.payload.confirmation_code});
    }
    catch (error) {
       console.log(error);
