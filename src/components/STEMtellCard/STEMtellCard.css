@@ -1,5 +1,40 @@
-#userClass{
-    font-size: smaller;
-    display:inline-flexbox,
-    
+.StemCard {
+  margin: 20px;
+  padding: 16px;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1px;
+  width: 300px;
+  height: 400px;
+  /* padding: theme.spacing(2); */
+  text-align: center;
+  color: grey;
+}
+
+.UserName {
+  margin-top: 2px;
+  text-align: left;
+  margin-left: 50px;
+  /* float: left; */
+  display: flex;
+  flex-direction: row;
+  color: #727272;
+}
+
+.Avatar {
+  /* // margin:'10px', */
+  text-align: left;
+  float: left;
+  display: flex;
+  flex-direction: row;
+}
+
+#userClass {
+  font-size: smaller;
+  display: inline-flexbox;
+}
+
+#stemDescription {
+  padding: 8px;
+  color: #727272;
 }
