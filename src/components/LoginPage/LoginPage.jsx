@@ -1,12 +1,32 @@
 import React from 'react';
 import LoginForm from '../LoginForm/LoginForm';
 import { useHistory } from 'react-router-dom';
+import GoogleLogin from 'react-google-login';
+import cryptoRandomString from 'crypto-random-string';
+import { useDispatch, useSelector } from 'react-redux';
+require('dotenv').config();
 
 function LoginPage() {
-  const history = useHistory();
+   const history = useHistory();
+   const dispatch = useDispatch();
+   const failureResponse = (response) => {
+      console.log(response);
+   }
+   const successResponse = (response) => {
+      console.log("Response is:", response.profileObj);
+      
+      dispatch({
+        type: 'GOOGLELOGIN',
+        payload: {
+          username: response.profileObj.name,
+          password: cryptoRandomString({length: 32, type: 'base64'}),
+          email: response.profileObj.email,
+        },
+      });
+    }; 
 
-  return (
-    <div>
+   return (
+      <div>
       <LoginForm />
 
       <center>
@@ -19,6 +39,16 @@ function LoginPage() {
         >
           Register
         </button>
+        <button onClick={() => {console.log(cryptoRandomString({length: 32, type: 'base64'}))}}>Test</button>
+        <br />
+        <GoogleLogin
+            // clientId="process.env.GOOGLE_CLIENT_ID"
+            clientId="1088702246729-sjul1ddverh7shltkjtqvk14q25k5oqo.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={successResponse}
+            onFailure={failureResponse}
+            cookiePolicy={'single_host_origin'}
+         />
       </center>
     </div>
   );
