@@ -7,9 +7,12 @@ function StudentCard() {
 
     return(
         <Container className='StudentCardContainer'>
-            <Card className='StudentDetailsCard'>
-                <Avatar></Avatar>
-                <h4>Student's name</h4>
+            <Card className='StudentDetailsCard'
+            variant='outlined'>
+                <Box className='StudentProfilePicAndName'>
+                <Avatar id='StudentCardAvatar'></Avatar> <span> <h4 id='StudentDetailsName'>Student's name</h4> </span>
+                </Box>
+                
                 <Button 
                 className='StudentCardDeleteBtn'
                 variant= 'outlined'
