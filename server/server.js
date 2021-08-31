@@ -37,7 +37,7 @@ app.use('/api/comment', commentRouter);
 app.use('/api/reaction', reactionRouter);
 app.use('/api/interesttag', interestRouter);
 app.use('/api/stemtag', stemtagRouter);
-app.use('/api/notification', notifcationRouter);
+app.use('/api/notification', notificationRouter);
 
 
 // Serve static files
