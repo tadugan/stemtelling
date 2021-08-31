@@ -22,6 +22,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import StemtellCard from '../STEMtellCard/STEMtellCard';
 
 import './App.css';
+import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
 
 function App() {
   const dispatch = useDispatch();
@@ -68,6 +69,14 @@ function App() {
             path="/info"
           >
             <InfoPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows CreateSTEMtell else shows LoginPage
+            exact
+            path="/create"
+          >
+            <CreateSTEMtell />
           </ProtectedRoute>
 
           <Route
