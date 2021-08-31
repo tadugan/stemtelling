@@ -23,12 +23,17 @@
 -- Create "user" Table
 CREATE TABLE "user" (
 	"id" SERIAL PRIMARY KEY,
-	"username" TEXT UNIQUE NOT NULL,
    "email" TEXT UNIQUE NOT NULL,
 	"password" TEXT NOT NULL,
 	"name" TEXT,
 	"authority" INT DEFAULT 0,
 	"profile_picture_url" TEXT
+);
+
+CREATE TABLE "reset_password" (
+   "id" INTEGER PRIMARY KEY,
+   "uuid" TEXT UNIQUE NOT NULL,
+   "email" TEXT UNIQUE NOT NULL
 );
 
 
