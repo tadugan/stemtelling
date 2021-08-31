@@ -21,6 +21,8 @@
 --DROP TABLE "stemtell_tag" CASCADE;
 
 -- Create "user" Table
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE "user" (
 	"id" SERIAL PRIMARY KEY,
    "email" TEXT UNIQUE NOT NULL,
@@ -32,8 +34,7 @@ CREATE TABLE "user" (
 
 CREATE TABLE "reset_password" (
    "id" INTEGER PRIMARY KEY UNIQUE,
-   "uuid" TEXT UNIQUE NOT NULL,
-   "code" TEXT UNIQUE NOT NULL,
+   "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(),
    "email" TEXT UNIQUE NOT NULL
 );
 

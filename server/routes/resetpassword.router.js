@@ -2,9 +2,6 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 var nodemailer = require('nodemailer');
-const { v4: uuidv4 } = require('uuid');
-
-
 
 const transporter = nodemailer.createTransport({
    service: 'Gmail',
@@ -15,27 +12,34 @@ const transporter = nodemailer.createTransport({
 });
 
 router.post('/email', (req, res) => {
-   const resetUUID = uuidv4();
    const userEmail = req.body.email.toLowerCase();
-   const resetCode = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-   const getUserQuery = `SELECT * FROM "user" WHERE "email" = $1`;
-   pool.query(getUserQuery, [userEmail])
+   const getUserIDQuery = `SELECT * FROM "user" WHERE "email" = $1`;
+
+   pool.query(getUserIDQuery, [userEmail]) // start of first query
    .then((result) => {
-      console.log(result.rows);
-      const userID = result.rows[0].id;
-      console.log(userID);
-      const qText = `INSERT INTO "reset_password" (id, uuid, email, code)
-                     VALUES ($1, $2, $3, $4) RETURNING id`;
-      pool.query(qText, [userID, resetUUID, userEmail, resetCode])
+      const userID = result.rows[0].id; // sets ID in reset table equal to user ID
+      const insertUserInfoQuery = `INSERT INTO "reset_password" (id, email)
+                     VALUES ($1, $2) RETURNING id`;
+      pool.query(insertUserInfoQuery, [userID, userEmail]) // start of second query
       .then((result) => {
          res.sendStatus(201);
+         const getUUIDQuery = `SELECT "uuid" FROM "reset_password" WHERE "id" = $1 AND "email" = $2`;
+         pool.query(getUUIDQuery, [userID, userEmail])
+         .then((result) => {
+            console.log(result)
+         })
+         .catch((error) => {
+            console.log(error);  
+         })
+         
+
       })
-      .catch((error) => {
+      .catch((error) => { // end of second query
          console.log(error);
          res.sendStatus(401);
       })
    })
-   .catch((error) => {
+   .catch((error) => { // end of first query
       console.log(error);
       console.log("Email does not exist in database");
       res.sendStatus(404);
