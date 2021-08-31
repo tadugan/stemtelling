@@ -8,8 +8,8 @@ function RegisterForm() {
    const [email, setEmail] = useState('');
    const [name, setName] = useState('');
    const [classCode, setClassCode] = useState('');
-   const [profilePicture, setProfilePicture] = useState('');
-   const [role, setRole] = useState('Student');
+   const [profilePictureURL, setProfilePictureURL] = useState('');
+   const [authority, setAuthority] = useState('student');
    const errors = useSelector((store) => store.errors);
    const dispatch = useDispatch();
 
@@ -27,9 +27,9 @@ function RegisterForm() {
       payload: {
         email: email.toLowerCase(),
         password: password,
-        role: role,
+        authority: authority,
         name: name,
-        profilePicture: profilePicture,
+        profilePictureURL: profilePictureURL,
       },
     });
   }; // end registerUser
@@ -45,9 +45,9 @@ function RegisterForm() {
          <br /><br /><br /><br /><br />
          <div>
             <label for="role">Choose a role: </label>
-            <select name="role" id="role">
-            <option value="Student" onClick={() => (setRole("Student"))}>Student</option>
-            <option value="Teacher" onClick={() => (setRole("Teacher"))}>Teacher</option>
+            <select name="role" id="role" onChange={(event) => (setAuthority(event.target.value))}>
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
             </select>
          </div>
          <div>
@@ -127,7 +127,7 @@ function RegisterForm() {
          </label>
          </div>
          <div>
-         <input className="btn" type="submit" name="submit" value="Create Account" />
+            <input className="btn" type="submit" name="submit" value="Create Account" />
          </div>
     </form>
   );

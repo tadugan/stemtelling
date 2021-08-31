@@ -26,7 +26,7 @@ CREATE TABLE "user" (
    "email" TEXT UNIQUE NOT NULL,
 	"password" TEXT NOT NULL,
 	"name" TEXT,
-	"authority" INT DEFAULT 0,
+	"authority" TEXT NOT NULL,
 	"profile_picture_url" TEXT
 );
 
