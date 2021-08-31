@@ -6,14 +6,17 @@ function RegisterForm() {
    const [password, setPassword] = useState('');
    const [confirmedPassword, setConfirmedPassword] = useState('');
    const [email, setEmail] = useState('');
+   const [name, setName] = useState('');
+   const [classCode, setClassCode] = useState('');
+   const [profilePicture, setProfilePicture] = useState('');
+   const [role, setRole] = useState('Student');
    const errors = useSelector((store) => store.errors);
    const dispatch = useDispatch();
 
    const registerUser = (event) => {
       event.preventDefault();
       if (password != confirmedPassword) {
-         dispatch({
-            type: 'MISMATCHED_PASSWORDS'})
+         dispatch({type: 'MISMATCHED_PASSWORDS'});
          setPassword('');
          setConfirmedPassword('');
          return false;
@@ -24,13 +27,16 @@ function RegisterForm() {
       payload: {
         email: email.toLowerCase(),
         password: password,
+        role: role,
+        name: name,
+        profilePicture: profilePicture,
       },
     });
   }; // end registerUser
 
    return (
       <form className="formPanel" onSubmit={registerUser}>
-         <h2>Register</h2>
+         <h2>Create An Account</h2>
          {errors.registrationMessage && (
             <h3 className="alert" role="alert">
                {errors.registrationMessage}
@@ -38,44 +44,91 @@ function RegisterForm() {
          )}
          <br /><br /><br /><br /><br />
          <div>
+            <label for="role">Choose a role: </label>
+            <select name="role" id="role">
+            <option value="Student" onClick={() => (setRole("Student"))}>Student</option>
+            <option value="Teacher" onClick={() => (setRole("Teacher"))}>Teacher</option>
+            </select>
+         </div>
+         <div>
+         <label htmlFor="name">
+            Name:
+            <input
+               type="text"
+               name="name"
+               value={name}
+               placeholder="required"
+               required
+               onChange={(event) => setName(event.target.value)}
+            />
+         </label>
+         </div>
+         <div>
+         <label htmlFor="Class Code">
+            Class Code:
+            <input
+               type="text"
+               name="Class Code"
+               value={classCode}
+               placeholder="optional"
+               onChange={(event) => setClassCode(event.target.value)}
+            />
+         </label>
+         </div>
+         <div>
          <label htmlFor="email">
             Email:
             <input
                type="email"
                name="email"
                value={email}
+               placeholder="required"
                required
                onChange={(event) => setEmail(event.target.value)}
             />
          </label>
-      </div>
-      <div>
-        <label htmlFor="password">
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={password}
-            required
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="Confirm Password">
-          Confirm Password:
-          <input
-            type="password"
-            name="Confirm Password"
-            value={confirmedPassword}
-            required
-            onChange={(event) => setConfirmedPassword(event.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <input className="btn" type="submit" name="submit" value="Register" />
-      </div>
+         </div>
+         <div>
+         <label htmlFor="password">
+            Password:
+            <input
+               type="password"
+               name="password"
+               value={password}
+               placeholder="required"
+               required
+               onChange={(event) => setPassword(event.target.value)}
+            />
+         </label>
+         </div>
+         <div>
+         <label htmlFor="Confirm Password">
+            Confirm Password:
+            <input
+               type="password"
+               name="Confirm Password"
+               value={confirmedPassword}
+               placeholder="required"
+               required
+               onChange={(event) => setConfirmedPassword(event.target.value)}
+            />
+         </label>
+         </div>
+         <div>
+         <label htmlFor="profile picture">
+            Profile Picture (optional):
+            <input
+               type="file"
+               name="profile picture"  
+               accept="image/*"
+               placeholder="optional"
+               onChange={(event) => setProfilePicture(event.target.value)}
+            />
+         </label>
+         </div>
+         <div>
+         <input className="btn" type="submit" name="submit" value="Create Account" />
+         </div>
     </form>
   );
 }
