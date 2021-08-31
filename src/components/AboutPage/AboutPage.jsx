@@ -1,6 +1,7 @@
 import React from 'react';
 import ClassCard from '../ClassCard/ClassCard';
 import Comment from '../Comment/Comment'
+import StudentCard from '../StudentCard/StudentCard';
 
 // This is one of our simplest components
 // It doesn't have local state,
@@ -15,6 +16,7 @@ function AboutPage() {
         <ClassCard/>
       </div>
       <Comment />
+      <StudentCard/>
     </div>
   );
 }
