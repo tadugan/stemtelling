@@ -2,6 +2,7 @@ import React from 'react';
 import ClassCard from '../ClassCard/ClassCard';
 import Comment from '../Comment/Comment'
 import StudentCard from '../StudentCard/StudentCard';
+import BackBtn from '../BackBtn/BackBtn';
 
 // This is one of our simplest components
 // It doesn't have local state,
@@ -11,6 +12,7 @@ import StudentCard from '../StudentCard/StudentCard';
 function AboutPage() {
   return (
     <div className="container">
+      <BackBtn/>
       <div>
         <p>This about page is for anyone to read!</p>
         <ClassCard/>
