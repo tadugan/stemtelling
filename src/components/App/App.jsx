@@ -20,6 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage';
+import StemtellCard from '../STEMtellCard/STEMtellCard';
 
 import './App.css';
 
@@ -47,6 +48,7 @@ function App() {
             path="/about"
           >
             <AboutPage />
+            <StemtellCard />
           </Route>
           <Route
             exact
