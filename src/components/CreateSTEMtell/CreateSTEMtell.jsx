@@ -28,6 +28,22 @@ function CreateSTEMtell() {
         description: ${description}
         tags: ${tagsArray}
         `);
+
+        // Dispatch captured inputs to SAGA
+        dispatch({ type: 'SUBMIT_NEW_STEMTELL', payload: {
+            title: title,
+            body_text: description,
+            media_url: imageUrl,
+            class_id: className,
+            tag_ids: tagsArray
+            }
+        });
+
+        // Clear Input Fields
+        // TODO:
+
+        // Return user to previous view
+        // TODO:
     }
 
     const handleCancel = () => {
