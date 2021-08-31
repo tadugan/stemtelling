@@ -18,7 +18,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
 router.post('/register', (req, res, next) => {
-  const email = req.body.email;
+  const email = req.body.email.toLowerCase();
   const password = encryptLib.encryptPassword(req.body.password);
   const name = req.body.name;
   const authority = req.body.authority;
@@ -40,7 +40,7 @@ router.post('/register', (req, res, next) => {
 // follows code similar to regular registration
 router.post('/changepassword', (req, res, next) => {
    const password = encryptLib.encryptPassword(req.body.password);
-   const userEmail = req.body.email;
+   const userEmail = req.body.email.toLowerCase();
    const queryText = 'UPDATE "user" SET password = $1 WHERE email = $2';
    pool
       .query(queryText, [password, userEmail])

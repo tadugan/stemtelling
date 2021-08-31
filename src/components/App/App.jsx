@@ -21,8 +21,9 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage';
 import StemtellCard from '../STEMtellCard/STEMtellCard';
-
+import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 import './App.css';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -55,6 +56,11 @@ function App() {
             path="/forgotpassword"
           >
             <ForgotPasswordPage />
+          </Route>
+          <Route
+          path ="/resetpassword"
+          >
+             <ResetPasswordPage />
           </Route>
 
           {/* For protected routes, the view could show one of several things on the same route.
