@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { put, takeLatest } from 'redux-saga/effects';
 import { useDispatch, useSelector } from 'react-redux';
+import cryptoRandomString from 'crypto-random-string';
 
 function RegisterForm() {
    const [password, setPassword] = useState('');

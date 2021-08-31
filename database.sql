@@ -31,8 +31,9 @@ CREATE TABLE "user" (
 );
 
 CREATE TABLE "reset_password" (
-   "id" INTEGER PRIMARY KEY,
+   "id" INTEGER PRIMARY KEY UNIQUE,
    "uuid" TEXT UNIQUE NOT NULL,
+   "code" TEXT UNIQUE NOT NULL,
    "email" TEXT UNIQUE NOT NULL
 );
 

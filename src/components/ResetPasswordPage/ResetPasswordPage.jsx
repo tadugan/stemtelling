@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import cryptoRandomString from 'crypto-random-string';
-import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -25,8 +23,6 @@ const useStyles = makeStyles((theme) => ({
 
 function ResetPasswordPage() {
    const history = useHistory();
-   const [resetCode, setResetCode] = useState('');
-   const [inputCode, setInputCode] = useState('');
    const [email, setEmail] = useState('');
    const errors = useSelector(store => store.errors);
    const dispatch = useDispatch();
@@ -36,32 +32,24 @@ function ResetPasswordPage() {
    const handleClose = () => {setOpen(false); setEmail(''); setInputCode(''); setResetCode('');};
 
    const resetPassword = () => { // main handler for password resetting, collects data from email input and dispatches it
-      setResetCode('');
       if (email == null || email == undefined || email == '' || email == ' ') {
          alert('Invalid Email');
          setEmail('');  
          return false;
       };
-      let newCode = cryptoRandomString({length: 32, type: 'base64'});
-      setResetCode(newCode);
       dispatch({
          type: 'FORGOT_PASSWORD',
          payload: {
             email: email,
-            confirmation_code: newCode,
          },
       });
-      console.log("reset code is:", newCode);
       handleOpen();
    };
    // end resetPassword handler
 
    const checkCode = () => {
-      console.log(resetCode);
-      console.log(inputCode);
       if (resetCode != inputCode) {
          alert('Invalid code');
-         setInputCode('');
          return false;
       }
       else if (resetCode == inputCode) {
