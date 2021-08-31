@@ -8,11 +8,11 @@ const { URLSearchParams } = require('url');
 const transporter = nodemailer.createTransport({ // nodemailer handler, auth should be stored as a local .env variable and input in auth to avoid sensitive data leaking
    service: 'Gmail',
    auth: {
-       user: 'Stemtelltest@gmail.com',
-       pass: 'Stemtelltesting123!'
+       user: `${process.env.NODEMAILER_USER}`,
+       pass: `${process.env.NODEMAILER_PASS}`
    }
 });
-const websiteURL = new URL ("http://localhost:3000/resetpassword/"); // origin point for resetting a password, will later be appended with a confirmation code
+const websiteURL = new URL ("http://localhost:3000/resetpassword/"); // origin point for resetting a password, will later be appended with a confirmation code. Edit this to whatever your website URL is
 
 router.post('/sendresetemail', (req, res) => { // handler for sending out a password reset email to the user, as well as creating a temporary database placement for them
    const userEmail = req.body.email.toLowerCase();
