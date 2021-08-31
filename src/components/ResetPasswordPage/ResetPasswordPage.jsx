@@ -3,16 +3,14 @@ import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-
-
 function ResetPasswordPage() {
    const [newPassword, setNewPassword] = useState('');
    const [confirmedNewPassword, setConfirmedNewPassword] = useState('');
+   const getSearchQueryByFullURL = (url) => {return url.split('?confirmation=')}; // split URL into our base url and the confirmation code
 
 
    const test = () => {
-      const queryString = window.location.search;
-      console.log(queryString);
+      console.log(getSearchQueryByFullURL(window.location.href));
    }
 
   return (
