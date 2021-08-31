@@ -1,0 +1,17 @@
+h2{
+    color: #727272;
+    padding: 8px;
+    float: left;
+}
+
+.classDetail{
+padding: 8px;
+margin:8px;
+margin-top: 12px;
+text-align: right;
+
+}
+
+.classCard{
+    width: 300px;
+}
