@@ -6,13 +6,13 @@ require('dotenv').config();
 const { URLSearchParams } = require('url');
 
 const transporter = nodemailer.createTransport({ // nodemailer handler, auth should be stored as a local .env variable and input in auth to avoid sensitive data leaking
-   service: 'Gmail',
+   service: 'Gmail', // can be changed to different services, https://nodemailer.com/smtp/well-known/
    auth: {
        user: `${process.env.NODEMAILER_USER}`,
        pass: `${process.env.NODEMAILER_PASS}`
    }
 });
-const websiteURL = new URL ("http://localhost:3000/resetpassword/"); // origin point for resetting a password, will later be appended with a confirmation code. Edit this to whatever your website URL is
+const websiteURL = new URL ("http://localhost:3000/#/resetpassword/"); // origin point for resetting a password, will later be appended with a confirmation code. Edit this to whatever your website URL is
 
 router.post('/sendresetemail', (req, res) => { // handler for sending out a password reset email to the user, as well as creating a temporary database placement for them
    const userEmail = req.body.email.toLowerCase();
@@ -59,5 +59,10 @@ router.post('/sendresetemail', (req, res) => { // handler for sending out a pass
       res.sendStatus(401);
    });
 });
+
+router.delete('/removereset', (req, res) => {
+   console.log(req);
+   const qText = `DELETE FROM "reset_password" WHERE "uuid" = $1 RETURNING "id"`;
+});   
 
 module.exports = router;

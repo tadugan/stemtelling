@@ -58,7 +58,7 @@ function App() {
             <ForgotPasswordPage />
           </Route>
           <Route
-          path ="/resetpassword"
+            path ="/resetpassword/"
           >
              <ResetPasswordPage />
           </Route>

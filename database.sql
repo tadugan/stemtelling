@@ -32,7 +32,8 @@ CREATE TABLE "user" (
 	"profile_picture_url" TEXT
 );
 
-CREATE TABLE "reset_password" (
+-- this table needs to be periodically cleansed via a cron (e.g. https://github.com/citusdata/pg_cron), ideally at inactive times of day, in order to prevent buildup.
+CREATE TABLE "reset_password" ( 
    "id" INTEGER PRIMARY KEY UNIQUE,
    "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(),
    "email" TEXT UNIQUE NOT NULL
