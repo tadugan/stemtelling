@@ -1,0 +1,38 @@
+.CommentProfilePicAndName{
+    display: flex;
+
+    align-items: center;
+    
+}
+
+.GeneralCommentSection{
+    padding-left: 15px;
+}
+
+.GeneralCommentCard{
+    margin: 10px;
+    
+}
+
+#GeneralCommentInput{
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+
+.CommentDate{
+    float:right;
+    margin-left: 20px;
+    font-size: 10px;
+}
+
+.CommentCardHeader{
+    margin-left: 10px;
+}
+
+.CommentUserName{
+     padding-left: 10px;
+}
+.BtnsforCommenting{
+    display: inline-block;
+    
+}
