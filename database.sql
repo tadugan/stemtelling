@@ -133,14 +133,7 @@ CREATE TABLE "stemtell_tag" (
 
 -- <== TEST DATA SETUP ==> --
 
--- Step 1: Create 2 classes with the following queries
-INSERT INTO "class" ("code", "name")
-	VALUES ('0001', 'CHEM 101'), -- id 1
-	('0002', 'BIO 101'); -- id 2
-	
-
-
--- Step 2: While the application is running, register the following users IN ORDER
+-- Step 1: While the application is running, register the following users IN ORDER
 -- 1st
 	-- username: student1@email.com
 -- 2nd 
@@ -149,6 +142,11 @@ INSERT INTO "class" ("code", "name")
 	-- username: teacherA@email.com
 -- 4th
 	-- username: teacherB@email.com	
+
+-- Step 2: Create 2 classes with the following queries
+INSERT INTO "class" ("code", "name")
+	VALUES ('0001', 'CHEM 101'), -- id 1
+	('0002', 'BIO 101'); -- id 2
 
 -- Step 3: add personal Data
 UPDATE "user"
@@ -160,11 +158,11 @@ SET "name" = 'Student2', "profile_picture_url" = 'https://www.fmjfee.com/i901fee
 WHERE "id" = 2;
 
 UPDATE "user"
-SET "name" = 'Teacher1', "profile_picture_url" = 'https://www.nea.org/sites/default/files/legacy/2020/04/new_teacher.jpeg'
+SET "name" = 'Teacher1', "profile_picture_url" = 'https://www.nea.org/sites/default/files/legacy/2020/04/new_teacher.jpeg', "authority" = '5'
 WHERE "id" = 3;
 
 UPDATE "user"
-SET "name" = 'Teacher2', "profile_picture_url" = 'https://uconn-today-universityofconn.netdna-ssl.com/wp-content/uploads/2014/05/MaleMathTeacher.jpg'
+SET "name" = 'Teacher2', "profile_picture_url" = 'https://uconn-today-universityofconn.netdna-ssl.com/wp-content/uploads/2014/05/MaleMathTeacher.jpg', "authority" = '5'
 WHERE "id" = 4;
 
 -- Step 4: run the following queries to add the users to user_class table
@@ -215,7 +213,16 @@ INSERT INTO "reaction" ("media_url", "name")
 	VALUES ('https://www.nicepng.com/png/detail/376-3762215_how-to-set-use-blue-thumbs-up-icon.png', 'like'),
 	('https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png', 'love');
 
--- COMING SOON
--- Step 10: comments
+-- Step 10: run the following queries to add comments to the comment table
+INSERT INTO "comment" ("user_id", "stemtell_id", "comment", "date_published", "teacher_feedback")
+	VALUES ('2', '1', 'This is a great Chemistry STEMtell!', NOW(), 'false'),
+	('1', '2', 'This is a great Biology STEMtell!', NOW(), 'false'),
+	('3', '1', 'Needs more Chemistry stuff', NOW(), 'true'),
+	('4', '2', 'Needs more Biology stuff', NOW(), 'true');
+
 -- Step 11: existing stemtell reactions
+INSERT INTO "reaction_stemtell" ("stemtell_id", "user_id", "reaction_id")
+	VALUES ('1', '2', '1'),
+	('2', '1', '2');
+
 

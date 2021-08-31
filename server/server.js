@@ -16,7 +16,7 @@ const reactionRouter = require('./routes/reaction.router');
 const interestRouter = require('./routes/interest.router');
 const stemtagRouter = require('./routes/stemtag.router');
 const resetPasswordRouter = require('./routes/resetpassword.router');
-//const notificationRouter = require('./routes/notification.router');
+const notificationRouter = require('./routes/notification.router');
 
 
 // Body parser middleware
@@ -39,7 +39,7 @@ app.use('/api/reaction', reactionRouter);
 app.use('/api/interesttag', interestRouter);
 app.use('/api/stemtag', stemtagRouter);
 app.use('/api/resetpassword', resetPasswordRouter);
-//app.use('/api/notification', notifcationRouter);
+app.use('/api/notification', notificationRouter);
 
 
 // Serve static files
