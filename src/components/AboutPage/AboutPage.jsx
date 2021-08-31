@@ -1,4 +1,5 @@
 import React from 'react';
+import Comment from '../Comment/Comment'
 
 // This is one of our simplest components
 // It doesn't have local state,
@@ -11,6 +12,7 @@ function AboutPage() {
       <div>
         <p>This about page is for anyone to read!</p>
       </div>
+      <Comment />
     </div>
   );
 }
