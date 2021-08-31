@@ -19,6 +19,7 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import StemtellCard from '../STEMtellCard/STEMtellCard';
 
 import './App.css';
 
@@ -46,6 +47,7 @@ function App() {
             path="/about"
           >
             <AboutPage />
+            <StemtellCard />
           </Route>
 
           {/* For protected routes, the view could show one of several things on the same route.

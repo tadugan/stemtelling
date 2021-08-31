@@ -15,6 +15,7 @@ const commentRouter = require('./routes/comment.router');
 const reactionRouter = require('./routes/reaction.router');
 const interestRouter = require('./routes/interest.router');
 const stemtagRouter = require('./routes/stemtag.router');
+const notificationRouter = require('./routes/notification.router');
 
 
 // Body parser middleware
@@ -36,6 +37,7 @@ app.use('/api/comment', commentRouter);
 app.use('/api/reaction', reactionRouter);
 app.use('/api/interesttag', interestRouter);
 app.use('/api/stemtag', stemtagRouter);
+app.use('/api/notification', notifcationRouter);
 
 
 // Serve static files

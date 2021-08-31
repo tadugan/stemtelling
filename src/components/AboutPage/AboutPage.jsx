@@ -1,4 +1,5 @@
 import React from 'react';
+import ClassCard from '../ClassCard/ClassCard';
 import Comment from '../Comment/Comment'
 
 // This is one of our simplest components
@@ -11,6 +12,7 @@ function AboutPage() {
     <div className="container">
       <div>
         <p>This about page is for anyone to read!</p>
+        <ClassCard/>
       </div>
       <Comment />
     </div>
