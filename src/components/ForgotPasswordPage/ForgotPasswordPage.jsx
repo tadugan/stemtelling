@@ -35,7 +35,7 @@ function ForgotPasswordPage() {
    const classes = useStyles();
    const [open, setOpen] = React.useState(false);
    const handleOpen = () => {setOpen(true)};
-   const handleClose = () => {setOpen(false)};
+   const handleClose = () => {setOpen(false); setEmail(''); setInputCode(''); setResetCode('');};
 
    const resetPassword = () => { // main handler for password resetting, collects data from email input and dispatches it
       event.preventDefault();
@@ -68,10 +68,15 @@ function ForgotPasswordPage() {
          setInputCode('');
          return false;
       }
-      if (resetCode == inputCode) {
-         alert.log("Now proceeding to reset password!");
+      else if (resetCode == inputCode) {
+         alert("Now proceeding to reset password!");
       }
-   }
+      else {
+         alert('An unknown error has occurred.');
+         setInputCode('');
+         return false;
+      };
+   };
 
    
   return (
