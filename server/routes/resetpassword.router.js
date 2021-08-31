@@ -11,9 +11,9 @@ const transporter = nodemailer.createTransport({
        pass: 'Stemtelltesting123!'
    }
 });
-const websiteURL = "http://localhost:3000";
+const websiteURL = new URL ("http://localhost:3000/resetpassword/"); // origin point for resetting a password, will later be appended with a confirmation code
 
-router.post('/email', (req, res) => {
+router.post('/email', (req, res) => { // handler for resetting a user's password
    const userEmail = req.body.email.toLowerCase();
    const getUserIDQuery = `SELECT * FROM "user" WHERE "email" = $1`;
 
@@ -28,21 +28,16 @@ router.post('/email', (req, res) => {
          pool.query(getUUIDQuery, [userID, userEmail]) // start of third query
          .then((results) => {
             const resetPasswordUUID = results.rows[0].uuid; 
-            function encodeQueryData(data) {
-               const ret = [];
-               for (let d in data)
-                 ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
-               return ret.join('&');
-            }
-            const testUUID = encodeQueryData({confirmationUUID: resetPasswordUUID});
-            console.log(testUUID);
-            console.log(URLSearchParams.get(confirmationUUID))
+            websiteURL.searchParams.append("confirmation", resetPasswordUUID);
+            console.log(websiteURL.href);
+
+
             const resetEmail = {
                from: 'Stemtelltest@gmail.com',
                to: `${userEmail}`,
                subject: 'STEMTelling Password Reset Request',
                text: `
-               ${websiteURL}/resetpassword/${resetPasswordUUID}
+               ${websiteURL.href}
                
                
                `};
