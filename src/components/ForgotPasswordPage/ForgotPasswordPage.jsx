@@ -23,8 +23,6 @@ const useStyles = makeStyles((theme) => ({
    },
  }));
 
- 
-
 function ForgotPasswordPage() {
    const history = useHistory();
    const [resetCode, setResetCode] = useState('');
@@ -38,7 +36,6 @@ function ForgotPasswordPage() {
    const handleClose = () => {setOpen(false); setEmail(''); setInputCode(''); setResetCode('');};
 
    const resetPassword = () => { // main handler for password resetting, collects data from email input and dispatches it
-      event.preventDefault();
       setResetCode('');
       if (email == null || email == undefined || email == '' || email == ' ') {
          alert('Invalid Email');
