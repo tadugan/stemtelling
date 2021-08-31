@@ -33,6 +33,22 @@ router.post('/register', (req, res, next) => {
     });
 });
 
+
+router.post('/changepassword', (req, res, next) => {
+   const password = encryptLib.encryptPassword(req.body.password);
+   const userEmail = req.body.email;
+   const queryText = 'UPDATE "user" SET password = $1 WHERE email = $2';
+   pool
+     .query(queryText, [password, userEmail])
+     .then(() => res.sendStatus(201))
+     .catch((err) => {
+       console.log('Change password failed: ', err);
+       res.sendStatus(500);
+     });
+ });
+
+
+
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route
 // this middleware will run our POST if successful

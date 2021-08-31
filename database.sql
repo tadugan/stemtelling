@@ -22,15 +22,9 @@
 
 -- Create "user" Table
 CREATE TABLE "user" (
-<<<<<<< HEAD
-    "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) NOT NULL,
-    "email" VARCHAR (1000) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
-);
-=======
 	"id" SERIAL PRIMARY KEY,
 	"username" TEXT UNIQUE NOT NULL,
+   "email" TEXT UNIQUE NOT NULL,
 	"password" TEXT NOT NULL,
 	"name" TEXT,
 	"authority" INT DEFAULT 0,
@@ -220,4 +214,3 @@ INSERT INTO "reaction" ("media_url", "name")
 -- Step 10: comments
 -- Step 11: existing stemtell reactions
 
->>>>>>> 5e0de92496db3308a5f396507726089368112122

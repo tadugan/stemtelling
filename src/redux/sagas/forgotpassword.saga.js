@@ -10,8 +10,22 @@ function* forgotPassword(action) {
    };
 };
 
+function* changePassword(action) {
+   try {
+     // clear any existing error on the registration page
+     yield put({ type: 'CLEAR_REGISTRATION_ERROR' });
+ 
+     // passes the username and password from the payload to the server
+     yield axios.post('/api/user/changepassword', action.payload);
+   } catch (error) {
+     console.log('Error with changing password:', error);
+     yield put({ type: 'REGISTRATION_FAILED' });
+   }
+ }
+
 function* forgotPasswordSaga() {
    yield takeLatest('FORGOT_PASSWORD', forgotPassword);
+   yield takeLatest('CHANGE_PASSWORD', changePassword);
  }
  
  export default forgotPasswordSaga;

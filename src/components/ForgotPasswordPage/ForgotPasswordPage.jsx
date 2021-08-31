@@ -54,7 +54,6 @@ function ForgotPasswordPage() {
             confirmation_code: newCode,
          },
       });
-      setEmail('');
       console.log("reset code is:", newCode);
       handleOpen();
    };
@@ -69,7 +68,14 @@ function ForgotPasswordPage() {
          return false;
       }
       else if (resetCode == inputCode) {
-         alert("Now proceeding to reset password!");
+         let newPassword = prompt("Please enter a new password");
+         dispatch({
+            type: "CHANGE_PASSWORD",
+            payload: {
+               email: email,
+               password: newPassword,
+            }
+         });
       }
       else {
          alert('An unknown error has occurred.');
