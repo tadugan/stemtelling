@@ -22,10 +22,10 @@ function RegisterForm() {
          setConfirmedPassword('');
          return false;
       };
-      if (newPassword.length < 8 || confirmedNewPassword.length < 8) { // checks for passwords that are too short (under 8 characters)
+      if (password.length < 8 || confirmedPassword.length < 8) { // checks for passwords that are too short (under 8 characters)
          dispatch({type: 'PASSWORD_TOO_SHORT'});
-         setNewPassword('');
-         setConfirmedNewPassword('');
+         setPassword('');
+         setConfirmedPassword('');
          return false;
       };
       dispatch({
