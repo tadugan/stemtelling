@@ -10,7 +10,7 @@ import "./TeacherFeedback.css";
 
 function TeacherFeedback() {
   return (
-    <>
+    
       <Container className="TeacherFeedbackContainer">
         <Box id="TeacherFeedbackInput">
           <label id="feedbackLabel">
@@ -31,7 +31,7 @@ function TeacherFeedback() {
             </div>
           </label>
         </Box>
-      </Container>
+     
 
       <Card className="FeedbackCard">
         <h6 id="teacherFeedbackHeading">
@@ -84,7 +84,8 @@ function TeacherFeedback() {
           <p className="FeedbackText">This is a feedback from a teacher.</p>
         </section>
       </Card>
-    </>
+      </Container>
+   
   );
 }
 
