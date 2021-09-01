@@ -3,6 +3,7 @@ import ClassCard from '../ClassCard/ClassCard';
 import Comment from '../Comment/Comment'
 import StudentCard from '../StudentCard/StudentCard';
 import BackBtn from '../BackBtn/BackBtn';
+import TeacherFeedback from '../TeacherFeedback/TeacherFeedback';
 
 // This is one of our simplest components
 // It doesn't have local state,
@@ -19,6 +20,7 @@ function AboutPage() {
       </div>
       <Comment />
       <StudentCard/>
+      <TeacherFeedback/>
     </div>
   );
 }
