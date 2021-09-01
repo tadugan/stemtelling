@@ -1,24 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import './Comment.css';
 import {Container, Card, TextField, Box, Avatar, Button} from '@material-ui/core';
-//Add reducer and stuff here
+
 
 
 function Comment() {
+    const dispatch= useDispatch();
+    const comments = useSelector((store) => store.commentList);
+
+useEffect(() =>{
+    dispatch({ type: 'GET_COMMENTLIST'});
+}, []);
 
     return(
         <Container className='GeneralCommentContainer'>
+            <h4 className='CommentCardHeader'> 
+                Comments 
+            </h4> 
             <Box id='GeneralCommentInput'>
              <TextField 
-            fullWidth='true'
+            fullWidth= 'true'
             placeholder='Comment...'
             multiline
-            rows={3}
-            //value=
-            //OnChange=
-            //Handleonsubmit?
-            />
+            rows={3}/>
             <section className='BtnsforCommenting'>
             <Button className='CancelCommentBtn'>Cancel</Button>
             <Button className='CommentBtn'> Comment </Button>
@@ -26,49 +32,51 @@ function Comment() {
             </section>
             
             </Box>
-        
-            <Card 
-            className='GeneralCommentCard'
-            variant= 'outlined'
-            >
+             
+            {/* mapping thru comments to show all individual comments */}
+            {comments.map((comment) => {
+                return (
+                 <Card 
+                 className='GeneralCommentCard'
+                 variant= 'outlined'
+                 key= {comment.id}>
 
-            <h6 
-            className='CommentCardHeader'
-            > 
-            Comments 
-            </h6>   
+                
 
-            <section 
-            className='GeneralCommentSection'
-            >
+                <section 
+                className='GeneralCommentSection'>
            
-            <div 
-            className='CommentProfilePicAndName'
-            >
-            <Avatar
-            id='GeneralCommentAvatar'
-            >
-            </Avatar> 
-            <span className='CommentUserName'>
-                <h5> Commenter's Name </h5>
-            </span>
-            <span className='CommentDate'> 
-                <p> Aug 28th, 2020 </p>
-            </span>
+                <div 
+                className='CommentProfilePicAndName'>
+                <Avatar
+                id='GeneralCommentAvatar'
+                src={comment.profile_picture_url}>
+
+                </Avatar> 
+
+                <span className='CommentUserName'>
+                <h5 id='commenterName'> {comment.username} </h5>
+                </span>
+                <span className='CommentDate'> 
+                <p> {comment.date_published} </p>
+                </span>
             
-            </div>
+                </div>
             
 
-            <p 
-            className='CommentText'
-            > 
-            This is a general comment from a user. 
-            </p>
-            </section>
+                <p 
+                className='CommentText'> 
+                {comment.comment} 
+                </p>
+                </section>
 
-            </Card>
+                </Card>   
+            
+            );
+            
+        })}
+            
         </Container>
-
     )
 }
 
