@@ -1,6 +1,6 @@
 import { Button, Chip, makeStyles } from '@material-ui/core';
 import { DriveEtaOutlined } from '@material-ui/icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import './TagChip.css';
 
@@ -14,12 +14,14 @@ const useStyles = makeStyles({
     },
 });
 
-function TagChip( {tagInfo} ) {
+function TagChip( {tagInfo, selectedTags} ) {
 
     const classes = useStyles();
     const dispatch = useDispatch();
 
     const [ isSelected, setIsSelected ] = useState(false);
+
+    // const selectedTags = useSelector(store => store.selectedTags)
 
     const conditionalClass = () => {
         if (isSelected) {
@@ -46,6 +48,16 @@ function TagChip( {tagInfo} ) {
         }
         
     };
+
+    const compareReducer = () => {
+        if (selectedTags.includes(tagInfo)) {
+            setIsSelected(true);
+        }
+    }
+
+    useEffect(() => {
+        compareReducer();
+    }, []);
 
     return (
         <div onClick={handleClick}>

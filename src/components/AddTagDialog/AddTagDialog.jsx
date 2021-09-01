@@ -9,6 +9,7 @@ function AddTagDialog() {
 
     const dispatch = useDispatch();
     const allTags = useSelector(store => store.tags);
+    const selectedTags = useSelector(store => store.selectedTags)
 
     const [ open, setOpen ] = useState(false);
     const [ tagDisplay, setTagDisplay ] = useState('stem');
@@ -94,7 +95,7 @@ function AddTagDialog() {
                                 {allTags.map((tag, index) => {
                                     return (
                                         <Grid item key={index}>
-                                            <TagChip tagInfo={tag} />
+                                            <TagChip tagInfo={tag} selectedTags={selectedTags} />
                                         </Grid>
                                     );
                                 })}
