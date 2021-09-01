@@ -16,6 +16,9 @@ useEffect(() =>{
 
     return(
         <Container className='GeneralCommentContainer'>
+            <h4 className='CommentCardHeader'> 
+                Comments 
+            </h4> 
             <Box id='GeneralCommentInput'>
              <TextField 
             fullWidth= 'true'
@@ -29,7 +32,7 @@ useEffect(() =>{
             </section>
             
             </Box>
-        
+             
             {/* mapping thru comments to show all individual comments */}
             {comments.map((comment) => {
                 return (
@@ -38,10 +41,7 @@ useEffect(() =>{
                  variant= 'outlined'
                  key= {comment.id}>
 
-                <h6 
-                className='CommentCardHeader'> 
-                Comments 
-                </h6>   
+                
 
                 <section 
                 className='GeneralCommentSection'>
@@ -55,7 +55,7 @@ useEffect(() =>{
                 </Avatar> 
 
                 <span className='CommentUserName'>
-                <h5 id='commenterName'> {comment.user_id} </h5>
+                <h5 id='commenterName'> {comment.username} </h5>
                 </span>
                 <span className='CommentDate'> 
                 <p> {comment.date_published} </p>
@@ -66,7 +66,7 @@ useEffect(() =>{
 
                 <p 
                 className='CommentText'> 
-                This is a general comment from a user. 
+                {comment.comment} 
                 </p>
                 </section>
 
