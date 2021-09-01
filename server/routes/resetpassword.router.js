@@ -15,6 +15,7 @@ const transporter = nodemailer.createTransport({ // nodemailer handler, auth sho
 });
 const websiteURL = new URL ("http://localhost:3000/#/resetpassword/"); // origin point for resetting a password, will later be appended with a confirmation code. Edit this to whatever your website URL is
 
+
 router.delete('/removerequest', (req, res) => {
    const userEmail = req.query.email.toLowerCase();
    const deleteUserRequests = `DELETE FROM "reset_password" WHERE "email" = $1`;
@@ -31,7 +32,6 @@ router.delete('/removerequest', (req, res) => {
 router.post('/sendresetemail', (req, res) => { // handler for sending out a password reset email to the user, as well as creating a temporary database placement for them
    const userEmail = req.body.email.toLowerCase();
    const getUserIDQuery = `SELECT * FROM "user" WHERE "email" = $1`;
-
    pool.query(getUserIDQuery, [userEmail]) // start of first query (gets user information from core user database)
    .then(results => {
       const userID = results.rows[0].id; // sets ID in reset table equal to user ID
