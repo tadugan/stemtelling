@@ -1,11 +1,19 @@
 import { AppBar, Button, Dialog, Divider, IconButton, List, ListItem, ListItemText, Toolbar, Typography } from '@material-ui/core';
-import React, { useState } from 'react';
-import {useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import CloseIcon from '@material-ui/icons/Close';
 import './AddTagDialog.css';
 
 function AddTagDialog() {
+
+    const dispatch = useDispatch();
+
     const [open, setOpen] = useState(false);
+
+    // GETs an array that contains all the tags from the database
+    const getAllTags = () => {
+        dispatch({ type: 'GET_ALL_TAGS'});
+    }
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -14,6 +22,10 @@ function AddTagDialog() {
     const handleClose = () => {
         setOpen(false);
     };
+
+    useEffect(() => {
+        getAllTags();
+    }, []);
 
     return (
         <div className="add-tag-dialog-body">
