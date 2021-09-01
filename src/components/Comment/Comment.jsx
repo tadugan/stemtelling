@@ -1,23 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import './Comment.css';
 import {Container, Card, TextField, Box, Avatar, Button} from '@material-ui/core';
-//Add reducer and stuff here
+
 
 
 function Comment() {
+    const dispatch= useDispatch();
+    const comments = useSelector((store) => store.commentList);
+
+useEffect(() =>{
+    dispatch({ type: 'GET_COMMENTLIST'});
+}), [];
 
     return(
         <Container className='GeneralCommentContainer'>
             <Box id='GeneralCommentInput'>
              <TextField 
-            fullWidth='true'
+            fullWidth= 'true'
             placeholder='Comment...'
             multiline
             rows={3}
-            //value=
-            //OnChange=
-            //Handleonsubmit?
             />
             <section className='BtnsforCommenting'>
             <Button className='CancelCommentBtn'>Cancel</Button>
@@ -27,6 +31,7 @@ function Comment() {
             
             </Box>
         
+            
             <Card 
             className='GeneralCommentCard'
             variant= 'outlined'
