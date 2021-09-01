@@ -71,9 +71,8 @@ router.get('/getuuid', (req, res) => { // checks for a valid uuid in the reset_p
       res.send("invalid");
       // if there is no uuid in the database, an error will be caught. rather than logging it, we manipulate the error to send back a status in order to decline the ability to change password
       // removing this wil result in an error
-   })
-
-})
+   });
+});
 
 router.delete('/removereset', (req, res) => {
    console.log(req);

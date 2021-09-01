@@ -6,7 +6,7 @@ import userSaga from './user.saga';
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
 // This is imported in index.js as rootSaga
-import forgotPasswordSaga from './forgotpassword.saga';
+import resetPasswordSaga from './resetpassword.saga';
 
 // some sagas trigger other sagas, as an example
 // the registration triggers a login
@@ -16,6 +16,6 @@ export default function* rootSaga() {
     loginSaga(), // login saga is now registered
     registrationSaga(),
     userSaga(),
-    forgotPasswordSaga(),
+    resetPasswordSaga(),
   ]);
 }

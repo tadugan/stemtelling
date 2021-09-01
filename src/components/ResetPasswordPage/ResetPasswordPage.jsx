@@ -8,21 +8,26 @@ function ResetPasswordPage() {
    const errors = useSelector((store) => store.errors);
    const uuid = useSelector((store) => store.resetPassword);
    const [newPassword, setNewPassword] = useState('');
+   const [isDisabled, setIsDisabled] = useState('');
    const [confirmedNewPassword, setConfirmedNewPassword] = useState('');
    const getSearchQueryByFullURL = (url) => {return url.split('?confirmation=')}; // split URL into our base url and the confirmation code
 
-   useEffect(() => {
-      console.log("UUID gathered from URL is:", getSearchQueryByFullURL(window.location.href)[1]);
-      dispatch({
+   useEffect(() => { // checks for a valid link on page load
+      dispatch({ // sends out a request to the server to check if the UUID in the URL is valid
          type: 'GET_UUID',
          payload: {
             uuid: getSearchQueryByFullURL(window.location.href)[1],
          },
       });
+      if (errors.resetMessage == "Invalid Link") { // if we get back this response (invalid link), disable the inputs and reset button
+         setIsDisabled(true);
+      };
+      
     });
 
    const test = () => {
       console.log(getSearchQueryByFullURL(window.location.href));
+      console.log(errors.resetMessage);
    }
 
   return (
@@ -39,6 +44,7 @@ function ResetPasswordPage() {
             type="password"
             name="Enter New Password"
             required
+            disabled={isDisabled}
             value={newPassword}
             onChange={(event) => setNewPassword(event.target.value)}
           />
@@ -51,13 +57,14 @@ function ResetPasswordPage() {
             type="password"
             name="Confirm New Password"
             required
+            disabled={isDisabled}
             value={confirmedNewPassword}
             onChange={(event) => setConfirmedNewPassword(event.target.value)}
           />
         </label>
       </div>
       <div>
-         <button className="btn" onClick={test}>Set Password</button>
+         <button className="btn" onClick={test} disabled={isDisabled}>Set Password</button>
       </div>
    </div>
   );
