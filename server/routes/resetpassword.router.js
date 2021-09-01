@@ -60,6 +60,21 @@ router.post('/sendresetemail', (req, res) => { // handler for sending out a pass
    });
 });
 
+router.get('/getuuid', (req, res) => { // checks for a valid uuid in the reset_password table
+   const uuid = req.query.uuid;
+   const qText = `SELECT * FROM "reset_password" WHERE "uuid" = $1`;
+   pool.query(qText, [uuid])
+   .then(results => {
+      res.send(results.rows); // if there is a uuid, send it back
+   })
+   .catch(() => {
+      res.send("invalid");
+      // if there is no uuid in the database, an error will be caught. rather than logging it, we manipulate the error to send back a status in order to decline the ability to change password
+      // removing this wil result in an error
+   })
+
+})
+
 router.delete('/removereset', (req, res) => {
    console.log(req);
    const qText = `DELETE FROM "reset_password" WHERE "uuid" = $1 RETURNING "id"`;

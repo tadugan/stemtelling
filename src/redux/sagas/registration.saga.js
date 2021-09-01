@@ -21,6 +21,7 @@ function* registerUser(action) {
     yield put({ type: 'REGISTRATION_FAILED' });
   }
 }
+
 function* mismatchedPasswords(action) {
    try {
       yield put({ type: 'REGISTRATION_PASSWORD_MATCH_ERROR' });

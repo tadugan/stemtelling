@@ -10,6 +10,20 @@ function* forgotPassword(action) {
    };
 };
 
+function* getUUID(action) {
+   const uuid = action.payload.uuid;
+   try {
+       // clear any existing error on the reset password page
+      const response = yield axios.get('/api/resetpassword/getuuid', { params: { uuid } });
+      if (response.data == 'invalid') {
+         yield put ({type: 'INVALID_LINK'});
+      };
+   }
+   catch (error) {
+      console.log(error);
+   };
+};
+
 function* changePassword(action) {
    try {
       // clear any existing error on the registration page
@@ -26,6 +40,7 @@ function* changePassword(action) {
 function* forgotPasswordSaga() {
    yield takeLatest('FORGOT_PASSWORD', forgotPassword);
    yield takeLatest('CHANGE_PASSWORD', changePassword);
+   yield takeLatest('GET_UUID', getUUID);
  };
  
  export default forgotPasswordSaga;
