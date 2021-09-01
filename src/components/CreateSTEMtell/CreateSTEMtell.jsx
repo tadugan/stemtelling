@@ -83,8 +83,8 @@ function CreateSTEMtell() {
                             <em>Choose a Class</em>
                         </MenuItem>
                         {/* This needs to be based on the classes the student is enrolled in */}
-                        <MenuItem value={'CHEM'}>CHEM</MenuItem>
-                        <MenuItem value={'BIO'}>BIO</MenuItem>
+                        <MenuItem value={1}>CHEM</MenuItem>
+                        <MenuItem value={2}>BIO</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
