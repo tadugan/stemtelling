@@ -16,7 +16,7 @@ function* fetchUser() {
     const response = yield axios.get('/api/user', config);
 
     // now that the session has given us a user object
-    // with an id and username set the client-side user object to let
+    // with an id and email set the client-side user object to let
     // the client-side code know the user is logged in
     yield put({ type: 'SET_USER', payload: response.data });
   } catch (error) {

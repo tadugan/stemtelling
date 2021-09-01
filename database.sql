@@ -21,13 +21,22 @@
 --DROP TABLE "stemtell_tag" CASCADE;
 
 -- Create "user" Table
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 CREATE TABLE "user" (
 	"id" SERIAL PRIMARY KEY,
-	"username" TEXT UNIQUE NOT NULL,
+   "email" TEXT UNIQUE NOT NULL,
 	"password" TEXT NOT NULL,
 	"name" TEXT,
-	"authority" INT DEFAULT 0,
+	"authority" TEXT NOT NULL,
 	"profile_picture_url" TEXT
+);
+
+-- this table needs to be periodically cleansed via a cron (e.g. https://github.com/citusdata/pg_cron), ideally at inactive times of day, in order to prevent buildup.
+CREATE TABLE "reset_password" ( 
+   "id" INTEGER PRIMARY KEY UNIQUE,
+   "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(),
+   "email" TEXT UNIQUE NOT NULL
 );
 
 
