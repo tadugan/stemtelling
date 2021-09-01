@@ -43,8 +43,8 @@ function StemtellCard() {
           <section id="stemDescription">{stemtell.body_text}</section>
         </Card>
       </Grid>
-        );
-        })};
+        )
+        })}
     </Grid>
     </Container>
     
