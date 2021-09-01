@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import errors from './errors.reducer';
 import user from './user.reducer';
+import commentList from './commentList.reducer';
 import stemtells from './stemtell.reducer';
 
 // rootReducer is the primary reducer for our entire project
@@ -12,6 +13,7 @@ import stemtells from './stemtell.reducer';
 const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
   user, // will have an id and username if someone is logged in
+  commentList,
   stemtells,
 });
 

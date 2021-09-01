@@ -15,6 +15,7 @@ const commentRouter = require('./routes/comment.router');
 const reactionRouter = require('./routes/reaction.router');
 const interestRouter = require('./routes/interest.router');
 const stemtagRouter = require('./routes/stemtag.router');
+const resetPasswordRouter = require('./routes/resetpassword.router');
 const notificationRouter = require('./routes/notification.router');
 
 
@@ -37,6 +38,7 @@ app.use('/api/comment', commentRouter);
 app.use('/api/reaction', reactionRouter);
 app.use('/api/interesttag', interestRouter);
 app.use('/api/stemtag', stemtagRouter);
+app.use('/api/resetpassword', resetPasswordRouter);
 app.use('/api/notification', notificationRouter);
 
 
