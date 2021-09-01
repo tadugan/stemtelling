@@ -10,7 +10,8 @@ function AddTagDialog() {
     const dispatch = useDispatch();
     const allTags = useSelector(store => store.tags);
 
-    const [open, setOpen] = useState(false);
+    const [ open, setOpen ] = useState(false);
+    const [ tagDisplay, setTagDisplay ] = useState('stem');
 
     // GETs an array that contains all the tags from the database
     const getAllTags = () => {
@@ -23,6 +24,10 @@ function AddTagDialog() {
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const changeTagDisplay = (mode) => {
+        setTagDisplay(mode);
     };
 
     useEffect(() => {
@@ -41,10 +46,10 @@ function AddTagDialog() {
                         <CloseIcon />
                     </IconButton>
                     <Typography variant="h6" className="add-tag-dialog-title">
-                        Add Tags
+                        Tags
                     </Typography>
                     <Button autoFocus color="inherit" onClick={handleClose}>
-                    confirm tags
+                    add tags
                     </Button>
                 </Toolbar>
                 </AppBar>
@@ -73,8 +78,8 @@ function AddTagDialog() {
                                     color="primary"
                                     aria-label="contained primary button group"
                                 >
-                                    <Button>STEM</Button>
-                                    <Button>General</Button>
+                                    <Button onClick={() => changeTagDisplay('stem')}>STEM</Button>
+                                    <Button onClick={() => changeTagDisplay('general')}>General</Button>
                                 </ButtonGroup>
                                 </Grid>
                             </Grid>
