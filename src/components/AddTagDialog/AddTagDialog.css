@@ -1,6 +1,6 @@
 .add-tag-dialog-body {
     width: 200px;
-    margin: auto;
+    margin: 56px auto;
 }
 
 .add-tag-dialog-button {
@@ -9,7 +9,8 @@
 
 .add-tag-dialog-appbar {
     position: relative;
-    margin-bottom: 100px;
+    top: 0px;
+    margin-bottom: 56px;
 }
 
 .add-tag-dialog-title {
@@ -17,6 +18,10 @@
     flex: 1;
 }
 
-.add-tag-dialog-list {
+/* .add-tag-dialog-list {
     margin-top: 56px;
+} */
+
+.add-tag-dialog-tag-container {
+    margin-top: 80px;
 }

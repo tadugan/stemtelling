@@ -1,12 +1,14 @@
-import { AppBar, Button, Dialog, Divider, IconButton, List, ListItem, ListItemText, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Button, ButtonGroup, Dialog, Divider, Grid, IconButton, Toolbar, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import CloseIcon from '@material-ui/icons/Close';
 import './AddTagDialog.css';
+import TagChip from '../TagChip/TagChip';
 
 function AddTagDialog() {
 
     const dispatch = useDispatch();
+    const allTags = useSelector(store => store.tags);
 
     const [open, setOpen] = useState(false);
 
@@ -46,14 +48,54 @@ function AddTagDialog() {
                     </Button>
                 </Toolbar>
                 </AppBar>
-                {/* Display tags here */}
-                <p>All the tags go here</p>
-                <p>All the tags go here</p>
-                <p>All the tags go here</p>
-                <p>All the tags go here</p>
-                <p>All the tags go here</p>
-                <p>All the tags go here</p>
-                <p>All the tags go here</p>
+                    <div className="add-tag-dialog-tag-container">
+                        <Grid
+                            container
+                            spacing={3}
+                            direction="column"
+                            justifyContent="center"
+                            alignItems="center"
+                        >
+                            <Grid
+                                item
+                                container
+                                spacing={1}
+                                direction="column"
+                                justifyContent="center"
+                                alignItems="center"
+                            >
+                                <Grid
+                                    item
+                                    xs={12}
+                                >
+                                <ButtonGroup
+                                    variant="contained"
+                                    color="primary"
+                                    aria-label="contained primary button group"
+                                >
+                                    <Button>STEM</Button>
+                                    <Button>General</Button>
+                                </ButtonGroup>
+                                </Grid>
+                            </Grid>
+                            <Grid
+                                item
+                                container
+                                spacing={1}
+                                direction="row"
+                                justifyContent="center"
+                                alignItems="center"
+                            >
+                                {allTags.map((tag, index) => {
+                                    return (
+                                        <Grid item key={index}>
+                                            <TagChip tagInfo={tag} />
+                                        </Grid>
+                                    );
+                                })}
+                            </Grid>
+                        </Grid>
+                    </div>
             </Dialog>
         </div>
     );
