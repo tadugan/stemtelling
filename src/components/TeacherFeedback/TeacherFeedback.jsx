@@ -6,9 +6,18 @@ import {
   Box,
   Container,
 } from "@material-ui/core";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./TeacherFeedback.css";
 
 function TeacherFeedback() {
+    const dispatch= useDispatch();
+    const feedback = useSelector((store) => store.feedback);
+    console.log(feedback, "THIS IS TEACHER FEEDBACK****");
+
+useEffect(() => {
+    dispatch({ type: 'GET_FEEDBACK'});
+}, []);
   return (
     
       <Container className="TeacherFeedbackContainer">
@@ -32,8 +41,11 @@ function TeacherFeedback() {
           </label>
         </Box>
      
-
-      <Card className="FeedbackCard">
+    {feedback.map((fb) => {
+        return(
+      <Card 
+      key= {fb.id}
+      className="FeedbackCard">
         <h6 id="teacherFeedbackHeading">
           <svg
           id="feedbackNotification"
@@ -72,18 +84,19 @@ function TeacherFeedback() {
 
         <section className="FeedbackSection">
           <div className="FeedbackProfilePicAndName">
-            <Avatar id="FeedbackAvatar"></Avatar>
+            <Avatar id="FeedbackAvatar" src={fb.profile_picture_url}></Avatar>
             <span className="FeedbackUserName">
-              <h5> Teacher's Name </h5>
+              <h5> {fb.username} </h5>
             </span>
             <span className="FeedbackDate">
-              <p> Sept 1st, 2021 </p>
+              {fb.date_published}
             </span>
           </div>
 
-          <p className="FeedbackText">This is a feedback from a teacher.</p>
+          <p className="FeedbackText">{fb.comment}</p>
         </section>
       </Card>
+    )})}
       </Container>
    
   );

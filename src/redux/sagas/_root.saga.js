@@ -5,7 +5,7 @@ import userSaga from './user.saga';
 import commentSaga from './comment.saga';
 import stemtellSaga from './stemtell.saga';
 import classesSaga from './classes.saga';
-
+import feedbackSaga from './feedback.saga';
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
 // This is imported in index.js as rootSaga
@@ -23,5 +23,6 @@ export default function* rootSaga() {
     resetPasswordSaga(),
     stemtellSaga(),
     classesSaga(),
+    feedbackSaga(),
   ]);
 }
