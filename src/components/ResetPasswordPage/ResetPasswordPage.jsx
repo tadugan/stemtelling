@@ -5,11 +5,12 @@ import { useHistory } from 'react-router-dom';
 
 function ResetPasswordPage() {
    const dispatch = useDispatch();
+   const history = useHistory();
    const errors = useSelector((store) => store.errors);
    const uuid = useSelector((store) => store.resetPassword);
    const [newPassword, setNewPassword] = useState('');
-   const [isDisabled, setIsDisabled] = useState('');
    const [confirmedNewPassword, setConfirmedNewPassword] = useState('');
+   const [isDisabled, setIsDisabled] = useState('');
    const getSearchQueryByFullURL = (url) => {return url.split('?confirmation=')}; // split URL into our base url and the confirmation code
 
    useEffect(() => { // checks for a valid link on page load
@@ -22,13 +23,32 @@ function ResetPasswordPage() {
       if (errors.resetMessage == "Invalid Link") { // if we get back this response (invalid link), disable the inputs and reset button
          setIsDisabled(true);
       };
-      
-    });
+   });
 
-   const test = () => {
-      console.log(getSearchQueryByFullURL(window.location.href));
-      console.log(errors.resetMessage);
-   }
+   const resetPassword = () => {
+      if (newPassword.length < 8 || confirmedNewPassword.length < 8) { // checks for passwords that are too short (under 8 characters)
+         alert("Password is too short. Please enter at least 8 characters");
+         setNewPassword('');
+         setConfirmedNewPassword('');
+         return false;
+      }
+      if (newPassword != confirmedNewPassword) { // checks for mismatched passwords
+         alert("Passwords do not match");
+         setNewPassword('');
+         setConfirmedNewPassword('');
+         return false;
+      }
+      else {
+         dispatch({
+            type: 'CHANGE_PASSWORD',
+            payload: {
+               newPassword: newPassword,
+               uuid: getSearchQueryByFullURL(window.location.href)[1],
+            },
+         });
+         history.push('/');
+      };
+   };
 
   return (
      <div className="formPanel">
@@ -64,7 +84,7 @@ function ResetPasswordPage() {
         </label>
       </div>
       <div>
-         <button className="btn" onClick={test} disabled={isDisabled}>Set Password</button>
+         <button className="btn" onClick={resetPassword} disabled={isDisabled}>Set Password</button>
       </div>
    </div>
   );

@@ -1,6 +1,7 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const encryptLib = require('../modules/encryption');
 var nodemailer = require('nodemailer');
 require('dotenv').config();
 const { URLSearchParams } = require('url');
@@ -29,12 +30,11 @@ router.post('/sendresetemail', (req, res) => { // handler for sending out a pass
          pool.query(getUUIDQuery, [userID, userEmail]) // start of third query
          .then(results => {
             const resetPasswordUUID = results.rows[0].uuid; 
-            websiteURL.searchParams.append("confirmation", resetPasswordUUID); // append UUID to url params for confirmation 
             const resetEmail = { // nodemailer handler, this is what the email will be
                from: 'Stemtelltest@gmail.com',
                to: `${userEmail}`,
                subject: 'STEMTelling Password Reset Request',
-               text: `${websiteURL.href}`
+               text: `${websiteURL}?confirmation=${resetPasswordUUID}`
             };
             transporter.sendMail(resetEmail, (error, info) => { // sends the email via nodemailer
                if (error) {
@@ -45,17 +45,17 @@ router.post('/sendresetemail', (req, res) => { // handler for sending out a pass
             res.sendStatus(200); // send pack a positive status code for our third query
          })
          .catch(error => { // end of third query
-            console.log("Error in third query in password reset:", error); // catch any errors in our third query
+            console.log("Error in third query in password reset:", error);
             res.sendStatus(401);
          });
       })
       .catch(error => { // end of second query   
-         console.log("Error in second query in password reset:", error); // catch any errors in our second query
+         console.log("Error in second query in password reset:", error);
          res.sendStatus(401);
       });
    })
    .catch(error => { // end of first query
-      console.log("Error in first query in password reset:", error); // catch any errors in our first query
+      console.log("Error in first query in password reset:", error);
       res.sendStatus(401);
    });
 });
@@ -74,9 +74,39 @@ router.get('/getuuid', (req, res) => { // checks for a valid uuid in the reset_p
    });
 });
 
-router.delete('/removereset', (req, res) => {
-   console.log(req);
-   const qText = `DELETE FROM "reset_password" WHERE "uuid" = $1 RETURNING "id"`;
-});   
+// Handles POST request for resetting/updating the user password
+// This is only called after an email has been entered, confirmed, and a new password has been selected by the user
+// follows code similar to regular registration
+router.post('/changepassword', (req, res, next) => {
+   const password = encryptLib.encryptPassword(req.body.newPassword);
+   const uuid = req.body.uuid;
+   const getUserQuery = 'SELECT * FROM "reset_password" WHERE "uuid" = $1';
+   pool.query(getUserQuery, [uuid]) // start of first query
+   .then(results => {
+      const updateUserQuery = `UPDATE "user" SET "password" = $1 WHERE "id" = $2 AND "email" = $3`;
+      const userID = results.rows[0].id;
+      const userEmail = results.rows[0].email;
+      pool.query(updateUserQuery, [password, userID, userEmail]) // start of second query
+      .then(() => {
+         const clearResetTableQuery = `DELETE FROM "reset_password" WHERE "uuid" = $1`; // start of third query
+         pool.query(clearResetTableQuery, [uuid])
+         .then(() => {
+            res.sendStatus(200);
+         })
+         .catch(error => { // end of third query
+            console.log("Error in clearing reset table: ", error);
+            res.sendStatus(401);
+         });
+      })
+      .catch(error => { // end of second query
+         console.log("Error in changing password: ", error);
+         res.sendStatus(401); 
+      });
+   })
+   .catch(error => { // end of first query
+      console.log('Change password failed: ', error);
+      res.sendStatus(500);
+   });
+});
 
 module.exports = router;

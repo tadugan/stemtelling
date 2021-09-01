@@ -24,8 +24,9 @@ function* getUUID(action) { // called on ResetPasswordPage load, checks if the U
 };
 
 function* changePassword(action) { // handles changing the user password
+   console.log(action.payload);
    try {
-      yield axios.post('/api/user/changepassword', action.payload);
+      yield axios.post('/api/resetpassword/changepassword', action.payload);
    }
    catch (error) {
       console.log('Error with changing password:', error);
