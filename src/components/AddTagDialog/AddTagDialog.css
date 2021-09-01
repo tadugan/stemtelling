@@ -1,0 +1,22 @@
+.add-tag-dialog-body {
+    width: 200px;
+    margin: auto;
+}
+
+.add-tag-dialog-button {
+    width: 100%;
+}
+
+.add-tag-dialog-appbar {
+    position: relative;
+    margin-bottom: 100px;
+}
+
+.add-tag-dialog-title {
+    margin-left: 16px;
+    flex: 1;
+}
+
+.add-tag-dialog-list {
+    margin-top: 56px;
+}

@@ -2,6 +2,7 @@ import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField } fr
 import { AddCircleOutlineRounded } from '@material-ui/icons';
 import React, { useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import AddTagDialog from '../AddTagDialog/AddTagDialog';
 import "./CreateSTEMtell.css";
 
 function CreateSTEMtell() {
@@ -14,9 +15,9 @@ function CreateSTEMtell() {
     const [ description, setDescription] = useState('');
     const [ tagsArray, setTagsArray] = useState([]);
 
-    const handleAddTag = () => {
-        console.log('ADD TAG');
-    }
+    // const handleAddTag = () => {
+    //     console.log('ADD TAG');
+    // }
 
     const handleSubmit = () => {
         event.preventDefault();
@@ -124,26 +125,8 @@ function CreateSTEMtell() {
                 </Grid>
                 <Grid
                     item
-                    container
-                    spacing={0}
-                    xs={12}
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center"
-            
                 >
-                        <Grid
-                            item
-                            xs={2}
-                        >
-                            <p>Add Tags</p>
-                        </Grid>
-                        <Grid
-                            item
-                            xs={1}
-                        >
-                            <AddCircleOutlineRounded onClick={handleAddTag}/>
-                        </Grid>
+                    <AddTagDialog />
                 </Grid>
                 <Grid
                     item
