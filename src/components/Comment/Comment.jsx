@@ -12,7 +12,7 @@ function Comment() {
 
 useEffect(() =>{
     dispatch({ type: 'GET_COMMENTLIST'});
-}), [];
+}, []);
 
     return(
         <Container className='GeneralCommentContainer'>
