@@ -25,7 +25,7 @@ function ResetPasswordPage() {
       };
    });
 
-   const resetPassword = () => {
+   const resetPassword = () => { // main handler for the user to reset their password
       if (newPassword.length < 8 || confirmedNewPassword.length < 8) { // checks for passwords that are too short (under 8 characters)
          alert("Password is too short. Please enter at least 8 characters");
          setNewPassword('');
@@ -38,7 +38,7 @@ function ResetPasswordPage() {
          setConfirmedNewPassword('');
          return false;
       }
-      else {
+      else { // if none of the other are valid, submit the password
          dispatch({
             type: 'CHANGE_PASSWORD',
             payload: {

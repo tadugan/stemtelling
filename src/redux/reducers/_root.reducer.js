@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 import errors from './errors.reducer';
 import user from './user.reducer';
-import resetPassword from './resetpassword.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -12,7 +11,6 @@ import resetPassword from './resetpassword.reducer';
 const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
   user, // will have an id and email if someone is logged in
-  resetPassword,
 });
 
 export default rootReducer;

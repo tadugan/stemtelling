@@ -2,8 +2,10 @@ import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
 function* forgotPassword(action) { // handles sending an email when a user requests a password reset
+   const email = action.payload.email;
    try {
-      yield axios.post('/api/resetpassword/sendresetemail', {email: action.payload.email}); // sends email to the server for processing
+      yield axios.delete('/api/resetpassword/removerequest', { params: { email } });
+      yield axios.post('/api/resetpassword/sendresetemail', {email: email}); // sends email to the server for processing
    }
    catch (error) {
       console.log(error);

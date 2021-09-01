@@ -15,19 +15,32 @@ const transporter = nodemailer.createTransport({ // nodemailer handler, auth sho
 });
 const websiteURL = new URL ("http://localhost:3000/#/resetpassword/"); // origin point for resetting a password, will later be appended with a confirmation code. Edit this to whatever your website URL is
 
+router.delete('/removerequest', (req, res) => {
+   const userEmail = req.query.email.toLowerCase();
+   const deleteUserRequests = `DELETE FROM "reset_password" WHERE "email" = $1`;
+   pool.query(deleteUserRequests, [userEmail])
+   .then(() => {
+      res.sendStatus(201);
+   })
+   .catch(error => {
+      console.log(error);
+      res.sendStatus(401);
+   });
+});
+
 router.post('/sendresetemail', (req, res) => { // handler for sending out a password reset email to the user, as well as creating a temporary database placement for them
    const userEmail = req.body.email.toLowerCase();
    const getUserIDQuery = `SELECT * FROM "user" WHERE "email" = $1`;
 
-   pool.query(getUserIDQuery, [userEmail]) // start of first query
+   pool.query(getUserIDQuery, [userEmail]) // start of first query (gets user information from core user database)
    .then(results => {
       const userID = results.rows[0].id; // sets ID in reset table equal to user ID
       const insertUserInfoQuery = `INSERT INTO "reset_password" (id, email)
                      VALUES ($1, $2) RETURNING id`;
-      pool.query(insertUserInfoQuery, [userID, userEmail]) // start of second query
+      pool.query(insertUserInfoQuery, [userID, userEmail]) // start of second query (inserts data into the reset_password table based off user info)
       .then(() => {
          const getUUIDQuery = `SELECT "uuid" FROM "reset_password" WHERE "id" = $1 AND "email" = $2`;
-         pool.query(getUUIDQuery, [userID, userEmail]) // start of third query
+         pool.query(getUUIDQuery, [userID, userEmail]) // start of third query (gets uuid from reset_password table and passes into into a link to send to the user email)
          .then(results => {
             const resetPasswordUUID = results.rows[0].uuid; 
             const resetEmail = { // nodemailer handler, this is what the email will be
@@ -81,14 +94,14 @@ router.post('/changepassword', (req, res, next) => {
    const password = encryptLib.encryptPassword(req.body.newPassword);
    const uuid = req.body.uuid;
    const getUserQuery = 'SELECT * FROM "reset_password" WHERE "uuid" = $1';
-   pool.query(getUserQuery, [uuid]) // start of first query
+   pool.query(getUserQuery, [uuid]) // start of first query (gets info from reset_password table where uuid matches that in the link)
    .then(results => {
       const updateUserQuery = `UPDATE "user" SET "password" = $1 WHERE "id" = $2 AND "email" = $3`;
       const userID = results.rows[0].id;
       const userEmail = results.rows[0].email;
-      pool.query(updateUserQuery, [password, userID, userEmail]) // start of second query
+      pool.query(updateUserQuery, [password, userID, userEmail]) // start of second query (updates user password based off their email attached to the uuid)
       .then(() => {
-         const clearResetTableQuery = `DELETE FROM "reset_password" WHERE "uuid" = $1`; // start of third query
+         const clearResetTableQuery = `DELETE FROM "reset_password" WHERE "uuid" = $1`; // start of third query (deletes user from reset_password table)
          pool.query(clearResetTableQuery, [uuid])
          .then(() => {
             res.sendStatus(200);

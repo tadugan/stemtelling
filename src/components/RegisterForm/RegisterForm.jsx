@@ -21,18 +21,23 @@ function RegisterForm() {
          setPassword('');
          setConfirmedPassword('');
          return false;
-    };
-
-    dispatch({
-      type: 'REGISTER',
-      payload: {
-        email: email,
-        password: password,
-        authority: authority,
-        name: name,
-        profilePictureURL: profilePictureURL,
-      },
-    });
+      };
+      if (newPassword.length < 8 || confirmedNewPassword.length < 8) { // checks for passwords that are too short (under 8 characters)
+         dispatch({type: 'PASSWORD_TOO_SHORT'});
+         setNewPassword('');
+         setConfirmedNewPassword('');
+         return false;
+      };
+      dispatch({
+         type: 'REGISTER',
+         payload: {
+            email: email,
+            password: password,
+            authority: authority,
+            name: name,
+            profilePictureURL: profilePictureURL,
+         },
+      });
   }; // end registerUser
 
    return (
