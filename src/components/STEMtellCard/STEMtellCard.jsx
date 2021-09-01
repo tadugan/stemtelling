@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { Avatar, Card, Grid } from "@material-ui/core";
 // import { makeStyles } from "@material-ui/core";
 import "./STEMtellCard.css";
-import { useDispatch, useSelector } from "react-redux";
 
+import { useDispatch, useSelector } from "react-redux";
 
 function StemtellCard() {
 
