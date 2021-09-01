@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Avatar, Card, Grid } from "@material-ui/core";
+import { Avatar, Card, Container, Grid } from "@material-ui/core";
 // import { makeStyles } from "@material-ui/core";
 import "./STEMtellCard.css";
 
@@ -21,17 +21,22 @@ function StemtellCard() {
 
 
   return (
+    <Container>
     <Grid>
       {stemtells.map((stemtell) => {
         return (
-      <Grid item >
+      <Grid item key={stemtell.id}>
         <Card className="StemCard">
-          <Avatar className="Avatar" />
+        <h6 id="stemDate">{stemtell.date_published}</h6>
+          <Avatar className="Avatar"
+          src={stemtell.profile_picture_url} />
           <section className="UserName">{stemtell.username}</section>
           <div className="UserName" id="userClass">
             {stemtell.class_name}
           </div>
-          <h3> {stemtell.title}</h3>
+        
+          <h3 id="stemTitle"> {stemtell.title}</h3>
+          
           <img src={stemtell.media_url} />
           <section id="cardReactions">{stemtell.reaction_name}</section>
 
@@ -41,6 +46,7 @@ function StemtellCard() {
         );
         })};
     </Grid>
+    </Container>
     
 )
 };
