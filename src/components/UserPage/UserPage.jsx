@@ -6,9 +6,6 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
-import CreateIcon from '@material-ui/icons/Create';
-import Button from '@material-ui/core/Button';
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +23,6 @@ function UserPage() {
    const user = useSelector((store) => store.user);
    const dispatch = useDispatch();
    const stemtells = useSelector((store) => store.stemtells);
-   const getSearchQueryByFullURL = (url) => {return url.split('/')};
 
    useEffect(() => {
       dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
@@ -65,7 +61,7 @@ function UserPage() {
                         <img src={stemtell.media_url} />
                         <section id="cardReactions">{stemtell.reaction_name}</section>
                         <section id="stemDescription">{stemtell.body_text}</section>
-                        <button value={stemtell.id} className="btn" onClick={event => {console.log(event.target.value)}}>
+                        <button value={stemtell.id} className="btn" onClick={event => {editStemtell(event.target.value)}}>
                            Edit
                         </button>
                      </Card>
