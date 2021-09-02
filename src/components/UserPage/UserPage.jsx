@@ -30,8 +30,6 @@ function UserPage() {
       dispatch({ type: "FETCH_USER_STEMTELLS"});
     }, []);
 
-   
-
    return (
       <div className={classes.root}>
       <Grid container>

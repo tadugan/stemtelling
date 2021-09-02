@@ -27,17 +27,23 @@ import './App.css';
 
 function App() {
   const dispatch = useDispatch();
-
   const user = useSelector(store => store.user);
+  const getSearchQueryByFullURL = (url) => {return url.split('/')};
+   useEffect(() => {
+      dispatch({ type: 'FETCH_USER' });
+      dispatch({ type: 'FETCH_ALL_USERS' });
+      console.log(getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1]);
+   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch({ type: 'FETCH_USER' });
-  }, [dispatch]);
+   function test() {
+      console.log("user:", user);
+   }
 
   return (
     <Router>
       <div>
         <Nav />
+        <button onClick={test}>Test</button>
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
@@ -70,7 +76,7 @@ function App() {
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
-            path="/user"
+            path="/user/:id"
           >
             <UserPage />
           </ProtectedRoute>
