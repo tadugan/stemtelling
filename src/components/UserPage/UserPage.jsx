@@ -40,7 +40,6 @@ function UserPage() {
           <Paper className={classes.paper}>
             <img src={user.profile_picture_url}></img>
             <h2>{user.name}</h2> 
-            <p>Your ID is: {user.id}</p>
             <LogOutButton className="btn" />
           </Paper>
         </Grid>
