@@ -19,18 +19,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 function UserPage() {
    const classes = useStyles();
    const user = useSelector((store) => store.user);
+   const profile = useSelector((store) => store.profile);
    const dispatch = useDispatch();
    const stemtells = useSelector((store) => store.stemtells);
    const getSearchQueryByFullURL = (url) => {return url.split('/')};
 
    useEffect(() => {
       dispatch({ type: "FETCH_USER_STEMTELLS", payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1])});
-      console.log(getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1]);
+      dispatch({ type: 'FETCH_PROFILE', payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1]) });
+      //console.log(getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1]);
     }, []);
+
+    const test = () => {
+       console.log(profile);
+    }
 
    return (
       <div className={classes.root}>
@@ -38,21 +43,22 @@ function UserPage() {
         <Grid item xs={12} sm={3}> 
         {/* user profile information */}
           <Paper className={classes.paper}>
-            <h2>Welcome, {user.name}!</h2> 
+            <h2>{profile.name}</h2> 
             <p>Your ID is: {user.id}</p>
-           <LogOutButton className="btn" />
+           <button class="btn" onClick={test}>Test</button>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={9}>
            {/* user stemtells */}
-          <Paper className={classes.paper}>User Profile Feed</Paper>
+          <Paper className={classes.paper}>{profile.name}'s STEMtells</Paper>
           <Grid container>
             {stemtells.map((stemtell) => {
                return (
+                  
                   <Grid item >
                      <Card className="StemCard">
                         <Avatar className="Avatar" />
-                        <section className="UserName">{stemtell.username} ID {stemtell.user_id}<button onClick={() => {console.log(stemtell)}}>Test</button></section>
+                        <section className="UserName">{stemtell.username}</section>
                         <div className="UserName" id="userClass">
                            {stemtell.class_name}
                         </div>

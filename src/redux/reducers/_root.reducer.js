@@ -3,7 +3,7 @@ import errors from './errors.reducer';
 import user from './user.reducer';
 import commentList from './commentList.reducer';
 import stemtells from './stemtell.reducer';
-import userListReducer from './userlist.reducer'
+import profile from './profile.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   commentList,
   stemtells,
-  userListReducer,
+  profile,
 });
 
 export default rootReducer;
