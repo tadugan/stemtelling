@@ -16,6 +16,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
+import ProfilePage from '../ProfilePage/ProfilePage';
 import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
@@ -24,7 +25,6 @@ import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage';
 import StemtellCard from '../STEMtellCard/STEMtellCard';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 import './App.css';
-
 
 
 function App() {
@@ -72,9 +72,9 @@ function App() {
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
-            path="/user/:id"
+            path="/profile/:id"
           >
-            <UserPage />
+            <ProfilePage />
           </ProtectedRoute>
 
           <ProtectedRoute
@@ -84,6 +84,13 @@ function App() {
           >
             <InfoPage />
           </ProtectedRoute>
+          <ProtectedRoute
+            // logged in shows InfoPage else shows LoginPage
+            exact
+            path="/myprofile"
+          >
+            <UserPage />
+          </ProtectedRoute>
 
           <Route
             exact
@@ -92,7 +99,7 @@ function App() {
             {user.id ?
               // If the user is already logged in, 
               // redirect to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/myprofile" />
               :
               // Otherwise, show the login page
               <LoginPage />
@@ -106,7 +113,7 @@ function App() {
             {user.id ?
               // If the user is already logged in, 
               // redirect them to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/myprofile" />
               :
               // Otherwise, show the registration page
               <RegisterPage />
@@ -120,7 +127,7 @@ function App() {
             {user.id ?
               // If the user is already logged in, 
               // redirect them to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/myprofile" />
               :
               // Otherwise, show the Landing page
               <LandingPage />

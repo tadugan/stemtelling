@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import LogOutButton from '../LogOutButton/LogOutButton';
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -18,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function UserPage() {
+function ProfilePage() {
    const classes = useStyles();
    const user = useSelector((store) => store.user);
    const profile = useSelector((store) => store.profile);
@@ -27,9 +26,8 @@ function UserPage() {
    const getSearchQueryByFullURL = (url) => {return url.split('/')};
 
    useEffect(() => {
-      dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
-      dispatch({ type: 'FETCH_PROFILE', payload: user.id });
-      //console.log(getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1]);
+      dispatch({ type: "FETCH_USER_STEMTELLS", payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1])});
+      dispatch({ type: 'FETCH_PROFILE', payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1]) });
     }, []);
 
     const test = () => {
@@ -77,4 +75,4 @@ function UserPage() {
 }
 
 
-export default UserPage;
+export default ProfilePage;
