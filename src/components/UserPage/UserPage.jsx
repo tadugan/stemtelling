@@ -43,9 +43,10 @@ function UserPage() {
         <Grid item xs={12} sm={3}> 
         {/* user profile information */}
           <Paper className={classes.paper}>
+            <img src={profile.profile_picture_url}></img>
             <h2>{profile.name}</h2> 
             <p>Your ID is: {user.id}</p>
-           <button class="btn" onClick={test}>Test</button>
+           <button className="btn" onClick={test}>Test</button>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={9}>

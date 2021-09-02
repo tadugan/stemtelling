@@ -24,15 +24,6 @@ function* fetchUser() {
   }
 }
 
-function* fetchAllUsers() {
-   try {
-      const response = yield axios.get('/api/user/all');
-      yield put({ type: 'SET_ALL_USERS', payload: response.data });
-   }
-   catch (error) {
-      console.log("error in fetchAllUsers:", error);
-   };
-};
 
 function* fetchProfile(action) {
    const profileID = action.payload;
@@ -48,7 +39,6 @@ function* fetchProfile(action) {
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('FETCH_PROFILE', fetchProfile);
-  yield takeLatest('FETCH_ALL_USERS', fetchAllUsers);
 }
 
 export default userSaga;
