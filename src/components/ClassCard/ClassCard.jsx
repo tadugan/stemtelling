@@ -4,7 +4,7 @@ import "./ClassCard.css";
 function ClassCard() {
   return (
     <Card className="classCard">
-      <h2>Class title</h2>
+      <h2 id='ClassCardHeader'>Class title</h2>
       <section className="classDetail">class status</section>
       <section className="classDetail">class code</section>
     </Card>

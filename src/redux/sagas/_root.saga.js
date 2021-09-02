@@ -4,6 +4,8 @@ import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
 import commentSaga from './comment.saga';
 import stemtellSaga from './stemtell.saga';
+import studentListSaga from './studentList.saga';
+import deleteStudentSaga from './deleteStudent.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -21,5 +23,7 @@ export default function* rootSaga() {
     commentSaga(),
     resetPasswordSaga(),
     stemtellSaga(),
+    studentListSaga(),
+    deleteStudentSaga(),
   ]);
 }
