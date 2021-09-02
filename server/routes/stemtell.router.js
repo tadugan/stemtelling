@@ -26,7 +26,6 @@ router.get('/', (req, res) => {
 });
 
 router.get('/userstemtells', (req, res) => {
-   const currentUserID = req.user.id;
    const profilePageID = req.query.profileID;
    const query = `SELECT "user".name AS username, "user".id AS user_id, "class".name AS class_name, "stemtell".id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "reaction".name AS reaction_name, "tag".name AS tag_name
    FROM "stemtell"

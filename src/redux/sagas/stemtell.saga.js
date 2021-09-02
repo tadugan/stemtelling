@@ -4,7 +4,7 @@ import axios from "axios";
 function* stemtellSaga(){
     yield takeEvery("FETCH_STEMTELLS", fetchAllStemTells);
     yield takeEvery("FETCH_USER_STEMTELLS", fetchUserStemTells);
-}
+};
 
 function* fetchAllStemTells(){
     try {
@@ -12,8 +12,8 @@ function* fetchAllStemTells(){
         yield put({type: "SET_STEMTELLS", payload: stemtells.data});
     } catch(err){
         console.log("get all stemtells error", err);
-    }
-}
+    };
+};
 
 function* fetchUserStemTells(action){
    try {
@@ -22,7 +22,7 @@ function* fetchUserStemTells(action){
       yield put({type: "SET_USER_STEMTELLS", payload: stemtells.data});
    } catch(err){
       console.log("get user stemtells error", err);
-   }
-}
+   };
+};
 
 export default stemtellSaga;

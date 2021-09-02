@@ -32,7 +32,7 @@ function ProfilePage() {
 
     const test = () => {
        console.log(profile);
-    }
+    };
 
    return (
       <div className={classes.root}>

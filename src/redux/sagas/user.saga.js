@@ -21,8 +21,8 @@ function* fetchUser() {
     yield put({ type: 'SET_USER', payload: response.data });
   } catch (error) {
     console.log('User get request failed', error);
-  }
-}
+  };
+};
 
 
 function* fetchProfile(action) {
@@ -39,6 +39,6 @@ function* fetchProfile(action) {
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('FETCH_PROFILE', fetchProfile);
-}
+};
 
 export default userSaga;
