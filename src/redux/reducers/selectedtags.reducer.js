@@ -3,7 +3,7 @@ const selectedTagReducer = (state = [], action) => {
       case 'ADD_TAG_TO_STEMTELL':
         return [...state, action.payload];
       case 'REMOVE_TAG_FROM_STEMTELL':
-        const filteredState = state.filter(tag => tag.id !== action.payload.id)
+        const filteredState = state.filter(tag => tag !== action.payload)
         return filteredState;
       default:
         return state;

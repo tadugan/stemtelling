@@ -19,13 +19,34 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     const newStemtell = req.body;
     const user = req.user;
 
-    const queryText = `
+    const queryTextAddStemtell = `
     INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "date_published")
-	  VALUES ($1, $2, $3, $4, $5, NOW());
+	  VALUES ($1, $2, $3, $4, $5, NOW())
+    RETURNING id;
     `;
 
-    pool.query(queryText, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, newStemtell.media_url])
+    const queryTextAddTag = `
+    INSERT INTO stemtell_tag ("tag_id", "stemtell_id")
+	  VALUES ($1, $2);
+    `;
+
+    pool.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, newStemtell.media_url])
       .then(response => {
+        const stemTellId = response.rows[0].id;
+        for (let i=0; i<newStemtell.tag_ids.length; i++) {
+            pool.query(queryTextAddTag, [newStemtell.tag_ids[i], stemTellId])
+                .then(response => {
+                    console.log('i', i);
+                    console.log('newStemtell.tag_ids.length', newStemtell.tag_ids.length)
+                    if ( i === newStemtell.tag_ids.length) {
+                        res.sendStatus(201);
+                    }
+                })
+                .catch(error => {
+                  console.log('Error adding tags to database. Error', error);
+                  res.sendStatus(500);
+              });
+        }
         res.sendStatus(201);
       })
       .catch(error => {

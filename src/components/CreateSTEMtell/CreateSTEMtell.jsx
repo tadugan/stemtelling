@@ -9,25 +9,24 @@ function CreateSTEMtell() {
 
     const dispatch = useDispatch();
 
+
+
     const [ className, setClassName ] = useState('');
     const [ title, setTitle ] = useState('');
     const [ imageUrl, setImageUrl] = useState('');
     const [ description, setDescription] = useState('');
-    const [ tagsArray, setTagsArray] = useState([]);
 
-    // const handleAddTag = () => {
-    //     console.log('ADD TAG');
-    // }
+    const selectedTags = useSelector(store => store.selectedTags)
 
     const handleSubmit = () => {
         event.preventDefault();
-        console.log('SUBMIT');
+
         console.log(`
         class: ${className}
         title: ${title}
         imageUrl: ${imageUrl}
         description: ${description}
-        tags: ${tagsArray}
+        tags: ${selectedTags}
         `);
 
         // Dispatch captured inputs to SAGA
@@ -36,7 +35,7 @@ function CreateSTEMtell() {
             body_text: description,
             media_url: imageUrl,
             class_id: className,
-            tag_ids: tagsArray
+            tag_ids: selectedTags
             }
         });
 

@@ -40,17 +40,17 @@ function TagChip( {tagInfo, selectedTags} ) {
         console.log('You clicked the Chip.'); // test
         if (isSelected) {
             setIsSelected(false)
-            dispatch({ type: 'REMOVE_TAG_FROM_STEMTELL', payload: tagInfo });
+            dispatch({ type: 'REMOVE_TAG_FROM_STEMTELL', payload: tagInfo.id });
         }
         else {
             setIsSelected(true)
-            dispatch({ type: 'ADD_TAG_TO_STEMTELL', payload: tagInfo });
+            dispatch({ type: 'ADD_TAG_TO_STEMTELL', payload: tagInfo.id });
         }
         
     };
 
     const compareReducer = () => {
-        if (selectedTags.includes(tagInfo)) {
+        if (selectedTags.includes(tagInfo.id)) {
             setIsSelected(true);
         }
     }
