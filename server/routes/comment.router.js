@@ -7,12 +7,11 @@ const rejectUnauthenticated = require('../modules/authentication-middleware').re
  * GET route template
  */
 router.get('/', rejectUnauthenticated, (req, res) => {
-  // GET route code here
   const query= `SELECT "user".name AS username, "stemtell".id, "user".profile_picture_url, "comment".comment, "comment".date_published, "comment".id, "user".authority 
   FROM "comment"
   JOIN "user" ON "comment".user_id = "user".id
   JOIN "stemtell" ON "stemtell".id = "comment".stemtell_id
-  WHERE  "user".authority = 0  ;`;
+  WHERE  "user".authority = 'student' ;`;
   pool
     .query(query)
     .then((result) => {

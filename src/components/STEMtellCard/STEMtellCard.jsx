@@ -15,10 +15,14 @@ function StemtellCard() {
   const dispatch = useDispatch();
   const stemtells = useSelector((store) => store.stemtells);
 
+<<<<<<< HEAD
   const onUserProfile = (author_id) => {
     console.log("Clicked profile with author_id:", author_id);
     history.push(`/profile/${author_id}`);
   }
+=======
+  console.log(stemtells, "THIS IS THE STEMTELL STORE*****");
+>>>>>>> 2966853d3352da8af7e1c8dce17b2b033188241a
 
   return (
     <Container>

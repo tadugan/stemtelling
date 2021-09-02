@@ -32,7 +32,6 @@ function LoginForm() {
           {errors.loginMessage}
         </h3>
       )}
-      <br /><br /><br /><br /><br />
       <div>
         <label htmlFor="email">
           Email:

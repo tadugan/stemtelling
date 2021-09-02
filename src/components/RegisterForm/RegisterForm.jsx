@@ -48,7 +48,6 @@ function RegisterForm() {
                {errors.registrationMessage}
             </h3>
          )}
-         <br /><br /><br /><br /><br />
          <div>
             <label for="role">Choose a role: </label>
             <select name="role" id="role" onChange={(event) => (setAuthority(event.target.value))}>
