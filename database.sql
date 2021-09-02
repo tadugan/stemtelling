@@ -1,4 +1,3 @@
-
 -- USER is a reserved keyword with Postgres
 -- You must use double quotes in every query that user is in:
 -- ex. SELECT * FROM "user";
@@ -20,9 +19,10 @@
 --DROP TABLE "user_tag" CASCADE;
 --DROP TABLE "stemtell_tag" CASCADE;
 
--- Create "user" Table
+-- extension required for generating UUIDs in postgresql
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+-- Create "user" Table
 CREATE TABLE "user" (
 	"id" SERIAL PRIMARY KEY,
    "email" TEXT UNIQUE NOT NULL,
@@ -153,19 +153,19 @@ INSERT INTO "class" ("code", "name")
 
 -- Step 3: add personal Data
 UPDATE "user"
-SET "name" = 'Student1', "profile_picture_url" = 'https://image.shutterstock.com/image-photo/laughing-turkish-female-student-desk-260nw-1766762942.jpg'
+SET "name" = 'Student 1', "profile_picture_url" = 'https://image.shutterstock.com/image-photo/laughing-turkish-female-student-desk-260nw-1766762942.jpg' "authority" = 'student'
 WHERE "id" = 1;
 
 UPDATE "user"
-SET "name" = 'Student2', "profile_picture_url" = 'https://www.fmjfee.com/i901fee/img/home/learn/learn_1.jpg'
+SET "name" = 'Student 2', "profile_picture_url" = 'https://www.fmjfee.com/i901fee/img/home/learn/learn_1.jpg' "authority" = 'student'
 WHERE "id" = 2;
 
 UPDATE "user"
-SET "name" = 'Teacher1', "profile_picture_url" = 'https://www.nea.org/sites/default/files/legacy/2020/04/new_teacher.jpeg', "authority" = '5'
+SET "name" = 'Teacher 1', "profile_picture_url" = 'https://www.nea.org/sites/default/files/legacy/2020/04/new_teacher.jpeg', "authority" = 'teacher'
 WHERE "id" = 3;
 
 UPDATE "user"
-SET "name" = 'Teacher2', "profile_picture_url" = 'https://uconn-today-universityofconn.netdna-ssl.com/wp-content/uploads/2014/05/MaleMathTeacher.jpg', "authority" = '5'
+SET "name" = 'Teacher 2', "profile_picture_url" = 'https://uconn-today-universityofconn.netdna-ssl.com/wp-content/uploads/2014/05/MaleMathTeacher.jpg', "authority" = 'teacher'
 WHERE "id" = 4;
 
 -- Step 4: run the following queries to add the users to user_class table
@@ -227,5 +227,3 @@ INSERT INTO "comment" ("user_id", "stemtell_id", "comment", "date_published", "t
 INSERT INTO "reaction_stemtell" ("stemtell_id", "user_id", "reaction_id")
 	VALUES ('1', '2', '1'),
 	('2', '1', '2');
-
-
