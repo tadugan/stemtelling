@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import LogOutButton from '../LogOutButton/LogOutButton';
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -18,19 +17,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function UserPage() {
+function ProfilePage() {
    const classes = useStyles();
    const user = useSelector((store) => store.user);
+   const profile = useSelector((store) => store.profile);
    const dispatch = useDispatch();
    const stemtells = useSelector((store) => store.stemtells);
+   const getSearchQueryByFullURL = (url) => {return url.split('/')};
 
    useEffect(() => {
-      dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
+      dispatch({ type: "FETCH_USER_STEMTELLS", payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1])});
+      dispatch({ type: 'FETCH_PROFILE', payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1]) });
     }, []);
 
-    const editStemtell = (stemtellID) => {
-       console.log(stemtellID);
-    }
+    const test = () => {
+       console.log(profile);
+    };
 
    return (
       <div className={classes.root}>
@@ -38,14 +40,13 @@ function UserPage() {
         <Grid item xs={12} sm={3}> 
         {/* user profile information */}
           <Paper className={classes.paper}>
-            <img src={user.profile_picture_url}></img>
-            <h2>{user.name}</h2> 
-            <LogOutButton className="btn" />
+            <img src={profile.profile_picture_url}></img>
+            <h2>{profile.name}</h2> 
           </Paper>
         </Grid>
         <Grid item xs={12} sm={9}>
            {/* user stemtells */}
-          <Paper className={classes.paper}>Your STEMtells</Paper>
+          <Paper className={classes.paper}>{profile.name}'s STEMtells</Paper>
           <Grid container>
             {stemtells.map((stemtell) => {
                return (
@@ -60,9 +61,6 @@ function UserPage() {
                         <img src={stemtell.media_url} />
                         <section id="cardReactions">{stemtell.reaction_name}</section>
                         <section id="stemDescription">{stemtell.body_text}</section>
-                        <button value={stemtell.id} className="btn" onClick={event => {editStemtell(event.target.value)}}>
-                           Edit
-                        </button>
                      </Card>
                   </Grid>
                )
@@ -75,4 +73,4 @@ function UserPage() {
 }
 
 
-export default UserPage;
+export default ProfilePage;

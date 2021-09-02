@@ -21,11 +21,24 @@ function* fetchUser() {
     yield put({ type: 'SET_USER', payload: response.data });
   } catch (error) {
     console.log('User get request failed', error);
-  }
-}
+  };
+};
+
+
+function* fetchProfile(action) {
+   const profileID = action.payload;
+   try {
+      const response = yield axios.get('/api/user/profile', { params: { profileID } });
+      yield put({ type: 'SET_CURRENT_PROFILE', payload: response.data[0] });
+   }
+   catch (error) {
+      console.log("error in fetchAllUsers:", error);
+   };
+};
 
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
-}
+  yield takeLatest('FETCH_PROFILE', fetchProfile);
+};
 
 export default userSaga;

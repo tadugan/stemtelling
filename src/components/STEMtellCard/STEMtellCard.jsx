@@ -17,9 +17,6 @@ function StemtellCard() {
 
   console.log(stemtells, "THIS IS THE STEMTELL STORE*****");
 
-
-
-
   return (
     <Container>
     <Grid>

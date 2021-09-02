@@ -20,6 +20,7 @@ router.get('/', (req, res) => {
     console.log("Error getting teacher's classes", err);
     res.sendStatus(500);
   })
+});
 
 
 //gets students from a class list

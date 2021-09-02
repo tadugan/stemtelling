@@ -3,6 +3,7 @@ import errors from './errors.reducer';
 import user from './user.reducer';
 import commentList from './commentList.reducer';
 import stemtells from './stemtell.reducer';
+import profile from './profile.reducer';
 import classes from './class.reducer';
 import feedback from './feedback.reducer';
 import studentList from './studentList.reducer';
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   commentList,
   stemtells,
+  profile,
   classes,
   feedback,
   studentList,
