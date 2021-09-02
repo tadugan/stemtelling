@@ -44,7 +44,7 @@ function StudentCard() {
                 <section id='StudentDeleteBtnContainer'>
                 <Button 
                 className='StudentCardDeleteBtn'
-                variant= 'outlined'
+                variant= 'contained'
                 color='secondary'
                 onClick= {() => handleDelete(student.user_id)}
                 > 
