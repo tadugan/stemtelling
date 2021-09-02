@@ -3,6 +3,8 @@ import { Avatar, Card, Grid } from "@material-ui/core";
 // import { makeStyles } from "@material-ui/core";
 import "./STEMtellCard.css";
 import { useDispatch, useSelector } from "react-redux";
+
+
 function StemtellCard() {
 
   useEffect(() => {
@@ -13,9 +15,6 @@ function StemtellCard() {
   const stemtells = useSelector((store) => store.stemtells);
 
   console.log(stemtells, "THIS IS THE STEMTELL STORE*****");
-
-
-
 
   return (
     <Grid>
@@ -38,8 +37,7 @@ function StemtellCard() {
         )
         })}
     </Grid>
-    
-)
+   )
 };
 
 export default StemtellCard;
