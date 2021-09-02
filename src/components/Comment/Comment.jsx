@@ -7,12 +7,16 @@ import {Container, Card, TextField, Box, Avatar, Button} from '@material-ui/core
 
 
 function Comment() {
+    const [leaveComment, setComment] = useState('');
     const dispatch= useDispatch();
     const comments = useSelector((store) => store.commentList);
 
 useEffect(() =>{
     dispatch({ type: 'GET_COMMENTLIST'});
 }, []);
+    const submitComment = () =>{
+        
+    }
 
     return(
         <Container className='GeneralCommentContainer'>
