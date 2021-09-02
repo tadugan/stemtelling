@@ -35,12 +35,41 @@ function AddTagDialog() {
     const conditionalTagDisplay = () => {
         if (tagDisplay === 'stem') {
             return (
-                <p>STEM</p>
+                <>
+                    <Grid
+                        item
+                        xs={12}
+                    >
+                        <h3>Science</h3>
+                    </Grid>
+                    <GeneralTagMap type="stem" stemField="science"/>
+                    <Grid
+                        item
+                        xs={12}
+                    >
+                        <h3>Technology</h3>
+                    </Grid>
+                    <GeneralTagMap type="stem" stemField="technology"/>
+                    <Grid
+                        item
+                        xs={12}
+                    >
+                        <h3>Engineering</h3>
+                    </Grid>
+                    <GeneralTagMap type="stem" stemField="engineering"/>
+                    <Grid
+                        item
+                        xs={12}
+                    >
+                        <h3>Math</h3>
+                    </Grid>
+                    <GeneralTagMap type="stem" stemField="mathematics"/>
+                </>
             );
         }
         else if (tagDisplay === 'general') {
             return (
-                <GeneralTagMap />
+                <GeneralTagMap type="general" stemField={null}/>
             );
         }
     }

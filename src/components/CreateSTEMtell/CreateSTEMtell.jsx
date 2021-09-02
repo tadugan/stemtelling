@@ -145,6 +145,7 @@ function CreateSTEMtell() {
                         return (
                             <Grid
                                 item
+                                key={tag.id}
                             >
                                 <TagChipDeletable tagInfo={tag}/>
                             </Grid>
