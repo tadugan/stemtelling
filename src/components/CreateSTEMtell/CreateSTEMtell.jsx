@@ -10,7 +10,7 @@ function CreateSTEMtell() {
 
     const dispatch = useDispatch();
 
-    const [ className, setClassName ] = useState('');
+    const [ classId, setClassId ] = useState(1);
     const [ title, setTitle ] = useState('');
     const [ imageUrl, setImageUrl] = useState('');
     const [ description, setDescription ] = useState('');
@@ -20,14 +20,6 @@ function CreateSTEMtell() {
 
     const handleSubmit = () => {
         event.preventDefault();
-
-        console.log(`
-        class: ${className}
-        title: ${title}
-        imageUrl: ${imageUrl}
-        description: ${description}
-        tags: ${selectedTags}
-        `);
 
         // array to store tag ids
         const tagIds = [];
@@ -42,13 +34,17 @@ function CreateSTEMtell() {
             title: title,
             body_text: description,
             media_url: imageUrl,
-            class_id: className,
+            class_id: classId,
             tag_ids: tagIds
             }
         });
 
         // Clear Input Fields
-        // TODO:
+        setClassId(1);
+        setTitle('');
+        setImageUrl('');
+        setDescription('');
+        dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
 
         // Return user to previous view
         // TODO:
@@ -82,8 +78,8 @@ function CreateSTEMtell() {
                         <Select
                         variant="outlined"
                         labelId="demo-simple-select-outlined-label"
-                        value={className}
-                        onChange={(event) => setClassName(event.target.value)}
+                        value={classId}
+                        onChange={(event) => setClassId(event.target.value)}
                         label="Age"
                         className="create-stemtell-class-select"
                         >

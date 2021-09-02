@@ -38,6 +38,8 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     const newStemtell = req.body;
     const user = req.user;
 
+    console.log('req.body', req.body);
+
     const queryTextAddStemtell = `
     INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "date_published")
 	  VALUES ($1, $2, $3, $4, $5, NOW())
@@ -55,8 +57,6 @@ router.post('/', rejectUnauthenticated, (req, res) => {
         for (let i=0; i<newStemtell.tag_ids.length; i++) {
             pool.query(queryTextAddTag, [newStemtell.tag_ids[i], stemTellId])
                 .then(response => {
-                    console.log('i', i);
-                    console.log('newStemtell.tag_ids.length', newStemtell.tag_ids.length)
                     if ( i === newStemtell.tag_ids.length) {
                         res.sendStatus(201);
                     }
