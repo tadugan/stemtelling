@@ -43,13 +43,9 @@ function StemtellCard() {
         )
         })}
     </Grid>
-<<<<<<< HEAD
-   )
-=======
     </Container>
     
 )
->>>>>>> 6f77338ef40cdb4c21f768d1525ae3b9c9dddb50
 };
 
 export default StemtellCard;
