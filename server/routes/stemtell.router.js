@@ -8,7 +8,7 @@ const {
 
 
 router.get('/', (req, res) => {
-<<<<<<< HEAD
+
   // GET route code here
   const query = `SELECT "user".name AS username, "user".id AS author_id, "stemtell".id AS stem_id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".date_published, "class".name AS class_name
   FROM "stemtell"
@@ -16,18 +16,6 @@ router.get('/', (req, res) => {
   JOIN "class" ON "stemtell".class_id = "class".id
   WHERE "class".id = 2
   ORDER BY "stemtell".date_published DESC;`;
-=======
-  const query = `SELECT "user".name AS username, "user".id AS user_id, "class".name AS class_name, "stemtell".id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "reaction".name AS reaction_name, "tag".name AS tag_name
-  FROM "stemtell"
-  FULL OUTER JOIN "user" ON "stemtell".user_id = "user".id
-  FULL OUTER JOIN "user_class" ON "user".id = "user_class".user_id
-  FULL OUTER JOIN "class" ON "user_class".class_id = "class".id
-  FULL OUTER JOIN "stemtell_tag" ON "stemtell".id = "stemtell_tag".stemtell_id
-  FULL OUTER JOIN "tag" ON "stemtell_tag".tag_id = "tag".id
-  FULL OUTER JOIN "reaction_stemtell" ON "stemtell".id = "reaction_stemtell".stemtell_id
-  FULL OUTER JOIN "reaction" ON "reaction_stemtell".reaction_id = "reaction".id
-  WHERE "class".id = 1;`;
->>>>>>> 2966853d3352da8af7e1c8dce17b2b033188241a
   pool
     .query(query)
     .then((result) => {

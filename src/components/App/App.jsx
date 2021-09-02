@@ -25,11 +25,11 @@ import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage';
 import StemtellCard from '../STEMtellCard/STEMtellCard';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 import './App.css';
-<<<<<<< HEAD
+
 import Homepage from '../Homepage/Homepage';
-=======
+
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
->>>>>>> 2966853d3352da8af7e1c8dce17b2b033188241a
+
 
 
 function App() {
