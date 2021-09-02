@@ -5,6 +5,10 @@ import tags from './tag.reducer';
 import selectedTags from './selectedtags.reducer';
 import commentList from './commentList.reducer';
 import stemtells from './stemtell.reducer';
+import profile from './profile.reducer';
+import classes from './class.reducer';
+import feedback from './feedback.reducer';
+import studentList from './studentList.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -19,6 +23,10 @@ const rootReducer = combineReducers({
   selectedTags, // contains tags chosen to be added to a new STEMtell
   commentList,
   stemtells,
+  profile,
+  classes,
+  feedback,
+  studentList,
 });
 
 export default rootReducer;

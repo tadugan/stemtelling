@@ -1,0 +1,64 @@
+.FeedbackProfilePicAndName{
+    display: flex;
+
+    align-items: center;
+}
+
+.FeedbackSection{
+    padding-left: 15px;
+    background-color: rgb(230, 229, 229);
+    border-radius: 8px;
+    margin: 4px;
+    margin-right: 14px;
+    padding-bottom: 4px;
+    
+}
+
+#FeedbackInput{
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+#feedbackLabel{
+    color: grey;
+    display: block;
+    font-size: 10px;
+    padding-top: 20px;
+}
+
+.FeedbackDate{
+    float: right;
+    margin-left: 20px;
+    font-size: 10px;
+}
+
+.FeedbackHeader{
+    margin-left: 10px;
+}
+
+.FeedbackUserName{
+    padding-left: 10px;
+}
+/* 
+.FeedbackBtn{
+    display: inline-block;
+} */
+
+#feedbackText{
+    font-style: italic;
+    font-weight: 600;
+    width: 300px;
+}
+
+.FeedbackText{
+    font-style: italic;
+    font-weight: 400;
+}
+
+#feedbackNotification{
+    margin-right: 4px;
+    margin-left: 8px;
+}
+
+#teacherFeedbackHeading{
+    font-size: 12px;
+}

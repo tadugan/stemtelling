@@ -14,6 +14,27 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   res.send(req.user);
 });
 
+router.get('/all', (req, res) => {
+   const qText = `SELECT "id" FROM "user"`;
+   pool.query(qText)
+   .then((results) => res.send(results.rows))
+   .catch((err) => {
+     console.log('Get all users failed: ', err);
+     res.sendStatus(500);
+   });
+});
+
+router.get('/profile', (req, res) => {
+   const profileID = req.query.profileID;
+   const qText = `SELECT * FROM "user" WHERE "id" = $1`;
+   pool.query(qText, [profileID])
+   .then((results) => res.send(results.rows))
+   .catch((err) => {
+     console.log('Get all users failed: ', err);
+     res.sendStatus(500);
+   });
+});
+
 // Handles POST request with new user data
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
