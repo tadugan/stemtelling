@@ -27,6 +27,8 @@ router.get('/', (req, res) => {
 
 router.get('/userstemtells', (req, res) => {
    const currentUserID = req.user.id;
+   console.log(req.query.profileID);
+   const profilePageID = req.query.profileID;
    const query = `SELECT "user".name AS username, "user".id AS user_id, "class".name AS class_name, "stemtell".id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "reaction".name AS reaction_name, "tag".name AS tag_name
    FROM "stemtell"
    FULL OUTER JOIN "user" ON "stemtell".user_id = "user".id
@@ -38,7 +40,7 @@ router.get('/userstemtells', (req, res) => {
    FULL OUTER JOIN "reaction" ON "reaction_stemtell".reaction_id = "reaction".id
    WHERE "user".id = $1;`;
    pool
-     .query(query, [currentUserID])
+     .query(query, [profilePageID])
      .then((result) => {
        res.send(result.rows);
      })

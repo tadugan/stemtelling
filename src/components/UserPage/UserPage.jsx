@@ -25,9 +25,11 @@ function UserPage() {
    const user = useSelector((store) => store.user);
    const dispatch = useDispatch();
    const stemtells = useSelector((store) => store.stemtells);
+   const getSearchQueryByFullURL = (url) => {return url.split('/')};
 
    useEffect(() => {
-      dispatch({ type: "FETCH_USER_STEMTELLS"});
+      dispatch({ type: "FETCH_USER_STEMTELLS", payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1])});
+      console.log(getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1]);
     }, []);
 
    return (

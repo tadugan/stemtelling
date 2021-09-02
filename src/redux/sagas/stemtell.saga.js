@@ -16,13 +16,14 @@ function* fetchAllStemTells(){
     }
 }
 
-function* fetchUserStemTells(){
+function* fetchUserStemTells(action){
    try {
-       const stemtells = yield axios.get("/api/stemtell/userstemtells");
-       console.log("get user stemtells:", stemtells.data);
-       yield put({type: "SET_USER_STEMTELLS", payload: stemtells.data});
+      const profileID = action.payload;
+      const stemtells = yield axios.get("/api/stemtell/userstemtells", { params: { profileID } });
+      console.log("get user stemtells:", stemtells.data);
+      yield put({type: "SET_USER_STEMTELLS", payload: stemtells.data});
    } catch(err){
-       console.log("get user stemtells error", err);
+      console.log("get user stemtells error", err);
    }
 }
 

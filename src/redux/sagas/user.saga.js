@@ -27,7 +27,7 @@ function* fetchUser() {
 function* fetchAllUsers() {
    try {
       const response = yield axios.get('/api/user/all');
-      console.log(response.data);
+      yield put({ type: 'SET_ALL_USERS', payload: response.data });
    }
    catch (error) {
       console.log("error in fetchAllUsers:", error);

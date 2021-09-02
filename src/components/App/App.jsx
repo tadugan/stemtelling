@@ -4,6 +4,7 @@ import {
   Redirect,
   Route,
   Switch,
+  Link,
 } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,25 +26,19 @@ import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 import './App.css';
 
 
+
 function App() {
   const dispatch = useDispatch();
   const user = useSelector(store => store.user);
-  const getSearchQueryByFullURL = (url) => {return url.split('/')};
    useEffect(() => {
       dispatch({ type: 'FETCH_USER' });
-      dispatch({ type: 'FETCH_ALL_USERS' });
-      console.log(getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1]);
    }, [dispatch]);
 
-   function test() {
-      console.log("user:", user);
-   }
 
   return (
     <Router>
       <div>
         <Nav />
-        <button onClick={test}>Test</button>
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
@@ -73,6 +68,7 @@ function App() {
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
             Even though it seems like they are different pages, the user is always on localhost:3000/user */}
+
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
