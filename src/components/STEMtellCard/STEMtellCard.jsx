@@ -2,11 +2,7 @@ import React, { useEffect } from "react";
 import { Avatar, Card, Grid } from "@material-ui/core";
 // import { makeStyles } from "@material-ui/core";
 import "./STEMtellCard.css";
-<<<<<<< HEAD
-
-=======
 import { useDispatch, useSelector } from "react-redux";
->>>>>>> master
 function StemtellCard() {
 
   useEffect(() => {
