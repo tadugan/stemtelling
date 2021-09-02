@@ -21,7 +21,6 @@ function ClassCard() {
     <Card className="classCard">
       <h2>{classList.name}</h2>
       <section className="classDetail"> status: Active {classList.archived}
-
       </section>
       <section className="classDetail">code: {classList.code}</section>
     </Card>
