@@ -1,3 +1,7 @@
+.StudentCardContainer{
+    display: flex;   
+}
+
 .StudentDetailsCard{
     display: block;
     
@@ -18,5 +22,11 @@ float: right;
     margin: 10px 5px 0px;
 }
 .StudentCardDeleteBtn{
-    margin: 15px 0px 0px;
+    
 }
+
+#StudentListHeader{
+
+}
+
+

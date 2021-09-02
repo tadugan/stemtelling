@@ -6,7 +6,7 @@ const rejectUnauthenticated = require('../modules/authentication-middleware').re
 
 
 //gets students from a class list
-router.get('/', rejectUnauthenticated, (req, res) => {
+router.get('/details', rejectUnauthenticated, (req, res) => {
   const query= `SELECT "user".name AS username, "user".profile_picture_url 
   FROM "user"
   JOIN "user_class" ON "user".id = "user_class".user_id

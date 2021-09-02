@@ -17,10 +17,12 @@ function StudentCard() {
 
     // }
     return(
+        <>
+        <h2 id='StudentListHeader'> Students </h2> 
         <Container className='StudentCardContainer'>
-           <h2> Students </h2> 
+           
 
-            {/* {students.map((student) => {
+            {students.map((student) => {
                 return(
                 <Card className='StudentDetailsCard'
                 variant='outlined' key={student.id}>
@@ -38,25 +40,10 @@ function StudentCard() {
 
                 </Card>  
                 );
-            })} */}
-            <Card className='StudentDetailsCard'
-                variant='outlined' >
-                <Box className='StudentProfilePicAndName'>
-                <Avatar id='StudentCardAvatar' ></Avatar> <span> 
-                    <h4 id='StudentDetailsName'> </h4> </span>
-                </Box>
-                
-                <Button 
-                className='StudentCardDeleteBtn'
-                variant= 'outlined'
-                color='secondary'
-                > 
-                Delete </Button>
-
-                </Card>
-            
+            })}
 
         </Container>
+        </>
 
     )
 }
