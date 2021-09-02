@@ -7,7 +7,7 @@ const router = express.Router();
  */
 router.get('/', (req, res) => {
   // GET route code here
-  const query = `SELECT "user".name AS username, "class".name AS class_name, "stemtell".id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "reaction".name AS reaction_name, "tag".name AS tag_name
+  const query = `SELECT "user".name AS username, "class".name AS class_name, "stemtell".id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "reaction".name AS reaction_name, "tag".name AS tag_name, "user".profile_picture_url, "stemtell".date_published
   FROM "stemtell"
   JOIN "user" ON "stemtell".user_id = "user".id
   JOIN "user_class" ON "user".id = "user_class".user_id

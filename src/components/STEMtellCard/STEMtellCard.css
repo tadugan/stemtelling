@@ -38,3 +38,11 @@
   padding: 8px;
   color: #727272;
 }
+
+#stemDate{
+  float: right;
+}
+
+#stemTitle{
+  margin-top: 24px;
+}

@@ -3,6 +3,8 @@ import errors from './errors.reducer';
 import user from './user.reducer';
 import commentList from './commentList.reducer';
 import stemtells from './stemtell.reducer';
+import classes from './class.reducer';
+import feedback from './feedback.reducer';
 import studentList from './studentList.reducer';
 
 // rootReducer is the primary reducer for our entire project
@@ -16,6 +18,8 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   commentList,
   stemtells,
+  classes,
+  feedback,
   studentList,
 });
 

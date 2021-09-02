@@ -4,6 +4,8 @@ import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
 import commentSaga from './comment.saga';
 import stemtellSaga from './stemtell.saga';
+import classesSaga from './classes.saga';
+import feedbackSaga from './feedback.saga';
 import studentListSaga from './studentList.saga';
 import deleteStudentSaga from './deleteStudent.saga';
 
@@ -23,6 +25,8 @@ export default function* rootSaga() {
     commentSaga(),
     resetPasswordSaga(),
     stemtellSaga(),
+    classesSaga(),
+    feedbackSaga(),
     studentListSaga(),
     deleteStudentSaga(),
   ]);
