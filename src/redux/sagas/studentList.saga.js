@@ -9,7 +9,6 @@ function* studentListSaga(){
 function* getStudents() {
     try {
         const response = yield axios.get('/api/class/details');
-        console.log('This is the getStudentsSaga res', response.data);
         yield put({ type: 'SET_STUDENTLIST', payload: response.data});
         
     } catch (error) {

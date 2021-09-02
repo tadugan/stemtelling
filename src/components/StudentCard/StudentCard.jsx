@@ -7,12 +7,13 @@ import {Container, Card, TextField, Box, Avatar, Button} from '@material-ui/core
 function StudentCard() {
     const dispatch = useDispatch();
     const students =  useSelector((store) => store.studentList);
-    console.log(`store for student: ${students}`)
+
 
     useEffect(() => {
         dispatch({type: 'GET_STUDENTLIST'})
     }, []);
 
+    //deletes student from specific class
     const handleDelete = (deleteStudent) => {
 
         //SWEETALERT CODE
@@ -24,9 +25,9 @@ function StudentCard() {
         // });
         
         dispatch({ type: "DELETE_STUDENT", payload: deleteStudent });
-        
+       
       };
-
+    
     return(
         <Container className='StudentCardContainer'>
             <h2 id='StudentListHeader'> Students </h2> 
@@ -45,10 +46,11 @@ function StudentCard() {
                 className='StudentCardDeleteBtn'
                 variant= 'outlined'
                 color='secondary'
+                onClick= {() => handleDelete(student.user_id)}
                 > 
-                Delete </Button>
+                Remove </Button>
                 </section>  
-
+                   
                 </Card>
                 
                 );
