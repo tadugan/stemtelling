@@ -4,5 +4,17 @@
 }
 
 .create-stemtell-class-select {
-    min-width: 150px;
+    width: 248px;
+}
+
+.create-stemtell-title {
+    width: 360px;
+}
+
+.create-stemtell-image-url {
+    width: 360px;
+}
+
+.create-stemtell-description {
+    width: 360px;
 }

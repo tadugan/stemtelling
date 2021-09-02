@@ -3,20 +3,20 @@ import { AddCircleOutlineRounded } from '@material-ui/icons';
 import React, { useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import AddTagDialog from '../AddTagDialog/AddTagDialog';
+import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
 import "./CreateSTEMtell.css";
 
 function CreateSTEMtell() {
 
     const dispatch = useDispatch();
 
-
-
     const [ className, setClassName ] = useState('');
     const [ title, setTitle ] = useState('');
     const [ imageUrl, setImageUrl] = useState('');
-    const [ description, setDescription] = useState('');
+    const [ description, setDescription ] = useState('');
 
-    const selectedTags = useSelector(store => store.selectedTags)
+    const selectedTags = useSelector(store => store.selectedTags);
+    const allTags = useSelector(store => store.tags);
 
     const handleSubmit = () => {
         event.preventDefault();
@@ -29,13 +29,21 @@ function CreateSTEMtell() {
         tags: ${selectedTags}
         `);
 
+        // array to store tag ids
+        const tagIds = [];
+
+        // add ids to tagIds array
+        for (const tag of selectedTags) {
+            tagIds.push(tag.id);
+        }
+
         // Dispatch captured inputs to SAGA
         dispatch({ type: 'SUBMIT_NEW_STEMTELL', payload: {
             title: title,
             body_text: description,
             media_url: imageUrl,
             class_id: className,
-            tag_ids: selectedTags
+            tag_ids: tagIds
             }
         });
 
@@ -96,6 +104,7 @@ function CreateSTEMtell() {
                         variant="outlined"
                         value={title}
                         onChange={(event) => setTitle(event.target.value)}
+                        className="create-stemtell-title"
                     />
                 </Grid>
                 <Grid
@@ -106,6 +115,7 @@ function CreateSTEMtell() {
                         variant="outlined"
                         value={imageUrl}
                         onChange={(event) => setImageUrl(event.target.value)}
+                        className="create-stemtell-image-url"
                     />
                 </Grid>
                 <Grid
@@ -120,7 +130,26 @@ function CreateSTEMtell() {
                         multiline
                         value={description}
                         onChange={(event) => setDescription(event.target.value)}
+                        className="create-stemtell-description"
                     />
+                </Grid>
+                <Grid
+                    item
+                    container
+                    spacing={2}
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                >
+                    {selectedTags.map((tag) => {
+                        return (
+                            <Grid
+                                item
+                            >
+                                <TagChipDeletable tagInfo={tag}/>
+                            </Grid>
+                        );
+                    })}
                 </Grid>
                 <Grid
                     item

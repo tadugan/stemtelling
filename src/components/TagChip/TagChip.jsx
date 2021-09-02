@@ -21,8 +21,6 @@ function TagChip( {tagInfo, selectedTags} ) {
 
     const [ isSelected, setIsSelected ] = useState(false);
 
-    // const selectedTags = useSelector(store => store.selectedTags)
-
     const conditionalClass = () => {
         if (isSelected) {
             return (
@@ -40,17 +38,17 @@ function TagChip( {tagInfo, selectedTags} ) {
         console.log('You clicked the Chip.'); // test
         if (isSelected) {
             setIsSelected(false)
-            dispatch({ type: 'REMOVE_TAG_FROM_STEMTELL', payload: tagInfo.id });
+            dispatch({ type: 'REMOVE_TAG_FROM_STEMTELL', payload: tagInfo });
         }
         else {
             setIsSelected(true)
-            dispatch({ type: 'ADD_TAG_TO_STEMTELL', payload: tagInfo.id });
+            dispatch({ type: 'ADD_TAG_TO_STEMTELL', payload: tagInfo });
         }
         
     };
 
     const compareReducer = () => {
-        if (selectedTags.includes(tagInfo.id)) {
+        if (selectedTags.includes(tagInfo)) {
             setIsSelected(true);
         }
     }

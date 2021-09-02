@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import CloseIcon from '@material-ui/icons/Close';
 import './AddTagDialog.css';
 import TagChip from '../TagChip/TagChip';
+import GeneralTagMap from '../GeneralTagMap/GeneralTagMap';
 
 function AddTagDialog() {
 
@@ -30,6 +31,19 @@ function AddTagDialog() {
     const changeTagDisplay = (mode) => {
         setTagDisplay(mode);
     };
+
+    const conditionalTagDisplay = () => {
+        if (tagDisplay === 'stem') {
+            return (
+                <p>STEM</p>
+            );
+        }
+        else if (tagDisplay === 'general') {
+            return (
+                <GeneralTagMap />
+            );
+        }
+    }
 
     useEffect(() => {
         getAllTags();
@@ -84,7 +98,7 @@ function AddTagDialog() {
                                 </ButtonGroup>
                                 </Grid>
                             </Grid>
-                            <Grid
+                            {/* <Grid
                                 item
                                 container
                                 spacing={1}
@@ -99,7 +113,9 @@ function AddTagDialog() {
                                         </Grid>
                                     );
                                 })}
-                            </Grid>
+                                {conditionalTagDisplay()}
+                            </Grid> */}
+                            {conditionalTagDisplay()}
                         </Grid>
                     </div>
             </Dialog>
