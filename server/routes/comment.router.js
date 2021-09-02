@@ -12,7 +12,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   FROM "comment"
   JOIN "user" ON "comment".user_id = "user".id
   JOIN "stemtell" ON "stemtell".id = "comment".stemtell_id
-  WHERE  "user".authority = 0  ;`;
+  WHERE  "user".authority = 'student' ;`;
   pool
     .query(query)
     .then((result) => {
