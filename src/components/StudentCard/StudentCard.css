@@ -1,0 +1,22 @@
+.StudentDetailsCard{
+    display: block;
+    
+}
+
+.StudentCardDeleteBtn{
+float: right;
+}
+
+.StudentProfilePicAndName{
+ float: left;
+ display: inline-flex;
+ margin: 5px;
+}
+
+
+#StudentDetailsName{
+    margin: 10px 5px 0px;
+}
+.StudentCardDeleteBtn{
+    margin: 10px 0px 0px;
+}

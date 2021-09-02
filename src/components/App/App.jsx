@@ -19,10 +19,12 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage';
 import StemtellCard from '../STEMtellCard/STEMtellCard';
-
+import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 import './App.css';
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -49,6 +51,17 @@ function App() {
           >
             <AboutPage />
             <StemtellCard />
+          </Route>
+          <Route
+            exact
+            path="/forgotpassword"
+          >
+            <ForgotPasswordPage />
+          </Route>
+          <Route
+            path ="/resetpassword/"
+          >
+             <ResetPasswordPage />
           </Route>
 
           {/* For protected routes, the view could show one of several things on the same route.

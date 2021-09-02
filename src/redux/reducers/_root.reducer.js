@@ -3,6 +3,8 @@ import errors from './errors.reducer';
 import user from './user.reducer';
 import tags from './tag.reducer';
 import selectedTags from './selectedtags.reducer';
+import commentList from './commentList.reducer';
+import stemtells from './stemtell.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -15,6 +17,8 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   tags, // contains a list of all available tags
   selectedTags, // contains tags chosen to be added to a new STEMtell
+  commentList,
+  stemtells,
 });
 
 export default rootReducer;

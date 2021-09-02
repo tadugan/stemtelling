@@ -4,10 +4,13 @@ import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
 import createStemtellSaga from './createSTEMtell.saga';
 import tagSaga from './tag.saga';
+import commentSaga from './comment.saga';
+import stemtellSaga from './stemtell.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
 // This is imported in index.js as rootSaga
+import resetPasswordSaga from './resetpassword.saga';
 
 // some sagas trigger other sagas, as an example
 // the registration triggers a login
@@ -19,5 +22,8 @@ export default function* rootSaga() {
     userSaga(),
     createStemtellSaga(),
     tagSaga(),
+    commentSaga(),
+    resetPasswordSaga(),
+    stemtellSaga(),
   ]);
 }

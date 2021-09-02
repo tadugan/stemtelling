@@ -1,4 +1,3 @@
-
 -- USER is a reserved keyword with Postgres
 -- You must use double quotes in every query that user is in:
 -- ex. SELECT * FROM "user";
@@ -20,14 +19,26 @@
 --DROP TABLE "user_tag" CASCADE;
 --DROP TABLE "stemtell_tag" CASCADE;
 
+-- extension required for generating UUIDs in postgresql
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+
 -- Create "user" Table
 CREATE TABLE "user" (
 	"id" SERIAL PRIMARY KEY,
-	"username" TEXT UNIQUE NOT NULL,
+   "email" TEXT UNIQUE NOT NULL,
 	"password" TEXT NOT NULL,
 	"name" TEXT,
-	"authority" INT DEFAULT 0,
+	"authority" TEXT NOT NULL,
 	"profile_picture_url" TEXT
+);
+
+
+-- this table needs to be periodically cleansed via a cron (e.g. https://github.com/citusdata/pg_cron), ideally at inactive times of day, in order to prevent buildup.
+CREATE TABLE "reset_password" ( 
+   "id" INTEGER PRIMARY KEY UNIQUE,
+   "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(),
+   "email" TEXT UNIQUE NOT NULL
 );
 
 
@@ -53,6 +64,7 @@ CREATE TABLE "stemtell" (
 	"needs_revision" BOOLEAN DEFAULT 'false'
 );
 
+
 -- Create "user_class" table
 CREATE TABLE "user_class" (
 	"id" SERIAL PRIMARY KEY,
@@ -60,6 +72,7 @@ CREATE TABLE "user_class" (
 	"class_id" INT REFERENCES "class"("id"),
 	"user_id" INT REFERENCES "user"("id")
 );
+
 
 -- Create "notification" table
 CREATE TABLE "notification" (
@@ -127,14 +140,7 @@ CREATE TABLE "stemtell_tag" (
 
 -- <== TEST DATA SETUP ==> --
 
--- Step 1: Create 2 classes with the following queries
-INSERT INTO "class" ("code", "name")
-	VALUES ('0001', 'CHEM 101'), -- id 1
-	('0002', 'BIO 101'); -- id 2
-	
-
-
--- Step 2: While the application is running, register the following users IN ORDER
+-- Step 1: While the application is running, register the following users IN ORDER
 -- 1st
 	-- username: student1@email.com
 -- 2nd 
@@ -144,22 +150,29 @@ INSERT INTO "class" ("code", "name")
 -- 4th
 	-- username: teacherB@email.com	
 
+-- Step 2: Create 2 classes with the following queries
+INSERT INTO "class" ("code", "name")
+	VALUES ('0001', 'CHEM 101'), -- id 1
+	('0002', 'BIO 101'); -- id 2
+
+
 -- Step 3: add personal Data
 UPDATE "user"
-SET "name" = 'Student1', "profile_picture_url" = 'https://image.shutterstock.com/image-photo/laughing-turkish-female-student-desk-260nw-1766762942.jpg'
+SET "name" = 'Student 1', "profile_picture_url" = 'https://image.shutterstock.com/image-photo/laughing-turkish-female-student-desk-260nw-1766762942.jpg' "authority" = 'student'
 WHERE "id" = 1;
 
 UPDATE "user"
-SET "name" = 'Student2', "profile_picture_url" = 'https://www.fmjfee.com/i901fee/img/home/learn/learn_1.jpg'
+SET "name" = 'Student 2', "profile_picture_url" = 'https://www.fmjfee.com/i901fee/img/home/learn/learn_1.jpg' "authority" = 'student'
 WHERE "id" = 2;
 
 UPDATE "user"
-SET "name" = 'Teacher1', "profile_picture_url" = 'https://www.nea.org/sites/default/files/legacy/2020/04/new_teacher.jpeg'
+SET "name" = 'Teacher 1', "profile_picture_url" = 'https://www.nea.org/sites/default/files/legacy/2020/04/new_teacher.jpeg', "authority" = 'teacher'
 WHERE "id" = 3;
 
 UPDATE "user"
-SET "name" = 'Teacher2', "profile_picture_url" = 'https://uconn-today-universityofconn.netdna-ssl.com/wp-content/uploads/2014/05/MaleMathTeacher.jpg'
+SET "name" = 'Teacher 2', "profile_picture_url" = 'https://uconn-today-universityofconn.netdna-ssl.com/wp-content/uploads/2014/05/MaleMathTeacher.jpg', "authority" = 'teacher'
 WHERE "id" = 4;
+
 
 -- Step 4: run the following queries to add the users to user_class table
 INSERT INTO "user_class" ("role", "user_id", "class_id")
@@ -168,6 +181,7 @@ INSERT INTO "user_class" ("role", "user_id", "class_id")
 	('teacher', '3', '1'),
 	('teacher', '4', '2');
 	
+
 -- Step 5: run the following queries to create data for the tag table
 INSERT INTO "tag" ("type", "name", "stem_field")
 	VALUES ('stem', 'chemistry', 'science'), -- id 1
@@ -185,16 +199,19 @@ INSERT INTO "tag" ("type", "name", "stem_field")
 	( 'general', 'photography', null), -- id 13
 	( 'general', 'music', null); -- id 14
 	
+
 -- Step 6: run the following queries to create student stemtells
 INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "date_published")
 	VALUES ('1', '1', 'CHEMISTRY STEMTELL', 'I Love Chemistry!!', 'https://www.sciencecompany.com/Assets/ProductImages/nc0071n-lg.jpg', NOW()),
 	('2', '2', 'BIOLOGY STEMTELL', 'I Love Biology!!', 'https://medlineplus.gov/images/Anatomy.jpg', NOW());
 	
+
 -- Step 7: run the following queries to add tags to the stemtells via the stemtell_tag table
 INSERT INTO "stemtell_tag" ("tag_id", "stemtell_id")
 	VALUES ('1', '1'),
 	('2', '2');
 	
+
 -- Step 8: run the following queries to add tags to the users via the user_tag table
 INSERT INTO "user_tag" ("user_id", "tag_id")
 	VALUES ('1', '1'),
@@ -204,12 +221,22 @@ INSERT INTO "user_tag" ("user_id", "tag_id")
 	('3', '1'),
 	('4', '2');
 	
+
 -- Step 9: run the following queries to add reactions to the reaction table
 INSERT INTO "reaction" ("media_url", "name")
 	VALUES ('https://www.nicepng.com/png/detail/376-3762215_how-to-set-use-blue-thumbs-up-icon.png', 'like'),
 	('https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png', 'love');
 
--- COMING SOON
--- Step 10: comments
--- Step 11: existing stemtell reactions
 
+-- Step 10: run the following queries to add comments to the comment table
+INSERT INTO "comment" ("user_id", "stemtell_id", "comment", "date_published", "teacher_feedback")
+	VALUES ('2', '1', 'This is a great Chemistry STEMtell!', NOW(), 'false'),
+	('1', '2', 'This is a great Biology STEMtell!', NOW(), 'false'),
+	('3', '1', 'Needs more Chemistry stuff', NOW(), 'true'),
+	('4', '2', 'Needs more Biology stuff', NOW(), 'true');
+
+
+-- Step 11: existing stemtell reactions
+INSERT INTO "reaction_stemtell" ("stemtell_id", "user_id", "reaction_id")
+	VALUES ('1', '2', '1'),
+	('2', '1', '2');
