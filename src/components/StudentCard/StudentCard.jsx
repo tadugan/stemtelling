@@ -13,14 +13,23 @@ function StudentCard() {
         dispatch({type: 'GET_STUDENTLIST'})
     }, []);
 
-    // const handleDeleteFromClass = () =>{
+    const handleDelete = (deleteStudent) => {
 
-    // }
+        //SWEETALERT CODE
+        // swal({
+        //   title: "Post Deleted!",
+        //   text: "Post Successfully Deleted!",
+        //   icon: "success",
+        //   button: "Okay",
+        // });
+        
+        dispatch({ type: "DELETE_STUDENT", payload: deleteStudent });
+        
+      };
+
     return(
-        <>
-        <h2 id='StudentListHeader'> Students </h2> 
         <Container className='StudentCardContainer'>
-           
+            <h2 id='StudentListHeader'> Students </h2> 
 
             {students.map((student) => {
                 return(
@@ -31,19 +40,21 @@ function StudentCard() {
                     <h4 id='StudentDetailsName'> {student.username}</h4> </span>
                 </Box>
                 
+                <section id='StudentDeleteBtnContainer'>
                 <Button 
                 className='StudentCardDeleteBtn'
                 variant= 'outlined'
                 color='secondary'
                 > 
                 Delete </Button>
+                </section>  
 
-                </Card>  
+                </Card>
+                
                 );
             })}
 
         </Container>
-        </>
 
     )
 }
