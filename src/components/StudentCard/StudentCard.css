@@ -1,10 +1,16 @@
+.StudentCardContainer{
+    display: flex;   
+}
+
 .StudentDetailsCard{
     display: block;
+    margin: 5px;
     
 }
 
 .StudentCardDeleteBtn{
-float: right;
+    float: right;
+
 }
 
 .StudentProfilePicAndName{
@@ -15,8 +21,16 @@ float: right;
 
 
 #StudentDetailsName{
+     color: #727272;
     margin: 10px 5px 0px;
 }
-.StudentCardDeleteBtn{
-    margin: 10px 0px 0px;
+
+#StudentListHeader{
+    color: #727272;
 }
+
+#StudentDeleteBtnContainer{
+    margin: 10px 0px 0px;
+    margin-right: 5px;
+}
+
