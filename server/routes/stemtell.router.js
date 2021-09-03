@@ -35,8 +35,6 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     const newStemtell = req.body;
     const user = req.user;
 
-    console.log('req.body', req.body);
-
     const queryTextAddStemtell = `
     INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "date_published")
 	  VALUES ($1, $2, $3, $4, $5, NOW())
