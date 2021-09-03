@@ -28,6 +28,7 @@ router.get('/', (req, res) => {
 });
 
 
+
 /**
  * POST a new STEMtell
  */
@@ -109,8 +110,6 @@ router.get('/userstemtells', (req, res) => {
     JOIN comments OND stemtells.id = comments.stemtell_id
     WHERE stemtell.id = $1
    `
-
-
    pool
      .query(query, [profilePageID])
      .then((result) => {
@@ -118,6 +117,22 @@ router.get('/userstemtells', (req, res) => {
      })
      .catch((err) => {
        console.log("Error getting user STEMtells", err);
+       res.sendStatus(500);
+     });
+ });
+
+
+ router.get('/editstemtell', (req, res) => {
+   const stemtellID = req.query.stemtellID;
+   const user = req.user.id
+   const query = `SELECT * FROM "stemtell" WHERE "id" = $1 AND "user_id" = $2`;
+   pool
+     .query(query, [stemtellID, user])
+     .then(result => {
+       res.send(result.rows);
+     })
+     .catch(error => {
+       console.log("Error getting STEMtell to edit", error);
        res.sendStatus(500);
      });
  });

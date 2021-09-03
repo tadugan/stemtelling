@@ -1,16 +1,22 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AddTagDialog from '../AddTagDialog/AddTagDialog';
 import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
 
-function EditSTEMtell(itemInfo) {
+function EditSTEMtell() {
     const dispatch = useDispatch();
     const [ classId, setClassId ] = useState(1);
     const [ title, setTitle ] = useState('');
     const [ imageUrl, setImageUrl] = useState('');
     const [ description, setDescription ] = useState('');
     const selectedTags = useSelector(store => store.selectedTags);
+    const getSearchQueryByFullURL = (url) => {return url.split('/')};
+    const stemtell = useSelector((store) => store.stemtells[0]);
+
+    useEffect(() => {
+      dispatch({ type: "EDIT_STEMTELL", payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1])});
+    }, []);
 
     const handleSubmit = () => {
         event.preventDefault();
@@ -36,7 +42,7 @@ function EditSTEMtell(itemInfo) {
     }
 
     const handleCancel = () => {
-        console.log(itemInfo);
+        console.log(stemtell);
     }
 
     const test = (itemInfo) => {

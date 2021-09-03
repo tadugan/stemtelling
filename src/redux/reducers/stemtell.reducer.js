@@ -6,7 +6,7 @@ const stemtells = (state = [], action) => {
             return action.payload;
          case "SET_USER_STEMTELLS":
             return action.payload;
-         case "EDIT_STEMTELL":
+         case "SET_EDIT_STEMTELL":
             return action.payload;
         default:
             return state;

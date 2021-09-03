@@ -30,7 +30,8 @@ function* fetchUserStemTells(action){
 function* editStemtell(action){
    try {
       const stemtellID = action.payload;
-      const stemtell = yield axios.get("/api/stemtell/userstemtells", { params: { stemtellID } });
+      const stemtell = yield axios.get("/api/stemtell/editstemtell", { params: { stemtellID } });
+      yield put({type: "SET_EDIT_STEMTELL", payload: stemtell.data});
    } catch(err){
       console.log("get stemtell to edit error", err);
    };
