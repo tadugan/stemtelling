@@ -31,6 +31,7 @@ function UserPage() {
     }, []);
 
     const editStemtell = (stemtellID) => {
+       dispatch({ type: "GET_STEMTELL", payload: user.id });
        history.push(`/edit/${stemtellID}`);
     }
 

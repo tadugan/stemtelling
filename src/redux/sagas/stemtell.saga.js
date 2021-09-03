@@ -4,7 +4,7 @@ import axios from "axios";
 function* stemtellSaga(){
     yield takeEvery("FETCH_STEMTELLS", fetchAllStemTells);
     yield takeEvery("FETCH_USER_STEMTELLS", fetchUserStemTells);
-    yield takeEvery("EDIT_STEMTELL", editStemtell);
+    yield takeEvery("GET_STEMTELL", getStemtell);
 };
 
 function* fetchAllStemTells(){
@@ -27,13 +27,11 @@ function* fetchUserStemTells(action){
    };
 };
 
-function* editStemtell(action){
+function* getStemtell(action){
    try {
       const stemtellID = action.payload;
-      const stemtell = yield axios.get("/api/stemtell/editstemtell", { params: { stemtellID } });
-      console.log('returned:', stemtell.data);
-      yield put({type: "SET_EDIT_STEMTELL", payload: stemtell.data});
-      return(stemtell.data);
+      const stemtell = yield axios.get("/api/stemtell/getstemtell", { params: { stemtellID } });
+      yield put({type: "SET_STEMTELL", payload: stemtell.data[0]});
    } catch(err){
       console.log("get stemtell to edit error", err);
    };

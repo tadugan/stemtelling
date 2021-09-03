@@ -122,7 +122,7 @@ router.get('/userstemtells', (req, res) => {
  });
 
 
- router.get('/editstemtell', (req, res) => {
+ router.get('/getstemtell', (req, res) => {
    const stemtellID = req.query.stemtellID;
    const user = req.user.id
    const query = `SELECT * FROM "stemtell" WHERE "id" = $1 AND "user_id" = $2`;

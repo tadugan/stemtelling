@@ -1,31 +1,32 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import AddTagDialog from '../AddTagDialog/AddTagDialog';
 import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
 
 function EditSTEMtell() {
     const dispatch = useDispatch();
+    const history= useHistory();
     const [ classId, setClassId ] = useState(1);
     const [ title, setTitle ] = useState('');
     const [ imageUrl, setImageUrl] = useState('');
     const [ description, setDescription ] = useState('');
     const selectedTags = useSelector(store => store.selectedTags);
     const getSearchQueryByFullURL = (url) => {return url.split('/')};
-    const stemtell = useSelector((store) => store.stemtells[0]);
+    const stemtell = useSelector((store) => store.stemtells);
 
     useEffect(() => {
-         dispatch({ type: "EDIT_STEMTELL", payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1])});
+         // dispatch({ type: "GET_STEMTELL", payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1])});
+         // setDescription(stemtell.body_text);
+         console.log(stemtell);  
+         // setTitle(stemtell[0].title);
+         // setImageUrl(stemtell[0].media_url);
+         // setClassId(stemtell[0].class_id)
     }, []);
 
     const handleCancel = () => {
-        console.log(stemtell.body_text);
-        setDescription(stemtell.body_text);
-        setTitle(stemtell.title);
-        setImageUrl(stemtell.media_url);
-        setClassId(stemtell.class_id)
-        
-
+       history.goBack()
     }
 
     const test = (itemInfo) => {
