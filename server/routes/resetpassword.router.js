@@ -30,153 +30,78 @@ router.delete('/removerequest', (req, res) => {
     });
 });
 
-// router.post('/sendresetemail', (req, res) => {
-//   // handler for sending out a password reset email to the user, as well as creating a temporary database placement for them
-//   const userEmail = req.body.email.toLowerCase();
-//   const getUserIDQuery = `SELECT * FROM "user" WHERE "email" = $1`;
-//   pool
-//     .query(getUserIDQuery, [userEmail]) // start of first query (gets user information from core user database)
-//     .then((results) => {
-//       const userID = results.rows[0].id; // sets ID in reset table equal to user ID
-//       const insertUserInfoQuery = `INSERT INTO "reset_password" (id, email)
-//                      VALUES ($1, $2) RETURNING id`;
-//       pool
-//         .query(insertUserInfoQuery, [userID, userEmail]) // start of second query (inserts data into the reset_password table based off user info)
-//         .then(() => {
-//           const getUUIDQuery = `SELECT "uuid" FROM "reset_password" WHERE "id" = $1 AND "email" = $2`;
-//           pool
-//             .query(getUUIDQuery, [userID, userEmail]) // start of third query (gets uuid from reset_password table and passes into into a link to send to the user email)
-//             .then((results) => {
-//               const resetPasswordUUID = results.rows[0].uuid;
-//               const resetEmail = {
-//                 // nodemailer handler, this is what the email will be
-//                 from: 'Stemtelltest@gmail.com',
-//                 to: `${userEmail}`,
-//                 subject: 'STEMTelling Password Reset Request',
-//                 text: `${websiteURL}?confirmation=${resetPasswordUUID}`,
-//               };
-//               transporter.sendMail(resetEmail, (error, info) => {
-//                 // sends the email via nodemailer
-//                 if (error) {
-//                   return console.log(error); // catch any nodemailer errors
-//                 }
-//                 res
-//                   .status(200)
-//                   .send({ message: 'Mail send', message_id: info.messageId }); // success
-//               });
-//               res.sendStatus(200); // send pack a positive status code for our third query
-//             })
-//             .catch((error) => {
-//               // end of third query
-//               console.log('Error in third query in password reset:', error);
-//               res.sendStatus(401);
-//             });
-//         })
-//         .catch((error) => {
-//           // end of second query
-//           console.log('Error in second query in password reset:', error);
-//           res.sendStatus(401);
-//         });
-//     })
-//     .catch((error) => {
-//       // end of first query
-//       console.log('Error in first query in password reset:', error);
-//       res.sendStatus(401);
-//     });
-// });
 
+// POST /api/resetpassword/sendresetemail
+// sends an email to the entered email
 router.post('/sendresetemail', async (req, res) => {
-  // handler for sending out a password reset email to the user, as well as creating a temporary database placement for them
   try {
     const userEmail = req.body.email.toLowerCase();
     const getUserIDQuery = `SELECT * FROM "user" WHERE "email" = $1`;
-    const results = await pool.query(getUserIDQuery, [userEmail]); // start of first query (gets user information from core user database)
-    const userID = results.rows[0].id; // sets ID in reset table equal to user ID
+    const results = await pool.query(getUserIDQuery, [userEmail]); 
+    const userID = results.rows[0].id; 
     const insertUserInfoQuery = `INSERT INTO "reset_password" (id, email)
                      VALUES ($1, $2) RETURNING id`;
-    await pool.query(insertUserInfoQuery, [userID, userEmail]); // start of second query (inserts data into the reset_password table based off user info)
+    await pool.query(insertUserInfoQuery, [userID, userEmail]); 
     const getUUIDQuery = `SELECT "uuid" FROM "reset_password" WHERE "id" = $1 AND "email" = $2`;
-
-    const user_uuid = await pool.query(getUUIDQuery, [userID, userEmail]); // start of third query (gets uuid from reset_password table and passes into into a link to send to the user email)
+    const user_uuid = await pool.query(getUUIDQuery, [userID, userEmail]); 
     const resetPasswordUUID = user_uuid.rows[0].uuid;
-    const resetEmail = {
-      // nodemailer handler, this is what the email will be
+    const resetEmail = { // nodemailer module
       from: 'Stemtelltest@gmail.com',
       to: `${userEmail}`,
       subject: 'STEMTelling Password Reset Request',
       text: `${websiteURL}?confirmation=${resetPasswordUUID}`,
     };
     transporter.sendMail(resetEmail, (error, info) => {
-      // sends the email via nodemailer
       if (error) {
-        return console.log(error); // catch any nodemailer errors
+        return console.log(error);
       }
       res
         .status(200)
-        .send({ message: 'Mail send', message_id: info.messageId }); // success
+        .send({ message: 'Mail send', message_id: info.messageId }); 
     });
-    res.sendStatus(200); // send back a positive status code for our third query
-  } catch (error) {
-    console.log('Error in first query in password reset:', error);
+    res.sendStatus(200); 
+  }
+  catch (error) {
+    console.log('Error in sending password reset email:', error);
     res.sendStatus(401);
   }
 });
 
+// GET /api/resetpassword/getuuid
+// checks for a valid uuid in the reset_password table
 router.get('/getuuid', (req, res) => {
-  // checks for a valid uuid in the reset_password table
   const uuid = req.query.uuid;
   const qText = `SELECT * FROM "reset_password" WHERE "uuid" = $1`;
   pool
     .query(qText, [uuid])
     .then((results) => {
-      res.send(results.rows); // if there is a uuid, send it back
+      res.send(results.rows); 
     })
     .catch(() => {
       res.send('invalid');
-      // if there is no uuid in the database, an error will be caught. rather than logging it, we manipulate the error to send back a status in order to decline the ability to change password
-      // removing this wil result in an error
     });
 });
 
 // Handles POST request for resetting/updating the user password
 // This is only called after an email has been entered, confirmed, and a new password has been selected by the user
 // follows code similar to regular registration
-router.post('/changepassword', (req, res, next) => {
-  const password = encryptLib.encryptPassword(req.body.newPassword);
-  const uuid = req.body.uuid;
-  const getUserQuery = 'SELECT * FROM "reset_password" WHERE "uuid" = $1';
-  pool
-    .query(getUserQuery, [uuid]) // start of first query (gets info from reset_password table where uuid matches that in the link)
-    .then((results) => {
+router.post('/changepassword', async (req, res, next) => {
+   try {
+      const password = encryptLib.encryptPassword(req.body.newPassword);
+      const uuid = req.body.uuid;
+      const getUserQuery = 'SELECT * FROM "reset_password" WHERE "uuid" = $1';
+      const results = await pool.query(getUserQuery, [uuid]);
       const updateUserQuery = `UPDATE "user" SET "password" = $1 WHERE "id" = $2 AND "email" = $3`;
       const userID = results.rows[0].id;
       const userEmail = results.rows[0].email;
-      pool
-        .query(updateUserQuery, [password, userID, userEmail]) // start of second query (updates user password based off their email attached to the uuid)
-        .then(() => {
-          const clearResetTableQuery = `DELETE FROM "reset_password" WHERE "uuid" = $1`; // start of third query (deletes user from reset_password table)
-          pool
-            .query(clearResetTableQuery, [uuid])
-            .then(() => {
-              res.sendStatus(200);
-            })
-            .catch((error) => {
-              // end of third query
-              console.log('Error in clearing reset table: ', error);
-              res.sendStatus(401);
-            });
-        })
-        .catch((error) => {
-          // end of second query
-          console.log('Error in changing password: ', error);
-          res.sendStatus(401);
-        });
-    })
-    .catch((error) => {
-      // end of first query
+      await pool.query(updateUserQuery, [password, userID, userEmail]);
+      const clearResetTableQuery = `DELETE FROM "reset_password" WHERE "uuid" = $1`; 
+      await pool.query(clearResetTableQuery, [uuid]);
+   }
+    catch (error) {
       console.log('Change password failed: ', error);
       res.sendStatus(500);
-    });
+    };
 });
 
 module.exports = router;
