@@ -16,7 +16,6 @@ function* getUUID(action) { // called on ResetPasswordPage load, checks if the U
    const uuid = action.payload.uuid;
    try {
       const response = yield axios.get('/api/resetpassword/getuuid', { params: { uuid } }); // sends the UUID to resetpassword.router.js for validation
-      console.log(response.data);
       if (response.data == 'invalid' || response.data.length == 0) { // if the server responds with 'invalid', or with an empty array, an error occurs on the DOM
          yield put ({type: 'INVALID_LINK'});
       };
@@ -27,7 +26,6 @@ function* getUUID(action) { // called on ResetPasswordPage load, checks if the U
 };
 
 function* changePassword(action) { // handles changing the user password
-   console.log(action.payload);
    try {
       yield axios.post('/api/resetpassword/changepassword', action.payload);
    }
