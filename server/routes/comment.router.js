@@ -12,7 +12,8 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   FROM "comment"
   JOIN "user" ON "comment".user_id = "user".id
   JOIN "stemtell" ON "stemtell".id = "comment".stemtell_id
-  WHERE  "user".authority = 'student'  ;`;
+  WHERE  "user".authority = 'student'  
+  ORDER BY "date_published" desc;`;
   pool
     .query(query)
     .then((result) => {
@@ -28,8 +29,23 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 /**
  * POST route template
  */
-router.post('/', (req, res) => {
-  // POST route code here
+router.post('/:', rejectUnauthenticated, (req, res) => {
+  const query= `INSERT INTO "comment" ("comment", "user_id", "stemtell_id", "date_published", "teacher_feedback")
+  VALUES $1, $2, $3, $4, $5, $6;`;
+  pool
+  .query(query, [
+    req.body.comment,
+    req.body.user_id,
+    req.body.stemtell_id,
+    req.body.date_published,
+    req.body.teacher_feedback,
+  ])
+  .then((result) => {
+    console.log('New comment posted', result);
+  })
+  .catch((error) => {
+    console.log('Error Posting comment', error);
+  })
 });
 
 module.exports = router;
