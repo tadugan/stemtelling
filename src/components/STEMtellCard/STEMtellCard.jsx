@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import { Avatar, Card, Container, Grid } from "@material-ui/core";
 // import { makeStyles } from "@material-ui/core";
 import "./STEMtellCard.css";
-
+import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 
 
 function StemtellCard() {
 
+  const history = useHistory();
   useEffect(() => {
     dispatch({ type: "FETCH_STUDENT_CLASS"})
     dispatch({ type: "FETCH_STEMTELLS"});
