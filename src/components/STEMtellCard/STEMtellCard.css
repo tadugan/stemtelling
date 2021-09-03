@@ -1,5 +1,5 @@
 .StemCard {
-  margin: 20px;
+  margin: 6px;
   padding: 16px;
   align-items: center;
   justify-content: center;
@@ -44,5 +44,8 @@
 }
 
 #stemTitle{
-  margin-top: 24px;
+  display: inline-block;
+  text-align: center;
+  font-size: 18px;
+  padding: 4px;
 }
