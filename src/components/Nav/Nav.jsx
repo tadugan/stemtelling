@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import LogOutButton from '../LogOutButton/LogOutButton';
+import React from 'react';
 import './Nav.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -9,24 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
-import { AppBar, Button, Grid, Toolbar } from '@material-ui/core';
-
-
-const studentOptions = [
-  'Home',
-  'Profile',
-  'Create',
-  'Logout'
-];
-
-const teacherOptions = [
-  'Home',
-  'Profile',
-  'Create',
-  'Review STEMtells',
-  'Class List',
-  'Logout'
-]
+import { AppBar, Grid, Toolbar } from '@material-ui/core';
 
 const ITEM_HEIGHT = 48;
 

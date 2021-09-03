@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import AddTagDialog from '../AddTagDialog/AddTagDialog';
 import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
 import "./CreateSTEMtell.css";
+import { useHistory } from 'react-router';
 
 function CreateSTEMtell() {
 
     const dispatch = useDispatch();
-
+    const history = useHistory();
     const [ classId, setClassId ] = useState(1);
     const [ title, setTitle ] = useState('');
     const [ imageUrl, setImageUrl] = useState('');
@@ -51,7 +52,7 @@ function CreateSTEMtell() {
     }
 
     const handleCancel = () => {
-        console.log('CANCEL');
+      history.goBack();
     }
 
   return (

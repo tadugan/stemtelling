@@ -4,7 +4,6 @@ import {
   Redirect,
   Route,
   Switch,
-  Link,
 } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,7 +17,6 @@ import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import ProfilePage from '../ProfilePage/ProfilePage';
 import InfoPage from '../InfoPage/InfoPage';
-import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage';
@@ -157,8 +155,8 @@ function App() {
               // redirect them to the /user page
               <Redirect to="/myprofile" />
               :
-              // Otherwise, show the Landing page
-              <LandingPage />
+              // Otherwise, show the user page
+              <Homepage />
             }
           </Route>
 

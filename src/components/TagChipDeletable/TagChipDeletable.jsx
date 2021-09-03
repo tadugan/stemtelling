@@ -1,6 +1,6 @@
-import { Button, Chip } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import { Chip } from '@material-ui/core';
+import React from 'react';
+import {useDispatch } from 'react-redux';
 import './TagChipDeletable.css';
 
 function TagChipDeletable( {tagInfo} ) {
