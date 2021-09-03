@@ -1,58 +1,36 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import AddTagDialog from '../AddTagDialog/AddTagDialog';
 import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
-import "./CreateSTEMtell.css";
-import { useHistory } from 'react-router';
 
-function CreateSTEMtell() {
-
+function EditSTEMtell() {
     const dispatch = useDispatch();
-    const history = useHistory();
+    const history= useHistory();
     const [ classId, setClassId ] = useState(1);
     const [ title, setTitle ] = useState('');
     const [ imageUrl, setImageUrl] = useState('');
     const [ description, setDescription ] = useState('');
-
     const selectedTags = useSelector(store => store.selectedTags);
-    // TODO: Remove unused variables!
-    // const allTags = useSelector(store => store.tags);
+    const getSearchQueryByFullURL = (url) => {return url.split('/')};
+    const stemtell = useSelector((store) => store.stemtells);
 
-    const handleSubmit = () => {
-        event.preventDefault();
-
-        // array to store tag ids
-        const tagIds = [];
-
-        // add ids to tagIds array
-        for (const tag of selectedTags) {
-            tagIds.push(tag.id);
-        }
-
-        // Dispatch captured inputs to SAGA
-        dispatch({ type: 'SUBMIT_NEW_STEMTELL', payload: {
-            title: title,
-            body_text: description,
-            media_url: imageUrl,
-            class_id: classId,
-            tag_ids: tagIds
-            }
-        });
-
-        // Clear Input Fields
-        setClassId(1);
-        setTitle('');
-        setImageUrl('');
-        setDescription('');
-        dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
-
-        // Return user to previous view
-        // TODO:
-    }
+    useEffect(() => {
+         // dispatch({ type: "GET_STEMTELL", payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1])});
+         // setDescription(stemtell.body_text);
+         console.log(stemtell);  
+         // setTitle(stemtell[0].title);
+         // setImageUrl(stemtell[0].media_url);
+         // setClassId(stemtell[0].class_id)
+    }, []);
 
     const handleCancel = () => {
-      history.goBack();
+       history.goBack()
+    }
+
+    const test = (itemInfo) => {
+       console.log(itemInfo)
     }
 
   return (
@@ -185,7 +163,7 @@ function CreateSTEMtell() {
                         <Button
                             variant="contained"
                             color="primary"
-                            onClick={handleSubmit}
+                            onClick={test}
                             type="submit"
                         >
                             Submit
@@ -198,4 +176,4 @@ function CreateSTEMtell() {
   );
 }
 
-export default CreateSTEMtell;
+export default EditSTEMtell;
