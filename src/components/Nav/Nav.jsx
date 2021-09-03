@@ -72,7 +72,7 @@ function Nav() {
                 },
               }}
             >
-              <MenuItem onClick={() => handleHistoryPush('home')}>
+              <MenuItem onClick={() => handleHistoryPush('homepage')}>
                   Home
               </MenuItem>
               <MenuItem onClick={() => handleHistoryPush(`profile/${user.id}`)}>
@@ -102,7 +102,7 @@ function Nav() {
                 },
               }}
               >
-              <MenuItem onClick={() => handleHistoryPush('home')}>
+              <MenuItem onClick={() => handleHistoryPush('homepage')}>
                   Home
               </MenuItem>
               <MenuItem onClick={() => handleHistoryPush(`profile/${user.id}`)}>
