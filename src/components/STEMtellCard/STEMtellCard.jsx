@@ -18,6 +18,7 @@ function StemtellCard() {
   const stemtells = useSelector((store) => store.stemtells);
 
   const onUserProfile = (author_id) => {
+    // TODO: If this is working, remove console.log()
     console.log("Clicked profile with author_id:", author_id);
     history.push(`/profile/${author_id}`);
   }
@@ -36,9 +37,9 @@ function StemtellCard() {
           <div className="UserName" id="userClass">
             {stemtell.class_name}
           </div>
-        
+
           <h3 id="stemTitle"> {stemtell.title}</h3>
-          
+
           <img src={stemtell.media_url} />
           <section id="cardReactions">{stemtell.reaction_name}</section>
 
@@ -49,7 +50,7 @@ function StemtellCard() {
         })}
     </Grid>
     </Container>
-    
+
 )
 };
 

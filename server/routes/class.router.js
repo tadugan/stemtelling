@@ -3,13 +3,15 @@ const pool = require('../modules/pool');
 const router = express.Router();
 const rejectUnauthenticated = require('../modules/authentication-middleware').rejectUnauthenticated;
 
+
 /**
- * GET route template
+ * GET api/class/
+ * Description ...
+ * Returns an array of class object: { class object model }
  */
 router.get('/', (req, res) => {
-  // GET route code here
   const query = `SELECT * FROM "class"
-  JOIN "user_class" ON "user_class".class_id= "class".id
+  JOIN "user_class" ON "user_class".class_id = "class".id
   WHERE "user_class".user_id = 3;`
   pool
   .query(query)
@@ -25,12 +27,14 @@ router.get('/', (req, res) => {
 
 //gets students from a class list
 router.get('/details', rejectUnauthenticated, (req, res) => {
+  // TODO: Fix hard coded value for the class_id property!
   const query= `SELECT "user".name AS username, "user".profile_picture_url, "user_class".user_id
   FROM "user"
   JOIN "user_class" ON "user".id = "user_class".user_id
   join "class" on "class".id = "user_class".class_id
   WHERE  "user".authority = 'student'
   AND "user_class".class_id = 1  ;`;
+
   pool
     .query(query)
     .then((result) => {
@@ -43,12 +47,15 @@ router.get('/details', rejectUnauthenticated, (req, res) => {
 });
 
 
+// TODO: Setup class creation!
 /**
  * POST route template
  */
 router.post('/', (req, res) => {
   // POST route code here
 });
+
+// TODO: Setup class edit? PUT
 
 
 router.delete("/details/:id", rejectUnauthenticated, (req, res) => {
