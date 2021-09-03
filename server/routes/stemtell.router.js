@@ -29,46 +29,50 @@ router.get('/', (req, res) => {
 
 
 /**
- * POST a new STEMtell
+ * POST api/stemtell/
+ * Description: INSERTS a new STEMtell into "stemtell" table and INSERTS tags into "stemtell_tag" table 
+ * Returns 201 CREATED
  */
 router.post('/', rejectUnauthenticated, (req, res) => {
     const newStemtell = req.body;
     const user = req.user;
 
-    const queryTextAddStemtell = `
-    INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "date_published")
-	  VALUES ($1, $2, $3, $4, $5, NOW())
-    RETURNING id;
-    `;
+    (async () => {
+      const client = await pool.connect();
+      console.log('Inside POST, outside trycatch');
+      try {
+          console.log('inside trycatch');
+          await client.query('BEGIN');
+          const queryTextAddStemtell = `
+          INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "date_published")
+          VALUES ($1, $2, $3, $4, $5, NOW())
+          RETURNING id
+          `;
+          const response = await client.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, newStemtell.media_url]);
+  
+          const stemtellId = response.rows[0].id;
 
-    const queryTextAddTag = `
-    INSERT INTO stemtell_tag ("tag_id", "stemtell_id")
-	  VALUES ($1, $2);
-    `;
+          const queryTextAddTag = `
+          INSERT INTO stemtell_tag ("tag_id", "stemtell_id")
+          VALUES ($1, $2)
+          `;
+  
+          console.log('response', response);
 
-    // TODO Modify to use TRANSACTIONS from node-postgres
-    // TODO Convert to async/await for clarity of code
-    pool.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, newStemtell.media_url])
-      .then(response => {
-        const stemTellId = response.rows[0].id;
-        for (let i=0; i<newStemtell.tag_ids.length; i++) {
-            pool.query(queryTextAddTag, [newStemtell.tag_ids[i], stemTellId])
-                .then(response => {
-                    if ( i === newStemtell.tag_ids.length) {
-                        res.sendStatus(201);
-                    }
-                })
-                .catch(error => {
-                  console.log('Error adding tags to database. Error', error);
-                  res.sendStatus(500);
-              });
-        }
-        res.sendStatus(201);
-      })
-      .catch(error => {
-        console.log('Error adding new stemtell to database. Error:', error);
-        res.sendStatus(500);
-      });
+          for (let id of newStemtell.tag_ids) {
+              console.log('Inside for loop. id:', id);
+              await client.query(queryTextAddTag, [id, stemtellId]);
+          }
+  
+          await client.query('COMMIT');
+          
+      } catch (err) {
+          await client.query('ROLLBACK');
+          throw err;
+      } finally {
+        client.release();
+      }
+    })().catch(e => console.error(e.stack))
 });
 
 router.get('/userstemtells', (req, res) => {
