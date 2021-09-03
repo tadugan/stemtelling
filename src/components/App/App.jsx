@@ -116,9 +116,9 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
-            // logged in shows CreateSTEMtell else shows LoginPage
+            
             exact
-            path="/userstemtells/:id"
+            path="/stemtell/details/:id"
           >
             <StemtellDetails />
           </ProtectedRoute>

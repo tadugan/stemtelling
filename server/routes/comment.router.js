@@ -13,7 +13,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   JOIN "stemtell" ON "stemtell".id = "comment".stemtell_id
   WHERE  "user".authority = 'student' ;`;
   pool
-    .query(query, [stemtellId])
+    .query(query)
     .then((result) => {
       console.log('successful GETTING comments', result.rows); // remove!
       res.send(result.rows);
