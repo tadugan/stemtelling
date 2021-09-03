@@ -2,7 +2,7 @@
   margin-left: 1000px;
 }
 .StemCard {
-  margin: 20px;
+  margin: 6px;
   padding: 16px;
   align-items: center;
   justify-content: center;
@@ -40,4 +40,15 @@
 #stemDescription {
   padding: 8px;
   color: #727272;
+}
+
+#stemDate{
+  float: right;
+}
+
+#stemTitle{
+  display: inline-block;
+  text-align: center;
+  font-size: 18px;
+  padding: 4px;
 }
