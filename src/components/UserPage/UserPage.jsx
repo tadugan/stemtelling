@@ -30,13 +30,13 @@ function UserPage() {
 
     const editStemtell = (stemtellID) => {
        console.log(stemtellID);
+      //  redirect to edit stemtell
     }
 
    return (
       <div className={classes.root}>
       <Grid container>
         <Grid item xs={12} sm={3}> 
-        {/* user profile information */}
           <Paper className={classes.paper}>
             <img src={user.profile_picture_url}></img>
             <h2>{user.name}</h2> 
@@ -44,7 +44,6 @@ function UserPage() {
           </Paper>
         </Grid>
         <Grid item xs={12} sm={9}>
-           {/* user stemtells */}
           <Paper className={classes.paper}>Your STEMtells</Paper>
           <Grid container>
             {stemtells.map((stemtell) => {

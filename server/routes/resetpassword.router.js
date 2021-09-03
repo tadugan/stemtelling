@@ -4,8 +4,6 @@ const router = express.Router();
 const encryptLib = require('../modules/encryption');
 var nodemailer = require('nodemailer');
 require('dotenv').config();
-const { URLSearchParams } = require('url');
-
 const transporter = nodemailer.createTransport({
   // nodemailer handler, auth should be stored as a local .env variable and input in auth to avoid sensitive data leaking
   service: 'Gmail', // can be changed to different services, https://nodemailer.com/smtp/well-known/
@@ -29,7 +27,6 @@ router.delete('/removerequest', (req, res) => {
       res.sendStatus(401);
     });
 });
-
 
 // POST /api/resetpassword/sendresetemail
 // sends an email to the entered email
