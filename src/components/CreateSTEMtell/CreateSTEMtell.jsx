@@ -1,5 +1,5 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AddTagDialog from '../AddTagDialog/AddTagDialog';
 import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
@@ -15,8 +15,7 @@ function CreateSTEMtell() {
     const [ description, setDescription ] = useState('');
 
     const selectedTags = useSelector(store => store.selectedTags);
-    // TODO: Remove unused variables!
-    // const allTags = useSelector(store => store.tags);
+    const classList = useSelector(store => store.classes);
 
     const handleSubmit = () => {
         event.preventDefault();
@@ -53,6 +52,14 @@ function CreateSTEMtell() {
     const handleCancel = () => {
         console.log('CANCEL');
     }
+
+    const getClassList = () => {
+        dispatch({ type: 'FETCH_CLASSES'});
+    }
+
+    useEffect(() => {
+        getClassList();
+    }, []);
 
   return (
     <div className="create-stemtell-body">
