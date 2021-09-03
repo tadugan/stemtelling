@@ -128,23 +128,6 @@ function AddTagDialog() {
                 </ButtonGroup>
               </Grid>
             </Grid>
-            {/* <Grid
-                                item
-                                container
-                                spacing={1}
-                                direction="row"
-                                justifyContent="center"
-                                alignItems="center"
-                            >
-                                {allTags.map((tag, index) => {
-                                    return (
-                                        <Grid item key={index}>
-                                            <TagChip tagInfo={tag} selectedTags={selectedTags} />
-                                        </Grid>
-                                    );
-                                })}
-                                {conditionalTagDisplay()}
-                            </Grid> */}
             {conditionalTagDisplay()}
           </Grid>
         </div>

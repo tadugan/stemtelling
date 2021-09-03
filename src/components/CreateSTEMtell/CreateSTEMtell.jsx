@@ -1,5 +1,5 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AddTagDialog from '../AddTagDialog/AddTagDialog';
 import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
@@ -14,13 +14,18 @@ function CreateSTEMtell() {
     const [ title, setTitle ] = useState('');
     const [ imageUrl, setImageUrl] = useState('');
     const [ description, setDescription ] = useState('');
+    const [ alertMessage, setAlertMessage ] = useState('');
 
     const selectedTags = useSelector(store => store.selectedTags);
-    // TODO: Remove unused variables!
-    // const allTags = useSelector(store => store.tags);
+    const classList = useSelector(store => store.classes);
 
     const handleSubmit = () => {
         event.preventDefault();
+
+        // validate class input
+        if (invalidInputs()) {
+            return;
+        }
 
         // array to store tag ids
         const tagIds = [];
@@ -41,7 +46,7 @@ function CreateSTEMtell() {
         });
 
         // Clear Input Fields
-        setClassId(1);
+        setClassId(0);
         setTitle('');
         setImageUrl('');
         setDescription('');
@@ -54,6 +59,68 @@ function CreateSTEMtell() {
     const handleCancel = () => {
       history.goBack();
     }
+
+    const getClassList = () => {
+        dispatch({ type: 'FETCH_CLASSES'});
+    }
+
+    const invalidInputs = () => {
+        if (classId === 0) {
+            setAlertMessage('class');
+            return true;
+        } 
+        else if (title === '') {
+            setAlertMessage('title');
+            return true;
+        }
+        else if (description === '') {
+            setAlertMessage('description');
+            return true;
+        }
+        else if (selectedTags.length === 0) {
+            setAlertMessage('tag');
+            return true;
+        }
+        else {
+            setAlertMessage('');
+            return false;
+        }
+    }
+
+    const conditionalInputAlert = (alertType) => {
+        switch (alertType) {
+            case 'class':
+                return (
+                    <Grid item xs={12}>
+                        <h4 className="create-stemtell-input-alert" >*Please Select a Class to your STEMtell</h4>
+                    </Grid>
+                );
+            case 'title':
+                return (
+                    <Grid item xs={12}>
+                        <h4 className="create-stemtell-input-alert" >*Please Add a Title to your STEMtell</h4>
+                    </Grid>
+                );
+            case 'description':
+            return (
+                <Grid item xs={12}>
+                    <h4 className="create-stemtell-input-alert" >*Please add text to your STEMtell</h4>
+                </Grid>
+            );
+            case 'tag':
+                return (
+                    <Grid item xs={12}>
+                        <h4 className="create-stemtell-input-alert" >*Please some tags to your STEMtell</h4>
+                    </Grid>
+                );
+            default:
+                return;
+        }
+    }
+
+    useEffect(() => {
+        getClassList();
+    }, []);
 
   return (
     <div className="create-stemtell-body">
@@ -84,12 +151,16 @@ function CreateSTEMtell() {
                         label="Age"
                         className="create-stemtell-class-select"
                         >
-                        <MenuItem value="">
+                        <MenuItem value={0}>
                             <em>Choose a Class</em>
                         </MenuItem>
-                        {/* This needs to be based on the classes the student is enrolled in */}
-                        <MenuItem value={1}>CHEM</MenuItem>
-                        <MenuItem value={2}>BIO</MenuItem>
+                        {classList.map(classItem => {
+                            return (
+                                <MenuItem key={classItem.id} value={classItem.class_id}>
+                                    {classItem.name}
+                                </MenuItem>
+                            );
+                        })}
                         </Select>
                     </FormControl>
                 </Grid>
@@ -191,6 +262,7 @@ function CreateSTEMtell() {
                             Submit
                         </Button>
                     </Grid>
+                    {conditionalInputAlert(alertMessage)}
                 </Grid>
             </Grid>
         </form>
