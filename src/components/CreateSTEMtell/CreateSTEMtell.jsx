@@ -9,7 +9,7 @@ function CreateSTEMtell() {
 
     const dispatch = useDispatch();
 
-    const [ classId, setClassId ] = useState(1);
+    const [ classId, setClassId ] = useState(0);
     const [ title, setTitle ] = useState('');
     const [ imageUrl, setImageUrl] = useState('');
     const [ description, setDescription ] = useState('');
@@ -19,6 +19,12 @@ function CreateSTEMtell() {
 
     const handleSubmit = () => {
         event.preventDefault();
+
+        // validate class input
+        if (classId === 0) {
+            // TODO: display "please select a class" on the DOM
+            return;
+        }
 
         // array to store tag ids
         const tagIds = [];
@@ -39,7 +45,7 @@ function CreateSTEMtell() {
         });
 
         // Clear Input Fields
-        setClassId(1);
+        setClassId(0);
         setTitle('');
         setImageUrl('');
         setDescription('');
@@ -90,12 +96,16 @@ function CreateSTEMtell() {
                         label="Age"
                         className="create-stemtell-class-select"
                         >
-                        <MenuItem value="">
+                        <MenuItem value={0}>
                             <em>Choose a Class</em>
                         </MenuItem>
-                        {/* This needs to be based on the classes the student is enrolled in */}
-                        <MenuItem value={1}>CHEM</MenuItem>
-                        <MenuItem value={2}>BIO</MenuItem>
+                        {classList.map(classItem => {
+                            return (
+                                <MenuItem key={classItem.id} value={classItem.class_id}>
+                                    {classItem.name}
+                                </MenuItem>
+                            );
+                        })}
                         </Select>
                     </FormControl>
                 </Grid>
