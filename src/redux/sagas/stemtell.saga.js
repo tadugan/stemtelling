@@ -31,7 +31,9 @@ function* editStemtell(action){
    try {
       const stemtellID = action.payload;
       const stemtell = yield axios.get("/api/stemtell/editstemtell", { params: { stemtellID } });
+      console.log('returned:', stemtell.data);
       yield put({type: "SET_EDIT_STEMTELL", payload: stemtell.data});
+      return(stemtell.data);
    } catch(err){
       console.log("get stemtell to edit error", err);
    };

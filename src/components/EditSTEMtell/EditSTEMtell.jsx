@@ -15,34 +15,17 @@ function EditSTEMtell() {
     const stemtell = useSelector((store) => store.stemtells[0]);
 
     useEffect(() => {
-      dispatch({ type: "EDIT_STEMTELL", payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1])});
+         dispatch({ type: "EDIT_STEMTELL", payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1])});
     }, []);
 
-    const handleSubmit = () => {
-        event.preventDefault();
-        const tagIds = [];
-        for (const tag of selectedTags) {
-            tagIds.push(tag.id);
-        }
-        // Dispatch captured inputs to SAGA
-        dispatch({ type: 'SUBMIT_NEW_STEMTELL', payload: {
-            title: title,
-            body_text: description,
-            media_url: imageUrl,
-            class_id: classId,
-            tag_ids: tagIds
-            }
-        });
-        // Clear Input Fields
-        setClassId(1);
-        setTitle('');
-        setImageUrl('');
-        setDescription('');
-        dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
-    }
-
     const handleCancel = () => {
-        console.log(stemtell);
+        console.log(stemtell.body_text);
+        setDescription(stemtell.body_text);
+        setTitle(stemtell.title);
+        setImageUrl(stemtell.media_url);
+        setClassId(stemtell.class_id)
+        
+
     }
 
     const test = (itemInfo) => {
