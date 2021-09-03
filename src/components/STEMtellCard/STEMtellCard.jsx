@@ -1,10 +1,8 @@
+import { Avatar, Card, Grid } from "@material-ui/core";
 import React, { useEffect } from "react";
-import { Avatar, Card, Container, Grid } from "@material-ui/core";
-import "./STEMtellCard.css";
-import { useHistory } from "react-router";
-
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router";
+import "./STEMtellCard.css";
 
 
 function StemtellCard() {
@@ -21,7 +19,6 @@ function StemtellCard() {
   const dispatch = useDispatch();
   const history = useHistory();
   const stemtells = useSelector((store) => store.stemtells);
-  const history = useHistory();
 
   const onUserProfile = (author_id) => {
     // TODO: If this is working, remove console.log()
