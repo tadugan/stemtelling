@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
@@ -8,7 +8,8 @@ import { useHistory } from 'react-router';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import MenuIcon from '@material-ui/icons/Menu';
+import { AppBar, Button, Grid, Toolbar } from '@material-ui/core';
 
 
 const studentOptions = [
@@ -29,7 +30,6 @@ const teacherOptions = [
 
 const ITEM_HEIGHT = 48;
 
-
 function Nav() {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
@@ -45,131 +45,149 @@ function Nav() {
     setAnchorEl(null);
   };
 
-  const handleHome = () => {
-    history.push('/user')
+  const handleLogout = () => {
+    dispatch({ type: 'LOGOUT' });
+    handleClose();
   };
 
-  const handleProfile = () => {
-    history.push()
-  };
-  
-  const handleCreate = () => {
-    history.push()
-  };
+  const handleHistoryPush = (destination) => {
+      history.push(`/${destination}`);
+      handleClose();
+  }
 
-   const handleLogout = () => {
-  //   dispatch({ type: 'LOGOUT' })
-   };
+  const conditionalMenu = () => {
+    // displays menu items if a user is a student
+    if (user.authority === 'student') {
+        return (
+            <Menu
+              id="long-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={open}
+              onClose={handleClose}
+              PaperProps={{
+                style: {
+                maxHeight: ITEM_HEIGHT * 4.5,
+                width: '20ch',
+                },
+              }}
+            >
+              <MenuItem onClick={() => handleHistoryPush('home')}>
+                  Home
+              </MenuItem>
+              <MenuItem onClick={() => handleHistoryPush(`profile/${user.id}`)}>
+                  Profile
+              </MenuItem>
+              <MenuItem onClick={() => handleHistoryPush('create')}>
+                  Create STEMtell
+              </MenuItem>
+              <MenuItem onClick={handleLogout}>
+                  Logout
+              </MenuItem>
+            </Menu>
+        );
+    }
+    else if (user.authority === 'teacher') {
+      return (
+          <Menu
+              id="long-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={open}
+              onClose={handleClose}
+              PaperProps={{
+                style: {
+                maxHeight: ITEM_HEIGHT * 6.5,
+                width: '20ch',
+                },
+              }}
+              >
+              <MenuItem onClick={() => handleHistoryPush('home')}>
+                  Home
+              </MenuItem>
+              <MenuItem onClick={() => handleHistoryPush(`profile/${user.id}`)}>
+                  Profile
+              </MenuItem>
+              <MenuItem onClick={() => handleHistoryPush('create')}>
+                  Create STEMtell
+              </MenuItem>
+              <MenuItem onClick={() => handleHistoryPush('review')}>
+                  Review STEMtells
+              </MenuItem>
+              <MenuItem onClick={() => handleHistoryPush('classlist')}>
+                  Class List
+              </MenuItem>
+              <MenuItem onClick={handleLogout}>
+                  Logout
+              </MenuItem>
+          </Menu>
+      );
+    }
+    else {
+        return (
+          <Menu
+              id="long-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={open}
+              onClose={handleClose}
+              PaperProps={{
+                style: {
+                maxHeight: ITEM_HEIGHT * 6.5,
+                width: '20ch',
+                },
+              }}
+              >
+              <MenuItem onClick={() => handleHistoryPush('login')}>
+                  Login
+              </MenuItem>
+              <MenuItem onClick={() => handleHistoryPush('registration')}>
+                  Register
+              </MenuItem>
+              <MenuItem onClick={() => handleHistoryPush('about')}>
+                  About STEMtelling
+              </MenuItem>
+          </Menu>
+        );
+    }
+  }
 
   return (
-    <div className="nav">
-      <Link to="/home">
-        <h2 className="nav-title"> STEMtell</h2>
-      </Link>
       <div>
-        {/* If no user is logged in, show these links */}
-        {user.id === null &&
-          // If there's no user, show login/registration links
-          <Link className="navLink" to="/login">
-            Login / Register
-          </Link>
-        }
-
-        {/* If a student is logged in, show these links */}
-        {user.id && (
-          // <>
-          //   <Link className="navLink" to="/user">
-          //     Home
-          //   </Link>
-
-          //   <Link className="navLink" to="/info">
-          //     Info Page
-          //   </Link>
-
-          //   <LogOutButton className="navLink" />
-          // </>
-          <div>
-            <IconButton
-            aria-label="more"
-            aria-controls="long-menu"
-            aria-haspopup="true"
-            onClick={handleClick}
-            >
-          <MoreVertIcon />
-          </IconButton>
-          <Menu
-            id="long-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={open}
-            onClose={handleClose}
-            PaperProps={{
-              style: {
-              maxHeight: ITEM_HEIGHT * 4.5,
-              width: '20ch',
-              },
-            }}
-          >
-            {/* Will NEED edit this portion to work depending on what is clicked */}
-            {studentOptions.map((option) => (
-              <MenuItem key={option} selected={option === 'Home'} onClick={handleHome}>
-              {option}
-              </MenuItem>,
-              <MenuItem key={option} selected={option === 'Profile'} onClick={handleProfile}>
-              {option}
-              </MenuItem>,
-              <MenuItem key={option} selected={option === 'Create'} onClick={handleCreate}>
-              {option}
-              </MenuItem>,
-              <MenuItem key={option} selected={option === 'Logout'} onClick={handleLogout}>
-              {option}
-              </MenuItem>
-            ))}
-            </Menu>
-          </div>
- 
-        )}
-
-
-        {/* If a teacher is logged in, show these links */}
-        {/* {user.id && (
-          <div>
-            <IconButton
-            aria-label="more"
-            aria-controls="long-menu"
-            aria-haspopup="true"
-            onClick={handleClick}
-            >
-          <MoreVertIcon />
-          </IconButton>
-          <Menu
-            id="long-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={open}
-            onClose={handleClose}
-            PaperProps={{
-              style: {
-              maxHeight: ITEM_HEIGHT * 4.5,
-              width: '20ch',
-              },
-            }}
-          >
-            {teacherOptions.map((option) => (
-              <MenuItem key={option} selected={option === 'Home'} onClick={handleHome}>
-              {option}
-              </MenuItem>
-            ))}
-            </Menu>
-          </div>
- 
-            )}*/}
-
-        <Link className="navLink" to="/about">
-          About
-        </Link>
+          <AppBar position="static">
+            <Toolbar>
+              <Grid
+                  container
+                  spacing={0}
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+              >
+                <Grid
+                  item
+                >
+                  <h2>STEMtelling</h2>
+                </Grid>
+                <Grid
+                  item
+                >
+                  <div>
+                    <IconButton
+                      aria-label="more"
+                      aria-controls="long-menu"
+                      aria-haspopup="true"
+                      onClick={handleClick}
+                      color="inherit"
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                        {conditionalMenu()}
+                    </div>
+                </Grid>
+              </Grid>
+            </Toolbar>
+          </AppBar>
       </div>
-    </div>
   );
 }
 
