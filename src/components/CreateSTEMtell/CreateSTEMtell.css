@@ -18,3 +18,7 @@
 .create-stemtell-description {
     width: 360px;
 }
+.create-stemtell-input-alert {
+    color: red;
+    text-align: center;
+}

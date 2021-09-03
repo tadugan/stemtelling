@@ -13,6 +13,7 @@ function CreateSTEMtell() {
     const [ title, setTitle ] = useState('');
     const [ imageUrl, setImageUrl] = useState('');
     const [ description, setDescription ] = useState('');
+    const [ alertMessage, setAlertMessage ] = useState('');
 
     const selectedTags = useSelector(store => store.selectedTags);
     const classList = useSelector(store => store.classes);
@@ -21,8 +22,7 @@ function CreateSTEMtell() {
         event.preventDefault();
 
         // validate class input
-        if (classId === 0) {
-            // TODO: display "please select a class" on the DOM
+        if (invalidInputs()) {
             return;
         }
 
@@ -61,6 +61,60 @@ function CreateSTEMtell() {
 
     const getClassList = () => {
         dispatch({ type: 'FETCH_CLASSES'});
+    }
+
+    const invalidInputs = () => {
+        if (classId === 0) {
+            setAlertMessage('class');
+            return true;
+        } 
+        else if (title === '') {
+            setAlertMessage('title');
+            return true;
+        }
+        else if (description === '') {
+            setAlertMessage('description');
+            return true;
+        }
+        else if (selectedTags.length === 0) {
+            setAlertMessage('tag');
+            return true;
+        }
+        else {
+            setAlertMessage('');
+            return false;
+        }
+    }
+
+    const conditionalInputAlert = (alertType) => {
+        switch (alertType) {
+            case 'class':
+                return (
+                    <Grid item xs={12}>
+                        <h4 className="create-stemtell-input-alert" >*Please Select a Class to your STEMtell</h4>
+                    </Grid>
+                );
+            case 'title':
+                return (
+                    <Grid item xs={12}>
+                        <h4 className="create-stemtell-input-alert" >*Please Add a Title to your STEMtell</h4>
+                    </Grid>
+                );
+            case 'description':
+            return (
+                <Grid item xs={12}>
+                    <h4 className="create-stemtell-input-alert" >*Please add text to your STEMtell</h4>
+                </Grid>
+            );
+            case 'tag':
+                return (
+                    <Grid item xs={12}>
+                        <h4 className="create-stemtell-input-alert" >*Please some tags to your STEMtell</h4>
+                    </Grid>
+                );
+            default:
+                return;
+        }
     }
 
     useEffect(() => {
@@ -207,6 +261,7 @@ function CreateSTEMtell() {
                             Submit
                         </Button>
                     </Grid>
+                    {conditionalInputAlert(alertMessage)}
                 </Grid>
             </Grid>
         </form>
