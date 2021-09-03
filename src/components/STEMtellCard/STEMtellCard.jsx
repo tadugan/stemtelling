@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Avatar, Card, Container, Grid } from "@material-ui/core";
 // import { makeStyles } from "@material-ui/core";
 import "./STEMtellCard.css";
+import { useHistory } from "react-router";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,6 +16,7 @@ function StemtellCard() {
 
   const dispatch = useDispatch();
   const stemtells = useSelector((store) => store.stemtells);
+  const history = useHistory();
 
   const onUserProfile = (author_id) => {
     console.log("Clicked profile with author_id:", author_id);

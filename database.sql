@@ -7,17 +7,17 @@
 -- Then run these queries in order
 
 -- <== DROP ALL TABLES ==> --
---DROP TABLE "user" CASCADE;
---DROP TABLE "class" CASCADE;
---DROP TABLE "stemtell" CASCADE;
---DROP TABLE "user_class" CASCADE;
---DROP TABLE "notification" CASCADE;
---DROP TABLE "comment" CASCADE;
---DROP TABLE "reaction" CASCADE;
---DROP TABLE "reaction_stemtell" CASCADE;
---DROP TABLE "tag" CASCADE;
---DROP TABLE "user_tag" CASCADE;
---DROP TABLE "stemtell_tag" CASCADE;
+-- DROP TABLE "user" CASCADE;
+-- DROP TABLE "class" CASCADE;
+-- DROP TABLE "stemtell" CASCADE;
+-- DROP TABLE "user_class" CASCADE;
+-- DROP TABLE "notification" CASCADE;
+-- DROP TABLE "comment" CASCADE;
+-- DROP TABLE "reaction" CASCADE;
+-- DROP TABLE "reaction_stemtell" CASCADE;
+-- DROP TABLE "tag" CASCADE;
+-- DROP TABLE "user_tag" CASCADE;
+-- DROP TABLE "stemtell_tag" CASCADE;
 
 -- extension required for generating UUIDs in postgresql
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
