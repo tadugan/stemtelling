@@ -29,6 +29,7 @@ import './App.css';
 import Homepage from '../Homepage/Homepage';
 
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
+import EditSTEMtell from './../EditSTEMtell/EditSTEMtell';
 
 
 
@@ -111,6 +112,13 @@ function App() {
             path="/create"
           >
             <CreateSTEMtell />
+          </ProtectedRoute>
+          <ProtectedRoute
+            // logged in shows CreateSTEMtell else shows LoginPage
+            exact
+            path="/edit"
+          >
+            <EditSTEMtell />
           </ProtectedRoute>
 
           <Route
