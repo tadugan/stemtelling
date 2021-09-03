@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Redirect,
   Route,
   Switch,
@@ -47,7 +47,7 @@ function App() {
         <Nav />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-          <Redirect exact from="/" to="/home" />
+          <Redirect exact from="/" to="/homepage" />
 
           {/* Visiting localhost:3000/about will show the about page. */}
           <Route
@@ -115,7 +115,6 @@ function App() {
           </ProtectedRoute>
           <ProtectedRoute
             // logged in shows CreateSTEMtell else shows LoginPage
-            exact
             path="/edit"
           >
             <EditSTEMtell />

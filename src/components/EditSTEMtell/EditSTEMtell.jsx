@@ -4,30 +4,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import AddTagDialog from '../AddTagDialog/AddTagDialog';
 import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
 
-function EditSTEMtell() {
-
+function EditSTEMtell(itemInfo) {
     const dispatch = useDispatch();
-
     const [ classId, setClassId ] = useState(1);
     const [ title, setTitle ] = useState('');
     const [ imageUrl, setImageUrl] = useState('');
     const [ description, setDescription ] = useState('');
-
     const selectedTags = useSelector(store => store.selectedTags);
-    // TODO: Remove unused variables!
-    // const allTags = useSelector(store => store.tags);
 
     const handleSubmit = () => {
         event.preventDefault();
-
-        // array to store tag ids
         const tagIds = [];
-
-        // add ids to tagIds array
         for (const tag of selectedTags) {
             tagIds.push(tag.id);
         }
-
         // Dispatch captured inputs to SAGA
         dispatch({ type: 'SUBMIT_NEW_STEMTELL', payload: {
             title: title,
@@ -37,20 +27,20 @@ function EditSTEMtell() {
             tag_ids: tagIds
             }
         });
-
         // Clear Input Fields
         setClassId(1);
         setTitle('');
         setImageUrl('');
         setDescription('');
         dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
-
-        // Return user to previous view
-        // TODO:
     }
 
     const handleCancel = () => {
-        console.log('CANCEL');
+        console.log(itemInfo);
+    }
+
+    const test = (itemInfo) => {
+       console.log(itemInfo)
     }
 
   return (
@@ -183,7 +173,7 @@ function EditSTEMtell() {
                         <Button
                             variant="contained"
                             color="primary"
-                            onClick={handleSubmit}
+                            onClick={test}
                             type="submit"
                         >
                             Submit
