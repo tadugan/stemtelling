@@ -25,7 +25,11 @@ import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage';
 import StemtellCard from '../STEMtellCard/STEMtellCard';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 import './App.css';
+
+import Homepage from '../Homepage/Homepage';
+
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
+
 
 
 function App() {
@@ -76,6 +80,14 @@ function App() {
             path="/profile/:id"
           >
             <ProfilePage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows UserPage else shows LoginPage
+            exact
+            path="/homepage"
+          >
+            <Homepage />
           </ProtectedRoute>
 
           <ProtectedRoute
