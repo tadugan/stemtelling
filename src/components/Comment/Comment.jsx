@@ -11,12 +11,26 @@ function Comment() {
     const dispatch= useDispatch();
     const comments = useSelector((store) => store.commentList);
 
-useEffect(() =>{
-    dispatch({ type: 'GET_COMMENTLIST'});
-}, []);
-    const submitComment = () =>{
-        
+    const newComment= {
+        comment: leaveComment
     }
+
+    useEffect(() =>{
+    dispatch({ type: 'GET_COMMENTLIST'});
+    }, []);
+
+    const submitComment = (event) =>{
+         event.preventDefault();
+        console.log('successfully added comment');
+        dispatch({type:'ADD_COMMENT', payload: newComment});
+        setComment('');
+    }
+ 
+    const handleComment = () => {
+        event.preventDefault();
+        setComment(event.target.value);
+    }
+    
 
     return(
         <Container className='GeneralCommentContainer'>
@@ -24,14 +38,19 @@ useEffect(() =>{
                 Comments 
             </h4> 
             <Box id='GeneralCommentInput'>
-             <TextField 
+             <TextField
+             name= 'addComment' 
             fullWidth= 'true'
             placeholder='Comment...'
             multiline
-            rows={3}/>
+            rows={3}
+            type='text'
+            value={leaveComment}
+            onChange={handleComment}
+            autoComplete= 'off'/>
             <section className='BtnsforCommenting'>
             <Button className='CancelCommentBtn'>Cancel</Button>
-            <Button className='CommentBtn'> Comment </Button>
+            <Button className='CommentBtn' onClick= {(event) => {submitComment}}> Comment </Button>
             
             </section>
             
