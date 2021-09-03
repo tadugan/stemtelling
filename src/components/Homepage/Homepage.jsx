@@ -7,11 +7,12 @@ function Homepage(){
 
 return(
 <Grid container>
-<Grid item xs={12} sm={3}>
+<Grid item >
 
 <h1 id="HomepageTitle">My STEMtell Feed </h1>
 
 <StemtellCard/>
+
 
 
 </Grid>

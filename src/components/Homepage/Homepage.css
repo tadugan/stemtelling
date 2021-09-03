@@ -1,8 +1,7 @@
 #HomepageTitle{
     text-align: center;
+    display: inline-block;
+    width: 100%;
+    
 }
 
-#HomepageCard{
-    align-content: center;
-    margin-right: 300px;
-}

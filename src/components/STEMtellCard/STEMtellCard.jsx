@@ -1,20 +1,25 @@
 import React, { useEffect } from "react";
 import { Avatar, Card, Container, Grid } from "@material-ui/core";
-// import { makeStyles } from "@material-ui/core";
 import "./STEMtellCard.css";
+import { useHistory } from "react-router";
 
 import { useDispatch, useSelector } from "react-redux";
 
 
 function StemtellCard() {
 
+  const userClasses = useSelector((store) => store.classes)
+  console.log(userClasses, "user classes");
+
   useEffect(() => {
-    dispatch({ type: "FETCH_STUDENT_CLASS"})
-    dispatch({ type: "FETCH_STEMTELLS"});
+    dispatch({ type: "FETCH_CLASSES"})
+    
+    dispatch({ type: "FETCH_STEMTELLS"}); //need to use the value from FETCH CLASSES
   }, []);
 
   const dispatch = useDispatch();
   const stemtells = useSelector((store) => store.stemtells);
+  const history = useHistory();
 
   const onUserProfile = (author_id) => {
     // TODO: If this is working, remove console.log()

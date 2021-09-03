@@ -44,8 +44,10 @@
 }
 
 #stemTitle{
+  
   display: inline-block;
   text-align: center;
   font-size: 18px;
   padding: 4px;
+  width: 100%;
 }
