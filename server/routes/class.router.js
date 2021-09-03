@@ -12,9 +12,9 @@ const rejectUnauthenticated = require('../modules/authentication-middleware').re
 router.get('/', (req, res) => {
   const query = `SELECT * FROM "class"
   JOIN "user_class" ON "user_class".class_id = "class".id
-  WHERE "user_class".user_id = 3;`
+  WHERE "user_class".user_id = $1`
   pool
-  .query(query)
+  .query(query, [req.user.id])
   .then((result) => {
     res.send(result.rows);
   })

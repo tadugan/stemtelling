@@ -8,6 +8,7 @@ function* stemtellSaga(){
 
 function* fetchAllStemTells(){
     try {
+        // const userClasses = action.payload;
         const stemtells = yield axios.get("/api/stemtell");
         yield put({type: "SET_STEMTELLS", payload: stemtells.data});
     } catch(err){
