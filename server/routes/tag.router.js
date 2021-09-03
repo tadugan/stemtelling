@@ -18,7 +18,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
         .then(response => {
             res.send(response.rows);
             //
-            console.log(response.rows); // test
+            // console.log(response.rows); // test
         })
         .catch(error => {
             console.log('Error retrieving list of tags. Error:', error);

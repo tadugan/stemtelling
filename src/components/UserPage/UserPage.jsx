@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,6 +23,7 @@ function UserPage() {
    const classes = useStyles();
    const user = useSelector((store) => store.user);
    const dispatch = useDispatch();
+   const history = useHistory();
    const stemtells = useSelector((store) => store.stemtells);
 
    useEffect(() => {
@@ -29,8 +31,8 @@ function UserPage() {
     }, []);
 
     const editStemtell = (stemtellID) => {
-       console.log(stemtellID);
-      //  redirect to edit stemtell
+       dispatch({ type: "GET_STEMTELL", payload: user.id });
+       history.push(`/edit/${stemtellID}`);
     }
 
    return (

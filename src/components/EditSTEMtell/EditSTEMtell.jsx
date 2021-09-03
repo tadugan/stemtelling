@@ -1,126 +1,37 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import AddTagDialog from '../AddTagDialog/AddTagDialog';
 import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
-import "./CreateSTEMtell.css";
-import { useHistory } from 'react-router';
 
-function CreateSTEMtell() {
-
+function EditSTEMtell() {
     const dispatch = useDispatch();
-    const history = useHistory();
+    const history= useHistory();
     const [ classId, setClassId ] = useState(1);
     const [ title, setTitle ] = useState('');
     const [ imageUrl, setImageUrl] = useState('');
     const [ description, setDescription ] = useState('');
-    const [ alertMessage, setAlertMessage ] = useState('');
-
     const selectedTags = useSelector(store => store.selectedTags);
-    const classList = useSelector(store => store.classes);
-
-    const handleSubmit = () => {
-        event.preventDefault();
-
-        // validate class input
-        if (invalidInputs()) {
-            return;
-        }
-
-        // array to store tag ids
-        const tagIds = [];
-
-        // add ids to tagIds array
-        for (const tag of selectedTags) {
-            tagIds.push(tag.id);
-        }
-
-        // Dispatch captured inputs to SAGA
-        dispatch({ type: 'SUBMIT_NEW_STEMTELL', payload: {
-            title: title,
-            body_text: description,
-            media_url: imageUrl,
-            class_id: classId,
-            tag_ids: tagIds
-            }
-        });
-
-        // Clear Input Fields
-        setClassId(0);
-        setTitle('');
-        setImageUrl('');
-        setDescription('');
-        dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
-
-        // Return user to previous view
-        // TODO:
-    }
-
-    const handleCancel = () => {
-      history.goBack();
-    }
-
-    const getClassList = () => {
-        dispatch({ type: 'FETCH_CLASSES'});
-    }
-
-    const invalidInputs = () => {
-        if (classId === 0) {
-            setAlertMessage('class');
-            return true;
-        } 
-        else if (title === '') {
-            setAlertMessage('title');
-            return true;
-        }
-        else if (description === '') {
-            setAlertMessage('description');
-            return true;
-        }
-        else if (selectedTags.length === 0) {
-            setAlertMessage('tag');
-            return true;
-        }
-        else {
-            setAlertMessage('');
-            return false;
-        }
-    }
-
-    const conditionalInputAlert = (alertType) => {
-        switch (alertType) {
-            case 'class':
-                return (
-                    <Grid item xs={12}>
-                        <h4 className="create-stemtell-input-alert" >*Please Select a Class to your STEMtell</h4>
-                    </Grid>
-                );
-            case 'title':
-                return (
-                    <Grid item xs={12}>
-                        <h4 className="create-stemtell-input-alert" >*Please Add a Title to your STEMtell</h4>
-                    </Grid>
-                );
-            case 'description':
-            return (
-                <Grid item xs={12}>
-                    <h4 className="create-stemtell-input-alert" >*Please add text to your STEMtell</h4>
-                </Grid>
-            );
-            case 'tag':
-                return (
-                    <Grid item xs={12}>
-                        <h4 className="create-stemtell-input-alert" >*Please some tags to your STEMtell</h4>
-                    </Grid>
-                );
-            default:
-                return;
-        }
-    }
+    const getSearchQueryByFullURL = (url) => {return url.split('/')};
+    const stemtell = useSelector((store) => store.stemtells);
 
     useEffect(() => {
-        getClassList();
+         // dispatch({ type: "GET_STEMTELL", payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1])});
+         // setDescription(stemtell.body_text);
+         console.log(stemtell);  
+         // setTitle(stemtell[0].title);
+         // setImageUrl(stemtell[0].media_url);
+         // setClassId(stemtell[0].class_id)
     }, []);
+
+    const handleCancel = () => {
+       history.goBack()
+    }
+
+    const test = (itemInfo) => {
+       console.log(itemInfo)
+    }
 
   return (
     <div className="create-stemtell-body">
@@ -151,16 +62,12 @@ function CreateSTEMtell() {
                         label="Age"
                         className="create-stemtell-class-select"
                         >
-                        <MenuItem value={0}>
+                        <MenuItem value="">
                             <em>Choose a Class</em>
                         </MenuItem>
-                        {classList.map(classItem => {
-                            return (
-                                <MenuItem key={classItem.id} value={classItem.class_id}>
-                                    {classItem.name}
-                                </MenuItem>
-                            );
-                        })}
+                        {/* This needs to be based on the classes the student is enrolled in */}
+                        <MenuItem value={1}>CHEM</MenuItem>
+                        <MenuItem value={2}>BIO</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
@@ -256,13 +163,12 @@ function CreateSTEMtell() {
                         <Button
                             variant="contained"
                             color="primary"
-                            onClick={handleSubmit}
+                            onClick={test}
                             type="submit"
                         >
                             Submit
                         </Button>
                     </Grid>
-                    {conditionalInputAlert(alertMessage)}
                 </Grid>
             </Grid>
         </form>
@@ -270,4 +176,4 @@ function CreateSTEMtell() {
   );
 }
 
-export default CreateSTEMtell;
+export default EditSTEMtell;
