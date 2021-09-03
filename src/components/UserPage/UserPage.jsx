@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import LogOutButton from '../LogOutButton/LogOutButton';
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
-import { useHistory } from 'react-router';
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Avatar, Card, Paper, Modal, Backdrop, Fade } from '@material-ui/core';
+import { Grid, Avatar, Card, Paper, Modal, Backdrop, Fade } from '@material-ui/core';
+import EditSTEMtell from "../EditSTEMtell/EditSTEMtell";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,21 +35,20 @@ function UserPage() {
    const modalClasses = modalStyles();
    const user = useSelector((store) => store.user);
    const dispatch = useDispatch();
-   const history = useHistory();
+   const [stemtellData, setStemtellData] = useState('');
    const stemtells = useSelector((store) => store.stemtells);
    const [open, setOpen] = React.useState(false);
-   const [editStemtellID, setEditStemtellID] = useState('');
-   const handleOpen = (stemID) => {setOpen(true); setEditStemtellID(stemID); console.log(stemID)};
-   const handleClose = (stemID) => {setOpen(false)};
+   const handleClose = () => {setOpen(false)};
 
+   const handleOpen = (stemtell) => {
+      setOpen(true); 
+      setStemtellData(stemtell);
+   };
+   
    useEffect(() => {
       dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
     }, []);
 
-    const editStemtell = (stemtellID) => {
-       dispatch({ type: "GET_STEMTELL", payload: user.id });
-       history.push(`/edit/${stemtellID}`);
-    }
 
    return (
       <div className={classes.root}>
@@ -77,7 +76,10 @@ function UserPage() {
                         <img src={stemtell.media_url} />
                         <section id="cardReactions">{stemtell.reaction_name}</section>
                         <section id="stemDescription">{stemtell.body_text}</section>
-                        <button value={stemtell.id} className="btn" onClick={(event) => {handleOpen(event.target.value)}}>
+                        {/* <button value={stemtell} className="btn" onClick={(event) => {handleOpen(event.target.value)}}>
+                           Edit
+                        </button> */}
+                        <button className="btn" onClick={() => {handleOpen(stemtell)}}>
                            Edit
                         </button>
                      </Card>
@@ -99,12 +101,7 @@ function UserPage() {
          }}
         >
          <Fade in={open}>
-            <div className={modalClasses.paper}>
-               <p id="email-confirmation-modal-description">
-                  An email has been sent. If you don't see it, check for previous emails, or check your spam/junk folder.
-               </p>
-               <button className="btn" onClick={() => {history.push('/')}}>Return Home</button>
-            </div>
+            <EditSTEMtell stemtell={stemtellData}/>
          </Fade>
       </Modal>
       </Grid>

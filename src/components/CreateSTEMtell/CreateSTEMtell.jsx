@@ -10,7 +10,7 @@ function CreateSTEMtell() {
 
     const dispatch = useDispatch();
     const history = useHistory();
-    const [ classId, setClassId ] = useState(1);
+    const [ classId, setClassId ] = useState('');
     const [ title, setTitle ] = useState('');
     const [ imageUrl, setImageUrl] = useState('');
     const [ description, setDescription ] = useState('');

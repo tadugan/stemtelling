@@ -27,8 +27,6 @@ import './App.css';
 import Homepage from '../Homepage/Homepage';
 
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
-import EditSTEMtell from './../EditSTEMtell/EditSTEMtell';
-
 
 
 function App() {
@@ -110,12 +108,6 @@ function App() {
             path="/create"
           >
             <CreateSTEMtell />
-          </ProtectedRoute>
-          <ProtectedRoute
-            // logged in shows CreateSTEMtell else shows LoginPage
-            path="/edit"
-          >
-            <EditSTEMtell />
           </ProtectedRoute>
 
           <Route
