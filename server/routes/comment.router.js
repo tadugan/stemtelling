@@ -14,7 +14,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   join "user" on "user".id = "comment".user_id 
   join "stemtell" on "stemtell".id = "comment".stemtell_id 
   where "comment".stemtell_id = 1 
-  and "comment".teacher_feedback = false `;
+  and "comment".teacher_feedback = false ;`;
   pool
     .query(query, [stemtellId])
     .then((result) => {
