@@ -4,16 +4,18 @@ import { Avatar, Card, Container, Grid } from "@material-ui/core";
 import "./STEMtellCard.css";
 
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 
 function StemtellCard() {
 
   useEffect(() => {
-    dispatch({ type: "FETCH_STUDENT_CLASS"})
+    dispatch({ type: "FETCH_STUDENT_CLASS"});
     dispatch({ type: "FETCH_STEMTELLS"});
   }, []);
 
   const dispatch = useDispatch();
+  const history = useHistory();
   const stemtells = useSelector((store) => store.stemtells);
 
   const onUserProfile = (author_id) => {
@@ -22,8 +24,10 @@ function StemtellCard() {
   }
 
   return (
-    <Container>
-    <Grid>
+    <Grid
+      item
+      container
+    >
       {stemtells.map((stemtell) => {
         return (
       <Grid item key={stemtell.id}>
@@ -47,8 +51,6 @@ function StemtellCard() {
         )
         })}
     </Grid>
-    </Container>
-    
 )
 };
 
