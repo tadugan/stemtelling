@@ -48,6 +48,8 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 	  VALUES ($1, $2);
     `;
 
+    // TODO Modify to use TRANSACTIONS from node-postgres
+    // TODO Convert to async/await for clarity of code
     pool.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, newStemtell.media_url])
       .then(response => {
         const stemTellId = response.rows[0].id;
@@ -83,6 +85,34 @@ router.get('/userstemtells', (req, res) => {
    FULL OUTER JOIN "reaction_stemtell" ON "stemtell".id = "reaction_stemtell".stemtell_id
    FULL OUTER JOIN "reaction" ON "reaction_stemtell".reaction_id = "reaction".id
    WHERE "user".id = $1;`;
+
+   // TODO: Verify this works
+   // Each with creates a temp table of data that can be used as a variable or a part of the secondary
+   // query. Reference the alias that follows the WITH command. In this instance, we're creating a table
+   // of reactions, with a stem id
+   // | comments | stemtell_id |
+   // | ['Cool', 'Woot', 'Dope', 'You rock!'] | 1 |
+   const chadsQuery = `
+    WITH reactions as (
+      SELECT array_agg(reaction) as reactions, reactions.stemtell_id
+      FROM reactions
+      WHERE reactions.stemtell_id = $1
+      GROUP BY reactions.stemtell_id
+    ),
+    WITH comments as (
+      SELECT array_agg(comments) as comments, reactions.stemtell_id
+      FROM comments
+      WHERE comments.stemtell_id = $1
+      GROUP BY comments.stemtell_id
+    )
+    SELECT *
+    FROM stemtells
+    JOIN reactions ON stemtells.id = reaction.stemtell_id
+    JOIN comments OND stemtells.id = comments.stemtell_id
+    WHERE stemtell.id = $1
+   `
+
+
    pool
      .query(query, [profilePageID])
      .then((result) => {

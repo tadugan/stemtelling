@@ -17,6 +17,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     pool.query(queryText)
         .then(response => {
             res.send(response.rows);
+            //
             console.log(response.rows); // test
         })
         .catch(error => {

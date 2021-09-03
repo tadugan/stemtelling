@@ -1,7 +1,6 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
-import { AddCircleOutlineRounded } from '@material-ui/icons';
 import React, { useState } from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AddTagDialog from '../AddTagDialog/AddTagDialog';
 import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
 import "./CreateSTEMtell.css";
@@ -16,7 +15,8 @@ function CreateSTEMtell() {
     const [ description, setDescription ] = useState('');
 
     const selectedTags = useSelector(store => store.selectedTags);
-    const allTags = useSelector(store => store.tags);
+    // TODO: Remove unused variables!
+    // const allTags = useSelector(store => store.tags);
 
     const handleSubmit = () => {
         event.preventDefault();
