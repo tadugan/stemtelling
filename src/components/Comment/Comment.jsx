@@ -12,7 +12,6 @@ import {
 
 function Comment() {
     const [leaveComment, setComment] = useState('');
-    const [stemtellId, setStemtellID] = useState('');
     const [feedback, setFeedback]= useState(false);
     const dispatch= useDispatch();
     const comments = useSelector((store) => store.commentList);
@@ -25,13 +24,12 @@ function Comment() {
     const handleSubmit = (event) =>{
          event.preventDefault();
         dispatch({type:'ADD_COMMENT', payload: {
-          stemtell_id: stemtellId,
+          stemtell_id: comments.stemtell_id,
           comment: leaveComment ,
           teacher_feedback: feedback
           }
         });
         setComment('');
-        setStemtellID();
         setFeedback(false);
     }
  
@@ -43,26 +41,28 @@ function Comment() {
 
 
     return(
-        <Container className='GeneralCommentContainer'>
-            <h4 className='CommentCardHeader'> 
-                Comments 
-            </h4> 
-            <Box id='GeneralCommentInput'>
-             <TextField
-             name= 'addComment' 
-            fullWidth= 'true'
-            placeholder='Comment...'
-            multiline
-            rows={3}
-            value={leaveComment}
-            onChange={handleComment}/>
-            <section className='BtnsforCommenting'>
-            <Button className='CancelCommentBtn' >Cancel</Button>
-            <Button className='CommentBtn' onClick= {handleSubmit}> Comment </Button>
-            
-            </section>
-            
-            </Box>
+      <Container className='GeneralCommentContainer'>
+      <h4 className='CommentCardHeader'> 
+          Comments 
+      </h4> 
+      <Box id='GeneralCommentInput'>
+        <form>
+       <TextField
+       name= 'addComment' 
+      fullWidth= 'true'
+      placeholder='Comment...'
+      multiline
+      rows={3}
+      value={leaveComment}
+      onChange={handleComment}/>
+      </form>
+      <section className='BtnsforCommenting'>
+      <Button className='CancelCommentBtn' >Cancel</Button>
+      <Button className='CommentBtn' onClick= {handleSubmit}> Comment </Button>
+      
+      </section>
+      
+      </Box>
             
       {/* mapping thru comments to show all individual comments */}
       {comments.map((comment) => {
