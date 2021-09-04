@@ -1,5 +1,5 @@
 import React from 'react';
-import Comment from '../Comment/Comment'
+
 
 
 function AboutPage() {
@@ -8,7 +8,6 @@ function AboutPage() {
       <div>
         <p>This about page is for anyone to read!</p>
       </div>
-      <Comment />
     </div>
   );
 }

@@ -7,7 +7,6 @@ import "./STEMtellCard.css";
 
 function StemtellCard() {
 
-  const history = useHistory();
   useEffect(() => {
     dispatch({ type: "FETCH_CLASSES"})
     dispatch({ type: "FETCH_STEMTELLS"}); //need to use the value from FETCH CLASSES
@@ -19,7 +18,7 @@ function StemtellCard() {
 
   const onUserProfile = (author_id) => {
    //  TODO: If this is working, remove console.log()
-   //  console.log("Clicked profile with author_id:", author_id);
+    console.log("Clicked profile with author_id:", author_id);
     history.push(`/profile/${author_id}`);
   }
 

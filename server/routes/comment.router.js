@@ -8,15 +8,17 @@ const rejectUnauthenticated =
  * GET route to grab
  */
 router.get("/", rejectUnauthenticated, (req, res) => {
-  const query = `SELECT "user".name AS username, "stemtell".id, "user".profile_picture_url, "comment".comment, "comment".date_published, "comment".id, "user".authority
+  const query = `SELECT "user".name AS username, "stemtell".id, "user".profile_picture_url, "comment".comment, "comment".date_published, "comment".id
   FROM "comment"
   JOIN "user" ON "comment".user_id = "user".id
   JOIN "stemtell" ON "stemtell".id = "comment".stemtell_id
-  WHERE  "user".authority = 'student'
-  and "stemtell".id = 1 ;`;
+  WHERE  "comment".teacher_feedback = FALSE
+  and "stemtell".id = 2
+  ORDER BY "comment".date_published ASC 
+  ;`;
   pool
     .query(query)
-    .then((result) => 
+    .then((result) => {
       res.send(result.rows);
     })
     .catch((err) => {
@@ -45,12 +47,12 @@ router.get("/feedback", rejectUnauthenticated, (req, res) => {
 /**
  * POST route template
  */
-router.post("/", rejectUnauthenticated, (req, res) => {
+router.post(`/`, rejectUnauthenticated, (req, res) => {
   const queryAddComment = `INSERT INTO "comment" ("stemtell_id", "user_id", "comment", "teacher_feedback", "date_published")
   VALUES ($1, $2, $3, $4 , NOW());`;
   pool
     .query(queryAddComment, [
-      req.body.stemtell_id,
+      req.query.stemtell_id,
       req.user.id,
       req.body.comment,
       req.body.date_published,

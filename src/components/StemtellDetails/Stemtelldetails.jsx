@@ -10,7 +10,7 @@ function StemtellDetails() {
     return(
         <>
         <BackBtn />
-    
+      
             <StemtellCard />
        
         

@@ -24,7 +24,6 @@ import StemtellCard from '../STEMtellCard/STEMtellCard';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 import StemtellDetails from '../StemtellDetails/StemtellDetails';
 import './App.css';
-import StemtellDetails from '../StemtellDetails/Stemtelldetails';
 import Homepage from '../Homepage/Homepage';
 
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
