@@ -19,7 +19,7 @@ function EditSTEMtell(stemtell) {
     const selectedTags = useSelector(store => store.selectedTags);
     const classList = useSelector(store => store.classes);
 
-    const handleSubmit = () => {
+    const handleSave = () => {
         event.preventDefault();
 
         // validate class input
@@ -36,7 +36,8 @@ function EditSTEMtell(stemtell) {
         }
 
         // Dispatch captured inputs to SAGA
-        dispatch({ type: 'SUBMIT_NEW_STEMTELL', payload: {
+        dispatch({ type: 'SAVE_EDITED_STEMTELL', payload: {
+            id: stemtell.stemtell.id,
             title: title,
             body_text: description,
             media_url: imageUrl,
@@ -51,6 +52,7 @@ function EditSTEMtell(stemtell) {
         setImageUrl('');
         setDescription('');
         dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
+        history.push('/myprofile');
 
         // Return user to previous view
         // TODO:
@@ -262,10 +264,10 @@ function EditSTEMtell(stemtell) {
                         <Button
                             variant="contained"
                             color="primary"
-                            onClick={handleSubmit}
+                            onClick={handleSave}
                             type="submit"
                         >
-                            Submit
+                            Save
                         </Button>
                     </Grid>
                     {conditionalInputAlert(alertMessage)}
