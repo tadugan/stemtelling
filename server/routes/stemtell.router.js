@@ -10,12 +10,24 @@ const {
 router.get('/', (req, res) => {
 
   // GET route code here
-  const query = `SELECT "user".name AS username, "user".id AS author_id, "stemtell".id AS stem_id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".date_published, "class".name AS class_name
+  const query = `WITH "stemtell_tag" AS (
+    SELECT array_agg("stemtell_tag".tag_id) AS tag_ids,"stemtell_tag".stemtell_id
+    FROM "stemtell_tag"
+    WHERE "stemtell_tag".stemtell_id = 1
+    GROUP BY "stemtell_tag".stemtell_id
+    ),
+    "reaction_stemtell" AS (
+    SELECT array_agg("reaction_stemtell".reaction_id) AS reaction_ids, "reaction_stemtell".stemtell_id
+    FROM "reaction_stemtell"
+    WHERE "reaction_stemtell".stemtell_id = 1
+    GROUP BY "reaction_stemtell".stemtell_id
+    )
+  SELECT *
   FROM "stemtell"
-  JOIN "user" ON "stemtell".user_id = "user".id
-  JOIN "class" ON "stemtell".class_id = "class".id
-  WHERE "class".id = 2
-  ORDER BY "stemtell".date_published DESC;`;
+  JOIN "stemtell_tag" ON "stemtell".id = "stemtell_tag".stemtell_id
+  FULL OUTER JOIN "comment" ON "stemtell".id = "comment".stemtell_id
+  FULL OUTER JOIN "reaction_stemtell" ON "stemtell".id = "reaction_stemtell".stemtell_id
+  WHERE "stemtell".id = 1;`;
   pool
     .query(query)
     .then((result) => {

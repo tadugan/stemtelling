@@ -25,7 +25,7 @@ import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage';
 import StemtellCard from '../STEMtellCard/STEMtellCard';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 import './App.css';
-
+import StemtellDetails from '../StemtellDetails/Stemtelldetails';
 import Homepage from '../Homepage/Homepage';
 
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
@@ -112,6 +112,15 @@ function App() {
           >
             <CreateSTEMtell />
           </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows UserPage else shows LoginPage
+            exact
+            path="/stemtell/:id"
+          >
+            <StemtellDetails />
+          </ProtectedRoute>
+
 
           <Route
             exact

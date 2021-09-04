@@ -10,7 +10,8 @@ function* commentSaga(){
 function* addComment(action){
     try{
          yield call(axios.post, '/api/comment', action.payload);
-         yield put({type: 'ADD_COMMENT'});
+         console.log('in addComment saga:' ,action.payload);
+         yield put({type: 'GET_COMMENTLIST'});
     } catch(error){
         console.log('unable to add comment', error);
     }
