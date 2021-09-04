@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import './Comment.css';
 import {
@@ -13,29 +12,35 @@ import {
 
 function Comment() {
     const [leaveComment, setComment] = useState('');
+    const [stemtellId, setStemtellID] = useState(2);
+    const [feedback, setFeedback]= useState(false);
     const dispatch= useDispatch();
     const comments = useSelector((store) => store.commentList);
 
-    const newComment= {
-        comment: leaveComment
-    }
 
     useEffect(() =>{
     dispatch({ type: 'GET_COMMENTLIST'});
     }, []);
 
-    const submitComment = (event) =>{
+    const handleSubmit = (event) =>{
          event.preventDefault();
-        console.log('successfully added comment');
-        dispatch({type:'ADD_COMMENT', payload: newComment});
+        dispatch({type:'ADD_COMMENT', payload: {
+          stemtell_id: stemtellId,
+          comment: leaveComment ,
+          teacher_feedback: feedback
+          }
+        });
         setComment('');
+        setStemtellID();
+        setFeedback(false);
     }
  
-    const handleComment = () => {
+    const handleComment = (event) => {
         event.preventDefault();
         setComment(event.target.value);
     }
     
+
 
     return(
         <Container className='GeneralCommentContainer'>
@@ -49,13 +54,11 @@ function Comment() {
             placeholder='Comment...'
             multiline
             rows={3}
-            type='text'
             value={leaveComment}
-            onChange={handleComment}
-            autoComplete= 'off'/>
+            onChange={handleComment}/>
             <section className='BtnsforCommenting'>
-            <Button className='CancelCommentBtn'>Cancel</Button>
-            <Button className='CommentBtn' onClick= {(event) => {submitComment}}> Comment </Button>
+            <Button className='CancelCommentBtn' >Cancel</Button>
+            <Button className='CommentBtn' onClick= {handleSubmit}> Comment </Button>
             
             </section>
             
@@ -70,8 +73,8 @@ function Comment() {
             key={comment.id}
           >
             <section className="GeneralCommentSection">
-                {/* Consider using article rather than div */}
-              <div className="CommentProfilePicAndName">
+               
+              <article className="CommentProfilePicAndName">
                 <Avatar
                   id="GeneralCommentAvatar"
                   src={comment.profile_picture_url}
@@ -83,7 +86,7 @@ function Comment() {
                 <span className="CommentDate">
                   <p> {comment.date_published} </p>
                 </span>
-              </div>
+              </article>
 
               <p className="CommentText">{comment.comment}</p>
             </section>
