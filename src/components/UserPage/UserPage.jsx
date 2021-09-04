@@ -1,12 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import LogOutButton from '../LogOutButton/LogOutButton';
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import Avatar from '@material-ui/core/Avatar';
-import { useHistory } from 'react-router';
+import { Grid, Avatar, Card, Paper, Modal, Backdrop, Fade } from '@material-ui/core';
+import EditSTEMtell from "../EditSTEMtell/EditSTEMtell";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,21 +16,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const modalStyles = makeStyles((theme) => ({
+   modal: {
+     display: 'flex',
+     alignItems: 'center',
+     justifyContent: 'center',
+   },
+   paper: {
+     backgroundColor: theme.palette.background.paper,
+     border: '2px solid #000',
+     boxShadow: theme.shadows[5],
+     padding: theme.spacing(2, 4, 3),
+   },
+ }));
+
 function UserPage() {
    const classes = useStyles();
+   const modalClasses = modalStyles();
    const user = useSelector((store) => store.user);
    const dispatch = useDispatch();
-   const history = useHistory();
+   const [stemtellData, setStemtellData] = useState('');
    const stemtells = useSelector((store) => store.stemtells);
+   const [open, setOpen] = React.useState(false);
+   const handleClose = () => {setOpen(false)};
 
+   const handleOpen = (stemtell) => {
+      setOpen(true); 
+      setStemtellData(stemtell);
+   };
+   
    useEffect(() => {
       dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
     }, []);
 
-    const editStemtell = (stemtellID) => {
-       dispatch({ type: "GET_STEMTELL", payload: user.id });
-       history.push(`/edit/${stemtellID}`);
-    }
 
    return (
       <div className={classes.root}>
@@ -61,7 +76,10 @@ function UserPage() {
                         <img src={stemtell.media_url} />
                         <section id="cardReactions">{stemtell.reaction_name}</section>
                         <section id="stemDescription">{stemtell.body_text}</section>
-                        <button value={stemtell.id} className="btn" onClick={event => {editStemtell(event.target.value)}}>
+                        {/* <button value={stemtell} className="btn" onClick={(event) => {handleOpen(event.target.value)}}>
+                           Edit
+                        </button> */}
+                        <button className="btn" onClick={() => {handleOpen(stemtell)}}>
                            Edit
                         </button>
                      </Card>
@@ -70,6 +88,22 @@ function UserPage() {
             })}
          </Grid>
         </Grid>
+        <Modal
+         aria-labelledby="email confirmation modal"
+         aria-describedby="email confirmation modal"
+         className={modalClasses.modal}
+         open={open}
+         onClose={handleClose}
+         closeAfterTransition
+         BackdropComponent={Backdrop}
+         BackdropProps={{
+            timeout: 500,
+         }}
+        >
+         <Fade in={open}>
+            <EditSTEMtell stemtell={stemtellData}/>
+         </Fade>
+      </Modal>
       </Grid>
     </div>
   );
