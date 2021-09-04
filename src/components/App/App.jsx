@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Redirect,
   Route,
   Switch,
-  Link,
 } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,7 +17,6 @@ import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import ProfilePage from '../ProfilePage/ProfilePage';
 import InfoPage from '../InfoPage/InfoPage';
-import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage';
@@ -30,7 +28,6 @@ import './App.css';
 import Homepage from '../Homepage/Homepage';
 
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
-
 
 
 function App() {
@@ -47,7 +44,7 @@ function App() {
         <Nav />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-          <Redirect exact from="/" to="/home" />
+          <Redirect exact from="/" to="/homepage" />
 
           {/* Visiting localhost:3000/about will show the about page. */}
           <Route
@@ -160,8 +157,8 @@ function App() {
               // redirect them to the /user page
               <Redirect to="/myprofile" />
               :
-              // Otherwise, show the Landing page
-              <LandingPage />
+              // Otherwise, show the user page
+              <Homepage />
             }
           </Route>
 

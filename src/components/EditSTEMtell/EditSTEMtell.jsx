@@ -3,14 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AddTagDialog from '../AddTagDialog/AddTagDialog';
 import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
-import "./CreateSTEMtell.css";
+import "./EditSTEMtell.css";
 import { useHistory } from 'react-router';
 
-function CreateSTEMtell() {
+function EditSTEMtell(stemtell) {
 
     const dispatch = useDispatch();
     const history = useHistory();
-    const [ classId, setClassId ] = useState('');
+    const [ classId, setClassId ] = useState(1);
     const [ title, setTitle ] = useState('');
     const [ imageUrl, setImageUrl] = useState('');
     const [ description, setDescription ] = useState('');
@@ -19,7 +19,7 @@ function CreateSTEMtell() {
     const selectedTags = useSelector(store => store.selectedTags);
     const classList = useSelector(store => store.classes);
 
-    const handleSubmit = () => {
+    const handleSave = () => {
         event.preventDefault();
 
         // validate class input
@@ -36,7 +36,8 @@ function CreateSTEMtell() {
         }
 
         // Dispatch captured inputs to SAGA
-        dispatch({ type: 'SUBMIT_NEW_STEMTELL', payload: {
+        dispatch({ type: 'SAVE_EDITED_STEMTELL', payload: {
+            id: stemtell.stemtell.id,
             title: title,
             body_text: description,
             media_url: imageUrl,
@@ -51,13 +52,15 @@ function CreateSTEMtell() {
         setImageUrl('');
         setDescription('');
         dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
+        history.push('/myprofile');
 
         // Return user to previous view
         // TODO:
     }
 
     const handleCancel = () => {
-      history.goBack();
+      // history.goBack();
+      console.log(stemtell);
     }
 
     const getClassList = () => {
@@ -120,6 +123,11 @@ function CreateSTEMtell() {
 
     useEffect(() => {
         getClassList();
+        setDescription(stemtell.stemtell.body_text);
+        setTitle(stemtell.stemtell.title);
+        setImageUrl(stemtell.stemtell.media_url);
+        setClassId(stemtell.stemtell.class_id);
+      //   setTitle
     }, []);
 
   return (
@@ -200,7 +208,7 @@ function CreateSTEMtell() {
                         onChange={(event) => setDescription(event.target.value)}
                         className="create-stemtell-description"
                     />
-                </Grid>
+                </Grid> 
                 <Grid
                     item
                     container
@@ -256,10 +264,10 @@ function CreateSTEMtell() {
                         <Button
                             variant="contained"
                             color="primary"
-                            onClick={handleSubmit}
+                            onClick={handleSave}
                             type="submit"
                         >
-                            Submit
+                            Save
                         </Button>
                     </Grid>
                     {conditionalInputAlert(alertMessage)}
@@ -268,6 +276,6 @@ function CreateSTEMtell() {
         </form>
     </div>
   );
-}
+};
 
-export default CreateSTEMtell;
+export default EditSTEMtell;

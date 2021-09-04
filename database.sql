@@ -7,17 +7,18 @@
 -- Then run these queries in order
 
 -- <== DROP ALL TABLES ==> --
---DROP TABLE "user" CASCADE;
---DROP TABLE "class" CASCADE;
---DROP TABLE "stemtell" CASCADE;
---DROP TABLE "user_class" CASCADE;
---DROP TABLE "notification" CASCADE;
---DROP TABLE "comment" CASCADE;
---DROP TABLE "reaction" CASCADE;
---DROP TABLE "reaction_stemtell" CASCADE;
---DROP TABLE "tag" CASCADE;
---DROP TABLE "user_tag" CASCADE;
---DROP TABLE "stemtell_tag" CASCADE;
+DROP TABLE "user" CASCADE;
+DROP TABLE "class" CASCADE;
+DROP TABLE "stemtell" CASCADE;
+DROP TABLE "user_class" CASCADE;
+DROP TABLE "notification" CASCADE;
+DROP TABLE "comment" CASCADE;
+DROP TABLE "reaction" CASCADE;
+DROP TABLE "reaction_stemtell" CASCADE;
+DROP TABLE "tag" CASCADE;
+DROP TABLE "user_tag" CASCADE;
+DROP TABLE "stemtell_tag" CASCADE;
+DROP TABLE "reset_password" CASCADE;
 
 -- extension required for generating UUIDs in postgresql
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -137,7 +138,6 @@ CREATE TABLE "stemtell_tag" (
 	"stemtell_id" INT REFERENCES "stemtell"("id")
 );
 
-
 -- <== TEST DATA SETUP ==> --
 
 -- Step 1: While the application is running, register the following users IN ORDER
@@ -155,14 +155,14 @@ INSERT INTO "class" ("code", "name")
 	VALUES ('0001', 'CHEM 101'), -- id 1
 	('0002', 'BIO 101'); -- id 2
 
-
+SELECT * FROM "user";
 -- Step 3: add personal Data
 UPDATE "user"
-SET "name" = 'Student 1', "profile_picture_url" = 'https://image.shutterstock.com/image-photo/laughing-turkish-female-student-desk-260nw-1766762942.jpg' "authority" = 'student'
+SET "name" = 'Student 1', "profile_picture_url" = 'https://image.shutterstock.com/image-photo/laughing-turkish-female-student-desk-260nw-1766762942.jpg', "authority" = 'student'
 WHERE "id" = 1;
 
 UPDATE "user"
-SET "name" = 'Student 2', "profile_picture_url" = 'https://www.fmjfee.com/i901fee/img/home/learn/learn_1.jpg' "authority" = 'student'
+SET "name" = 'Student 2', "profile_picture_url" = 'https://www.fmjfee.com/i901fee/img/home/learn/learn_1.jpg', "authority" = 'student'
 WHERE "id" = 2;
 
 UPDATE "user"
@@ -184,20 +184,84 @@ INSERT INTO "user_class" ("role", "user_id", "class_id")
 
 -- Step 5: run the following queries to create data for the tag table
 INSERT INTO "tag" ("type", "name", "stem_field")
-	VALUES ('stem', 'chemistry', 'science'), -- id 1
-	('stem', 'biology', 'science'), -- id 2
-	('stem', 'robotics', 'technology'), -- id 3
-	('stem', 'computer science', 'technology'), -- id 4
-	('stem', 'aerospace', 'engineering'), -- id 5
-	('stem', 'mechanics', 'engineering'), -- id 6
-	('stem', 'geometry', 'mathematics'), -- id 7
-	('stem', 'economics', 'mathematics'), -- id 8
-	( 'general', 'gaming', null), -- id 9
-	( 'general', 'nature', null), -- id  10
-	( 'general', 'animals', null), -- id 11
-	( 'general', 'cars', null), -- id 12
-	( 'general', 'photography', null), -- id 13
-	( 'general', 'music', null); -- id 14
+	VALUES ('stem', 'zoology', 'science'),
+	('stem', 'botany', 'science'),
+	('stem', 'veterinary', 'science'),
+	('stem', 'chemistry', 'science'),
+	('stem', 'biochemistry', 'science'),
+	('stem', 'mycology', 'science'),
+	('stem', 'physics', 'science'),
+	('stem', 'astronomy', 'science'),
+	('stem', 'geology', 'science'),
+	('stem', 'environmental science', 'science'),
+	('stem', 'geochemistry', 'science'),
+	('stem', 'histology', 'science'),
+	('stem', 'farming', 'science'),
+	('stem', 'paleontology', 'science'),
+	('stem', 'evolutionary biology', 'science'),
+	('stem', 'microbiology', 'science'),
+	('stem', 'oceanography', 'science'),
+	('stem', 'earth science', 'science'),
+	('stem', 'climate science', 'science'),
+	('stem', 'conservation', 'science'),
+	('stem', 'ecology', 'science'),
+	('stem', 'medicine', 'science'),
+	('stem', 'life science', 'science'),
+	('stem', 'science art', 'science'),
+	('stem', 'cosmology', 'science'),
+	('stem', 'agriculture', 'science'),
+	('stem', 'entymology', 'science'),
+	('stem', 'research', 'science'),
+	('stem', 'coding', 'technology'),
+	('stem', 'web developing', 'technology'),
+	('stem', 'computer science', 'technology'),
+	('stem', 'programming', 'technology'),
+	('stem', 'information technology', 'technology'),
+	('stem', 'database administration', 'technology'),
+	('stem', 'artificial intellignece', 'technology'),
+	('stem', 'network systems administration', 'technology'),
+	('stem', 'color technician', 'technology'),
+	('stem', 'software engineering', 'technology'),
+	('stem', 'web analytics', 'technology'),
+	('stem', 'animation', 'technology'),
+	('stem', 'robotics', 'technology'),
+	('stem', 'aerospace', 'engineering'),
+	('stem', 'mechanics', 'engineering'),
+	('stem', 'electrical engineering', 'engineering'),
+	('stem', 'construction', 'engineering'),
+	('stem', 'sound engineering', 'engineering'),
+	('stem', 'marine engineering', 'engineering'),
+	('stem', 'environmental engineering', 'engineering'),
+	('stem', 'accoustical engineering', 'engineering'),
+	('stem', 'bioengineering', 'engineering'),
+	('stem', 'plumbing', 'engineering'),
+	('stem', 'statistics', 'mathematics'),
+	('stem', 'algebra', 'mathematics'),
+	('stem', 'geometry', 'mathematics'),
+	('stem', 'trigonometry', 'mathematics'),
+	('stem', 'finance', 'mathematics'),
+	('stem', 'cryptography', 'mathematics'),
+	('stem', 'calculus', 'mathematics'),
+	('stem', 'economics', 'mathematics'),
+	('stem', 'banking', 'mathematics'),
+	('general', 'food', null),
+	('general', 'animals', null),
+	('general', 'movies & tv', null),
+	('general', 'sports', null),
+	('general', 'performance', null),
+	('general', 'travel', null),
+	('general', 'nature', null),
+	('general', 'family', null),
+	('general', 'dance', null),
+	('general', 'beauty', null),
+	('general', 'art & design', null),
+	('general', 'shopping', null),
+	('general', 'fashion', null),
+	('general', 'photography & video', null),
+	('general', 'gaming', null),
+	('general', 'music', null),
+	('general', 'cars', null),
+	('general', 'reading', null);
 	
 
 -- Step 6: run the following queries to create student stemtells

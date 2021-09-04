@@ -1,7 +1,6 @@
-import { Button, Chip, makeStyles } from '@material-ui/core';
-import { DriveEtaOutlined } from '@material-ui/icons';
+import { Chip, makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch } from 'react-redux';
 import './TagChip.css';
 
 // The CSS file was being overridden by the default styling, so component jsx styling was used
@@ -35,7 +34,7 @@ function TagChip( {tagInfo, selectedTags} ) {
     }
 
     const handleClick = () => {
-        console.log('You clicked the Chip.'); // test
+      //   console.log('You clicked the Chip.'); // test
         if (isSelected) {
             setIsSelected(false)
             dispatch({ type: 'REMOVE_TAG_FROM_STEMTELL', payload: tagInfo });
