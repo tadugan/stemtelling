@@ -22,6 +22,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage';
 import StemtellCard from '../STEMtellCard/STEMtellCard';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
+import StemtellDetails from '../StemtellDetails/StemtellDetails';
 import './App.css';
 
 import Homepage from '../Homepage/Homepage';
@@ -66,6 +67,7 @@ function App() {
              <ResetPasswordPage />
           </Route>
 
+    
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
@@ -108,6 +110,14 @@ function App() {
             path="/create"
           >
             <CreateSTEMtell />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            
+            exact
+            path="/stemtell/details/:id"
+          >
+            <StemtellDetails />
           </ProtectedRoute>
 
           <Route
