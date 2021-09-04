@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch} from 'react-redux';
 import './StudentCard.css';
-import {Container, Card, TextField, Box, Avatar, Button} from '@material-ui/core';
+import {Container, Card, Box, Avatar, Button} from '@material-ui/core';
 
 function StudentCard() {
     const dispatch = useDispatch();

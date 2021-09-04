@@ -16,7 +16,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
   and "stemtell".id = 1 ;`;
   pool
     .query(query)
-    .then((result) => {
+    .then((result) => 
       res.send(result.rows);
     })
     .catch((err) => {

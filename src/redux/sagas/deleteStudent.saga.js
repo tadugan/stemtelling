@@ -9,7 +9,7 @@ function* deleteStudentSaga(){
 function* deleteStudent(action) {
     try {
         yield call(axios.delete, `/api/class/details/${action.payload}`);
-        console.log(`What is in the DELETE STUDENT payload`, action.payload);
+      //   console.log(`What is in the DELETE STUDENT payload`, action.payload);
         yield put({ type: "GET_STUDENTLIST" });
     } catch (error) {
         console.log('Error deleting student', error);

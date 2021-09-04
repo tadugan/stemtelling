@@ -12,7 +12,7 @@ import {
 
 function Comment() {
     const [leaveComment, setComment] = useState('');
-    const [stemtellId, setStemtellID] = useState(2);
+    const [stemtellId, setStemtellID] = useState('');
     const [feedback, setFeedback]= useState(false);
     const dispatch= useDispatch();
     const comments = useSelector((store) => store.commentList);
