@@ -13,11 +13,11 @@ router.get("/", rejectUnauthenticated, (req, res) => {
   JOIN "user" ON "comment".user_id = "user".id
   JOIN "stemtell" ON "stemtell".id = "comment".stemtell_id
   WHERE  "comment".teacher_feedback = FALSE
-  and "stemtell".id = 2
+  and "stemtell".id = 1
   ORDER BY "comment".date_published ASC 
   ;`;
   pool
-    .query(query)
+    .query(query,[stemID])
     .then((result) => {
       res.send(result.rows);
     })

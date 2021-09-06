@@ -22,6 +22,11 @@ function StemtellCard() {
     history.push(`/profile/${author_id}`);
   }
 
+  const toStemtellDetail = (stem_id) => {
+    console.log('stemtell id is', stem_id)
+    history.push(`stemtell/details/${stem_id}`);
+  }
+
   return (
     <Grid
       item
@@ -39,7 +44,7 @@ function StemtellCard() {
             {stemtell.class_name}
           </div>
 
-          <h3 id="stemTitle"> {stemtell.title}</h3>
+          <h3 id="stemTitle" onClick= {() => toStemtellDetail(stemtell.stem_id)}> {stemtell.title}</h3>
 
           <img src={stemtell.media_url} />
           <section id="cardReactions">{stemtell.reaction_name}</section>

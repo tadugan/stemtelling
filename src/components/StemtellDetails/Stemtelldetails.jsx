@@ -1,25 +1,65 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import {Container, Card, TextField, Box, Avatar, Button} from '@material-ui/core';
-import Comment from '../Comment/Comment';
-import StemtellCard from '../STEMtellCard/STEMtellCard';
-import BackBtn from '../BackBtn/BackBtn';
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  Container,
+  Card,
+  TextField,
+  Box,
+  Avatar,
+  Button,
+  Grid,
+} from "@material-ui/core";
+import Comment from "../Comment/Comment";
+import BackBtn from "../BackBtn/BackBtn";
+import { Details } from "@material-ui/icons";
 
 function StemtellDetails() {
+  const dispatch = useDispatch();
 
-    return(
-        <>
-        <BackBtn />
-        <center>
-            <StemtellCard />
-        </center>
-        
-        <Comment />
+  useEffect(() => {
+    dispatch({ type: "FETCH_STEMTELL_DETAILS", payload: stemtell.id });
+  }, []);
 
+  const stemtell = useSelector((store) => store.stemtells);
 
-        </>
+  return (
+    <>
+      <BackBtn />
 
-    )
+      {stemtell.map((stemdetail) => {
+        <Grid item key={stemdetail.id}>
+          <Card className="StemCard">
+            <h6 id="stemDate">{stemdetail.date_published}</h6>
+            <Avatar className="Avatar" src={stemdetail.profile_picture_url} />
+            <section
+              className="UserName"
+              onClick={() => onUserProfile(stemdetail.user_id)}
+            >
+              {stemdetail.username}
+            </section>
+            <div className="UserName" id="userClass">
+              {stemdetail.class_name}
+            </div>
+
+            <h3
+              id="stemTitle"
+              onClick={() => toStemtellDetail(stemdetail.stem_id)}
+            >
+              {stemdetail.title}
+            </h3>
+
+            <img src={stemdetail.media_url} />
+            <section id="cardReactions">{stemdetail.reaction_name}</section>
+
+            <section id="stemDescription">{stemdetail.body_text}</section>
+          </Card>
+        </Grid>;
+      })}
+
+      <Comment />
+    </>
+  );
 }
 
 export default StemtellDetails;
