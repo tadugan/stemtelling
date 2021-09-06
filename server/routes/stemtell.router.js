@@ -147,7 +147,8 @@ router.get('/userstemtells', (req, res) => {
  });
 
  router.get('/details', (req, res) => {
-   const stemtellID= req.query.stemtellID
+  const stemtellID = req.query.stemtell;
+  console.log('stemtell id:', stemtellID)
     const query = `SELECT "user".name , "user".id as author_id, "stemtell".id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".date_published, "class".name AS class_name
     FROM "stemtell"
     JOIN "user" ON "stemtell".user_id = "user".id

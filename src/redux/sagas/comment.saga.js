@@ -10,16 +10,17 @@ function* commentSaga(){
 function* addComment(action){
     try{
          yield call(axios.post, '/api/comment', action.payload);
-         console.log('in addComment saga:' ,action.payload);
+         console.log('in addComment saga:',action.payload);
          yield put({type: 'GET_COMMENTLIST'});
     } catch(error){
         console.log('unable to add comment', error);
     }
 }
 
-function* getComments() {
+function* getComments(action) {
     try {
-        const response = yield axios.get('/api/comment');
+        const response = yield axios.get('/api/comment/stemcomments');
+        console.log('in getComments saga:', response.data)
         yield put({ type: 'SET_COMMENTLIST', payload: response.data});
     } catch (error) {
         console.log('Error GETting user comments on STEMtell', error);
