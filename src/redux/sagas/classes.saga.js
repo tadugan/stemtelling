@@ -19,7 +19,8 @@ function* fetchClasses(){
 function* fetchClassStemTells(){
     try {
         const response = yield axios.get('/api/class');
-        yield axios.get(`/api/stemtell/${response}`)
+        yield axios.get(`/api/stemtell`, response.data)
+        console.log(response, "THIS IS RESPONSE")
     } catch (error) {
         console.log('Error GETting classes'), error;
     }

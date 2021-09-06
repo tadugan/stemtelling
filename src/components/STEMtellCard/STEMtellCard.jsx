@@ -11,7 +11,9 @@ function StemtellCard() {
   console.log(userClasses, "user classes");
 
   useEffect(() => {
-    dispatch({ type: "FETCH_USER_FEED"} ); //need to use the value from FETCH CLASSES
+    dispatch({ type: "FETCH_CLASSES"})
+    dispatch({ type: "FETCH_STEMTELLS"})
+    dispatch({ type: "FETCH_USER_FEED"})  //need to use the value from FETCH CLASSES
   }, []);
 
   const dispatch = useDispatch();

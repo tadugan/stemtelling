@@ -10,7 +10,9 @@ return(
     <Grid item xs={12} sm={3}>
         <h1 id="HomepageTitle">My STEMtell Feed </h1>
     </Grid>
+    
     <StemtellCard/>
+    
 </Grid>
 )
 }
