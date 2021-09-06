@@ -3,23 +3,21 @@ import {
   Button,
   ButtonGroup,
   Dialog,
-  Divider,
   Grid,
   IconButton,
   Toolbar,
   Typography,
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import CloseIcon from '@material-ui/icons/Close';
 import './AddTagDialog.css';
-import TagChip from '../TagChip/TagChip';
 import GeneralTagMap from '../GeneralTagMap/GeneralTagMap';
 
 function AddTagDialog() {
   const dispatch = useDispatch();
-  const allTags = useSelector((store) => store.tags);
-  const selectedTags = useSelector((store) => store.selectedTags);
+//   const allTags = useSelector((store) => store.tags);
+//   const selectedTags = useSelector((store) => store.selectedTags);
 
   const [open, setOpen] = useState(false);
   const [tagDisplay, setTagDisplay] = useState('stem');
@@ -130,23 +128,6 @@ function AddTagDialog() {
                 </ButtonGroup>
               </Grid>
             </Grid>
-            {/* <Grid
-                                item
-                                container
-                                spacing={1}
-                                direction="row"
-                                justifyContent="center"
-                                alignItems="center"
-                            >
-                                {allTags.map((tag, index) => {
-                                    return (
-                                        <Grid item key={index}>
-                                            <TagChip tagInfo={tag} selectedTags={selectedTags} />
-                                        </Grid>
-                                    );
-                                })}
-                                {conditionalTagDisplay()}
-                            </Grid> */}
             {conditionalTagDisplay()}
           </Grid>
         </div>

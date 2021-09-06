@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Redirect,
   Route,
   Switch,
-  Link,
 } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,19 +17,20 @@ import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import ProfilePage from '../ProfilePage/ProfilePage';
 import InfoPage from '../InfoPage/InfoPage';
-import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage';
 import StemtellCard from '../STEMtellCard/STEMtellCard';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
+
 import ClassCard from '../ClassCard/ClassCard';
+
+import StemtellDetails from '../StemtellDetails/StemtellDetails';
 import './App.css';
 
 import Homepage from '../Homepage/Homepage';
 
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
-
 
 
 function App() {
@@ -47,7 +47,7 @@ function App() {
         <Nav />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-          <Redirect exact from="/" to="/home" />
+          <Redirect exact from="/" to="/homepage" />
 
           {/* Visiting localhost:3000/about will show the about page. */}
           <Route
@@ -70,6 +70,7 @@ function App() {
              <ResetPasswordPage />
           </Route>
 
+    
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
@@ -115,11 +116,20 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
+
             // logged in shows CreateSTEMtell else shows LoginPage
             exact
             path="/classlist"
           >
             <ClassCard />
+            </ProtectedRoute>
+
+            <ProtectedRoute
+            exact
+            path="/stemtell/details/:id"
+          >
+            <StemtellDetails />
+
           </ProtectedRoute>
 
           <Route
@@ -159,8 +169,8 @@ function App() {
               // redirect them to the /user page
               <Redirect to="/myprofile" />
               :
-              // Otherwise, show the Landing page
-              <LandingPage />
+              // Otherwise, show the user page
+              <Homepage />
             }
           </Route>
 

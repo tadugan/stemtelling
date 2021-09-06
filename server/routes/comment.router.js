@@ -15,7 +15,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   pool
     .query(query)
     .then((result) => {
-      console.log('successful GETTING comments', result.rows); // remove!
+      // console.log('successful GETTING comments', result.rows); // remove!
       res.send(result.rows);
     })
     .catch((err) => {
@@ -34,7 +34,7 @@ router.get('/feedback', rejectUnauthenticated, (req, res) => {
   pool
     .query(query)
     .then((result) => {
-      console.log('successful GETTING teacher feedback', result.rows); // remove
+      // console.log('successful GETTING teacher feedback', result.rows); // remove
       res.send(result.rows);
     })
     .catch((err) => {

@@ -1,14 +1,11 @@
-import { Avatar, Card, Container, Grid } from "@material-ui/core";
+import { Card, Container } from "@material-ui/core";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./ClassCard.css";
 
 function ClassCard() {
-
   const dispatch = useDispatch();
   const classes = useSelector((store) => store.classes);
-
-  console.log(classes, "THESE ARE CLASSES HAHAHA***");
 
   useEffect(() => {
     dispatch({ type: 'FETCH_CLASSES'});
