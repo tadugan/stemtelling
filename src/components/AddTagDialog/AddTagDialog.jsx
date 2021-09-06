@@ -16,8 +16,6 @@ import GeneralTagMap from '../GeneralTagMap/GeneralTagMap';
 
 function AddTagDialog() {
   const dispatch = useDispatch();
-//   const allTags = useSelector((store) => store.tags);
-//   const selectedTags = useSelector((store) => store.selectedTags);
 
   const [open, setOpen] = useState(false);
   const [tagDisplay, setTagDisplay] = useState('stem');

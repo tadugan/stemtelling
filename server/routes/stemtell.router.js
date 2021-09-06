@@ -8,8 +8,6 @@ const {
 
 
 router.get('/', (req, res) => {
-
-  // GET route code here
   const query = `SELECT "user".name AS username, "user".id AS author_id, "stemtell".id AS stem_id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".date_published, "class".name AS class_name
   FROM "stemtell"
   JOIN "user" ON "stemtell".user_id = "user".id
@@ -27,7 +25,30 @@ router.get('/', (req, res) => {
     });
 });
 
+/**
+ * GET api/stemtell/tags/:id
+ * Description: GETs all tags for one STEMtell ID 
+ * Returns 200
+ */
+router.get('/tags/:id', rejectUnauthenticated, (req, res) => {
+    const stemtellId = Number(req.params.id);
 
+    const queryText = `
+    SELECT "tag".id, "tag".name, "tag".stem_field, "tag".type
+    FROM "stemtell_tag"
+    JOIN "tag" ON "tag".id = "stemtell_tag".tag_id
+    WHERE "stemtell_tag".stemtell_id = $1;
+    `;
+
+    pool.query(queryText, [stemtellId])
+      .then(response => {
+        res.send(response.rows);
+      })
+      .catch(err => {
+        console.log("Error getting existing tags:", err);
+        res.sendStatus(500);
+      });
+});
 
 /**
  * POST api/stemtell/
@@ -40,9 +61,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 
     (async () => {
       const client = await pool.connect();
-      // console.log('Inside POST, outside trycatch');
       try {
-         //  console.log('inside trycatch');
           await client.query('BEGIN');
           const queryTextAddStemtell = `
           INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "date_published")
@@ -57,11 +76,8 @@ router.post('/', rejectUnauthenticated, (req, res) => {
           INSERT INTO stemtell_tag ("tag_id", "stemtell_id")
           VALUES ($1, $2)
           `;
-  
-         //  console.log('response', response);
 
           for (let id of newStemtell.tag_ids) {
-            //   console.log('Inside for loop. id:', id);
               await client.query(queryTextAddTag, [id, stemtellId]);
           }
   
@@ -76,33 +92,38 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     })().catch(e => console.error(e.stack))
 });
 
-router.post('/save', rejectUnauthenticated, (req, res) => {
+
+/**
+ * put api/stemtell/
+ * Description: UPDATES the info for a STEMtell that has been edited 
+ * Returns 204
+ */
+router.put('/save', rejectUnauthenticated, (req, res) => {
    const newStemtell = req.body;
    const user = req.user;
-   const stemtellID = req.body.id;
-   console.log(stemtellID);
+   const stemtellId = req.body.id;
 
    (async () => {
      const client = await pool.connect();
-     // console.log('Inside POST, outside trycatch');
      try {
-        //  console.log('inside trycatch');
          await client.query('BEGIN');
          const queryTextAddStemtell = `
-         UPDATE "stemtell" SET "class_id" = $1, "user_id" = $2, "title" = $3, "body_text" = $4, "media_url" = $5 WHERE "id" = $6 RETURNING *`;
-         const response = await client.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, newStemtell.media_url, stemtellID]);
- 
-         const stemtellId = response.rows[0].id;
+         UPDATE "stemtell" SET "class_id" = $1, "user_id" = $2, "title" = $3, "body_text" = $4, "media_url" = $5 WHERE "id" = $6`;
+         const response = await client.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, newStemtell.media_url, stemtellId]);
+
+         const queryTextDeleteExistingTags = `
+         DELETE
+         FROM "stemtell_tag"
+         WHERE stemtell_id = $1;
+         `
+         await client.query(queryTextDeleteExistingTags, [stemtellId]);
 
          const queryTextAddTag = `
          INSERT INTO stemtell_tag ("tag_id", "stemtell_id")
          VALUES ($1, $2)
          `;
- 
-        //  console.log('response', response);
 
          for (let id of newStemtell.tag_ids) {
-           //   console.log('Inside for loop. id:', id);
              await client.query(queryTextAddTag, [id, stemtellId]);
          }
  
