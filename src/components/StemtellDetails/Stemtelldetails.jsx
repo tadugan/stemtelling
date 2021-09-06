@@ -10,9 +10,9 @@ function StemtellDetails() {
     return(
         <>
         <BackBtn />
-      
+        <center>
             <StemtellCard />
-       
+        </center>
         
         <Comment />
 
