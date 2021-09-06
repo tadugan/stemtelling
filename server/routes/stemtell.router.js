@@ -147,15 +147,15 @@ router.get('/userstemtells', (req, res) => {
  });
 
  router.get('/details', (req, res) => {
-  const stemtellID = req.query.stemtell;
-  console.log('stemtell id:', stemtellID)
+  // const stemtellID = req.params.stemtell;
+  // console.log('stemtell id:', stemtellID)
     const query = `SELECT "user".name , "user".id as author_id, "stemtell".id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".date_published, "class".name AS class_name
     FROM "stemtell"
     JOIN "user" ON "stemtell".user_id = "user".id
     JOIN "class" ON "stemtell".class_id = "class".id
-    WHERE "stemtell".id = $1`;
+    WHERE "stemtell".id = 1`;
     pool
-    .query(query, [stemtellID])
+    .query(query)
     .then((result) => {
        res.send(result.rows);
     })

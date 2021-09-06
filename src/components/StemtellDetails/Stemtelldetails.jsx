@@ -19,9 +19,9 @@ function StemtellDetails() {
   const getSearchQueryByFullURL = (url) => {return url.split('/')};
 
   useEffect(() => {
-    dispatch({ type: "FETCH_STEMTELL_DETAILS", payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1])});
+    dispatch({ type: "FETCH_STEMTELL_DETAILS"});
   }, []);
-
+//, payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1]
   const stemtells = useSelector((store) => store.stemtells);
 console.log('STEMDETAILS STORE:', stemtells)
   const onUserProfile = (author_id) => {
