@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Container,
@@ -14,16 +14,22 @@ import Comment from "../Comment/Comment";
 import BackBtn from "../BackBtn/BackBtn";
 import { Details } from "@material-ui/icons";
 
+
 function StemtellDetails() {
+
+    const params = useParams();
+    const stemtellId= params.id;
+    console.log('This is the stemtell id:', stemtellId);
   const dispatch = useDispatch();
-  const getSearchQueryByFullURL = (url) => {return url.split('/')};
+//   const getSearchQueryByFullURL = (url) => {return url.split('/')};
 
   useEffect(() => {
-    dispatch({ type: "FETCH_STEMTELL_DETAILS"});
+    dispatch({ type: "FETCH_STEMTELL_DETAILS", payload: stemtellId});
   }, []);
-//, payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1]
-  const stemtells = useSelector((store) => store.stemtells);
-console.log('STEMDETAILS STORE:', stemtells)
+
+  const stemtell = useSelector((store) => store.stemtellDetails);
+console.log('STEMDETAILS STORE:', stemtell)
+
   const onUserProfile = (author_id) => {
     //  TODO: If this is working, remove console.log()
      console.log("Clicked profile with author_id:", author_id);
@@ -32,8 +38,7 @@ console.log('STEMDETAILS STORE:', stemtells)
   return (
     <>
       <BackBtn />
-
-      {stemtells.map((stemtell) => {
+<center>
         <Grid item key={stemtell.id}>
           <Card className="StemCard">
             <h6 id="stemDate">{stemtell.date_published}</h6>
@@ -59,9 +64,8 @@ console.log('STEMDETAILS STORE:', stemtells)
 
             <section id="stemDescription">{stemtell.body_text}</section>
           </Card>
-        </Grid>;
-      })}
-
+        </Grid>
+</center>
       <Comment />
     </>
   );

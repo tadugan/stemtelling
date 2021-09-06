@@ -5,7 +5,7 @@ function* stemtellSaga(){
     yield takeEvery("FETCH_STEMTELLS", fetchAllStemTells);
     yield takeEvery("FETCH_USER_STEMTELLS", fetchUserStemTells);
     yield takeEvery("GET_STEMTELL", getStemtell);
-    yield takeEvery("FETCH_STEM_DETAILS", getStemDetails);
+    yield takeEvery("FETCH_STEMTELL_DETAILS", getStemDetails);
 };
 
 function* fetchAllStemTells(){
@@ -38,12 +38,11 @@ function* getStemtell(action){
    };
 };
 
-function* getStemDetails(){
+function* getStemDetails(action){
    try {
-      // const stemtellID = action.payload;
-      // console.log('stemdetails saga:', stemtellID);
-      const response = yield axios.get('/api/stemtell/details');
-      yield put({ type: 'SET_STEM_DETAILS', payload: response.data });
+      const response = yield axios.get(`/api/stemtell/details/${action.payload}`);
+      console.log('STEMDETAILS SAGA:', response.data[0]);
+      yield put({ type: 'SET_STEM_DETAILS', payload: response.data[0] });
    }
    catch (error) {
       console.log("error in FETCHING stemdetails:", error);
