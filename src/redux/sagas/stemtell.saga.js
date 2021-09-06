@@ -42,7 +42,7 @@ function* getStemDetails(action){
    try {
       const stemtellID = action.payload;
       const response = yield axios.get('/api/stemtell/details', { params: { stemtellID } });
-      yield put({ type: 'SET_STEM_DETAILS', payload: response.data[0] });
+      yield put({ type: 'SET_STEM_DETAILS', payload: response.data });
    }
    catch (error) {
       console.log("error in FETCHING stemdetails:", error);

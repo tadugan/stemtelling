@@ -114,7 +114,7 @@ function App() {
           <ProtectedRoute
             
             exact
-            path="/stemtell/details/:id"
+            path="/stemtell/:id"
           >
             <StemtellDetails />
           </ProtectedRoute>

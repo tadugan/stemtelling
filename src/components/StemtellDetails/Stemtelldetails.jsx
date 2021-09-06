@@ -22,7 +22,11 @@ function StemtellDetails() {
   }, []);
 
   const stemtell = useSelector((store) => store.stemtells);
-
+  const onUserProfile = (author_id) => {
+    //  TODO: If this is working, remove console.log()
+     console.log("Clicked profile with author_id:", author_id);
+     history.push(`/profile/${author_id}`);
+   }
   return (
     <>
       <BackBtn />
@@ -44,7 +48,6 @@ function StemtellDetails() {
 
             <h3
               id="stemTitle"
-              onClick={() => toStemtellDetail(stemdetail.stem_id)}
             >
               {stemdetail.title}
             </h3>

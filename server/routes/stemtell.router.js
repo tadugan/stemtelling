@@ -146,19 +146,21 @@ router.get('/userstemtells', (req, res) => {
      });
  });
 
- router.get('/details/:id', (req, res) => {
-    const query = `SELECT "user".name , "user".id, "stemtell".id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".date_published, "class".name AS class_name
+ router.get('/details', (req, res) => {
+   const stemtellID= req.query.stemtellID
+    const query = `SELECT "user".name , "user".id as author_id, "stemtell".id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".date_published, "class".name AS class_name
     FROM "stemtell"
     JOIN "user" ON "stemtell".user_id = "user".id
     JOIN "class" ON "stemtell".class_id = "class".id
     WHERE "stemtell".id = $1`;
     pool
-    .query(query)
+    .query(query, [stemtellID])
     .then((result) => {
-      res.send(result.rows);
+       res.send(result.rows);
     })
+     
     .catch((err) => {
-      console.log("Error getting all STEMtells", err);
+      console.log("Error getting all STEMdetails", err);
       res.sendStatus(500);
     });
 });

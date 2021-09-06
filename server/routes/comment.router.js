@@ -8,16 +8,17 @@ const rejectUnauthenticated =
  * GET route to grab
  */
 router.get("/", rejectUnauthenticated, (req, res) => {
+  console.log(req.params.stemid)
   const query = `SELECT "user".name AS username, "stemtell".id, "user".profile_picture_url, "comment".comment, "comment".date_published, "comment".id
   FROM "comment"
   JOIN "user" ON "comment".user_id = "user".id
   JOIN "stemtell" ON "stemtell".id = "comment".stemtell_id
   WHERE  "comment".teacher_feedback = FALSE
-  and "stemtell".id = 1
+  and "stemtell".id = $1
   ORDER BY "comment".date_published ASC 
   ;`;
   pool
-    .query(query,[stemID])
+    .query(query)
     .then((result) => {
       res.send(result.rows);
     })
