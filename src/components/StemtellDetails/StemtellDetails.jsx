@@ -41,7 +41,7 @@ function StemtellDetails() {
               className="UserName"
               onClick={() => onUserProfile(stemtell.user_id)}
             >
-              {stemtell.username}
+              {stemtell.name}
             </section>
             <div className="UserName" id="userClass">
               {stemtell.class_name}
