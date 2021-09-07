@@ -25,7 +25,7 @@ import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 
 import ClassCard from '../ClassCard/ClassCard';
 
-import StemtellDetails from '../StemtellDetails/StemtellDetails';
+import StemtellDetails from '../StemtellDetails/Stemtelldetails';
 import './App.css';
 import Homepage from '../Homepage/Homepage';
 
