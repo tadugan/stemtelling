@@ -14,15 +14,6 @@ function StudentCard() {
 
     //deletes student from specific class
     const handleDelete = (deleteStudent) => {
-
-        //SWEETALERT CODE
-        // swal({
-        //   title: "Post Deleted!",
-        //   text: "Post Successfully Deleted!",
-        //   icon: "success",
-        //   button: "Okay",
-        // });
-        
         dispatch({ type: "DELETE_STUDENT", payload: deleteStudent });
        
       };

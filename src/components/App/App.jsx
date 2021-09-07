@@ -27,7 +27,6 @@ import ClassCard from '../ClassCard/ClassCard';
 
 import StemtellDetails from '../StemtellDetails/StemtellDetails';
 import './App.css';
-
 import Homepage from '../Homepage/Homepage';
 
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
@@ -126,7 +125,7 @@ function App() {
 
             <ProtectedRoute
             exact
-            path="/stemtell/details/:id"
+            path="/stemtell/:id"
           >
             <StemtellDetails />
 

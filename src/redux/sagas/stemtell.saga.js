@@ -5,6 +5,7 @@ function* stemtellSaga(){
     yield takeEvery("FETCH_STEMTELLS", fetchAllStemTells);
     yield takeEvery("FETCH_USER_STEMTELLS", fetchUserStemTells);
     yield takeEvery("GET_STEMTELL", getStemtell);
+    yield takeEvery("FETCH_STEMTELL_DETAILS", getStemDetails);
 };
 
 function* fetchAllStemTells(){
@@ -36,5 +37,16 @@ function* getStemtell(action){
       console.log("get stemtell to edit error", err);
    };
 };
+
+function* getStemDetails(action){
+   try {
+      const response = yield axios.get(`/api/stemtell/details/${action.payload}`);
+      yield put({ type: 'SET_STEM_DETAILS', payload: response.data[0] });
+   }
+   catch (error) {
+      console.log("error in FETCHING stemdetails:", error);
+   };
+   
+}
 
 export default stemtellSaga;

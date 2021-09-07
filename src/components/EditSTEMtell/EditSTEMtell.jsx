@@ -10,7 +10,7 @@ function EditSTEMtell(stemtell) {
 
     const dispatch = useDispatch();
     const history = useHistory();
-    const [ classId, setClassId ] = useState(1);
+    const [ classId, setClassId ] = useState(0);
     const [ title, setTitle ] = useState('');
     const [ imageUrl, setImageUrl] = useState('');
     const [ description, setDescription ] = useState('');
@@ -53,18 +53,18 @@ function EditSTEMtell(stemtell) {
         setDescription('');
         dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
         history.push('/myprofile');
-
-        // Return user to previous view
-        // TODO:
     }
 
     const handleCancel = () => {
-      // history.goBack();
-      console.log(stemtell);
+      console.log(stemtell); // TODO:
     }
 
     const getClassList = () => {
         dispatch({ type: 'FETCH_CLASSES'});
+    }
+
+    const getExistingTags = (stemtellId) => {
+        dispatch({ type: 'GET_EXISTING_TAGS', payload: stemtellId });
     }
 
     const invalidInputs = () => {
@@ -95,25 +95,25 @@ function EditSTEMtell(stemtell) {
             case 'class':
                 return (
                     <Grid item xs={12}>
-                        <h4 className="create-stemtell-input-alert" >*Please Select a Class to your STEMtell</h4>
+                        <h4 className="edit-stemtell-input-alert" >*Please Select a Class to your STEMtell</h4>
                     </Grid>
                 );
             case 'title':
                 return (
                     <Grid item xs={12}>
-                        <h4 className="create-stemtell-input-alert" >*Please Add a Title to your STEMtell</h4>
+                        <h4 className="edit-stemtell-input-alert" >*Please Add a Title to your STEMtell</h4>
                     </Grid>
                 );
             case 'description':
             return (
                 <Grid item xs={12}>
-                    <h4 className="create-stemtell-input-alert" >*Please add text to your STEMtell</h4>
+                    <h4 className="edit-stemtell-input-alert" >*Please add text to your STEMtell</h4>
                 </Grid>
             );
             case 'tag':
                 return (
                     <Grid item xs={12}>
-                        <h4 className="create-stemtell-input-alert" >*Please some tags to your STEMtell</h4>
+                        <h4 className="edit-stemtell-input-alert" >*Please some tags to your STEMtell</h4>
                     </Grid>
                 );
             default:
@@ -127,11 +127,12 @@ function EditSTEMtell(stemtell) {
         setTitle(stemtell.stemtell.title);
         setImageUrl(stemtell.stemtell.media_url);
         setClassId(stemtell.stemtell.class_id);
-      //   setTitle
+        getExistingTags(stemtell.stemtell.id);
+        // dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
     }, []);
 
   return (
-    <div className="create-stemtell-body">
+    <div className="edit-stemtell-body">
         <form>
             <Grid
                 container
@@ -140,11 +141,10 @@ function EditSTEMtell(stemtell) {
                 justifyContent="center"
                 alignItems="center"
             >
-                {/* BackButton Goes here */}
                 <Grid
                     item
                 >
-                    <h2>Create a STEMtell</h2>
+                    <h2>Edit</h2>
                 </Grid>
                 <Grid
                     item
@@ -157,7 +157,7 @@ function EditSTEMtell(stemtell) {
                         value={classId}
                         onChange={(event) => setClassId(event.target.value)}
                         label="Age"
-                        className="create-stemtell-class-select"
+                        className="edit-stemtell-class-select"
                         >
                         <MenuItem value={0}>
                             <em>Choose a Class</em>
@@ -180,7 +180,7 @@ function EditSTEMtell(stemtell) {
                         variant="outlined"
                         value={title}
                         onChange={(event) => setTitle(event.target.value)}
-                        className="create-stemtell-title"
+                        className="edit-stemtell-title"
                     />
                 </Grid>
                 <Grid
@@ -191,7 +191,7 @@ function EditSTEMtell(stemtell) {
                         variant="outlined"
                         value={imageUrl}
                         onChange={(event) => setImageUrl(event.target.value)}
-                        className="create-stemtell-image-url"
+                        className="edit-stemtell-image-url"
                     />
                 </Grid>
                 <Grid
@@ -206,7 +206,7 @@ function EditSTEMtell(stemtell) {
                         multiline
                         value={description}
                         onChange={(event) => setDescription(event.target.value)}
-                        className="create-stemtell-description"
+                        className="edit-stemtell-description"
                     />
                 </Grid> 
                 <Grid

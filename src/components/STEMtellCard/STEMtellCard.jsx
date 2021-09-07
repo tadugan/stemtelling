@@ -8,6 +8,7 @@ import "./STEMtellCard.css";
 function StemtellCard() {
 
   const history = useHistory();
+  
   useEffect(() => {
     dispatch({ type: "FETCH_CLASSES"})
 
@@ -22,7 +23,13 @@ function StemtellCard() {
   const onUserProfile = (author_id) => {
 
    //  TODO: If this is working, remove console.log()
+
+    console.log("Clicked profile with author_id:", author_id);
     history.push(`/profile/${author_id}`);
+  }
+
+  const toStemtellDetail = (stem_id) => {
+    history.push(`stemtell/${stem_id}`);
   }
 
   return (
@@ -42,7 +49,7 @@ function StemtellCard() {
             {stemtell.class_name}
           </div>
 
-          <h3 id="stemTitle"> {stemtell.title}</h3>
+          <h3 id="stemTitle" onClick= {() => toStemtellDetail(stemtell.stem_id)}> {stemtell.title}</h3>
 
           <img src={stemtell.media_url} />
           <section id="cardReactions">{stemtell.reaction_name}</section>

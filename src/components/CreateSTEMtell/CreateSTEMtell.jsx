@@ -120,6 +120,7 @@ function CreateSTEMtell() {
 
     useEffect(() => {
         getClassList();
+        dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL' });
     }, []);
 
   return (
