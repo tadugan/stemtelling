@@ -13,7 +13,7 @@ function StemtellCard() {
     dispatch({ type: "FETCH_CLASSES"})
 
     dispatch({ type: "FETCH_STEMTELLS"})
-    dispatch({ type: "FETCH_USER_FEED"})  //need to use the value from FETCH CLASSES
+     //need to use the value from FETCH CLASSES
 
   }, []);
 
@@ -22,9 +22,6 @@ function StemtellCard() {
 
   const onUserProfile = (author_id) => {
 
-   //  TODO: If this is working, remove console.log()
-
-    console.log("Clicked profile with author_id:", author_id);
     history.push(`/profile/${author_id}`);
   }
 

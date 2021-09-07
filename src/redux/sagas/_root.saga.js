@@ -10,9 +10,6 @@ import classesSaga from './classes.saga';
 import feedbackSaga from './feedback.saga';
 import studentListSaga from './studentList.saga';
 import deleteStudentSaga from './deleteStudent.saga';
-
-import userClassSaga from './user_class.saga';
-
 import editStemtellSaga from './editSTEMtell.saga';
 
 // rootSaga is the primary saga.
@@ -37,7 +34,6 @@ export default function* rootSaga() {
     feedbackSaga(),
     studentListSaga(),
     deleteStudentSaga(),
-    userClassSaga(),
     editStemtellSaga(),
   ]);
 }
