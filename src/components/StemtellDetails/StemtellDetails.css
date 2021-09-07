@@ -1,10 +1,11 @@
 .StemDetailsCard {
    width: 80%;
-   height: auto;
+   height: 100%;
 }
 
 #StemDetailsImage{
    margin-bottom: 3em;
+   max-height: 400px;
 }
 
 #StemDetailsDescription{
