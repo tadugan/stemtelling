@@ -1,25 +1,25 @@
-.create-stemtell-body {
+.edit-stemtell-body {
     width: 400px;
     margin: auto;
     background-color: white;
 }
 
-.create-stemtell-class-select {
+.edit-stemtell-class-select {
     width: 248px;
 }
 
-.create-stemtell-title {
+.edit-stemtell-title {
     width: 360px;
 }
 
-.create-stemtell-image-url {
+.edit-stemtell-image-url {
     width: 360px;
 }
 
-.create-stemtell-description {
+.edit-stemtell-description {
     width: 360px;
 }
-.create-stemtell-input-alert {
+.edit-stemtell-input-alert {
     color: red;
     text-align: center;
 }

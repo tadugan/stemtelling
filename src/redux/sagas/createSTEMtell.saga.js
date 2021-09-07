@@ -9,18 +9,8 @@ function* submitNewStemtell(action) {
     }
 }
 
-function* saveEditedStemtell(action) {
-   console.log(action.payload);
-   try {
-       yield axios.post('/api/stemtell/save', action.payload);
-   } catch (error) {
-       console.log('Error saving STEMtell', error);
-   }
-}
-
 function* createStemtellSaga() {
     yield takeLatest('SUBMIT_NEW_STEMTELL', submitNewStemtell);
-    yield takeLatest('SAVE_EDITED_STEMTELL', saveEditedStemtell);
   }
 
 export default createStemtellSaga;

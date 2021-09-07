@@ -7,13 +7,14 @@ import "./STEMtellCard.css";
 
 function StemtellCard() {
 
+  const history = useHistory();
+  
   useEffect(() => {
     dispatch({ type: "FETCH_CLASSES"})
     dispatch({ type: "FETCH_STEMTELLS"}); //need to use the value from FETCH CLASSES
   }, []);
 
   const dispatch = useDispatch();
-  const history = useHistory();
   const stemtells = useSelector((store) => store.stemtells);
 
   const onUserProfile = (author_id) => {

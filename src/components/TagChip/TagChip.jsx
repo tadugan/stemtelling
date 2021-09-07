@@ -34,7 +34,6 @@ function TagChip( {tagInfo, selectedTags} ) {
     }
 
     const handleClick = () => {
-      //   console.log('You clicked the Chip.'); // test
         if (isSelected) {
             setIsSelected(false)
             dispatch({ type: 'REMOVE_TAG_FROM_STEMTELL', payload: tagInfo });
