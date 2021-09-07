@@ -16,6 +16,7 @@
 #GeneralCommentInput{
     padding-left: 10px;
     margin-bottom: 5px;
+    width: 100%;
 }
 
 .CommentDate{
@@ -34,4 +35,8 @@
 .BtnsforCommenting{
     display: inline-block;
     
+}
+
+.MuiTextField-root {
+   width: 100%;
 }
