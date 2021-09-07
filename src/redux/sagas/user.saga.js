@@ -1,30 +1,25 @@
-import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
+import axios from 'axios';
 
-// worker Saga: will be fired on "FETCH_USER" actions
+
+// function for fetching the current user
+// called on login
 function* fetchUser() {
-  try {
-    const config = {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    };
-
-    // the config includes credentials which
-    // allow the server session to recognize the user
-    // If a user is logged in, this will return their information
-    // from the server session (req.user)
-    const response = yield axios.get('/api/user', config);
-
-    // now that the session has given us a user object
-    // with an id and email set the client-side user object to let
-    // the client-side code know the user is logged in
-    yield put({ type: 'SET_USER', payload: response.data });
-  } catch (error) {
-    console.log('User get request failed', error);
-  };
+   try {
+      const config = {
+         headers: { 'Content-Type': 'application/json' },
+         withCredentials: true,
+      };
+      const response = yield axios.get('/api/user', config);
+      yield put({ type: 'SET_USER', payload: response.data });
+   }
+   catch (error) {
+      console.log('Error with fetchUser in user.saga.js:', error);
+   };
 };
 
-
+// function for fetching a user profile
+// called on load when a user is visiting a "ProfilePage"
 function* fetchProfile(action) {
    const profileID = action.payload;
    try {
@@ -32,13 +27,16 @@ function* fetchProfile(action) {
       yield put({ type: 'SET_CURRENT_PROFILE', payload: response.data[0] });
    }
    catch (error) {
-      console.log("error in fetchAllUsers:", error);
+      console.log("Error with fetchProfile in user.saga.js:", error);
    };
 };
 
+
+// main export for this file
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('FETCH_PROFILE', fetchProfile);
 };
+
 
 export default userSaga;

@@ -150,15 +150,15 @@ function EditSTEMtell(stemtell) {
                 <Grid
                     item
                 >
-                    <FormControl variant="outlined">
-                        <InputLabel id="demo-simple-select-outlined-label">Class</InputLabel>
+                    <FormControl variant="outlined" className="edit-stemtell-class">
+                        <InputLabel className="demo-simple-select-outlined-label">Class</InputLabel>
                         <Select
-                        variant="outlined"
-                        labelId="demo-simple-select-outlined-label"
-                        value={classId}
-                        onChange={(event) => setClassId(event.target.value)}
-                        label="Age"
-                        id="edit-stemtell-class-select"
+                           variant="outlined"
+                           labelId="demo-simple-select-outlined-label"
+                           value={classId}
+                           onChange={(event) => setClassId(event.target.value)}
+                           label="Age"
+                           className="edit-stemtell-class-select"
                         >
                         <MenuItem value={0}>
                             <em>Choose a Class</em>
@@ -175,28 +175,29 @@ function EditSTEMtell(stemtell) {
                 </Grid>
                 <Grid
                     item
+                    className="edit-stemtell-title"
                 >
                     <TextField
                         label="Title"
                         variant="outlined"
                         value={title}
                         onChange={(event) => setTitle(event.target.value)}
-                        id="edit-stemtell-title"
                     />
                 </Grid>
                 <Grid
                     item
+                    className="edit-stemtell-image-url"
                 >
                     <TextField
                         label="Image URL"
                         variant="outlined"
                         value={imageUrl}
                         onChange={(event) => setImageUrl(event.target.value)}
-                        id="edit-stemtell-image-url"
                     />
                 </Grid>
                 <Grid
                     item
+                    className="edit-stemtell-description"
                 >
                     <TextField
                         aria-label="STEMtell textarea"
@@ -207,7 +208,6 @@ function EditSTEMtell(stemtell) {
                         multiline
                         value={description}  
                         onChange={(event) => setDescription(event.target.value)}
-                        id="edit-stemtell-description"
                     />
                 </Grid> 
                 <Grid
@@ -236,11 +236,6 @@ function EditSTEMtell(stemtell) {
                 </Grid>
                 <Grid
                     item
-                >
-                    <p>Selected Tags get display here</p>
-                </Grid>
-                <Grid
-                    item
                     container
                     spacing={2}
                     xs={12}
@@ -252,6 +247,7 @@ function EditSTEMtell(stemtell) {
                         item
                     >
                         <Button
+                            className="edit-page-button"
                             variant="contained"
                             color="secondary"
                             onClick={handleCancel}
@@ -263,6 +259,7 @@ function EditSTEMtell(stemtell) {
                         item
                     >
                         <Button
+                            className="edit-page-button"
                             variant="contained"
                             color="primary"
                             onClick={handleSave}
