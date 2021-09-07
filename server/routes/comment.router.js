@@ -30,7 +30,11 @@ router.get("/stemcomments/:id", rejectUnauthenticated, (req, res) => {
   JOIN "stemtell" ON "stemtell".id = "comment".stemtell_id
   WHERE  "comment".teacher_feedback = FALSE
   and "stemtell".id = $1
+<<<<<<< HEAD
+  ORDER BY "comment".date_published DESC 
+=======
   ORDER BY "comment".unix ASC 
+>>>>>>> master
   ;`;
   pool
     .query(query,[stemtellId] )
@@ -39,6 +43,7 @@ router.get("/stemcomments/:id", rejectUnauthenticated, (req, res) => {
     })
     .catch((err) => {
       console.log("error GETTING stemComments", err);
+      res.sendStatus(500);
     });
 });
 
@@ -75,9 +80,11 @@ router.post(`/`, rejectUnauthenticated, (req, res) => {
     ])
     .then((result) => {
       console.log("New comment posted", result);
+      res.sendStatus(201);
     })
     .catch((error) => {
       console.log("Error Posting comment", error);
+      res.sendStatus(500);
     });
 });
 
