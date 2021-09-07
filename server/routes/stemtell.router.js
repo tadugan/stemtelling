@@ -6,7 +6,7 @@ const {
 } = require("../modules/authentication-middleware");
 const { response } = require("express");
 
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   //This query pulls ALL stemtells from db
   const query = `SELECT "user".name AS username, "user".id AS author_id, "stemtell".id AS stem_id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".unix, "class".name AS class_name
   FROM "stemtell"
@@ -25,7 +25,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/homefeed", (req, res) => {
+router.get('/homefeed', (req, res) => {
   const query = `SELECT "user".name AS username, "user".id AS author_id, "stemtell".id AS stem_id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".unix, "class".name AS class_name
   FROM "stemtell"
   JOIN "user" ON "stemtell".user_id = "user".id
@@ -51,7 +51,7 @@ router.get("/homefeed", (req, res) => {
  * Description: GETs all tags for one STEMtell ID
  * Returns 200
  */
-router.get("/tags/:id", rejectUnauthenticated, (req, res) => {
+router.get('/tags/:id', rejectUnauthenticated, (req, res) => {
   const stemtellId = Number(req.params.id);
 
   const queryText = `
@@ -77,7 +77,7 @@ router.get("/tags/:id", rejectUnauthenticated, (req, res) => {
  * Description: INSERTS a new STEMtell into "stemtell" table and INSERTS tags into "stemtell_tag" table
  * Returns 201 CREATED
  */
-router.post("/", rejectUnauthenticated, (req, res) => {
+router.post('/', rejectUnauthenticated, (req, res) => {
   const newStemtell = req.body;
   const user = req.user;
 
@@ -124,7 +124,7 @@ router.post("/", rejectUnauthenticated, (req, res) => {
  * Description: UPDATES the info for a STEMtell that has been edited
  * Returns 204
  */
-router.put("/save", rejectUnauthenticated, (req, res) => {
+router.put('/save', rejectUnauthenticated, (req, res) => {
   const newStemtell = req.body;
   const user = req.user;
   const stemtellId = req.body.id;
@@ -170,7 +170,7 @@ router.put("/save", rejectUnauthenticated, (req, res) => {
   })().catch((e) => console.error(e.stack));
 });
 
-router.get("/userstemtells", (req, res) => {
+router.get('/userstemtells', (req, res) => {
   const profilePageID = req.query.profileID;
   const qText = `SELECT * FROM "stemtell" WHERE "user_id" = $1`;
   pool
@@ -184,7 +184,7 @@ router.get("/userstemtells", (req, res) => {
     });
 });
 
-router.get("/getstemtell", (req, res) => {
+router.get('/getstemtell', (req, res) => {
   const stemtellID = req.query.stemtellID;
   const user = req.user.id;
   const query = `SELECT * FROM "stemtell" WHERE "id" = $1 AND "user_id" = $2`;
@@ -199,7 +199,7 @@ router.get("/getstemtell", (req, res) => {
     });
 });
 
-router.get("/details/:id", (req, res) => {
+router.get('/details/:id', (req, res) => {
   const stemtellId = req.params.id;
   const query = `SELECT "user".name , "user".id as author_id, "stemtell".id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".unix, "class".name AS class_name
     FROM "stemtell"
