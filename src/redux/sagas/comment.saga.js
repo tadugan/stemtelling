@@ -20,9 +20,12 @@ function* getComments() {
 //TODO: work on posting a comment to a stemtell
 function* addComment(action){
     try{
-         yield call(axios.post, '/api/comment', action.payload);
-         console.log('in addComment saga:',action.payload);
-         yield put({type: 'GET_COMMENTLIST'});
+        console.log('In addComment. action.payload:', action.payload); // TODO:
+        yield call(axios.post, '/api/comment', action.payload);
+        // yield put({type: 'GET_STEMTELL_COMMENTS', payload: action.payload.stemtell_id});
+        const response = yield axios.get(`/api/comment/stemcomments/${action.payload.stemtell_id}`);
+        console.log('this is after getting stemtell comments. response:', response); // TODO:
+        yield put({ type: 'SET_STEMTELL_COMMENTS', payload: response.data});
     } catch(error){
         console.log('unable to add comment', error);
     }
@@ -30,6 +33,8 @@ function* addComment(action){
 
 function* getStemComments(action) {
     try {
+        console.log('In getStemComments'); // TODO:
+        console.log('Action Payload for getStemComments:', action.payload); // TODO:
         const response = yield axios.get(`/api/comment/stemcomments/${action.payload}`);
         yield put({ type: 'SET_STEMTELL_COMMENTS', payload: response.data});
     } catch (error) {

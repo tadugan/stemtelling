@@ -30,7 +30,7 @@ router.get("/stemcomments/:id", rejectUnauthenticated, (req, res) => {
   JOIN "stemtell" ON "stemtell".id = "comment".stemtell_id
   WHERE  "comment".teacher_feedback = FALSE
   and "stemtell".id = $1
-  ORDER BY "comment".date_published ASC 
+  ORDER BY "comment".date_published DESC 
   ;`;
   pool
     .query(query,[stemtellId] )
