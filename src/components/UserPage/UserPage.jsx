@@ -65,7 +65,7 @@ function UserPage() {
           <Grid container>
             {stemtells.map((stemtell) => {
                return (
-                  <Grid item >
+                  <Grid item key={stemtell.id}>
                      <Card className="StemCard">
                         <Avatar className="Avatar" />
                         <section className="UserName">{stemtell.username}</section>
@@ -101,7 +101,7 @@ function UserPage() {
          }}
         >
          <Fade in={open}>
-            <EditSTEMtell stemtell={stemtellData}/>
+            <EditSTEMtell stemtell={stemtellData} key={stemtellData.id}/>
          </Fade>
       </Modal>
       </Grid>
