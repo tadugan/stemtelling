@@ -54,7 +54,6 @@ function Comment() {
         <form>
        <TextField
        name= 'addComment' 
-      fullWidth= 'true'
       placeholder='Comment...'
       multiline
       rows={3}
