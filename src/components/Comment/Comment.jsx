@@ -19,7 +19,7 @@ function Comment() {
     const [feedback, setFeedback]= useState(false);
     const dispatch= useDispatch();
     const comments = useSelector((store) => store.stemtellComments);
-    console.log(`STEM COMMENTS STORE: ${comments}.`)
+
 
 
     useEffect(() =>{
@@ -27,15 +27,15 @@ function Comment() {
     }, []);
 
     const handleSubmit = (event) =>{
-         event.preventDefault();
         dispatch({type:'ADD_COMMENT', payload: {
-          stemtell_id: comments.stemtell_id,
+          stemtell_id: stemtellId,
           comment: leaveComment ,
           teacher_feedback: feedback
           }
         });
         setComment('');
         setFeedback(false);
+        dispatch({ type: 'GET_STEMTELL_COMMENTS', payload: stemtellId});
     }
  
     const handleComment = (event) => {

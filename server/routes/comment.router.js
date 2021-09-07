@@ -35,7 +35,6 @@ router.get("/stemcomments/:id", rejectUnauthenticated, (req, res) => {
   pool
     .query(query,[stemtellId] )
     .then((result) => {
-      console.log('THIS IS THE COMMENTS RESULTS', result.rows)
       res.send(result.rows)
     })
     .catch((err) => {
@@ -69,10 +68,9 @@ router.post(`/`, rejectUnauthenticated, (req, res) => {
   VALUES ($1, $2, $3, $4 , NOW());`;
   pool
     .query(queryAddComment, [
-      req.query.stemtell_id,
+      req.body.stemtell_id,
       req.user.id,
       req.body.comment,
-      req.body.date_published,
       req.body.teacher_feedback,
     ])
     .then((result) => {
