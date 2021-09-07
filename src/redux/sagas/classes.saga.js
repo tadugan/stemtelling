@@ -1,18 +1,24 @@
-import axios from "axios";
 import { put, takeEvery } from "redux-saga/effects";
+import axios from "axios";
 
-function* classesSaga(){
-    yield takeEvery('FETCH_CLASSES', fetchClasses);
 
-}
+// function to get all classes that the current logged in user is in
+// called when 
+function* fetchClasses() {
+   try {
+      const response = yield axios.get('/api/class');
+      yield put({ type: 'SET_CLASSES', payload: response.data});
+   }
+    catch (error) {
+      console.log('Error with fetchClasses in classes.saga.js:', error);
+   };
+};
 
-function* fetchClasses(){
-    try {
-        const response = yield axios.get('/api/class');
-        yield put({ type: 'SET_CLASSES', payload: response.data});
-    } catch (error) {
-        console.log('Error GETting teachers classes'), error;
-    }
-}
+
+// main export for this file
+function* classesSaga() { 
+   yield takeEvery('FETCH_CLASSES', fetchClasses);
+};
+
 
 export default classesSaga;
