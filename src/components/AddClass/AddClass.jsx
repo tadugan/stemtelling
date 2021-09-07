@@ -4,6 +4,15 @@ import {Container, TextField, Button} from '@material-ui/core';
 import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
 
 function AddClass() {
+    // const btnRef= React.useRef(null);
+    // const onHoverAdd = () =>{
+
+    // }
+    const handleAddClass = () => {
+
+
+    }
+
 
     return(
         <Container className='AddClassContainer'>
@@ -18,7 +27,7 @@ function AddClass() {
         </TextField>
         </form>
 
-        <span> <AddCircleOutlineRoundedIcon /> </span>
+        <span> <AddCircleOutlineRoundedIcon onMouseLeave/> </span>
         </Container>
     )
 
