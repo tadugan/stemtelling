@@ -77,9 +77,6 @@ function UserPage() {
                         <img id="stemtellImage" src={stemtell.media_url} />
                         <section id="cardReactions">{stemtell.reaction_name}</section>
                         <section id="userStemtellDescription">{stemtell.body_text}</section>
-                        {/* <button value={stemtell} className="btn" onClick={(event) => {handleOpen(event.target.value)}}>
-                           Edit
-                        </button> */}
                         <button className="btn" onClick={() => {handleOpen(stemtell)}}>
                            Edit
                         </button>
