@@ -6,14 +6,12 @@ import {Container, Card, TextField, Box, Avatar, Button} from '@material-ui/core
 
 function Comment() {
     const params = useParams();
-    const stemtellId= params.id;
+    const stemtellId = params.id;
   
     const [leaveComment, setComment] = useState('');
     const [feedback, setFeedback]= useState(false);
-    const dispatch= useDispatch();
+    const dispatch = useDispatch();
     const comments = useSelector((store) => store.stemtellComments);
-
-
 
     useEffect(() =>{
     dispatch({ type: 'GET_STEMTELL_COMMENTS', payload: stemtellId});
@@ -34,8 +32,6 @@ function Comment() {
         event.preventDefault();
         setComment(event.target.value);
     }
-    
-
 
     return(
       <Container className='GeneralCommentContainer'>
@@ -46,7 +42,6 @@ function Comment() {
         <form>
        <TextField
        className='GeneralCommentInput'
-       name= 'addComment' 
       placeholder='Comment...'
       multiline
       rows={3}
@@ -55,7 +50,7 @@ function Comment() {
       </form>
       <section className='BtnsforCommenting'>
       <Button className='CancelCommentBtn' >Cancel</Button>
-      <Button className='CommentBtn' onClick= {handleSubmit}> Comment </Button>
+      <Button className='CommentBtn' onClick={handleSubmit}> Comment </Button>
       
       </section>
       

@@ -158,7 +158,7 @@ function EditSTEMtell(stemtell) {
                         value={classId}
                         onChange={(event) => setClassId(event.target.value)}
                         label="Age"
-                        className="edit-stemtell-class-select"
+                        id="edit-stemtell-class-select"
                         >
                         <MenuItem value={0}>
                             <em>Choose a Class</em>
@@ -181,7 +181,7 @@ function EditSTEMtell(stemtell) {
                         variant="outlined"
                         value={title}
                         onChange={(event) => setTitle(event.target.value)}
-                        className="edit-stemtell-title"
+                        id="edit-stemtell-title"
                     />
                 </Grid>
                 <Grid
@@ -192,7 +192,7 @@ function EditSTEMtell(stemtell) {
                         variant="outlined"
                         value={imageUrl}
                         onChange={(event) => setImageUrl(event.target.value)}
-                        className="edit-stemtell-image-url"
+                        id="edit-stemtell-image-url"
                     />
                 </Grid>
                 <Grid
@@ -205,9 +205,9 @@ function EditSTEMtell(stemtell) {
                         maxRows={3}
                         variant="outlined"
                         multiline
-                        value={description}
+                        value={description}  
                         onChange={(event) => setDescription(event.target.value)}
-                        className="edit-stemtell-description"
+                        id="edit-stemtell-description"
                     />
                 </Grid> 
                 <Grid

@@ -39,6 +39,7 @@ router.get("/stemcomments/:id", rejectUnauthenticated, (req, res) => {
     })
     .catch((err) => {
       console.log("error GETTING stemComments", err);
+      res.sendStatus(500);
     });
 });
 
@@ -75,9 +76,11 @@ router.post(`/`, rejectUnauthenticated, (req, res) => {
     ])
     .then((result) => {
       console.log("New comment posted", result);
+      res.sendStatus(201);
     })
     .catch((error) => {
       console.log("Error Posting comment", error);
+      res.sendStatus(500);
     });
 });
 
