@@ -27,6 +27,7 @@ import './App.css';
 import Homepage from '../Homepage/Homepage';
 
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
+import TeacherReviewList from '../TeacherReviewList/TeacherReviewList';
 
 
 function App() {
@@ -117,6 +118,14 @@ function App() {
             path="/stemtell/:id"
           >
             <StemtellDetails />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            
+            exact
+            path="/teacher/review"
+          >
+            <TeacherReviewList />
           </ProtectedRoute>
 
           <Route
