@@ -89,7 +89,7 @@ useEffect(() => {
               <h5> {fb.username} </h5>
             </span>
             <span className="FeedbackDate">
-              {fb.date_published}
+              {fb.unix}
             </span>
           </div>
 

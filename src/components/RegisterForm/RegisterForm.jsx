@@ -29,7 +29,7 @@ function RegisterForm() {
       dispatch({
          type: 'REGISTER',
          payload: {
-            email: email,
+            email: email.toLowerCase(),
             password: password,
             authority: authority,
             name: name,
