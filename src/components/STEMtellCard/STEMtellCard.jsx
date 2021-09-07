@@ -33,11 +33,13 @@ function StemtellCard() {
     <Grid
       item
       container
+      aria-labelledby="homepage stemtell container"
     >
       {stemtells.map((stemtell) => {
         return (
-      <Grid item >
-        <Card className="StemCard" key={stemtell.id}>
+
+      <Grid item key={stemtell.id} aria-labelledby="homepage stemtell item">
+        <Card className="StemCard">
         <h6 id="stemDate">{stemtell.date_published}</h6>
           <Avatar className="Avatar"
           src={stemtell.profile_picture_url} />
