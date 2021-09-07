@@ -4,6 +4,21 @@ const router = express.Router();
 const rejectUnauthenticated =
   require("../modules/authentication-middleware").rejectUnauthenticated;
 
+
+
+
+  router.get("/", rejectUnauthenticated, (req, res) => {
+    const query = `SELECT * FROM comment
+    ;`;
+    pool
+      .query(query)
+      .then((result) => {
+        res.send(result.rows)
+      })
+      .catch((err) => {
+        console.log("error GETTING comments", err);
+      });
+  });
 /**
  * GET route to grab
  */
@@ -24,7 +39,7 @@ router.get("/stemcomments/:id", rejectUnauthenticated, (req, res) => {
       res.send(result.rows)
     })
     .catch((err) => {
-      console.log("error GETTING comments", err);
+      console.log("error GETTING stemComments", err);
     });
 });
 
