@@ -26,17 +26,17 @@ router.get('/', (req, res) => {
 
 
 //gets students from a class list
-router.get('/details', rejectUnauthenticated, (req, res) => {
-  // TODO: Fix hard coded value for the class_id property!
+router.get('/details/:id', rejectUnauthenticated, (req, res) => {
+  const classId= req.params.id;
   const query= `SELECT "user".name AS username, "user".profile_picture_url, "user_class".user_id
   FROM "user"
   JOIN "user_class" ON "user".id = "user_class".user_id
   join "class" on "class".id = "user_class".class_id
   WHERE  "user".authority = 'student'
-  AND "user_class".class_id = 1  ;`;
+  AND "user_class".class_id = $1;`;
 
   pool
-    .query(query)
+    .query(query, [classId])
     .then((result) => {
       // console.log('successful GETTING studentList', result.rows);
       res.send(result.rows);
