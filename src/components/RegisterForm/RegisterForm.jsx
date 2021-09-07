@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+
 function RegisterForm() {
    const [password, setPassword] = useState('');
    const [confirmedPassword, setConfirmedPassword] = useState('');
@@ -20,7 +21,7 @@ function RegisterForm() {
          setConfirmedPassword('');
          return false;
       };
-      if (password.length < 8 || confirmedPassword.length < 8) { // checks for passwords that are too short (under 8 characters)
+      if (password.length < 8 || confirmedPassword.length < 8) {
          dispatch({type: 'PASSWORD_TOO_SHORT'});
          setPassword('');
          setConfirmedPassword('');
@@ -36,7 +37,7 @@ function RegisterForm() {
             profilePictureURL: profilePictureURL,
          },
       });
-  }; // end registerUser
+   };
 
    return (
       <form className="formPanel" onSubmit={registerUser}>
@@ -49,91 +50,92 @@ function RegisterForm() {
          <div>
             <label for="role">Choose a role: </label>
             <select name="role" id="role" onChange={(event) => (setAuthority(event.target.value))}>
-            <option value="student">Student</option>
-            <option value="teacher">Teacher</option>
+               <option value="student">Student</option>
+               <option value="teacher">Teacher</option>
             </select>
          </div>
          <div>
-         <label htmlFor="name">
-            Name:
-            <input
-               type="text"
-               name="name"
-               value={name}
-               placeholder="required"
-               required
-               onChange={(event) => setName(event.target.value)}
-            />
-         </label>
+            <label htmlFor="name">
+               Name:
+               <input
+                  type="text"
+                  name="name"
+                  value={name}
+                  placeholder="required"
+                  required
+                  onChange={(event) => setName(event.target.value)}
+               />
+            </label>
          </div>
          <div>
-         <label htmlFor="Class Code">
-            Class Code:
-            <input
-               type="text"
-               name="Class Code"
-               value={classCode}
-               placeholder="optional"
-               onChange={(event) => setClassCode(event.target.value)}
-            />
-         </label>
+            <label htmlFor="Class Code">
+               Class Code:
+               <input
+                  type="text"
+                  name="Class Code"
+                  value={classCode}
+                  placeholder="optional"
+                  onChange={(event) => setClassCode(event.target.value)}
+               />
+            </label>
          </div>
          <div>
-         <label htmlFor="email">
-            Email:
-            <input
-               type="email"
-               name="email"
-               value={email}
-               placeholder="required"
-               required
-               onChange={(event) => setEmail(event.target.value)}
-            />
-         </label>
+            <label htmlFor="email">
+               Email:
+               <input
+                  type="email"
+                  name="email"
+                  value={email}
+                  placeholder="required"
+                  required
+                  onChange={(event) => setEmail(event.target.value)}
+               />
+            </label>
          </div>
          <div>
-         <label htmlFor="password">
-            Password:
-            <input
-               type="password"
-               name="password"
-               value={password}
-               placeholder="required"
-               required
-               onChange={(event) => setPassword(event.target.value)}
-            />
-         </label>
+            <label htmlFor="password">
+               Password:
+               <input
+                  type="password"
+                  name="password"
+                  value={password}
+                  placeholder="required"
+                  required
+                  onChange={(event) => setPassword(event.target.value)}
+               />
+            </label>
+         </div>
+            <div>
+            <label htmlFor="Confirm Password">
+               Confirm Password:
+               <input
+                  type="password"
+                  name="Confirm Password"
+                  value={confirmedPassword}
+                  placeholder="required"
+                  required
+                  onChange={(event) => setConfirmedPassword(event.target.value)}
+               />
+            </label>
          </div>
          <div>
-         <label htmlFor="Confirm Password">
-            Confirm Password:
-            <input
-               type="password"
-               name="Confirm Password"
-               value={confirmedPassword}
-               placeholder="required"
-               required
-               onChange={(event) => setConfirmedPassword(event.target.value)}
-            />
-         </label>
-         </div>
-         <div>
-         <label htmlFor="profile picture">
-            Profile Picture (optional):
-            <input
-               type="file"
-               name="profile picture"  
-               accept="image/*"
-               placeholder="optional"
-               onChange={(event) => setProfilePicture(event.target.value)}
-            />
-         </label>
+            <label htmlFor="profile picture">
+               Profile Picture (optional):
+               <input
+                  type="file"
+                  name="profile picture"  
+                  accept="image/*"
+                  placeholder="optional"
+                  onChange={(event) => setProfilePicture(event.target.value)}
+               />
+            </label>
          </div>
          <div>
             <input className="btn" type="submit" name="submit" value="Create Account" />
          </div>
-    </form>
-  );
-}
+      </form>
+   );
+};
+
 
 export default RegisterForm;
