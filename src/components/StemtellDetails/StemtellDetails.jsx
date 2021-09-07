@@ -1,23 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  Container,
-  Card,
-  TextField,
-  Box,
-  Avatar,
-  Button,
-  Grid,
-} from "@material-ui/core";
+import {Card, Avatar, Grid} from "@material-ui/core";
 import Comment from "../Comment/Comment";
 import BackBtn from "../BackBtn/BackBtn";
-import { Details } from "@material-ui/icons";
 
 function StemtellDetails() {
   const params = useParams();
   const stemtellId = params.id;
   const dispatch = useDispatch();
+  const history = useHistory();
 
 
   useEffect(() => {
@@ -39,7 +31,7 @@ function StemtellDetails() {
             <Avatar className="Avatar" src={stemtell.profile_picture_url} />
             <section
               className="UserName"
-              onClick={() => onUserProfile(stemtell.user_id)}
+              onClick={() => onUserProfile(stemtell.author_id)}
             >
               {stemtell.name}
             </section>

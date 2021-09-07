@@ -25,8 +25,8 @@ import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 import StemtellDetails from '../StemtellDetails/StemtellDetails';
 import './App.css';
 import Homepage from '../Homepage/Homepage';
-
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
+import ClassList from '../ClassList/ClassList';
 
 
 function App() {
@@ -117,6 +117,15 @@ function App() {
             path="/stemtell/:id"
           >
             <StemtellDetails />
+          </ProtectedRoute>
+
+            
+          <ProtectedRoute
+            // logged in shows Class List page
+            exact
+            path="/classlist"
+          >
+            <ClassList />
           </ProtectedRoute>
 
           <Route

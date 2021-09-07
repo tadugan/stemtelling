@@ -2,14 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import './Comment.css';
-import {
-  Container,
-  Card,
-  TextField,
-  Box,
-  Avatar,
-  Button,
-} from '@material-ui/core';
+import {Container, Card, TextField, Box, Avatar, Button} from '@material-ui/core';
 
 function Comment() {
     const params = useParams();
@@ -24,9 +17,9 @@ function Comment() {
 
     useEffect(() =>{
     dispatch({ type: 'GET_STEMTELL_COMMENTS', payload: stemtellId});
-    }, [comments]);
+    }, []);
 
-    const handleSubmit = (event) =>{
+    const handleSubmit = () =>{
         dispatch({type:'ADD_COMMENT', payload: {
           stemtell_id: stemtellId,
           comment: leaveComment ,
@@ -49,9 +42,10 @@ function Comment() {
       <h4 className='CommentCardHeader'> 
           Comments 
       </h4> 
-      <Box id='GeneralCommentInput'>
+      <Box className='GeneralCommentInputBox'>
         <form>
        <TextField
+       className='GeneralCommentInput'
        name= 'addComment' 
       placeholder='Comment...'
       multiline
