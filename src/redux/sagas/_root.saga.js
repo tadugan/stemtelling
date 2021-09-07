@@ -37,10 +37,7 @@ export default function* rootSaga() {
     feedbackSaga(),
     studentListSaga(),
     deleteStudentSaga(),
-<<<<<<< HEAD
     userClassSaga(),
-=======
     editStemtellSaga(),
->>>>>>> ce5b3d22cff754df62fd8d43e1e5847405bd2745
   ]);
 }
