@@ -17,6 +17,7 @@ function* getComments() {
     }
 }
 
+//TODO: work on posting a comment to a stemtell
 function* addComment(action){
     try{
          yield call(axios.post, '/api/comment', action.payload);
