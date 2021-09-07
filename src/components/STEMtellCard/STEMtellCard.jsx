@@ -37,7 +37,7 @@ function StemtellCard() {
         return (
       <Grid item key={stemtell.id} aria-labelledby="homepage stemtell item">
         <Card className="StemCard">
-        <h6 id="stemDate">{stemtell.date_published}</h6>
+        <h6 id="stemDate">{stemtell.unix}</h6>
           <Avatar className="Avatar"
           src={stemtell.profile_picture_url} />
           <section className="UserName" onClick={() => onUserProfile(stemtell.author_id)}>{stemtell.username}</section>

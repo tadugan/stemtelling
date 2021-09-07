@@ -8,11 +8,11 @@ const {
 
 
 router.get('/', (req, res) => {
-  const query = `SELECT "user".name AS username, "user".id AS author_id, "stemtell".id AS stem_id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".date_published, "class".name AS class_name
+  const query = `SELECT "user".name AS username, "user".id AS author_id, "stemtell".id AS stem_id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".unix, "class".name AS class_name
   FROM "stemtell"
   JOIN "user" ON "stemtell".user_id = "user".id
   JOIN "class" ON "stemtell".class_id = "class".id
-  ORDER BY "stemtell".date_published DESC;`;
+  ORDER BY "stemtell".unix DESC;`;
   pool
     .query(query)
     .then((result) => {
@@ -63,8 +63,8 @@ router.post('/', rejectUnauthenticated, (req, res) => {
       try {
           await client.query('BEGIN');
           const queryTextAddStemtell = `
-          INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "date_published")
-          VALUES ($1, $2, $3, $4, $5, NOW())
+          INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "unix")
+          VALUES ($1, $2, $3, $4, $5, extract(epoch from now()))
           RETURNING id
           `;
           const response = await client.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, newStemtell.media_url]);
@@ -169,7 +169,7 @@ router.get('/userstemtells', (req, res) => {
 
  router.get('/details/:id', (req, res) => {
     const stemtellId= req.params.id;
-    const query = `SELECT "user".name , "user".id as author_id, "stemtell".id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".date_published, "class".name AS class_name
+    const query = `SELECT "user".name , "user".id as author_id, "stemtell".id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".unix, "class".name AS class_name
     FROM "stemtell"
     JOIN "user" ON "stemtell".user_id = "user".id
     JOIN "class" ON "stemtell".class_id = "class".id

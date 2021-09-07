@@ -36,7 +36,7 @@ function StemtellDetails() {
       <center>
         <Grid item key={stemtell.id}>
           <Card className="StemDetailsCard">
-            <h6 id="stemDate">{stemtell.date_published}</h6>
+            <h6 id="stemDate">{stemtell.unix}</h6>
             <Avatar className="Avatar" src={stemtell.profile_picture_url} />
             <section
               className="UserName"
