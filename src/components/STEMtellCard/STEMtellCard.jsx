@@ -12,7 +12,7 @@ function StemtellCard() {
   useEffect(() => {
     dispatch({ type: "FETCH_CLASSES"})
 
-    dispatch({ type: "FETCH_STEMTELLS"})
+    dispatch({ type: "FETCH_USER_FEED"})
      //need to use the value from FETCH CLASSES
 
   }, []);
