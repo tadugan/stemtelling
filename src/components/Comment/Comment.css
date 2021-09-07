@@ -13,7 +13,7 @@
     
 }
 
-#GeneralCommentInput{
+.GeneralCommentInputBox{
     padding-left: 10px;
     margin-bottom: 5px;
     width: 100%;
@@ -37,6 +37,6 @@
     
 }
 
-.MuiTextField-root {
+.GeneralCommentInput {
    width: 100%;
 }

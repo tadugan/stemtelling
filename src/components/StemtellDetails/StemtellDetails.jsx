@@ -53,7 +53,7 @@ function StemtellDetails() {
          <Comment />
       </>
    );
-}
+};
 
 
 export default StemtellDetails;

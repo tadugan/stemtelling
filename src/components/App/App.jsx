@@ -25,9 +25,9 @@ import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 import StemtellDetails from '../StemtellDetails/StemtellDetails';
 import './App.css';
 import Homepage from '../Homepage/Homepage';
-
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
-
+import ClassList from '../ClassList/ClassList';
+import ClassDetails from '../ClassDetails/ClassDetails';
 
 function App() {
   const dispatch = useDispatch();
@@ -117,6 +117,23 @@ function App() {
             path="/stemtell/:id"
           >
             <StemtellDetails />
+          </ProtectedRoute>
+
+            
+          <ProtectedRoute
+            // logged in shows Class List page
+            exact
+            path="/classlist"
+          >
+            <ClassList />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows Class List page
+            exact
+            path="/classlist/details/:id"
+          >
+            <ClassDetails />
           </ProtectedRoute>
 
           <Route
