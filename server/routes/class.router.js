@@ -43,6 +43,7 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
     })
     .catch((err) => {
       console.log('error GETTING studentList', err);
+      res.sendStatus(500);
     });
 });
 
@@ -64,14 +65,14 @@ router.delete("/details/:id", rejectUnauthenticated, (req, res) => {
   pool
     .query(query, [req.params.id])
     .then((result) => {
-      // console.log(`Successfully DELETED STUDENT from class`, result);
+      console.log(`Successfully DELETED STUDENT from class`, result);
       res.sendStatus(201);
     })
     .catch((error) => {
       console.log(`Did not DELETE STUDENT from class`, error);
       res.sendStatus(500);
     });
-  // endpoint functionality
+  
 });
 
 module.exports = router;

@@ -6,9 +6,9 @@ function* studentListSaga(){
     yield takeEvery('GET_STUDENTLIST', getStudents);
 }
 
-function* getStudents() {
+function* getStudents(action) {
     try {
-        const response = yield axios.get('/api/class/details');
+        const response = yield axios.get(`/api/class/details/${action.payload}`);
         yield put({ type: 'SET_STUDENTLIST', payload: response.data});
         
     } catch (error) {
