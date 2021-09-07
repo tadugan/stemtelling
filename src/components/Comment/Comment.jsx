@@ -24,7 +24,7 @@ function Comment() {
 
     useEffect(() =>{
     dispatch({ type: 'GET_STEMTELL_COMMENTS', payload: stemtellId});
-    }, []);
+    }, [comments]);
 
     const handleSubmit = (event) =>{
         dispatch({type:'ADD_COMMENT', payload: {
@@ -35,7 +35,6 @@ function Comment() {
         });
         setComment('');
         setFeedback(false);
-        dispatch({ type: 'GET_STEMTELL_COMMENTS', payload: stemtellId});
     }
  
     const handleComment = (event) => {
