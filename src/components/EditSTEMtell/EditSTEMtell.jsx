@@ -7,7 +7,7 @@ import "./EditSTEMtell.css";
 import { useHistory } from 'react-router';
 
 function EditSTEMtell(stemtell) {
-
+    const user = useSelector((store) => store.user);
     const dispatch = useDispatch();
     const history = useHistory();
     const [ classId, setClassId ] = useState(0);
@@ -52,11 +52,12 @@ function EditSTEMtell(stemtell) {
         setImageUrl('');
         setDescription('');
         dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
+        dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
         history.push('/myprofile');
     }
 
     const handleCancel = () => {
-      console.log(stemtell); // TODO:
+      history.push('/myprofile');
     }
 
     const getClassList = () => {

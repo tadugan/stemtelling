@@ -1,0 +1,10 @@
+#stemtellImage{
+   height: 15em;
+}
+
+#userStemtellDescription{
+   padding: 15px;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;    
+}

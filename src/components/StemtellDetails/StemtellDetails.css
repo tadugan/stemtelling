@@ -1,0 +1,12 @@
+.StemDetailsCard {
+   width: 80%;
+   height: auto;
+}
+
+#StemDetailsImage{
+   margin-bottom: 3em;
+}
+
+#StemDetailsDescription{
+   margin-bottom: 2em;
+}

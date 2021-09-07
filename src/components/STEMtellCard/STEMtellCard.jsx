@@ -45,12 +45,12 @@ function StemtellCard() {
             {stemtell.class_name}
           </div>
 
-          <h3 id="stemTitle" onClick= {() => toStemtellDetail(stemtell.stem_id)}> {stemtell.title}</h3>
+          <h3 id="stemTitle" onClick={() => toStemtellDetail(stemtell.stem_id)}> {stemtell.title}</h3>
 
-          <img src={stemtell.media_url} />
+          <img id="stemtellImage" src={stemtell.media_url} onClick={() => toStemtellDetail(stemtell.stem_id)}/>
           <section id="cardReactions">{stemtell.reaction_name}</section>
 
-          <section id="stemDescription">{stemtell.body_text}</section>
+          <section id="stemDescription" onClick={() => toStemtellDetail(stemtell.stem_id)}>{stemtell.body_text}</section>
         </Card>
       </Grid>
         )
