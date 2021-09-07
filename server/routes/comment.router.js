@@ -35,7 +35,6 @@ router.get("/stemcomments/:id", rejectUnauthenticated, (req, res) => {
   pool
     .query(query,[stemtellId] )
     .then((result) => {
-      console.log('THIS IS THE COMMENTS RESULTS', result.rows)
       res.send(result.rows)
     })
     .catch((err) => {
@@ -65,14 +64,14 @@ router.get("/feedback", rejectUnauthenticated, (req, res) => {
  * POST route template
  */
 router.post(`/`, rejectUnauthenticated, (req, res) => {
+  console.log(`this is the stemtell id associated with comments`, req.body.stemtell_id);
   const queryAddComment = `INSERT INTO "comment" ("stemtell_id", "user_id", "comment", "teacher_feedback", "date_published")
   VALUES ($1, $2, $3, $4 , NOW());`;
   pool
     .query(queryAddComment, [
-      req.query.stemtell_id,
+      req.body.stemtell_id,
       req.user.id,
       req.body.comment,
-      req.body.date_published,
       req.body.teacher_feedback,
     ])
     .then((result) => {

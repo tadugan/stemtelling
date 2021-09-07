@@ -24,7 +24,6 @@ function StemtellCard() {
   }
 
   const toStemtellDetail = (stem_id) => {
-    console.log('stemtell id is', stem_id)
     history.push(`stemtell/${stem_id}`);
   }
 
