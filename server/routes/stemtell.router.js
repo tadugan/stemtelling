@@ -9,19 +9,22 @@ const { response } = require('express');
 
 
 router.get('/', (req, res) => {
-  const classIds = req.query[0];
-  for( num of classIds){
-   const arr = parseInt(num);}
-   arr;
+  let classIds = req.query;
+  console.log(req.query, "this is req.query");
+  let arr = [];
+  for( const num in classIds){
+   arr.push(classIds[num])
   
-   console.log(arr, "$$$$$$$THIS IS CLASS IDS");
+   console.log(arr, "THIS IS CLASS IDS");
+  }
+  console.log(classIds, "class ids");
+  console.log(arr, "arr after function")
 
   const query = `SELECT "user".name AS username, "user".id AS author_id, "stemtell".id AS stem_id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".date_published, "class".name AS class_name
   FROM "stemtell"
   JOIN "user" ON "stemtell".user_id = "user".id
   JOIN "class" ON "stemtell".class_id = "class".id
   WHERE "class".id IN ($1)
-
   ORDER BY "stemtell".date_published DESC;`;
   pool
     .query(query, [arr])
