@@ -30,11 +30,7 @@ router.get("/stemcomments/:id", rejectUnauthenticated, (req, res) => {
   JOIN "stemtell" ON "stemtell".id = "comment".stemtell_id
   WHERE  "comment".teacher_feedback = FALSE
   and "stemtell".id = $1
-<<<<<<< HEAD
-  ORDER BY "comment".date_published DESC 
-=======
   ORDER BY "comment".unix ASC 
->>>>>>> master
   ;`;
   pool
     .query(query,[stemtellId] )
