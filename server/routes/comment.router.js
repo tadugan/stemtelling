@@ -64,7 +64,6 @@ router.get("/feedback", rejectUnauthenticated, (req, res) => {
  * POST route template
  */
 router.post(`/`, rejectUnauthenticated, (req, res) => {
-  console.log(`this is the stemtell id associated with comments`, req.body.stemtell_id);
   const queryAddComment = `INSERT INTO "comment" ("stemtell_id", "user_id", "comment", "teacher_feedback", "date_published")
   VALUES ($1, $2, $3, $4 , NOW());`;
   pool
