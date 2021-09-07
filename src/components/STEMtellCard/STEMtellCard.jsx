@@ -17,7 +17,6 @@ function StemtellCard() {
   }, []);
 
   const dispatch = useDispatch();
-  const history = useHistory();
   const stemtells = useSelector((store) => store.stemtells);
 
   const onUserProfile = (author_id) => {
@@ -33,8 +32,8 @@ function StemtellCard() {
     >
       {stemtells.map((stemtell) => {
         return (
-      <Grid item key={stemtell.id}>
-        <Card className="StemCard">
+      <Grid item >
+        <Card className="StemCard" key={stemtell.id}>
         <h6 id="stemDate">{stemtell.date_published}</h6>
           <Avatar className="Avatar"
           src={stemtell.profile_picture_url} />

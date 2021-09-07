@@ -6,6 +6,7 @@ import './Homepage.css'
 function Homepage(){
 
 return(
+<Container>
 <Grid container>
     <Grid item xs={12} sm={3}>
         <h1 id="HomepageTitle">My STEMtell Feed </h1>
@@ -14,6 +15,7 @@ return(
     <StemtellCard/>
     
 </Grid>
+</Container>
 )
 }
 

@@ -16,10 +16,10 @@ router.get('/', (req, res) => {
   FROM "stemtell"
   JOIN "user" ON "stemtell".user_id = "user".id
   JOIN "class" ON "stemtell".class_id = "class".id
-  WHERE "class".id = 1 
+  WHERE "class".id = $1 
   ORDER BY "stemtell".date_published DESC;`;
   pool
-    .query(query)
+    .query(query, [req.params])
     .then((result) => {
       res.send(result.rows);
     })

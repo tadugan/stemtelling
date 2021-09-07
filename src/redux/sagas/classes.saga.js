@@ -18,9 +18,17 @@ function* fetchClasses(){
 
 function* fetchClassStemTells(){
     try {
+        
         const response = yield axios.get('/api/class');
-        yield axios.get(`/api/stemtell`, response.data)
-        console.log(response, "THIS IS RESPONSE")
+        console.log(response, "this is the class GET response");
+        const userClasses = response.data
+        console.log("*****THESE are the user classes:", userClasses);
+        let classArray = [];
+        for( const eachClass of userClasses){
+            classArray.push(eachClass.id)
+        } console.log("*********array of class ids", classArray);
+        const classIds = yield axios.get('/api/stemtell', {params: [classArray]});
+        console.log(classIds, "@#$%^) THIS IS CLASS ID RESPONSE")
     } catch (error) {
         console.log('Error GETting classes'), error;
     }
