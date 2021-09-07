@@ -24,7 +24,7 @@ DROP TABLE "reset_password" CASCADE;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 
--- Create "user" Table  
+-- Create "user" Table
 CREATE TABLE "user" (
 	"id" SERIAL PRIMARY KEY,
    "email" TEXT UNIQUE NOT NULL,
@@ -282,7 +282,7 @@ INSERT INTO "tag" ("type", "name", "stem_field")
 	
 
 -- Step 6: run the following queries to create student stemtells
-INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "date_published")
+INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "unix")
 	VALUES ('2', '1', 'CHEMISTRY STEMTELL', 'I Love Chemistry!!', 'https://www.sciencecompany.com/Assets/ProductImages/nc0071n-lg.jpg', extract(epoch from now())),
 	('2', '1', 'OCHEM STEMTELL', 'Organic chemistry is the study of the structure, properties, composition, reactions, and preparation of carbon-containing compounds. Most organic compounds contain carbon and hydrogen, but they may also include any number of other elements (e.g., nitrogen, oxygen, halogens, phosphorus, silicon, sulfur).
 		Originally limited to the study of compounds produced by living organisms, organic chemistry has been broadened to include human-made substances (e.g., plastics).', 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Corey_oseltamivir_synthesis.png/390px-Corey_oseltamivir_synthesis.png', extract(epoch from now())),
@@ -340,9 +340,9 @@ INSERT INTO "reaction" ("media_url", "name")
 
 
 -- Step 10: run the following queries to add comments to the comment table
-INSERT INTO "comment" ("user_id", "stemtell_id", "comment", "date_published", "teacher_feedback")
+INSERT INTO "comment" ("user_id", "stemtell_id", "comment", "unix", "teacher_feedback")
 	VALUES ('2', '1', 'This is a great Chemistry STEMtell!', extract(epoch from now()), 'false'),
-	('1', '2', 'This is a great Biology STEMtell!', extract(epoch from now()), 'false'),
+	('1', '2', 'This is a great Biology STEMtell!', extract(epoch from now()), 'false'),	
 	('3', '1', 'Needs more Chemistry stuff', extract(epoch from now()), 'true'),
 	('4', '2', 'Needs more Biology stuff', extract(epoch from now()), 'true');
 
