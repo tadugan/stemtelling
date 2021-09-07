@@ -19,8 +19,7 @@ function* addComment(action){
 
 function* getComments(action) {
     try {
-        const response = yield axios.get('/api/comment/stemcomments');
-        console.log('in getComments saga:', response.data)
+        const response = yield axios.get(`/api/comments/stemcomments/${action.payload}`);
         yield put({ type: 'SET_COMMENTLIST', payload: response.data});
     } catch (error) {
         console.log('Error GETting user comments on STEMtell', error);

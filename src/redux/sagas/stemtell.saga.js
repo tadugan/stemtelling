@@ -41,7 +41,6 @@ function* getStemtell(action){
 function* getStemDetails(action){
    try {
       const response = yield axios.get(`/api/stemtell/details/${action.payload}`);
-      console.log('STEMDETAILS SAGA:', response.data[0]);
       yield put({ type: 'SET_STEM_DETAILS', payload: response.data[0] });
    }
    catch (error) {

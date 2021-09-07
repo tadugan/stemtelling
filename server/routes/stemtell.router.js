@@ -147,7 +147,7 @@ router.get('/userstemtells', (req, res) => {
  });
 
  router.get('/details/:id', (req, res) => {
-    const stemtellId= req.params.id
+    const stemtellId= req.params.id;
     const query = `SELECT "user".name , "user".id as author_id, "stemtell".id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".date_published, "class".name AS class_name
     FROM "stemtell"
     JOIN "user" ON "stemtell".user_id = "user".id
@@ -161,7 +161,6 @@ router.get('/userstemtells', (req, res) => {
      
     .catch((err) => {
       console.log("Error getting all STEMdetails", err);
-      res.sendStatus(500);
     });
 });
 

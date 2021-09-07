@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import './Comment.css';
 import {
   Container,
@@ -11,14 +12,18 @@ import {
 } from '@material-ui/core';
 
 function Comment() {
+    const params = useParams();
+    const stemtellId= params.id;
+  
     const [leaveComment, setComment] = useState('');
     const [feedback, setFeedback]= useState(false);
     const dispatch= useDispatch();
     const comments = useSelector((store) => store.commentList);
+    console.log(`STEM COMMENTS STORE: ${comments}.`)
 
 
     useEffect(() =>{
-    dispatch({ type: 'GET_COMMENTLIST'});
+    dispatch({ type: 'GET_COMMENTLIST', payload: stemtellId});
     }, []);
 
     const handleSubmit = (event) =>{
@@ -63,8 +68,6 @@ function Comment() {
       </section>
       
       </Box>
-            
-      {/* mapping thru comments to show all individual comments */}
       {comments.map((comment) => {
         return (
           <Card

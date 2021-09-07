@@ -17,20 +17,16 @@ import { Details } from "@material-ui/icons";
 function StemtellDetails() {
   const params = useParams();
   const stemtellId = params.id;
-  console.log("This is the stemtell id:", stemtellId);
   const dispatch = useDispatch();
-  //   const getSearchQueryByFullURL = (url) => {return url.split('/')};
+
 
   useEffect(() => {
     dispatch({ type: "FETCH_STEMTELL_DETAILS", payload: stemtellId });
   }, []);
 
   const stemtell = useSelector((store) => store.stemtellDetails);
-  console.log("STEMDETAILS STORE:", stemtell);
 
   const onUserProfile = (author_id) => {
-    //  TODO: If this is working, remove console.log()
-    console.log("Clicked profile with author_id:", author_id);
     history.push(`/profile/${author_id}`);
   };
   return (

@@ -7,18 +7,20 @@ const rejectUnauthenticated =
 /**
  * GET route to grab
  */
-router.get("/stemcomments", rejectUnauthenticated, (req, res, next) => {
+router.get("/stemcomments/:id", rejectUnauthenticated, (req, res) => {
+  const stemtellId= req.params.id;
   const query = `SELECT "user".name AS username, "stemtell".id, "user".profile_picture_url, "comment".comment, "comment".date_published, "comment".id
   FROM "comment"
   JOIN "user" ON "comment".user_id = "user".id
   JOIN "stemtell" ON "stemtell".id = "comment".stemtell_id
   WHERE  "comment".teacher_feedback = FALSE
-  and "stemtell".id = 1
+  and "stemtell".id = $1
   ORDER BY "comment".date_published ASC 
   ;`;
   pool
-    .query(query)
+    .query(query,[stemtellId] )
     .then((result) => {
+      console.log('THIS IS THE COMMENTS RESULTS', result.rows)
       res.send(result.rows)
     })
     .catch((err) => {
