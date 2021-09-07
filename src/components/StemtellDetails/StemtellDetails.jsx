@@ -19,24 +19,30 @@ function StemtellDetails() {
   const params = useParams();
   const stemtellId = params.id;
   const dispatch = useDispatch();
-
+  const stemtell = useSelector((store) => store.stemtellDetails);
 
   useEffect(() => {
     dispatch({ type: "FETCH_STEMTELL_DETAILS", payload: stemtellId });
   }, []);
 
-  const stemtell = useSelector((store) => store.stemtellDetails);
-
   const onUserProfile = (author_id) => {
     history.push(`/profile/${author_id}`);
   };
+
+  const unixTimestamp = (timestamp) => {
+   const dateObject = new Date((timestamp * 1000));
+   return (
+      dateObject.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
+   );
+  }
+
   return (
     <>
       <BackBtn />
       <center>
         <Grid item key={stemtell.id}>
           <Card className="StemDetailsCard">
-            <h6 id="stemDate">{stemtell.unix}</h6>
+            <h6 id="stemDate">{unixTimestamp(stemtell.unix)}</h6>
             <Avatar className="Avatar" src={stemtell.profile_picture_url} />
             <section
               className="UserName"
