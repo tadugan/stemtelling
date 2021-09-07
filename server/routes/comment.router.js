@@ -24,13 +24,13 @@ const rejectUnauthenticated =
  */
 router.get("/stemcomments/:id", rejectUnauthenticated, (req, res) => {
   const stemtellId= req.params.id;
-  const query = `SELECT "user".name AS username, "stemtell".id, "user".profile_picture_url, "comment".comment, "comment".date_published, "comment".id
+  const query = `SELECT "user".name AS username, "stemtell".id, "user".profile_picture_url, "comment".comment, "comment".unix, "comment".id
   FROM "comment"
   JOIN "user" ON "comment".user_id = "user".id
   JOIN "stemtell" ON "stemtell".id = "comment".stemtell_id
   WHERE  "comment".teacher_feedback = FALSE
   and "stemtell".id = $1
-  ORDER BY "comment".date_published ASC 
+  ORDER BY "comment".unix ASC 
   ;`;
   pool
     .query(query,[stemtellId] )
@@ -39,12 +39,13 @@ router.get("/stemcomments/:id", rejectUnauthenticated, (req, res) => {
     })
     .catch((err) => {
       console.log("error GETTING stemComments", err);
+      res.sendStatus(500);
     });
 });
 
 router.get("/feedback", rejectUnauthenticated, (req, res) => {
   // GET route code here
-  const query = `SELECT "user".name AS username, "stemtell".id, "user".profile_picture_url, "comment".comment, "comment".date_published, "comment".id, "user".authority
+  const query = `SELECT "user".name AS username, "stemtell".id, "user".profile_picture_url, "comment".comment, "comment".unix, "comment".id, "user".authority
   FROM "comment"
   JOIN "user" ON "comment".user_id = "user".id
   JOIN "stemtell" ON "stemtell".id = "comment".stemtell_id
@@ -64,8 +65,8 @@ router.get("/feedback", rejectUnauthenticated, (req, res) => {
  * POST route template
  */
 router.post(`/`, rejectUnauthenticated, (req, res) => {
-  const queryAddComment = `INSERT INTO "comment" ("stemtell_id", "user_id", "comment", "teacher_feedback", "date_published")
-  VALUES ($1, $2, $3, $4 , NOW());`;
+  const queryAddComment = `INSERT INTO "comment" ("stemtell_id", "user_id", "comment", "teacher_feedback", "unix")
+  VALUES ($1, $2, $3, $4 , extract(epoch from now()));`;
   pool
     .query(queryAddComment, [
       req.body.stemtell_id,
@@ -75,9 +76,11 @@ router.post(`/`, rejectUnauthenticated, (req, res) => {
     ])
     .then((result) => {
       console.log("New comment posted", result);
+      res.sendStatus(201);
     })
     .catch((error) => {
       console.log("Error Posting comment", error);
+      res.sendStatus(500);
     });
 });
 

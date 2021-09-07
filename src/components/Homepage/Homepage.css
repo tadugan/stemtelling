@@ -2,6 +2,11 @@
     text-align: center;
     display: inline-block;
     width: 100%;
-    
 }
 
+#stemDescription{
+   padding: 15px;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;    
+}

@@ -1,6 +1,7 @@
 .movethiscard{
   margin-left: 1000px;
 }
+
 .StemCard {
   margin: 20px;
   padding: 16px;
@@ -8,7 +9,7 @@
   justify-content: center;
   flex-grow: 1px;
   width: 300px;
-  height: 500px;
+  height: 410px;
   /* padding: theme.spacing(2); */
   text-align: center;
   color: grey;
@@ -53,4 +54,8 @@
   font-size: 18px;
   padding: 4px;
   width: 100%;
+}
+
+#stemtellImage{
+   height: 15em;
 }

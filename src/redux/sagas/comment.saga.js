@@ -17,12 +17,10 @@ function* getComments() {
     }
 }
 
-//TODO: work on posting a comment to a stemtell
 function* addComment(action){
     try{
-         yield call(axios.post, '/api/comment', action.payload);
-         console.log('in addComment saga:',action.payload);
-         yield put({type: 'GET_COMMENTLIST'});
+        yield axios.post('/api/comment', action.payload);
+        yield put({ type: 'GET_STEMTELL_COMMENTS', payload: action.payload.stemtell_id});
     } catch(error){
         console.log('unable to add comment', error);
     }

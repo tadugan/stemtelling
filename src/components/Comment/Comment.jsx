@@ -13,18 +13,16 @@ import {
 
 function Comment() {
     const params = useParams();
-    const stemtellId= params.id;
+    const stemtellId = params.id;
   
     const [leaveComment, setComment] = useState('');
     const [feedback, setFeedback]= useState(false);
-    const dispatch= useDispatch();
+    const dispatch = useDispatch();
     const comments = useSelector((store) => store.stemtellComments);
-
-
 
     useEffect(() =>{
     dispatch({ type: 'GET_STEMTELL_COMMENTS', payload: stemtellId});
-    }, [comments]);
+    }, []);
 
     const handleSubmit = (event) =>{
         dispatch({type:'ADD_COMMENT', payload: {
@@ -41,8 +39,6 @@ function Comment() {
         event.preventDefault();
         setComment(event.target.value);
     }
-    
-
 
     return(
       <Container className='GeneralCommentContainer'>
@@ -51,8 +47,8 @@ function Comment() {
       </h4> 
       <Box id='GeneralCommentInput'>
         <form>
-       <TextField
-       name= 'addComment' 
+      <TextField
+      name= 'addComment' 
       placeholder='Comment...'
       multiline
       rows={3}
@@ -61,7 +57,7 @@ function Comment() {
       </form>
       <section className='BtnsforCommenting'>
       <Button className='CancelCommentBtn' >Cancel</Button>
-      <Button className='CommentBtn' onClick= {handleSubmit}> Comment </Button>
+      <Button className='CommentBtn' onClick={handleSubmit}> Comment </Button>
       
       </section>
       
@@ -85,7 +81,7 @@ function Comment() {
                   <h5 id="commenterName"> {comment.username} </h5>
                 </span>
                 <span className="CommentDate">
-                  <p> {comment.date_published} </p>
+                  <p> {comment.unix} </p>
                 </span>
               </article>
 

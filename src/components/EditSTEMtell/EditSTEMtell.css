@@ -1,25 +1,27 @@
 .edit-stemtell-body {
-    width: 400px;
+    width: 90%;
+    max-width: 400px;
     margin: auto;
     background-color: white;
 }
-
-.edit-stemtell-class-select {
-    width: 248px;
+/* 
+#edit-stemtell-class-select {
+    width: 90%;
 }
 
-.edit-stemtell-title {
+#edit-stemtell-title {
     width: 360px;
 }
 
-.edit-stemtell-image-url {
+#edit-stemtell-image-url {
     width: 360px;
 }
 
-.edit-stemtell-description {
-    width: 360px;
-}
-.edit-stemtell-input-alert {
+#edit-stemtell-description {
+    width: 90%;
+} */
+
+#edit-stemtell-input-alert {
     color: red;
     text-align: center;
 }
