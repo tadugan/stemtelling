@@ -17,22 +17,36 @@ function* fetchClasses(){
 }
 
 function* fetchClassStemTells(){
-    try {
-        
-        const response = yield axios.get('/api/class');
-        console.log(response, "this is the class GET response");
-        const userClasses = response.data
-        console.log("*****THESE are the user classes:", userClasses);
-        let classArray = [];
-        for( const eachClass of userClasses){
-            classArray.push(eachClass.id)
-        } console.log("*********array of class ids", classArray);
-        const classIds = yield axios.get('/api/stemtell', {params: classArray});
-        console.log(classIds.data, "******** THIS IS response from GET")
+    try{
+        const response = yield axios.get('/api/stemtell/homefeed');
+        console.log(response, "this is the fetchClassST response*******")
+        yield put({ type: 'SET_STEMTELLS', payload: response.data});
     } catch (error) {
-        console.log('Error GETting classes'), error;
-    }
+    console.log('Error Getting class stemtells');
 }
+}
+
+// function* fetchClassStemTells(){
+//     try {
+        
+//         const response = yield axios.get('/api/class');
+//         console.log(response, "this is the class GET response");
+//         const classList = response.data
+//         console.log("*****THESE are the user classes:", classList);
+//         let classIds = '';
+//         for (let i = 0; i > classList.length; i++) {
+//             classIds += classList[i].id;
+//             if (i < classList.length - 1) {
+//                 classIds += ',';
+//             }
+//             console.log(classIds, "these are class ids");
+//         }
+//         const classesIds = yield axios.get(`api/stemtell?classIds=${classIds}`)
+//         // console.log(classIds.data, "******** THIS IS response from GET")
+//     } catch (error) {
+//         console.log('Error GETting classes'), error;
+//     }
+// }
 
 export default classesSaga;
 
