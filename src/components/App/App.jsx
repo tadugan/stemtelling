@@ -24,7 +24,6 @@ import StemtellCard from '../STEMtellCard/STEMtellCard';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 import StemtellDetails from '../StemtellDetails/StemtellDetails';
 import './App.css';
-
 import Homepage from '../Homepage/Homepage';
 
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
@@ -115,7 +114,7 @@ function App() {
           <ProtectedRoute
             
             exact
-            path="/stemtell/details/:id"
+            path="/stemtell/:id"
           >
             <StemtellDetails />
           </ProtectedRoute>

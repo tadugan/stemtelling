@@ -9,6 +9,8 @@ import profile from './profile.reducer';
 import classes from './class.reducer';
 import feedback from './feedback.reducer';
 import studentList from './studentList.reducer';
+import stemtellDetails from './stemtellDetails.reducer';
+import stemtellComments from './stemtellComments.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -27,6 +29,8 @@ const rootReducer = combineReducers({
   classes,
   feedback,
   studentList,
+  stemtellDetails,
+  stemtellComments,
 });
 
 export default rootReducer;

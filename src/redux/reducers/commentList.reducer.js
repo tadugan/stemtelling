@@ -1,4 +1,4 @@
-const commentListReducer = (state = [], action) => {
+const commentList = (state = [], action) => {
     switch (action.type) {
       case 'SET_COMMENTLIST':
         return action.payload;
@@ -7,5 +7,5 @@ const commentListReducer = (state = [], action) => {
     }
   };
   
-  export default commentListReducer;
+  export default commentList;
   

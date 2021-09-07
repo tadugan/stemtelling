@@ -12,7 +12,6 @@ router.get('/', (req, res) => {
   FROM "stemtell"
   JOIN "user" ON "stemtell".user_id = "user".id
   JOIN "class" ON "stemtell".class_id = "class".id
-  WHERE "class".id = 1 
   ORDER BY "stemtell".date_published DESC;`;
   pool
     .query(query)
@@ -168,5 +167,22 @@ router.get('/userstemtells', (req, res) => {
      });
  });
 
+ router.get('/details/:id', (req, res) => {
+    const stemtellId= req.params.id;
+    const query = `SELECT "user".name , "user".id as author_id, "stemtell".id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".date_published, "class".name AS class_name
+    FROM "stemtell"
+    JOIN "user" ON "stemtell".user_id = "user".id
+    JOIN "class" ON "stemtell".class_id = "class".id
+    WHERE "stemtell".id = $1`;
+    pool
+    .query(query, [stemtellId])
+    .then((result) => {
+       res.send(result.rows);
+    })
+     
+    .catch((err) => {
+      console.log("Error getting all STEMdetails", err);
+    });
+});
 
 module.exports = router;

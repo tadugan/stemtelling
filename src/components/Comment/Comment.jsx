@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import './Comment.css';
 import {
   Container,
@@ -11,30 +12,62 @@ import {
 } from '@material-ui/core';
 
 function Comment() {
-  const dispatch = useDispatch();
-  const comments = useSelector((store) => store.commentList);
+    const params = useParams();
+    const stemtellId= params.id;
+  
+    const [leaveComment, setComment] = useState('');
+    const [feedback, setFeedback]= useState(false);
+    const dispatch= useDispatch();
+    const comments = useSelector((store) => store.stemtellComments);
+    console.log(`STEM COMMENTS STORE: ${comments}.`)
 
-  useEffect(() => {
-    dispatch({ type: 'GET_COMMENTLIST' });
-  }, []);
 
-  return (
-    <Container className="GeneralCommentContainer">
-      <h4 className="CommentCardHeader">Comments</h4>
-      <Box id="GeneralCommentInput">
-        <TextField
-          fullWidth="true"
-          placeholder="Comment..."
-          multiline
-          rows={3}
-        />
-        <section className="BtnsforCommenting">
-          <Button className="CancelCommentBtn">Cancel</Button>
-          <Button className="CommentBtn"> Comment </Button>
-        </section>
+    useEffect(() =>{
+    dispatch({ type: 'GET_STEMTELL_COMMENTS', payload: stemtellId});
+    }, []);
+
+    const handleSubmit = (event) =>{
+         event.preventDefault();
+        dispatch({type:'ADD_COMMENT', payload: {
+          stemtell_id: comments.stemtell_id,
+          comment: leaveComment ,
+          teacher_feedback: feedback
+          }
+        });
+        setComment('');
+        setFeedback(false);
+    }
+ 
+    const handleComment = (event) => {
+        event.preventDefault();
+        setComment(event.target.value);
+    }
+    
+
+
+    return(
+      <Container className='GeneralCommentContainer'>
+      <h4 className='CommentCardHeader'> 
+          Comments 
+      </h4> 
+      <Box id='GeneralCommentInput'>
+        <form>
+       <TextField
+       name= 'addComment' 
+      fullWidth= 'true'
+      placeholder='Comment...'
+      multiline
+      rows={3}
+      value={leaveComment}
+      onChange={handleComment}/>
+      </form>
+      <section className='BtnsforCommenting'>
+      <Button className='CancelCommentBtn' >Cancel</Button>
+      <Button className='CommentBtn' onClick= {handleSubmit}> Comment </Button>
+      
+      </section>
+      
       </Box>
-
-      {/* mapping thru comments to show all individual comments */}
       {comments.map((comment) => {
         return (
           <Card
@@ -43,8 +76,8 @@ function Comment() {
             key={comment.id}
           >
             <section className="GeneralCommentSection">
-                {/* Consider using article rather than div */}
-              <div className="CommentProfilePicAndName">
+               
+              <article className="CommentProfilePicAndName">
                 <Avatar
                   id="GeneralCommentAvatar"
                   src={comment.profile_picture_url}
@@ -56,7 +89,7 @@ function Comment() {
                 <span className="CommentDate">
                   <p> {comment.date_published} </p>
                 </span>
-              </div>
+              </article>
 
               <p className="CommentText">{comment.comment}</p>
             </section>
