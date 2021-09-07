@@ -13,29 +13,36 @@ import {
 import Comment from "../Comment/Comment";
 import BackBtn from "../BackBtn/BackBtn";
 import { Details } from "@material-ui/icons";
+import './StemtellDetails.css';
 
 function StemtellDetails() {
   const params = useParams();
   const stemtellId = params.id;
   const dispatch = useDispatch();
-
+  const stemtell = useSelector((store) => store.stemtellDetails);
 
   useEffect(() => {
     dispatch({ type: "FETCH_STEMTELL_DETAILS", payload: stemtellId });
   }, []);
 
-  const stemtell = useSelector((store) => store.stemtellDetails);
-
   const onUserProfile = (author_id) => {
     history.push(`/profile/${author_id}`);
   };
+
+  const unixTimestamp = (timestamp) => {
+   const dateObject = new Date((timestamp * 1000));
+   return (
+      dateObject.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
+   );
+  }
+
   return (
     <>
       <BackBtn />
       <center>
         <Grid item key={stemtell.id}>
-          <Card className="StemCard">
-            <h6 id="stemDate">{stemtell.date_published}</h6>
+          <Card className="StemDetailsCard">
+            <h6 id="stemDate">{unixTimestamp(stemtell.unix)}</h6>
             <Avatar className="Avatar" src={stemtell.profile_picture_url} />
             <section
               className="UserName"
@@ -49,10 +56,10 @@ function StemtellDetails() {
 
             <h3 id="stemTitle">{stemtell.title}</h3>
 
-            <img src={stemtell.media_url} />
+            <img id="StemDetailsImage" src={stemtell.media_url} />
             <section id="cardReactions">{stemtell.reaction_name}</section>
 
-            <section id="stemDescription">{stemtell.body_text}</section>
+            <section id="StemDetailsDescription">{stemtell.body_text}</section>
           </Card>
         </Grid>
       </center>

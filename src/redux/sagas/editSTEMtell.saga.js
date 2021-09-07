@@ -12,7 +12,6 @@ function* saveEditedStemtell(action) {
 
 function* getExistingTags(action) {
     try {
-        console.log('action.payload', action.payload);
         const tagArray = yield axios.get(`/api/stemtell/tags/${action.payload}`);
         yield put({ type: 'ADD_EXISTING_TAGS_TO_STEMTELL', payload: tagArray.data });
     } catch (error) {

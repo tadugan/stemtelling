@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import LogOutButton from '../LogOutButton/LogOutButton';
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Avatar, Card, Paper, Modal, Backdrop, Fade } from '@material-ui/core';
+import { Grid, Avatar, Card, Paper, Modal, Backdrop, Fade, TextField } from '@material-ui/core';
 import EditSTEMtell from "../EditSTEMtell/EditSTEMtell";
+import './UserPage.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,9 +74,9 @@ function UserPage() {
                            {stemtell.class_name}
                         </div>
                         <h3>{stemtell.title}</h3>
-                        <img src={stemtell.media_url} />
+                        <img id="stemtellImage" src={stemtell.media_url} />
                         <section id="cardReactions">{stemtell.reaction_name}</section>
-                        <section id="stemDescription">{stemtell.body_text}</section>
+                        <section id="userStemtellDescription">{stemtell.body_text}</section>
                         {/* <button value={stemtell} className="btn" onClick={(event) => {handleOpen(event.target.value)}}>
                            Edit
                         </button> */}

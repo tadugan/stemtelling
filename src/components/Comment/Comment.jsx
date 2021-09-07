@@ -81,7 +81,7 @@ function Comment() {
                   <h5 id="commenterName"> {comment.username} </h5>
                 </span>
                 <span className="CommentDate">
-                  <p> {comment.date_published} </p>
+                  <p> {comment.unix} </p>
                 </span>
               </article>
 

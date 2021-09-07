@@ -8,6 +8,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import { AppBar, Grid, Toolbar } from '@material-ui/core';
+import {ReactComponent as STEMtellLogo} from './LogoDark.svg';
+import Logo from './LogoDark.svg';
 
 const ITEM_HEIGHT = 48;
 
@@ -147,7 +149,7 @@ function Nav() {
                 <Grid
                   item
                 >
-                  <h2>STEMtelling</h2>
+                  <img src={Logo} id="logo" onClick={() => {history.push('/')}}/>
                 </Grid>
                 <Grid
                   item
