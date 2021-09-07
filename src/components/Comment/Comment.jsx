@@ -33,6 +33,14 @@ function Comment() {
         setComment(event.target.value);
     }
 
+    const unixTimestamp = (timestamp) => {
+      const dateObject = new Date((timestamp * 1000));
+      return (
+         dateObject.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
+      );
+   };
+
+
     return(
       <Container className='GeneralCommentContainer'>
       <h4 className='CommentCardHeader'> 
@@ -74,7 +82,7 @@ function Comment() {
                   <h5 id="commenterName"> {comment.username} </h5>
                 </span>
                 <span className="CommentDate">
-                  <p> {comment.unix} </p>
+                  <p> {unixTimestamp(comment.unix)} </p>
                 </span>
               </article>
 
