@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LogOutButton from '../LogOutButton/LogOutButton';
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Avatar, Card, Paper, Modal, Backdrop, Fade, TextField } from '@material-ui/core';
 import EditSTEMtell from "../EditSTEMtell/EditSTEMtell";
@@ -36,11 +37,13 @@ function UserPage() {
    const classes = useStyles();
    const modalClasses = modalStyles();
    const user = useSelector((store) => store.user);
+   const history = useHistory();
    const dispatch = useDispatch();
    const [stemtellData, setStemtellData] = useState('');
    const stemtells = useSelector((store) => store.stemtells);
    const [open, setOpen] = React.useState(false);
    const handleClose = () => {setOpen(false)};
+   const toStemtellDetail = (stem_id) => {history.push(`stemtell/${stem_id}`)};
 
    const handleOpen = (stemtell) => {
       setOpen(true); 
@@ -74,13 +77,12 @@ function UserPage() {
                      return (
                         <Grid item key={stemtell.id}>
                            <Card className="StemCard">
-                              <Avatar className="Avatar" />
                               <section className="UserName">{stemtell.username}</section>
                               <div className="UserName" id="userClass">
                                  {stemtell.class_name}
                               </div>
-                              <h3>{stemtell.title}</h3>
-                              <img id="stemtellImage" src={stemtell.media_url} />
+                              <h3 onClick={() => toStemtellDetail(stemtell.id)} >{stemtell.title}</h3>
+                              <img id="stemtellImage" src={stemtell.media_url}  onClick={() => toStemtellDetail(stemtell.id)} />
                               <section id="cardReactions">{stemtell.reaction_name}</section>
                               <section id="userStemtellDescription">{stemtell.body_text}</section>
                               <button className="btn" onClick={() => {handleOpen(stemtell)}}>
