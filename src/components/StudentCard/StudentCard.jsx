@@ -2,14 +2,17 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch} from 'react-redux';
 import './StudentCard.css';
 import {Container, Card, Box, Avatar, Button} from '@material-ui/core';
+import { useParams } from 'react-router';
 
 function StudentCard() {
+    const params = useParams();
+    const classId= params.id;
     const dispatch = useDispatch();
     const students =  useSelector((store) => store.studentList);
 
 
     useEffect(() => {
-        dispatch({type: 'GET_STUDENTLIST'})
+        dispatch({type: 'GET_STUDENTLIST', payload: classId})
     }, []);
 
     //deletes student from specific class

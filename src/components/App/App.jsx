@@ -22,13 +22,16 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage';
 import StemtellCard from '../STEMtellCard/STEMtellCard';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
+
+import ClassCard from '../ClassCard/ClassCard';
+
 import StemtellDetails from '../StemtellDetails/StemtellDetails';
 import './App.css';
 import Homepage from '../Homepage/Homepage';
-
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
 import TeacherReviewList from '../TeacherReviewList/TeacherReviewList';
-
+import ClassList from '../ClassList/ClassList';
+import ClassDetails from '../ClassDetails/ClassDetails';
 
 function App() {
   const dispatch = useDispatch();
@@ -113,11 +116,37 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
-            
+
+            // logged in shows CreateSTEMtell else shows LoginPage
+            exact
+            path="/classlist"
+          >
+            <ClassCard />
+            </ProtectedRoute>
+
+            <ProtectedRoute
             exact
             path="/stemtell/:id"
           >
             <StemtellDetails />
+
+          </ProtectedRoute>
+
+            
+          <ProtectedRoute
+            // logged in shows Class List page
+            exact
+            path="/classlist"
+          >
+            <ClassList />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows Class List page
+            exact
+            path="/classlist/details/:id"
+          >
+            <ClassDetails />
           </ProtectedRoute>
 
           <ProtectedRoute

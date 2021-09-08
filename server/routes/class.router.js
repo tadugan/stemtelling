@@ -26,23 +26,24 @@ router.get('/', (req, res) => {
 
 
 //gets students from a class list
-router.get('/details', rejectUnauthenticated, (req, res) => {
-  // TODO: Fix hard coded value for the class_id property!
+router.get('/details/:id', rejectUnauthenticated, (req, res) => {
+  const classId= req.params.id;
   const query= `SELECT "user".name AS username, "user".profile_picture_url, "user_class".user_id
   FROM "user"
   JOIN "user_class" ON "user".id = "user_class".user_id
   join "class" on "class".id = "user_class".class_id
   WHERE  "user".authority = 'student'
-  AND "user_class".class_id = 1  ;`;
+  AND "user_class".class_id = $1;`;
 
   pool
-    .query(query)
+    .query(query, [classId])
     .then((result) => {
       // console.log('successful GETTING studentList', result.rows);
       res.send(result.rows);
     })
     .catch((err) => {
       console.log('error GETTING studentList', err);
+      res.sendStatus(500);
     });
 });
 
@@ -64,14 +65,14 @@ router.delete("/details/:id", rejectUnauthenticated, (req, res) => {
   pool
     .query(query, [req.params.id])
     .then((result) => {
-      // console.log(`Successfully DELETED STUDENT from class`, result);
+      console.log(`Successfully DELETED STUDENT from class`, result);
       res.sendStatus(201);
     })
     .catch((error) => {
       console.log(`Did not DELETE STUDENT from class`, error);
       res.sendStatus(500);
     });
-  // endpoint functionality
+  
 });
 
 module.exports = router;

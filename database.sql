@@ -27,7 +27,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- Create "user" Table
 CREATE TABLE "user" (
 	"id" SERIAL PRIMARY KEY,
-   "email" TEXT UNIQUE NOT NULL,
+   	"email" TEXT UNIQUE NOT NULL,
 	"password" TEXT NOT NULL,
 	"name" TEXT,
 	"authority" TEXT NOT NULL,
@@ -37,9 +37,9 @@ CREATE TABLE "user" (
 
 -- this table needs to be periodically cleansed via a cron (e.g. https://github.com/citusdata/pg_cron), ideally at inactive times of day, in order to prevent buildup.
 CREATE TABLE "reset_password" ( 
-   "id" INTEGER PRIMARY KEY UNIQUE,
-   "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(),
-   "email" TEXT UNIQUE NOT NULL
+	"id" INTEGER PRIMARY KEY UNIQUE,
+	"uuid" uuid NOT NULL DEFAULT uuid_generate_v4(),
+	"email" TEXT UNIQUE NOT NULL
 );
 
 
@@ -178,18 +178,20 @@ WHERE "id" = 4;
 
 -- Step 4: run the following queries to add the users to user_class table
 INSERT INTO "user_class" ("role", "user_id", "class_id")
-	VALUES ('student', '1', '2'),
-	('student', '2', '3'),
+	VALUES ('student', '1', '1'),
+	('student', '1', '2'),
 	('student', '1', '4'),
-	('student', '2', '4'),
-	('teacher', '3', '2'),
-	('teacher', '3', '4'),
-	('teacher', '4', '4'),
-	('teacher', '4', '3'),
-	('student', '1', '1'),
 	('student', '2', '1'),
-	('student', '3', '1'),
-	('student', '4', '1');
+	('student', '2', '3'),
+	('student', '2', '4'),
+	('teacher', '3', '1'),
+	('teacher', '3', '2'),
+	('teacher', '3', '3'),
+	('teacher', '3', '4'),
+	('teacher', '4', '1'),
+	('teacher', '4', '2'),
+	('teacher', '4', '3'),
+	('teacher', '4', '4');
 	
 
 -- Step 5: run the following queries to create data for the tag table
