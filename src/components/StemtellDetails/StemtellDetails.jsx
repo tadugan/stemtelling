@@ -36,8 +36,8 @@ function STEMtellDetails() {
                <Grid item key={stemtell.id}>
                   <Card className="StemDetailsCard">
                      <h6 id="stemDate">{unixTimestamp(stemtell.unix)}</h6>
-                     <Avatar className="Avatar" src={stemtell.profile_picture_url} />
-                     <section className="UserName" onClick={() => onUserProfile(stemtell.user_id)}>
+                     <Avatar className="Avatar" src={stemtell.profile_picture_url}/>
+                     <section className="UserName" onClick={() => onUserProfile(stemtell.author_id)}>
                         {stemtell.name}
                      </section>
                      <div className="UserName" id="userClass">

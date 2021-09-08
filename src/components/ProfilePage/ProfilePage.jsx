@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -20,10 +21,12 @@ const useStyles = makeStyles((theme) => ({
 
 function ProfilePage() {
    const classes = useStyles();
+   const history = useHistory();
    const profile = useSelector((store) => store.profile);
    const dispatch = useDispatch();
    const stemtells = useSelector((store) => store.stemtells);
    const getSearchQueryByFullURL = (url) => {return url.split('/')};
+   const toStemtellDetail = (stem_id) => {history.push(`/stemtell/${stem_id}`)};
 
    useEffect(() => {
       dispatch({ type: "FETCH_USER_STEMTELLS", payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1])});
@@ -44,9 +47,8 @@ function ProfilePage() {
                <Grid container>
                   {stemtells.map((stemtell) => {
                      return (
-                        <Grid item>
-                           <Card className="StemCard">
-                              <Avatar className="Avatar" />
+                        <Grid item key={stemtell.id}>
+                           <Card className="StemCard" onClick={() => toStemtellDetail(stemtell.id)} >
                                  <section className="UserName">{stemtell.username}</section>
                                  <div className="UserName" id="userClass">
                                     {stemtell.class_name}

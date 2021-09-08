@@ -4,24 +4,20 @@ const router = express.Router();
 const rejectUnauthenticated = require('../modules/authentication-middleware').rejectUnauthenticated;
 
 
-/**
- * GET api/class/
- * Description ...
- * Returns an array of class object: { class object model }
- */
+// GET api/class/
+// Returns an array of class object: { class object model }
 router.get('/', (req, res) => {
-  const query = `SELECT * FROM "class"
-  JOIN "user_class" ON "user_class".class_id = "class".id
-  WHERE "user_class".user_id = $1`
-  pool
-  .query(query, [req.user.id])
-  .then((result) => {
-    res.send(result.rows);
-  })
-  .catch((err) => {
-    console.log("Error getting teacher's classes", err);
-    res.sendStatus(500);
-  })
+   const query = `SELECT * FROM "class"
+                  JOIN "user_class" ON "user_class".class_id = "class".id
+                  WHERE "user_class".user_id = $1`
+   pool.query(query, [req.user.id])
+   .then(results => {
+      res.send(results.rows);
+   })
+   .catch(error => {
+      console.log("Error getting teacher's classes:", error);
+      res.sendStatus(500);
+   });
 });
 
 
@@ -44,9 +40,8 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
     .catch((err) => {
       console.log('error GETTING studentList', err);
       res.sendStatus(500);
-    });
+   });
 });
-
 
 // TODO: Setup class creation!
 /**
@@ -58,6 +53,7 @@ router.post('/', (req, res) => {
 
 // TODO: Setup class edit? PUT
 
+
 //Removes students from a class
 router.delete("/details/:id", rejectUnauthenticated, (req, res) => {
   console.log(`What student is being DELETED:`, req.params.id);
@@ -66,12 +62,12 @@ router.delete("/details/:id", rejectUnauthenticated, (req, res) => {
     .query(query, [req.params.id])
     .then((result) => {
       res.sendStatus(201);
-    })
-    .catch((error) => {
-      console.log(`Did not DELETE STUDENT from class`, error);
+   })
+   .catch(error => {
+      console.log(`Error deleting student from class:`, error);
       res.sendStatus(500);
-    });
-  
+   });
 });
+
 
 module.exports = router;

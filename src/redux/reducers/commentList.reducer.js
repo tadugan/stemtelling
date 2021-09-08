@@ -9,5 +9,5 @@ const commentList = (state = [], action) => {
 
 
 // reducer for handling comments
-// called on
+// called on when loading all comments for a specific STEMtell
 export default commentList;
