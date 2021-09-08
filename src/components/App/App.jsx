@@ -22,7 +22,10 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage';
 import StemtellCard from '../STEMtellCard/STEMtellCard';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
-import StemtellDetails from '../StemtellDetails/StemtellDetails';
+
+import ClassCard from '../ClassCard/ClassCard';
+
+import StemtellDetails from '../StemtellDetails/Stemtelldetails';
 import './App.css';
 import Homepage from '../Homepage/Homepage';
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
@@ -112,11 +115,20 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
-            
+
+            // logged in shows CreateSTEMtell else shows LoginPage
+            exact
+            path="/classlist"
+          >
+            <ClassCard />
+            </ProtectedRoute>
+
+            <ProtectedRoute
             exact
             path="/stemtell/:id"
           >
             <StemtellDetails />
+
           </ProtectedRoute>
 
             

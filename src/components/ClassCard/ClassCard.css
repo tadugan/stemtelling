@@ -8,10 +8,18 @@
 padding: 8px;
 margin:8px;
 margin-top: 12px;
-text-align: right;
+display: flex;
 
 }
 
 .classCard{
     width: 300px;
+    margin: 20px;
+}
+
+#classCardTitle{
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+  margin:2px
 }
