@@ -154,9 +154,6 @@ function CreateSTEMtell() {
                <Grid item>
                   <AddTagDialog />
                </Grid>
-               <Grid item >
-                    <p>Selected Tags get display here</p>
-               </Grid>
                <Grid item container spacing={2} xs={12} direction="row" justifyContent="center" alignItems="center">
                   <Grid item>
                      <Button variant="contained" color="secondary" onClick={handleCancel}>
