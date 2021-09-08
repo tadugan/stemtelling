@@ -18,5 +18,36 @@ router.get('/', rejectUnauthenticated, (req, res) => {
    });
 });
 
+/**
+ * POST for adding tags to new user
+ */
+ router.post('/profile', rejectUnauthenticated, (req, res) => {
+  const tagIdArray = req.body.tag_ids;
+  const userId = req.user.id;
+
+  (async () => {
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+        const queryTextAddTag = `
+        INSERT INTO "user_tag" ("user_id", "tag_id")
+        VALUES ($1, $2)
+        `;
+
+        for (let id of tagIdArray) {
+            await client.query(queryTextAddTag, [userId, id]);
+        }
+
+        await client.query('COMMIT');
+        
+    } catch (err) {
+        await client.query('ROLLBACK');
+        throw err;
+    } finally {
+      client.release();
+    }
+  })().catch(e => console.error(e.stack))
+});
+
 
 module.exports = router;

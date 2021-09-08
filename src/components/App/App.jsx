@@ -6,6 +6,7 @@ import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import UserPage from '../UserPage/UserPage';
+import CreateProfile from '../CreateProfile/CreateProfile';
 import ProfilePage from '../ProfilePage/ProfilePage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
@@ -40,6 +41,7 @@ function App() {
                <ProtectedRoute exact path="/homepage" component={Homepage} />
                <ProtectedRoute exact path="/myprofile" component={UserPage} />
                <ProtectedRoute exact path="/create" component={CreateSTEMtell} />
+               <ProtectedRoute exact path="/create/:id" component={CreateProfile} />
                <ProtectedRoute exact path="/classlist" component={ClassCard} />
                <ProtectedRoute exact path="/teacher/review" component={TeacherReviewList} />
                <ProtectedRoute exact path="/stemtell/:id" component={STEMtellDetails} />
