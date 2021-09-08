@@ -1,8 +1,11 @@
-import { Avatar, Card, Grid } from '@material-ui/core';
+import { Button, Avatar, Card, Grid } from '@material-ui/core';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import './GenericSTEMtellCard.css';
 
-function GenericSTEMtellCard({ stemtell }) {
+function GenericSTEMtellCard({ stemtell, reviewMode }) {
+
+    const history = useHistory();
 
     const unixTimestamp = (timestamp) => {
         const dateObject = new Date((timestamp * 1000));
@@ -11,41 +14,58 @@ function GenericSTEMtellCard({ stemtell }) {
         );
     };
 
+    const handleReviewClick = () => {
+        history.push(`/teacher/feedback/${stemtell.stem_id}`);
+    }
+
+    const conditionalReviewButton = () => {
+        if (reviewMode) {
+            return (
+                <Button 
+                    variant="contained"
+                    color="primary"
+                    onClick={handleReviewClick}
+                >
+                    Review
+                </Button>
+            );
+        }
+        else {
+            return;
+        }
+    }
+
     return (
-            <Card className="StemCard">
-                <h6 id="stemDate">{unixTimestamp (stemtell.unix)}</h6>
-                <Avatar className="Avatar" src={stemtell.profile_picture_url} />
+            <Card className="generic-stemtell-card-body">
+                <h6 className="generic-stemtell-card-date">{unixTimestamp (stemtell.unix)}</h6>
+                <Avatar className="generic-stemtell-card-avatar" src={stemtell.profile_picture_url} />
                 <section
-                    className="UserName"
-                    onClick={() => onUserProfile(stemtell.author_id)}
+                    className="generic-stemtell-card-username"
                 >
                     {stemtell.username}
                 </section>
-                <div className="UserName" id="userClass">
+                <div className="generic-stemtell-card-username generic-stemtell-card-user-class">
                     {stemtell.class_name}
                 </div>
 
                 <h3
-                    id="stemTitle"
-                    onClick={() => toStemtellDetail(stemtell.stem_id)}
+                    className="generic-stemtell-card-title"
                 >
-                    {" "}
                     {stemtell.title}
                 </h3>
 
                 <img
-                    id="stemtellImage"
+                    className="generic-stemtell-card-image"
                     src={stemtell.media_url}
-                    onClick={() => toStemtellDetail(stemtell.stem_id)}
                 />
-                <section id="cardReactions">{stemtell.reaction_name}</section>
+                <section>{stemtell.reaction_name}</section>
 
                 <section
-                    id="stemDescription"
-                    onClick={() => toStemtellDetail(stemtell.stem_id)}
+                    className="generic-stemtell-card-description"
                 >
                     {stemtell.body_text}
                 </section>
+                {conditionalReviewButton()}
             </Card>
     );
 }

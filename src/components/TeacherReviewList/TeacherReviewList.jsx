@@ -6,18 +6,6 @@ import './TeacherReviewList.css';
 
 function TeacherReviewList() {
 
-    const stemtell = { // test STEMtell TODO: remove this
-        author_id: 1,
-        body_text: "I Love Chemistry!!",
-        class_name: "CHEM 101",
-        media_url: "https://www.sciencecompany.com/Assets/ProductImages/nc0071n-lg.jpg",
-        profile_picture_url: "https://image.shutterstock.com/image-photo/laughing-turkish-female-student-desk-260nw-1766762942.jpg",
-        stem_id: 1,
-        title: "CHEMISTRY STEMTELL",
-        unix: "1631042273",
-        username: "Student 1"
-    }
-
     const dispatch = useDispatch();
 
     const reviewStemtells = useSelector(store => store.teacherReviewList);
@@ -36,13 +24,18 @@ function TeacherReviewList() {
             <Grid
                 container
                 spacing={2}
-                direction="column"
+                direction="row"
                 justifyContent="center"
-                alignItems="center"
+                alignItems="flex-start"
             >
-                <Grid item xs={12}>
-                    <GenericSTEMtellCard stemtell={stemtell}/>
-                </Grid>
+                {reviewStemtells.map(stemtell => {
+                    return (
+                        <Grid item xs={12} md={4} key={stemtell.stem_id}>
+                            <GenericSTEMtellCard stemtell={stemtell} reviewMode={true}/>
+                        </Grid>
+                    );
+                })}
+                
             </Grid>
         </div>
     );
