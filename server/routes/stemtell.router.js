@@ -40,7 +40,7 @@ router.get('/homefeed', (req, res) => {
       res.send(results.rows);
    })
    .catch(error => {
-      console.log("error getting user's class stemtells:", error);
+      console.log("Error getting user's class stemtells:", error);
       res.sendStatus(500);
    });
 });
@@ -170,7 +170,7 @@ router.get('/details/:id', (req, res) => {
       res.send(results.rows);
    })
    .catch(error => {
-      console.log("Error getting all STEMdetails", error);
+      console.log("Error getting all STEMdetails:", error);
       res.sendStatus(500);
    });
 });

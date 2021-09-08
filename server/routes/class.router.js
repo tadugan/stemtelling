@@ -15,13 +15,13 @@ router.get('/', (req, res) => {
       res.send(results.rows);
    })
    .catch(error => {
-      console.log("Error getting teacher's classes", error);
+      console.log("Error getting teacher's classes:", error);
       res.sendStatus(500);
    });
 });
 
 // GET /api/class/details/:id
-// gets students from a class list
+// Handles getting students from a class list
 router.get('/details/:id', rejectUnauthenticated, (req, res) => {
    const classId = req.params.id;
    const query = `SELECT "user".name AS username, "user".profile_picture_url, "user_class".user_id
@@ -35,7 +35,7 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
       res.send(results.rows);
    })
    .catch(error => {
-      console.log('error GETTING studentList', error);
+      console.log('Error getting studentList:', error);
       res.sendStatus(500);
    });
 });
@@ -60,7 +60,7 @@ router.delete("/details/:id", rejectUnauthenticated, (req, res) => {
       res.sendStatus(201);
    })
    .catch(error => {
-      console.log(`Did not DELETE STUDENT from class`, error);
+      console.log(`Error deleting student from class:`, error);
       res.sendStatus(500);
    });
 });

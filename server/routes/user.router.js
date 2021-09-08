@@ -37,7 +37,7 @@ router.get('/profile', (req, res) => {
       res.send(results.rows)
    })
    .catch(error => {
-      console.log('Get all users failed:', error);
+      console.log('Get user profile failed:', error);
       res.sendStatus(500);
    });
 });

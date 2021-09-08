@@ -28,7 +28,7 @@ router.delete('/removerequest', (req, res) => {
    })
    .catch(error => {
       console.log("Error removing previous reset request:", error);
-      res.sendStatus(401);
+      res.sendStatus(500);
    });
 });
 
@@ -64,7 +64,7 @@ router.post('/sendresetemail', async (req, res) => {
    }
    catch (error) {
       console.log('Error in sending password reset email:', error);
-      res.sendStatus(401);
+      res.sendStatus(500);
    };
 });
 

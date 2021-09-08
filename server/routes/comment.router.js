@@ -13,7 +13,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
       res.send(results.rows)
    })
    .catch(error => {
-      console.log("Error GETTING comments", error);
+      console.log("Error getting comments:", error);
       res.sendStatus(500);
    });
 });
@@ -34,7 +34,7 @@ router.get("/stemcomments/:id", rejectUnauthenticated, (req, res) => {
       res.send(results.rows);
    })
    .catch(error => {
-      console.log("Error GETTING stemComments", error);
+      console.log("Error getting stemComments:", error);
       res.sendStatus(500);
    });
 });
@@ -52,7 +52,7 @@ router.get("/feedback", rejectUnauthenticated, (req, res) => {
       res.send(results.rows);
    })
    .catch(error => {
-      console.log("Error GETTING teacher feedback", error);
+      console.log("Error getting teacher feedback:", error);
       res.sendStatus(500);
    });
 });
@@ -67,7 +67,7 @@ router.post(`/`, rejectUnauthenticated, (req, res) => {
       res.sendStatus(201);
    })
    .catch(error => {
-      console.log("Error Posting comment", error);
+      console.log("Error posting comment:", error);
       res.sendStatus(500);
    });
 });
