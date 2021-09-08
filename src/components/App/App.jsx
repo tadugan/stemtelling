@@ -20,12 +20,12 @@ import InfoPage from '../InfoPage/InfoPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage';
-import StemtellCard from '../STEMtellCard/STEMtellCard';
+import STEMtellCard from '../STEMtellCard/STEMtellCard';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 
 import ClassCard from '../ClassCard/ClassCard';
 
-import StemtellDetails from '../StemtellDetails/StemtellDetails';
+import STEMtellDetails from '../STEMtellDetails/STEMtellDetails';
 import './App.css';
 import Homepage from '../Homepage/Homepage';
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
@@ -55,7 +55,7 @@ function App() {
             path="/about"
           >
             <AboutPage />
-            <StemtellCard />
+            <STEMtellCard />
           </Route>
           <Route
             exact
@@ -127,7 +127,7 @@ function App() {
             exact
             path="/stemtell/:id"
           >
-            <StemtellDetails />
+            <STEMtellDetails />
 
           </ProtectedRoute>
 
