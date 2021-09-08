@@ -17,7 +17,10 @@ function StudentCard() {
 
     //deletes student from specific class
     const handleDelete = (deleteStudent) => {
-        dispatch({ type: "DELETE_STUDENT", payload: deleteStudent });
+        dispatch({ type: "DELETE_STUDENT", payload: {
+            deleteStudent,
+            classId
+        } });
        
       };
     
