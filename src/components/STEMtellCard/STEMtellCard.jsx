@@ -29,32 +29,8 @@ function StemtellCard() {
       );
    };
 
-  useEffect(() => {
-    dispatch({ type: "FETCH_USER_FEED" });
-
-  }, []);
-
-  const onUserProfile = (author_id) => {
-    history.push(`/profile/${author_id}`);
-  };
-
-  const toStemtellDetail = (stem_id) => {
-    history.push(`stemtell/${stem_id}`);
-  };
-
-  const unixTimestamp = (timestamp) => {
-    const dateObject = new Date(timestamp * 1000);
-    return dateObject.toLocaleString([], {
-      year: "numeric",
-      month: "numeric",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
   return (
-    <Grid item container aria-labelledby="homepage stemtell container">
+    <Grid item container aria-labelledby="homepage stemtell container" direction="row" justifyContent="center" alignItems="flex-start">
       {stemtells.map((stemtell) => {
         return (
           <Grid item key={stemtell.id} aria-labelledby="homepage stemtell item">
