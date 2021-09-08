@@ -36,25 +36,13 @@ function LoginForm() {
          <div>
             <label htmlFor="email">
                Email:
-               <input
-                  type="email"
-                  name="email"
-                  required
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                />
+               <input type="email" name="email" required value={email} onChange={(event) => setEmail(event.target.value)}/>
             </label>
          </div>
          <div>
             <label htmlFor="password">
                Password:
-               <input
-                  type="password"
-                  name="password"
-                  required
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-               />
+               <input type="password" name="password" required value={password} onChange={(event) => setPassword(event.target.value)}/>
             </label>
          </div>
          <div>
