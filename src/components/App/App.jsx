@@ -25,7 +25,7 @@ import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
 
 import ClassCard from '../ClassCard/ClassCard';
 
-import STEMtellDetails from '../STEMtellDetails/STEMtellDetails';
+import StemtellDetails from '../StemtellDetails/StemtellDetails';
 import './App.css';
 import Homepage from '../Homepage/Homepage';
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
@@ -133,17 +133,25 @@ function App() {
             exact
             path="/stemtell/:id"
           >
-            <STEMtellDetails />
+            <StemtellDetails />
 
           </ProtectedRoute>
 
             
           <ProtectedRoute
+            // logged in shows teacher feedback form for specific stemtell
+            exact
+            path="/teacher/feedback/:id"
+          >
+            <TeacherFeedback />
+          </ProtectedRoute>
+          
+          <ProtectedRoute
             // logged in shows Class List page
             exact
-            path="/classlist"
+            path="/classlist/details/:id"
           >
-            <ClassList />
+            <ClassDetails />
           </ProtectedRoute>
 
           <ProtectedRoute
