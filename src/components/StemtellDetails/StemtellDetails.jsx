@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Card, Avatar, Grid } from "@material-ui/core";
 import Comment from "../Comment/Comment";
 import BackBtn from "../BackBtn/BackBtn";
-import './StemtellDetails.css';
+import './STEMtellDetails.css';
 
 
 function StemtellDetails() {
