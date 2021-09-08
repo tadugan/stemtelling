@@ -55,7 +55,7 @@ function Nav() {
                <MenuItem onClick={() => handleHistoryPush('homepage')}>
                   Home
                </MenuItem>
-               <MenuItem onClick={() => handleHistoryPush(`profile/${user.id}`)}>
+               <MenuItem onClick={() => handleHistoryPush(`myprofile`)}>
                   Profile
                </MenuItem>
                <MenuItem onClick={() => handleHistoryPush('create')}>
