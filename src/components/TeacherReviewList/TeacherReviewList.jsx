@@ -1,10 +1,12 @@
 import { Grid } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import GenericSTEMtellCard from '../GenericSTEMtellCard/GenericSTEMtellCard';
+import { useDispatch, useSelector } from 'react-redux';
+import './TeacherReviewList.css';
 
 function TeacherReviewList() {
 
-    const stemtell = { // test STEMtell
+    const stemtell = { // test STEMtell TODO: remove this
         author_id: 1,
         body_text: "I Love Chemistry!!",
         class_name: "CHEM 101",
@@ -16,9 +18,21 @@ function TeacherReviewList() {
         username: "Student 1"
     }
 
+    const dispatch = useDispatch();
+
+    const reviewStemtells = useSelector(store => store.teacherReviewList);
+
+    const getReviewStemtells = () => {
+        dispatch({ type: 'GET_REVIEW_STEMTELLS'});
+    }
+
+    useEffect(() => {
+        getReviewStemtells();
+    }, []);
+
     return (
         <div>
-            <p>Teacher STEMtell Review List</p>
+            <h3 className="teacher-review-list-header">Teacher STEMtell Review List</h3>
             <Grid
                 container
                 spacing={2}

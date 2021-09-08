@@ -11,6 +11,7 @@ import feedback from './feedback.reducer';
 import studentList from './studentList.reducer';
 import stemtellDetails from './stemtellDetails.reducer';
 import stemtellComments from './stemtellComments.reducer';
+import teacherReviewList from './teacherReviewList.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   studentList,
   stemtellDetails,
   stemtellComments,
+  teacherReviewList, // contains an array of STEMtell objects that have not yet been approved
 });
 
 export default rootReducer;
