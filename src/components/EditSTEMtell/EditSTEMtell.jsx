@@ -6,6 +6,7 @@ import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
 import "./EditSTEMtell.css";
 import { useHistory } from 'react-router';
 
+
 function EditSTEMtell(stemtell) {
    const user = useSelector((store) => store.user);
    const dispatch = useDispatch();
@@ -101,8 +102,8 @@ function EditSTEMtell(stemtell) {
             );
          default:
             return;
-        };
-    };
+      };
+   };
 
    useEffect(() => {
       getClassList();
@@ -113,148 +114,68 @@ function EditSTEMtell(stemtell) {
       getExistingTags(stemtell.stemtell.id);
    }, []);
 
-  return (
-    <div className="edit-stemtell-body">
-        <form>
-            <Grid
-                container
-                spacing={2}
-                direction="column"
-                justifyContent="center"
-                alignItems="center"
-            >
-                <Grid
-                    item
-                >
-                    <h2>Edit</h2>
-                </Grid>
-                <Grid
-                    item
-                >
-                    <FormControl variant="outlined" className="edit-stemtell-class">
-                        <InputLabel className="demo-simple-select-outlined-label">Class</InputLabel>
-                        <Select
-                           variant="outlined"
-                           labelId="demo-simple-select-outlined-label"
-                           value={classId}
-                           onChange={(event) => setClassId(event.target.value)}
-                           label="Age"
-                           className="edit-stemtell-class-select"
-                        >
+   return (
+      <div className="edit-stemtell-body">
+         <form>
+            <Grid container spacing={2} direction="column" justifyContent="center"alignItems="center">
+               <Grid item>
+                  <h2>Edit</h2>
+               </Grid>
+               <Grid item>
+                  <FormControl variant="outlined" className="edit-stemtell-class">
+                     <InputLabel className="demo-simple-select-outlined-label">Class</InputLabel>
+                     <Select variant="outlined" labelId="demo-simple-select-outlined-label" value={classId} onChange={(event) => setClassId(event.target.value)} label="Age" className="edit-stemtell-class-select">
                         <MenuItem value={0}>
-                            <em>Choose a Class</em>
+                           <em>Choose a Class</em>
                         </MenuItem>
                         {classList.map(classItem => {
-                            return (
-                                <MenuItem key={classItem.id} value={classItem.class_id}>
-                                    {classItem.name}
-                                </MenuItem>
-                            );
+                           return (
+                              <MenuItem key={classItem.id} value={classItem.class_id}>
+                                 {classItem.name}
+                              </MenuItem>
+                           );
                         })}
-                        </Select>
-                    </FormControl>
-                </Grid>
-                <Grid
-                    item
-                    className="edit-stemtell-title"
-                >
-                    <TextField
-                        label="Title"
-                        variant="outlined"
-                        value={title}
-                        onChange={(event) => setTitle(event.target.value)}
-                    />
-                </Grid>
-                <Grid
-                    item
-                    className="edit-stemtell-image-url"
-                >
-                    <TextField
-                        label="Image URL"
-                        variant="outlined"
-                        value={imageUrl}
-                        onChange={(event) => setImageUrl(event.target.value)}
-                    />
-                </Grid>
-                <Grid
-                    item
-                    className="edit-stemtell-description"
-                >
-                    <TextField
-                        aria-label="STEMtell textarea"
-                        placeholder="Add text"
-                        minRows={3}
-                        maxRows={3}
-                        variant="outlined"
-                        multiline
-                        value={description}  
-                        onChange={(event) => setDescription(event.target.value)}
-                    />
-                </Grid> 
-                <Grid
-                    item
-                    container
-                    spacing={2}
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center"
-                >
-                    {selectedTags.map((tag) => {
-                        return (
-                            <Grid
-                                item
-                                key={tag.id}
-                            >
-                                <TagChipDeletable tagInfo={tag}/>
-                            </Grid>
-                        );
-                    })}
-                </Grid>
-                <Grid
-                    item
-                >
-                    <AddTagDialog />
-                </Grid>
-                <Grid
-                    item
-                    container
-                    spacing={2}
-                    xs={12}
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center"
-                >
-                    <Grid
-                        item
-                    >
-                        <Button
-                            className="edit-page-button"
-                            variant="contained"
-                            color="secondary"
-                            onClick={handleCancel}
-                        >
-                            Cancel
-                        </Button>
-                    </Grid>
-                    <Grid
-                        item
-                    >
-                        <Button
-                            className="edit-page-button"
-                            variant="contained"
-                            color="primary"
-                            onClick={handleSave}
-                            type="submit"
-                        >
-                            Save
-                        </Button>
-                    </Grid>
-                    {conditionalInputAlert(alertMessage)}
-                </Grid>
+                     </Select>
+                  </FormControl>
+               </Grid>
+            <Grid item className="edit-stemtell-title">
+               <TextField label="Title" variant="outlined" value={title} onChange={(event) => setTitle(event.target.value)}/>
             </Grid>
-        </form>
-    </div>
-  );
+            <Grid item className="edit-stemtell-image-url">
+               <TextField label="Image URL" variant="outlined" value={imageUrl} onChange={(event) => setImageUrl(event.target.value)}/>
+            </Grid>
+            <Grid item className="edit-stemtell-description">
+               <TextField aria-label="STEMtell textarea" placeholder="Add text" minRows={3} maxRows={3} variant="outlined" multiline value={description} onChange={(event) => setDescription(event.target.value)}/>
+            </Grid> 
+            <Grid item container spacing={2} direction="row" justifyContent="center" alignItems="center">
+               {selectedTags.map((tag) => {
+                  return (
+                     <Grid item key={tag.id}>
+                        <TagChipDeletable tagInfo={tag}/>
+                     </Grid>
+                  );
+               })}
+            </Grid>
+            <Grid item>
+               <AddTagDialog />
+            </Grid>
+            <Grid item container spacing={2} xs={12} direction="row" justifyContent="center" alignItems="center">
+               <Grid item>
+                  <Button className="edit-page-button" variant="contained" color="secondary" onClick={handleCancel}>
+                     Cancel
+                  </Button>
+               </Grid>
+               <Grid item>
+                  <Button className="edit-page-button" variant="contained" color="primary" onClick={handleSave} type="submit">
+                     Save
+                  </Button>
+               </Grid>
+               {conditionalInputAlert(alertMessage)}
+               </Grid>
+            </Grid>
+         </form>
+      </div>
+   );
 };
 
 
