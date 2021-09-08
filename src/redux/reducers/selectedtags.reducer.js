@@ -1,4 +1,4 @@
-const selectedTagsReducer = (state = [], action) => {
+const selectedTags = (state = [], action) => {
    switch (action.type) {
       case 'ADD_TAG_TO_STEMTELL':
          return [...state, action.payload];
@@ -17,4 +17,4 @@ const selectedTagsReducer = (state = [], action) => {
 
 // reducer for handling specific STEMtags associated with a STEMtell
 // called on whenever a STEMcard is displayed
-export default selectedTagsReducer;
+export default selectedTags;

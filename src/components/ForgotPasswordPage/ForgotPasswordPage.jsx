@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
    },
  }));
 
+
 function ForgotPasswordPage() {
    const history = useHistory();
    const [email, setEmail] = useState('');
@@ -29,7 +30,7 @@ function ForgotPasswordPage() {
    const handleOpen = () => {setOpen(true)};
    const handleClose = () => {setOpen(false)};
 
-   const resetPassword = () => { // main handler for password resetting, collects data from email input and dispatches it
+   const resetPassword = () => {
       if (email == null || email == undefined || email == '' || email == ' ') {
          alert('Invalid Email');
          setEmail('');  
@@ -45,46 +46,30 @@ function ForgotPasswordPage() {
       handleOpen();
    }};
 
-  return (
-     <div className="formPanel">
-      <div>
-        <label htmlFor="email">
-          Email:
-          <input
-            type="text"
-            name="email"
-            required
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-        </label>
+   return (
+      <div className="formPanel">
+         <div>
+            <label htmlFor="email">
+               Email:
+               <input type="text" name="email" required value={email} onChange={(event) => setEmail(event.target.value)}/>
+            </label>
+         </div>
+         <div>
+            <button className="btn" onClick={resetPassword}>Reset Password</button>
+         </div>
+         <Modal aria-labelledby="email confirmation modal" aria-describedby="email confirmation modal" className={classes.modal} open={open} onClose={handleClose} closeAfterTransition BackdropComponent={Backdrop} BackdropProps={{timeout: 500}}>
+            <Fade in={open}>
+               <div className={classes.paper}>
+                  <p id="email-confirmation-modal-description">
+                     An email has been sent. If you don't see it, check for previous emails, or check your spam/junk folder.
+                  </p>
+                  <button className="btn" onClick={() => {history.push('/')}}>Return Home</button>
+               </div>
+            </Fade>
+         </Modal>
       </div>
-      <div>
-         <button className="btn" onClick={resetPassword}>Reset Password</button>
-      </div>
-      <Modal
-        aria-labelledby="email confirmation modal"
-        aria-describedby="email confirmation modal"
-        className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <div className={classes.paper}>
-            <p id="email-confirmation-modal-description">
-               An email has been sent. If you don't see it, check for previous emails, or check your spam/junk folder.
-            </p>
-            <button className="btn" onClick={() => {history.push('/')}}>Return Home</button>
-          </div>
-        </Fade>
-      </Modal>
-   </div>
-  );
+   );
 };
+
 
 export default ForgotPasswordPage;

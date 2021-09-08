@@ -7,7 +7,7 @@ import BackBtn from "../BackBtn/BackBtn";
 import './StemtellDetails.css';
 
 
-function StemtellDetails() {
+function STEMtellDetails() {
    const params = useParams();
    const history = useHistory();
    const stemtellId = params.id;
@@ -36,8 +36,8 @@ function StemtellDetails() {
                <Grid item key={stemtell.id}>
                   <Card className="StemDetailsCard">
                      <h6 id="stemDate">{unixTimestamp(stemtell.unix)}</h6>
-                     <Avatar className="Avatar" src={stemtell.profile_picture_url} />
-                     <section className="UserName" onClick={() => onUserProfile(stemtell.user_id)}>
+                     <Avatar className="Avatar" src={stemtell.profile_picture_url}/>
+                     <section className="UserName" onClick={() => onUserProfile(stemtell.author_id)}>
                         {stemtell.name}
                      </section>
                      <div className="UserName" id="userClass">
@@ -57,4 +57,4 @@ function StemtellDetails() {
 };
 
 
-export default StemtellDetails;
+export default STEMtellDetails;

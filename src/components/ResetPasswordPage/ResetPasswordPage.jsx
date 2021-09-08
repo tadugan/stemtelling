@@ -84,50 +84,25 @@ function ResetPasswordPage() {
             )}
             <label htmlFor="Enter New Password">
                Enter New Password:
-               <input
-                  type="password"
-                  name="Enter New Password"
-                  required
-                  disabled={isDisabled}
-                  value={newPassword}
-                  onChange={(event) => setNewPassword(event.target.value)}
-               />
+               <input type="password" name="Enter New Password" required disabled={isDisabled} value={newPassword} onChange={(event) => setNewPassword(event.target.value)}/>
             </label>
          </div>
          <div>
             <label htmlFor="Confirm New Password">
                Confirm Password:
-            <input
-               type="password"
-               name="Confirm New Password"
-               required
-               disabled={isDisabled}
-               value={confirmedNewPassword}
-               onChange={(event) => setConfirmedNewPassword(event.target.value)}
-            />
+               <input type="password" name="Confirm New Password" required disabled={isDisabled} value={confirmedNewPassword} onChange={(event) => setConfirmedNewPassword(event.target.value)}/>
             </label>
          </div>
          <div>
             <button className="btn" onClick={resetPassword} disabled={isDisabled}>Set Password</button>
          </div>
-         <Modal
-            aria-labelledby="email confirmation modal"
-            aria-describedby="email confirmation modal"
-            className={classes.modal}
-            open={open}
-            onClose={handleClose}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-               timeout: 500,
-            }}
-         >
+         <Modal aria-labelledby="email confirmation modal" aria-describedby="email confirmation modal" className={classes.modal} open={open} onClose={handleClose} closeAfterTransition BackdropComponent={Backdrop} BackdropProps={{timeout: 500}}>
             <Fade in={open}>
                <div className={classes.paper}>
-               <p id="email-confirmation-modal-description">
-               Your password has been reset!
-               </p>
-               <button className="btn" onClick={() => {history.push('/')}}>Return Home</button>
+                  <p id="email-confirmation-modal-description">
+                     Your password has been reset!
+                  </p>
+                  <button className="btn" onClick={() => {history.push('/')}}>Return Home</button>
                </div>
             </Fade>
          </Modal>

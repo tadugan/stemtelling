@@ -57,77 +57,37 @@ function RegisterForm() {
          <div>
             <label htmlFor="name">
                Name:
-               <input
-                  type="text"
-                  name="name"
-                  value={name}
-                  placeholder="required"
-                  required
-                  onChange={(event) => setName(event.target.value)}
-               />
+               <input type="text" name="name" value={name} placeholder="required" required onChange={(event) => setName(event.target.value)}/>
             </label>
          </div>
          <div>
             <label htmlFor="Class Code">
                Class Code:
-               <input
-                  type="text"
-                  name="Class Code"
-                  value={classCode}
-                  placeholder="optional"
-                  onChange={(event) => setClassCode(event.target.value)}
-               />
+               <input type="text" name="Class Code" value={classCode} placeholder="optional" onChange={(event) => setClassCode(event.target.value)}/>
             </label>
          </div>
          <div>
             <label htmlFor="email">
                Email:
-               <input
-                  type="email"
-                  name="email"
-                  value={email}
-                  placeholder="required"
-                  required
-                  onChange={(event) => setEmail(event.target.value)}
-               />
+               <input type="email" name="email" value={email} placeholder="required" required onChange={(event) => setEmail(event.target.value)}/>
             </label>
          </div>
          <div>
             <label htmlFor="password">
                Password:
-               <input
-                  type="password"
-                  name="password"
-                  value={password}
-                  placeholder="required"
-                  required
-                  onChange={(event) => setPassword(event.target.value)}
-               />
+               <input type="password" name="password" value={password} placeholder="required" required onChange={(event) => setPassword(event.target.value)}/>
             </label>
          </div>
             <div>
             <label htmlFor="Confirm Password">
                Confirm Password:
-               <input
-                  type="password"
-                  name="Confirm Password"
-                  value={confirmedPassword}
-                  placeholder="required"
-                  required
-                  onChange={(event) => setConfirmedPassword(event.target.value)}
-               />
+               <input type="password" name="Confirm Password" value={confirmedPassword} placeholder="required" required onChange={(event) => setConfirmedPassword(event.target.value)}/>
             </label>
          </div>
          <div>
             <label htmlFor="profile picture">
                Profile Picture (optional):
-               <input
-                  type="file"
-                  name="profile picture"  
-                  accept="image/*"
-                  placeholder="optional"
-                  onChange={(event) => setProfilePicture(event.target.value)}
-               />
+               <input type="file" name="profile picture" accept="image/*" placeholder="optional" onChange={(event) => setProfilePicture(event.target.value)}/>
             </label>
          </div>
          <div>
