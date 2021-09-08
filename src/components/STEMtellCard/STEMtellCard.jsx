@@ -30,10 +30,10 @@ function StemtellCard() {
    };
 
    return (
-      <Grid item container aria-labelledby="homepage stemtell container" direction="row" justifyContent="center" alignItems="flex-start">
+      <>
          {stemtells.map((stemtell) => {
             return (
-               <Grid item key={stemtell.id} aria-labelledby="homepage stemtell item">
+               <Grid item key={stemtell.stem_id} aria-labelledby="homepage stemtell item">
                   <Card className="StemCard">
                      <h6 id="stemDate">{unixTimestamp(stemtell.unix)}</h6>
                      <Avatar className="Avatar" src={stemtell.profile_picture_url} />
@@ -57,8 +57,8 @@ function StemtellCard() {
                </Grid>
             );
          })}
-    </Grid>
-  );
+      </>
+   );
 };
 
 
