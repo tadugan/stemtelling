@@ -13,7 +13,7 @@ function StemtellDetails() {
    const stemtellId = params.id;
    const dispatch = useDispatch();
    const stemtell = useSelector((store) => store.stemtellDetails);
-
+  
    useEffect(() => {
       dispatch({ type: "FETCH_STEMTELL_DETAILS", payload: stemtellId });
    }, []);
@@ -51,6 +51,7 @@ function StemtellDetails() {
                </Grid>
             </center>
          <Comment />
+        
       </>
    );
 };

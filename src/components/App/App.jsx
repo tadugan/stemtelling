@@ -31,6 +31,8 @@ import Homepage from '../Homepage/Homepage';
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
 import ClassList from '../ClassList/ClassList';
 import ClassDetails from '../ClassDetails/ClassDetails';
+import TeacherFeedback from '../TeacherFeedback/TeacherFeedback';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -55,7 +57,8 @@ function App() {
             path="/about"
           >
             <AboutPage />
-            <StemtellCard />
+            
+            <TeacherFeedback />
           </Route>
           <Route
             exact
