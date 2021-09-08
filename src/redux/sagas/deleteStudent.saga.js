@@ -2,12 +2,12 @@ import { put, takeEvery, call } from 'redux-saga/effects';
 import axios from 'axios';
 
 
-// function to delete a student
+// function to delete a student from a class
 // called when
 function* deleteStudent(action) {
    try {
-      yield call(axios.delete, `/api/class/details/${action.payload}`);
-      yield put({ type: "GET_STUDENTLIST" });
+      yield call(axios.delete, `/api/class/details/${action.payload.deleteStudent}`);
+      yield put({ type: "GET_STUDENTLIST", payload: action.payload.classId});
    }
    catch (error) {
       console.log('Error with deleteStudent in deleteStudent.saga.js:', error);

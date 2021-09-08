@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import errors from './errors.reducer';
 import user from './user.reducer';
 import tags from './tag.reducer';
-import selectedTags from './selectedTags.reducer';
+import selectedTags from './selectedtags.reducer';
 import commentList from './commentList.reducer';
 import stemtells from './stemtell.reducer';
 import profile from './profile.reducer';

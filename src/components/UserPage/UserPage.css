@@ -1,8 +1,8 @@
-#stemtellImage{
+#stemtellImage {
    height: 15em;
 }
 
-#userStemtellDescription{
+#userStemtellDescription {
    padding: 15px;
    text-overflow: ellipsis;
    white-space: nowrap;
