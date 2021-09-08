@@ -2,7 +2,7 @@ import { put, takeEvery, call } from 'redux-saga/effects';
 import axios from 'axios';
 
 
-// function to delete a student
+// function to delete a student from a class
 // called when
 function* deleteStudent(action) {
    try {
