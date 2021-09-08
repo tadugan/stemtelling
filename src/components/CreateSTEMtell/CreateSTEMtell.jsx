@@ -119,14 +119,7 @@ function CreateSTEMtell() {
                <Grid item>
                   <FormControl variant="outlined">
                      <InputLabel id="demo-simple-select-outlined-label">Class</InputLabel>
-                     <Select
-                        variant="outlined"
-                        labelId="demo-simple-select-outlined-label"
-                        value={classId}
-                        onChange={(event) => setClassId(event.target.value)}
-                        label="Age"
-                        className="create-stemtell-class-select"
-                     >
+                     <Select variant="outlined" labelId="demo-simple-select-outlined-label" value={classId} onChange={(event) => setClassId(event.target.value)} label="Age" className="create-stemtell-class-select">
                         <MenuItem value={0}>
                            <em>Choose a Class</em>
                         </MenuItem>

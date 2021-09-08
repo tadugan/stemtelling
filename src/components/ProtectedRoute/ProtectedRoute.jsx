@@ -35,8 +35,8 @@ function ProtectedRoute({ component, children, ...props }) {
         <LoginPage />
       }
     </Route>
-
   );
-}
+};
+
 
 export default ProtectedRoute;
