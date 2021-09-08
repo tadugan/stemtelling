@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import {useDispatch } from 'react-redux';
 import './TagChip.css';
 
-// The CSS file was being overridden by the default styling, so component jsx styling was used
 const useStyles = makeStyles({
     selected: {
         backgroundColor: "green",
@@ -13,56 +12,58 @@ const useStyles = makeStyles({
     },
 });
 
+
 function TagChip( {tagInfo, selectedTags} ) {
+   const classes = useStyles();
+   const dispatch = useDispatch();
+   const [ isSelected, setIsSelected ] = useState(false);
 
-    const classes = useStyles();
-    const dispatch = useDispatch();
+   const conditionalClass = () => {
+      if (isSelected) {
+         return (
+            classes.selected
+         );
+      }
+      else {
+         return (
+            classes.unselected
+         );
+      };
+   };
 
-    const [ isSelected, setIsSelected ] = useState(false);
+   const handleClick = () => {
+      if (isSelected) {
+         setIsSelected(false)
+         dispatch({
+            type: 'REMOVE_TAG_FROM_STEMTELL',
+            payload: tagInfo,
+         });
+      }
+      else {
+         setIsSelected(true)
+         dispatch({
+            type: 'ADD_TAG_TO_STEMTELL',
+            payload: tagInfo,
+         });
+      };
+   };
 
-    const conditionalClass = () => {
-        if (isSelected) {
-            return (
-                classes.selected
-            );
-        }
-        else {
-            return (
-                classes.unselected
-            );
-        }
-    }
+   const compareReducer = () => {
+      if (selectedTags.includes(tagInfo)) {
+         setIsSelected(true);
+      };
+   };
 
-    const handleClick = () => {
-        if (isSelected) {
-            setIsSelected(false)
-            dispatch({ type: 'REMOVE_TAG_FROM_STEMTELL', payload: tagInfo });
-        }
-        else {
-            setIsSelected(true)
-            dispatch({ type: 'ADD_TAG_TO_STEMTELL', payload: tagInfo });
-        }
-        
-    };
+   useEffect(() => {
+      compareReducer();
+   }, []);
 
-    const compareReducer = () => {
-        if (selectedTags.includes(tagInfo)) {
-            setIsSelected(true);
-        }
-    }
+   return (
+      <div onClick={handleClick}>
+         <Chip label={tagInfo.name} className={conditionalClass()} />
+      </div>
+   );
+};
 
-    useEffect(() => {
-        compareReducer();
-    }, []);
-
-    return (
-        <div onClick={handleClick}>
-            <Chip 
-            label={tagInfo.name} 
-            className={conditionalClass()} 
-            />
-        </div>
-    );
-}
 
 export default TagChip;

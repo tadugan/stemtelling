@@ -32,6 +32,7 @@ function App() {
             <Nav />
             <Switch>
                <Redirect exact from="/" to="/homepage" />
+               <Redirect exact from="/close" to="/myprofile" />
                <Route exact path="/forgotpassword" component={ForgotPasswordPage} />
                <Route path ="/resetpassword/" component={ResetPasswordPage} />
                <ProtectedRoute exact path="/profile/:id" component={ProfilePage} />

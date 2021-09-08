@@ -17,7 +17,7 @@ function EditSTEMtell(stemtell) {
    const [ alertMessage, setAlertMessage ] = useState('');
    const selectedTags = useSelector(store => store.selectedTags);
    const classList = useSelector(store => store.classes);
-   const handleCancel = () => {history.push('/myprofile')};
+   const handleCancel = () => {history.push('/close')};
    const getClassList = () => {dispatch({ type: 'FETCH_CLASSES'})};
    const getExistingTags = (stemtellId) => {dispatch({ type: 'GET_EXISTING_TAGS', payload: stemtellId })};
 
@@ -47,7 +47,7 @@ function EditSTEMtell(stemtell) {
       setDescription('');
       dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
       dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
-      history.push('/myprofile');
+      history.push('/close');
    };
 
    const invalidInputs = () => {
