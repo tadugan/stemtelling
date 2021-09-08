@@ -10,8 +10,7 @@ function StemtellCard() {
    const stemtells = useSelector((store) => store.stemtells);
 
    useEffect(() => {
-      dispatch({ type: "FETCH_CLASSES"})
-      dispatch({ type: "FETCH_STEMTELLS"});
+      dispatch({ type: "FETCH_USER_FEED"});
    }, []);
 
    const onUserProfile = (author_id) => {
