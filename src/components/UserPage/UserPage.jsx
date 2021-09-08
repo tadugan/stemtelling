@@ -56,10 +56,7 @@ function UserPage() {
 
    return (
       <div className={classes.root}>
-         <Grid container direction="row"
-               justifyContent="center"
-               alignItems="flex-start"
-         >
+         <Grid container direction="row" justifyContent="center" alignItems="flex-start">
             <Grid item xs={12} sm={3}> 
                <Paper className={classes.paper}>
                   <img src={user.profile_picture_url}></img>
@@ -69,10 +66,7 @@ function UserPage() {
             </Grid>
             <Grid item xs={12} sm={9}>
                <Paper className={classes.paper}>Your STEMtells</Paper>
-               <Grid container direction="row"
-                     justifyContent="center"
-                     alignItems="flex-start"
-               >
+               <Grid container direction="row" justifyContent="center" alignItems="flex-start">
                   {stemtells.map((stemtell) => {
                      return (
                         <Grid item key={stemtell.id}>
@@ -94,18 +88,7 @@ function UserPage() {
                   })}
                </Grid>
             </Grid>
-            <Modal
-               aria-labelledby="email confirmation modal"
-               aria-describedby="email confirmation modal"
-               className={modalClasses.modal}
-               open={open}
-               onClose={handleClose}
-               closeAfterTransition
-               BackdropComponent={Backdrop}
-               BackdropProps={{
-                  timeout: 500,
-               }}
-            >
+            <Modal aria-labelledby="email confirmation modal" aria-describedby="email confirmation modal" className={modalClasses.modal} open={open} onClose={handleClose} closeAfterTransition BackdropComponent={Backdrop} BackdropProps={{timeout: 500}}>
                <Fade in={open}>
                   <EditSTEMtell stemtell={stemtellData} key={stemtellData.id}/>
                </Fade>
