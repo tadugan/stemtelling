@@ -11,6 +11,7 @@ import feedbackSaga from './feedback.saga';
 import studentListSaga from './studentList.saga';
 import deleteStudentSaga from './deleteStudent.saga';
 import editStemtellSaga from './editSTEMtell.saga';
+import teacherReviewListSaga from './teacherReviewList.saga';
 import resetPasswordSaga from './resetpassword.saga';
 
 
@@ -29,5 +30,6 @@ export default function* rootSaga() {
       studentListSaga(),
       deleteStudentSaga(),
       editStemtellSaga(),
+      teacherReviewListSaga(),
    ]);
 };

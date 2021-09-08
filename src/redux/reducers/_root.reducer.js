@@ -11,21 +11,23 @@ import feedback from './feedback.reducer';
 import studentList from './studentList.reducer';
 import stemtellDetails from './stemtellDetails.reducer';
 import stemtellComments from './stemtellComments.reducer';
+import teacherReviewList from './teacherReviewList.reducer';
 
 
 const rootReducer = combineReducers({
-   errors,
-   user,
-   tags,
-   selectedTags,
-   commentList,
-   stemtells,
-   profile,
-   classes,
-   feedback,
-   studentList,
-   stemtellDetails,
-   stemtellComments,
+  errors, // contains registrationMessage and loginMessage
+  user, // will have an id and username if someone is logged in
+  tags, // contains a list of all available tags
+  selectedTags, // contains tags chosen to be added to a new STEMtell
+  commentList,
+  stemtells,
+  profile,
+  classes,
+  feedback,
+  studentList,
+  stemtellDetails,
+  stemtellComments,
+  teacherReviewList, // contains an array of STEMtell objects that have not yet been approved
 });
 
 

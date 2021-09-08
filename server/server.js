@@ -17,6 +17,7 @@ const stemtagRouter = require('./routes/stemtag.router');
 const resetPasswordRouter = require('./routes/resetpassword.router');
 const notificationRouter = require('./routes/notification.router');
 const tagRouter = require('./routes/tag.router');
+const reviewRouter = require('./routes/review.router');
 
 
 // Body parser middleware
@@ -44,6 +45,7 @@ app.use('/api/stemtag', stemtagRouter);
 app.use('/api/resetpassword', resetPasswordRouter);
 app.use('/api/notification', notificationRouter);
 app.use('/api/tag', tagRouter);
+app.use('/api/review', reviewRouter);
 
 
 // Serve static files
