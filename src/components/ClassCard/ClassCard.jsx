@@ -20,7 +20,7 @@ function ClassCard() {
          {classes.map((classList) => {
             return(
                <Card className="classCard">
-                  <h2 onClick= {() => toClassDetail(classList.class_id)}>{classList.name}</h2>
+                  <h2 id='classCardTitle' onClick= {() => toClassDetail(classList.class_id)}>{classList.name}</h2>
                   <section className="classDetail"> status: Active {classList.archived}</section>
                   <section className="classDetail">code: {classList.code}</section>
                </Card>
