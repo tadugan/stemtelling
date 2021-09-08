@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
 });
 
 
-//gets students from a class list
+//gets list of students in a particular class
 router.get('/details/:id', rejectUnauthenticated, (req, res) => {
   const classId= req.params.id;
   const query= `SELECT "user".name AS username, "user".profile_picture_url, "user_class".user_id
@@ -33,12 +33,12 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
   JOIN "user_class" ON "user".id = "user_class".user_id
   join "class" on "class".id = "user_class".class_id
   WHERE  "user".authority = 'student'
-  AND "user_class".class_id = $1;`;
+  AND "user_class".class_id = $1
+  ORDER BY username ASC;`;
 
   pool
     .query(query, [classId])
     .then((result) => {
-      // console.log('successful GETTING studentList', result.rows);
       res.send(result.rows);
     })
     .catch((err) => {
@@ -58,14 +58,13 @@ router.post('/', (req, res) => {
 
 // TODO: Setup class edit? PUT
 
-
+//Removes students from a class
 router.delete("/details/:id", rejectUnauthenticated, (req, res) => {
   console.log(`What student is being DELETED:`, req.params.id);
   const query = `DELETE FROM user_class WHERE "user_id" = $1;`;
   pool
     .query(query, [req.params.id])
     .then((result) => {
-      console.log(`Successfully DELETED STUDENT from class`, result);
       res.sendStatus(201);
     })
     .catch((error) => {

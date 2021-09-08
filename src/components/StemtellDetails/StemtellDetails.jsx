@@ -7,7 +7,7 @@ import BackBtn from "../BackBtn/BackBtn";
 import './STEMtellDetails.css';
 
 
-function StemtellDetails() {
+function STEMtellDetails() {
    const params = useParams();
    const history = useHistory();
    const stemtellId = params.id;
@@ -56,4 +56,4 @@ function StemtellDetails() {
 };
 
 
-export default StemtellDetails;
+export default STEMtellDetails;
