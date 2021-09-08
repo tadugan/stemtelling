@@ -1,10 +1,13 @@
 const tagReducer = (state = [], action) => {
-    switch (action.type) {
+   switch (action.type) {
       case 'SET_TAGS':
-        return action.payload;
+         return action.payload;
       default:
-        return state;
-    }
-  };
+         return state;
+   };
+};
 
-  export default tagReducer;
+
+// reducer for handling STEMtags
+// called on in "CreateSTEMtell" and "EditSTEMtell"
+export default tagReducer;

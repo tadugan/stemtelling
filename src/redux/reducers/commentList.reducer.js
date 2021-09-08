@@ -1,11 +1,13 @@
 const commentList = (state = [], action) => {
-    switch (action.type) {
+   switch (action.type) {
       case 'SET_COMMENTLIST':
-        return action.payload;
+         return action.payload;
       default:
-        return state;
-    }
-  };
-  
-  export default commentList;
-  
+         return state;
+   };
+};
+
+
+// reducer for handling comments
+// called on
+export default commentList;

@@ -1,11 +1,13 @@
 const stemtellComments = (state = [], action) => {
-    switch (action.type) {
+   switch (action.type) {
       case 'SET_STEMTELL_COMMENTS':
-        return action.payload;
+         return action.payload;
       default:
-        return state;
-    }
-  };
-  
-  export default stemtellComments;
-  
+         return state;
+   };
+};
+
+
+// reducer for handling the comments of a specific STEMtell
+// called on the "StemtellDetails" page
+export default stemtellComments;
