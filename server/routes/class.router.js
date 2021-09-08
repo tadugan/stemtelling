@@ -20,25 +20,23 @@ router.get('/', rejectUnauthenticated, (req, res) => {
    });
 });
 
-
-//gets list of students in a particular class
+// GET /api/class/details/:id
+// Gets list of students in a particular class
 router.get('/details/:id', rejectUnauthenticated, (req, res) => {
-  const classId= req.params.id;
-  const query= `SELECT "user".name AS username, "user".profile_picture_url, "user_class".user_id
-  FROM "user"
-  JOIN "user_class" ON "user".id = "user_class".user_id
-  join "class" on "class".id = "user_class".class_id
-  WHERE  "user".authority = 'student'
-  AND "user_class".class_id = $1
-  ORDER BY username ASC;`;
-
-  pool
-    .query(query, [classId])
-    .then((result) => {
-      res.send(result.rows);
-    })
-    .catch((err) => {
-      console.log('error GETTING studentList', err);
+   const classId= req.params.id;
+   const query= `SELECT "user".name AS username, "user".profile_picture_url, "user_class".user_id
+                 FROM "user"
+                 JOIN "user_class" ON "user".id = "user_class".user_id
+                 JOIN "class" on "class".id = "user_class".class_id
+                 WHERE  "user".authority = 'student'
+                 AND "user_class".class_id = $1
+                 ORDER BY username ASC;`;
+   pool.query(query, [classId])
+   .then(results => {
+      res.send(results.rows);
+   })
+   .catch(error => {
+      console.log('Error getting studentList', error);
       res.sendStatus(500);
    });
 });
@@ -53,14 +51,12 @@ router.post('/', (req, res) => {
 
 // TODO: Setup class edit? PUT
 
-
-//Removes students from a class
+// DELETE /api/class/details/:id
+// Removes students from a class
 router.delete("/details/:id", rejectUnauthenticated, (req, res) => {
-  console.log(`What student is being DELETED:`, req.params.id);
-  const query = `DELETE FROM user_class WHERE "user_id" = $1;`;
-  pool
-    .query(query, [req.params.id])
-    .then((result) => {
+   const query = `DELETE FROM user_class WHERE "user_id" = $1;`;  
+   pool.query(query, [req.params.id])
+   .then(() => {
       res.sendStatus(201);
    })
    .catch(error => {
