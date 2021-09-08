@@ -26,7 +26,9 @@ function TeacherReviewList() {
                 justifyContent="center"
                 alignItems="center"
             >
-                <GenericSTEMtellCard stemtell={stemtell}/>
+                <Grid item xs={12}>
+                    <GenericSTEMtellCard stemtell={stemtell}/>
+                </Grid>
             </Grid>
         </div>
     );
