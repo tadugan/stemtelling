@@ -1,71 +1,80 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import './Comment.css';
-import {
-  Container,
-  Card,
-  TextField,
-  Box,
-  Avatar,
-  Button,
-} from '@material-ui/core';
+import {Container, Card, TextField, Box, Avatar, Button} from '@material-ui/core';
+
 
 function Comment() {
-  const dispatch = useDispatch();
-  const comments = useSelector((store) => store.commentList);
+   const params = useParams();
+   const stemtellId = params.id;
+   const [leaveComment, setComment] = useState('');
+   const [feedback, setFeedback]= useState(false);
+   const dispatch = useDispatch();
+   const comments = useSelector((store) => store.stemtellComments);
 
-  useEffect(() => {
-    dispatch({ type: 'GET_COMMENTLIST' });
-  }, []);
+   useEffect(() =>{
+   dispatch({ type: 'GET_STEMTELL_COMMENTS', payload: stemtellId});
+   }, []);
 
-  return (
-    <Container className="GeneralCommentContainer">
-      <h4 className="CommentCardHeader">Comments</h4>
-      <Box id="GeneralCommentInput">
-        <TextField
-          fullWidth="true"
-          placeholder="Comment..."
-          multiline
-          rows={3}
-        />
-        <section className="BtnsforCommenting">
-          <Button className="CancelCommentBtn">Cancel</Button>
-          <Button className="CommentBtn"> Comment </Button>
-        </section>
-      </Box>
+   const handleSubmit = () =>{
+      dispatch({type:'ADD_COMMENT', payload: {
+         stemtell_id: stemtellId,
+         comment: leaveComment ,
+         teacher_feedback: feedback
+         }
+      });
+      setComment('');
+      setFeedback(false);
+   };
+ 
+   const handleComment = (event) => {
+      event.preventDefault();
+      setComment(event.target.value);
+   };
 
-      {/* mapping thru comments to show all individual comments */}
-      {comments.map((comment) => {
-        return (
-          <Card
-            className="GeneralCommentCard"
-            variant="outlined"
-            key={comment.id}
-          >
-            <section className="GeneralCommentSection">
-                {/* Consider using article rather than div */}
-              <div className="CommentProfilePicAndName">
-                <Avatar
-                  id="GeneralCommentAvatar"
-                  src={comment.profile_picture_url}
-                ></Avatar>
+   const unixTimestamp = (timestamp) => {
+      const dateObject = new Date((timestamp * 1000));
+         return (
+            dateObject.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
+         );
+   };
 
-                <span className="CommentUserName">
-                  <h5 id="commenterName"> {comment.username} </h5>
-                </span>
-                <span className="CommentDate">
-                  <p> {comment.date_published} </p>
-                </span>
-              </div>
-
-              <p className="CommentText">{comment.comment}</p>
+   return(
+      <Container className='GeneralCommentContainer'>
+         <h4 className='CommentCardHeader'> 
+            Comments 
+         </h4> 
+         <Box className='GeneralCommentInputBox'>
+            <form>
+               <TextField className='GeneralCommentInput' placeholder='Comment...' multiline rows={3} value={leaveComment}  onChange={handleComment}/>
+            </form>
+            <section className='BtnsforCommenting'>
+               <Button className='CancelCommentBtn' >Cancel</Button>
+               <Button className='CommentBtn' onClick={handleSubmit}> Comment </Button>
             </section>
-          </Card>
-        );
-      })}
-    </Container>
-  );
-}
+         </Box>
+         {comments.map((comment) => {
+            return (
+               <Card className="GeneralCommentCard" variant="outlined" key={comment.id}>
+                  <section className="GeneralCommentSection">
+                     <article className="CommentProfilePicAndName">
+                        <Avatar id="GeneralCommentAvatar" src={comment.profile_picture_url} />
+                        <span className="CommentUserName">
+                           <h5 id="commenterName"> {comment.username} </h5>
+                        </span>
+                        <span className="CommentDate">
+                           <p> {unixTimestamp(comment.unix)} </p>
+                        </span>
+                     </article>
+                     <p className="CommentText">{comment.comment}</p>
+                  </section>
+               </Card>
+            );
+         })}
+      </Container>
+   );
+};
+
 
 export default Comment;

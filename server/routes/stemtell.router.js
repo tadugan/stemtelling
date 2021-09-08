@@ -1,129 +1,179 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
-const {
-  rejectUnauthenticated,
-} = require('../modules/authentication-middleware');
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
+const { response } = require("express");
 
 
-
-router.get('/', (req, res) => {
-
-  // GET route code here
-  const query = `SELECT "user".name AS username, "user".id AS author_id, "stemtell".id AS stem_id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".date_published, "class".name AS class_name
-  FROM "stemtell"
-  JOIN "user" ON "stemtell".user_id = "user".id
-  JOIN "class" ON "stemtell".class_id = "class".id
-  WHERE "class".id = 2
-  ORDER BY "stemtell".date_published DESC;`;
-  pool
-    .query(query)
-    .then((result) => {
-      res.send(result.rows);
-    })
-    .catch((err) => {
-      console.log("Error getting all STEMtells", err);
+// GET /api/stemtell
+// Handles getting all STEMtells from database
+router.get('/', rejectUnauthenticated, (req, res) => {
+   const query = `SELECT "user".name AS username, "user".id AS author_id, "stemtell".id AS stem_id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".unix, "class".name AS class_name
+                  FROM "stemtell"
+                  JOIN "user" ON "stemtell".user_id = "user".id
+                  JOIN "class" ON "stemtell".class_id = "class".id
+                  ORDER BY "stemtell".unix DESC;`;
+   pool.query(query)
+   .then(results => {
+      res.send(results.rows);
+   })
+   .catch(error => {
+      console.log("Error getting all STEMtells:", error);
       res.sendStatus(500);
-    });
+   });
 });
 
+// GET /api/stemtell/homefeed
+// Handles getting all STEMtells for the users homepage
+router.get('/homefeed', rejectUnauthenticated, (req, res) => {
+   const query = `SELECT "user".name AS username, "user".id AS author_id, "stemtell".id AS stem_id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".unix, "class".name AS class_name
+                  FROM "stemtell"
+                  JOIN "user" ON "stemtell".user_id = "user".id
+                  JOIN "class" ON "stemtell".class_id = "class".id
+                  WHERE "stemtell".class_id IN (
+                  SELECT "class_id"
+                  FROM "user_class"
+                  WHERE "user_class".user_id = $1 )
+                  ORDER BY "stemtell".unix DESC;`;
+   pool.query(query, [req.user.id])
+   .then(results => {
+      res.send(results.rows);
+   })
+   .catch(error => {
+      console.log("Error getting user's class stemtells:", error);
+      res.sendStatus(500);
+   });
+});
 
-/**
- * POST a new STEMtell
- */
+//  GET api/stemtell/tags/:id
+//  Handles getting all tags for one STEMtell
+router.get('/tags/:id', rejectUnauthenticated, (req, res) => {
+   const stemtellId = Number(req.params.id);
+   const queryText = `SELECT "tag".id, "tag".name, "tag".stem_field, "tag".type
+                      FROM "stemtell_tag"
+                      JOIN "tag" ON "tag".id = "stemtell_tag".tag_id
+                      WHERE "stemtell_tag".stemtell_id = $1;`;
+   pool.query(queryText, [stemtellId])
+   .then(results => {
+      res.send(results.rows);
+   })
+   .catch(error => {
+      console.log("Error getting existing tags:", error);
+      res.sendStatus(500);
+   });
+});
+
+// POST /api/stemtell/
+// Handles posting a new STEMtell and its associated tags
 router.post('/', rejectUnauthenticated, (req, res) => {
-    const newStemtell = req.body;
-    const user = req.user;
-
-    const queryTextAddStemtell = `
-    INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "date_published")
-	  VALUES ($1, $2, $3, $4, $5, NOW())
-    RETURNING id;
-    `;
-
-    const queryTextAddTag = `
-    INSERT INTO stemtell_tag ("tag_id", "stemtell_id")
-	  VALUES ($1, $2);
-    `;
-
-
-    // TODO Modify to use TRANSACTIONS from node-postgres
-    // TODO Convert to async/await for clarity of code
-    pool.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, newStemtell.media_url])
-      .then(response => {
-        const stemTellId = response.rows[0].id;
-        for (let i=0; i<newStemtell.tag_ids.length; i++) {
-            pool.query(queryTextAddTag, [newStemtell.tag_ids[i], stemTellId])
-                .then(response => {
-                    if ( i === newStemtell.tag_ids.length) {
-                        res.sendStatus(201);
-                    }
-                })
-                .catch(error => {
-                  console.log('Error adding tags to database. Error', error);
-                  res.sendStatus(500);
-              });
-        }
-        res.sendStatus(201);
-      })
-      .catch(error => {
-        console.log('Error adding new stemtell to database. Error:', error);
-        res.sendStatus(500);
-      });
+   const newStemtell = req.body;
+   const user = req.user;
+   (async () => {
+      const client = await pool.connect();
+      try {
+         await client.query("BEGIN");
+         const queryTextAddStemtell = `INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "unix")
+                                       VALUES ($1, $2, $3, $4, $5, extract(epoch from now()))
+                                       RETURNING id`;
+         const response = await client.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, newStemtell.media_url]);
+         const stemtellId = response.rows[0].id;
+         const queryTextAddTag = `INSERT INTO stemtell_tag ("tag_id", "stemtell_id")
+                                  VALUES ($1, $2) `;
+         for (let id of newStemtell.tag_ids) {
+            await client.query(queryTextAddTag, [id, stemtellId]);
+         };
+         await client.query("COMMIT");
+      }
+      catch (error) {
+         await client.query("ROLLBACK");
+         throw error;
+      }
+      finally {
+         client.release();
+      }
+   })().catch(error => console.error(error.stack));
 });
 
+// PUT /api/stemtell/save
+// Handles updating information for a specific STEMtell that has been edited
+router.put('/save', rejectUnauthenticated, (req, res) => {
+   const newStemtell = req.body;
+   const user = req.user;
+   const stemtellId = req.body.id;
+   (async () => {
+      const client = await pool.connect();
+      try {
+         await client.query("BEGIN");
+         const queryTextAddStemtell = `UPDATE "stemtell" SET "class_id" = $1, "user_id" = $2, "title" = $3, "body_text" = $4, "media_url" = $5 WHERE "id" = $6`;
+         const response = await client.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, newStemtell.media_url, stemtellId,]);
+         const queryTextDeleteExistingTags = `DELETE FROM "stemtell_tag" WHERE stemtell_id = $1;`;
+         await client.query(queryTextDeleteExistingTags, [stemtellId]);
+         const queryTextAddTag = `INSERT INTO stemtell_tag ("tag_id", "stemtell_id")
+                                  VALUES ($1, $2)`;
+         for (let id of newStemtell.tag_ids) {
+            await client.query(queryTextAddTag, [id, stemtellId]);
+         };
+         await client.query("COMMIT");
+      }
+      catch (error) {
+         await client.query("ROLLBACK");
+         throw err;
+      }
+      finally {
+         client.release();
+      }
+   })().catch(error => console.error(error.stack));
+});
 
-
-router.get('/userstemtells', (req, res) => {
+// GET /api/stemtell/userstemtells
+// Handles getting all stemtells associated with a specific user ID
+router.get('/userstemtells', rejectUnauthenticated, (req, res) => {
    const profilePageID = req.query.profileID;
-   const query = `SELECT "user".name AS username, "user".id AS user_id, "class".name AS class_name, "stemtell".id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "reaction".name AS reaction_name, "tag".name AS tag_name
-   FROM "stemtell"
-   FULL OUTER JOIN "user" ON "stemtell".user_id = "user".id
-   FULL OUTER JOIN "user_class" ON "user".id = "user_class".user_id
-   FULL OUTER JOIN "class" ON "user_class".class_id = "class".id
-   FULL OUTER JOIN "stemtell_tag" ON "stemtell".id = "stemtell_tag".stemtell_id
-   FULL OUTER JOIN "tag" ON "stemtell_tag".tag_id = "tag".id
-   FULL OUTER JOIN "reaction_stemtell" ON "stemtell".id = "reaction_stemtell".stemtell_id
-   FULL OUTER JOIN "reaction" ON "reaction_stemtell".reaction_id = "reaction".id
-   WHERE "user".id = $1;`;
+   const qText = `SELECT * FROM "stemtell" WHERE "user_id" = $1`;
+   pool.query(qText, [profilePageID])
+   .then(results => {
+      res.send(results.rows);
+   })
+   .catch(error => {
+      console.log("Error getting user STEMtells:", error);
+      res.sendStatus(500);
+   });
+});
 
-   // TODO: Verify this works
-   // Each with creates a temp table of data that can be used as a variable or a part of the secondary
-   // query. Reference the alias that follows the WITH command. In this instance, we're creating a table
-   // of reactions, with a stem id
-   // | comments | stemtell_id |
-   // | ['Cool', 'Woot', 'Dope', 'You rock!'] | 1 |
-   const chadsQuery = `
-    WITH reactions as (
-      SELECT array_agg(reaction) as reactions, reactions.stemtell_id
-      FROM reactions
-      WHERE reactions.stemtell_id = $1
-      GROUP BY reactions.stemtell_id
-    ),
-    WITH comments as (
-      SELECT array_agg(comments) as comments, reactions.stemtell_id
-      FROM comments
-      WHERE comments.stemtell_id = $1
-      GROUP BY comments.stemtell_id
-    )
-    SELECT *
-    FROM stemtells
-    JOIN reactions ON stemtells.id = reaction.stemtell_id
-    JOIN comments OND stemtells.id = comments.stemtell_id
-    WHERE stemtell.id = $1
-   `
+// GET /api/stemtell/getstemtell
+// Handles getting a specific STEMtell from a specific user
+router.get('/getstemtell', rejectUnauthenticated, (req, res) => {
+   const stemtellID = req.query.stemtellID;
+   const user = req.user.id;
+   const query = `SELECT * FROM "stemtell" WHERE "id" = $1 AND "user_id" = $2`;
+   pool.query(query, [stemtellID, user])
+   .then(results => {
+      res.send(results.rows);
+   })
+   .catch(error => {
+      console.log("Error getting STEMtell to edit:", error);
+      res.sendStatus(500);
+   });
+});
 
-
-   pool
-     .query(query, [profilePageID])
-     .then((result) => {
-       res.send(result.rows);
-     })
-     .catch((err) => {
-       console.log("Error getting user STEMtells", err);
-       res.sendStatus(500);
-     });
- });
+// GET /api/stemtell/details/:id
+// Handles getting all details associated with a specific STEMtell
+router.get('/details/:id', rejectUnauthenticated, (req, res) => {
+   const stemtellId = req.params.id;
+   const query = `SELECT "user".name , "user".id as author_id, "stemtell".id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".unix, "class".name AS class_name
+                  FROM "stemtell"
+                  JOIN "user" ON "stemtell".user_id = "user".id
+                  JOIN "class" ON "stemtell".class_id = "class".id
+                  WHERE "stemtell".id = $1`;
+   pool.query(query, [stemtellId])
+   .then(results => {
+      res.send(results.rows);
+   })
+   .catch(error => {
+      console.log("Error getting all STEMdetails:", error);
+      res.sendStatus(500);
+   });
+});
 
 
 module.exports = router;

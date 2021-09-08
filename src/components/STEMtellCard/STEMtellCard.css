@@ -1,53 +1,57 @@
+.movethiscard {
+   margin-left: 1000px; 
+}
+
 .StemCard {
-  margin: 6px;
-  padding: 16px;
-  align-items: center;
-  justify-content: center;
-  flex-grow: 1px;
-  width: 300px;
-  height: 500px;
-  /* padding: theme.spacing(2); */
-  text-align: center;
-  color: grey;
+   margin: 20px;
+   padding: 16px;
+   align-items: center;
+   justify-content: center;
+   flex-grow: 1px;
+   width: 300px;
+   height: 410px;
+   text-align: center;
+   color: grey;
 }
 
 .UserName {
-  margin-top: 2px;
-  text-align: left;
-  margin-left: 50px;
-  /* float: left; */
-  display: flex;
-  flex-direction: row;
-  color: #727272;
+   margin-top: 2px;
+   text-align: left;
+   margin-left: 50px;
+   display: flex;
+   flex-direction: row;
+   color: #727272;
 }
 
 .Avatar {
-  /* // margin:'10px', */
-  text-align: left;
-  float: left;
-  display: flex;
-  flex-direction: row;
+   text-align: left;
+   float: left;
+   display: flex;
+   flex-direction: row;
 }
 
 #userClass {
-  font-size: smaller;
-  display: inline-flexbox;
+   font-size: smaller;
+   display: inline-flexbox;
 }
 
 #stemDescription {
-  padding: 8px;
-  color: #727272;
+   padding: 8px;
+   color: #727272;
 }
 
-#stemDate{
-  float: right;
+#stemDate {
+   float: right;
 }
 
-#stemTitle{
-  
-  display: inline-block;
-  text-align: center;
-  font-size: 18px;
-  padding: 4px;
-  width: 100%;
+#stemTitle {
+   display: inline-block;
+   text-align: center;
+   font-size: 18px;
+   padding: 4px;
+   width: 100%;
+}
+
+#stemtellImage {
+   height: 15em;
 }

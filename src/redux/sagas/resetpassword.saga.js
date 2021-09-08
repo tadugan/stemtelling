@@ -1,43 +1,53 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
-function* forgotPassword(action) { // handles sending an email when a user requests a password reset
+
+// function for clearing existing password reset requests and for sending an email to the user 
+// called after a user has entered their email on the "ForgotPassword" page and clicked on the "Submit" button
+function* forgotPassword(action) {
    const email = action.payload.email;
    try {
-      yield axios.delete('/api/resetpassword/removerequest', { params: { email } }); // deletes any previous requests from the user
-      yield axios.post('/api/resetpassword/sendresetemail', {email: email}); // sends email to the server for processing
+      yield axios.delete('/api/resetpassword/removerequest', { params: { email } });
+      yield axios.post('/api/resetpassword/sendresetemail', { email: email });
    }
    catch (error) {
-      console.log(error);
+      console.log('Error with forgotPassword in resetpassword.saga.js:', error);
    };
 };
 
-function* getUUID(action) { // called on ResetPasswordPage load, checks if the UUID in the link URL has a valid match in the database
+// function for getting the UUID associated with a password reset link
+// called on page load for "ResetPasswordPage"
+function* getUUID(action) {
    const uuid = action.payload.uuid;
    try {
-      const response = yield axios.get('/api/resetpassword/getuuid', { params: { uuid } }); // sends the UUID to resetpassword.router.js for validation
-      if (response.data == 'invalid' || response.data.length == 0) { // if the server responds with 'invalid', or with an empty array, an error occurs on the DOM
+      const response = yield axios.get('/api/resetpassword/getuuid', { params: { uuid } });
+      if (response.data == 'invalid' || response.data.length == 0) {
          yield put ({type: 'INVALID_LINK'});
       };
    }
    catch (error) {
-      console.log(error);
+      console.log('Error with getUUID in resetpassword.saga.js:', error);
    };
 };
 
-function* changePassword(action) { // handles changing the user password
+// function for handling the change of a user password
+// called after a user has clicked the "Save Password" button on the "ResetPassword" page
+function* changePassword(action) {
    try {
       yield axios.post('/api/resetpassword/changepassword', action.payload);
    }
    catch (error) {
-      console.log('Error with changing password:', error);
+      console.log('Error with changePassword in resetpassword.saga.js:', error);
    };
- };
+};
 
+
+// main export for this file
 function* resetPasswordSaga() {
    yield takeLatest('FORGOT_PASSWORD', forgotPassword);
    yield takeLatest('CHANGE_PASSWORD', changePassword);
    yield takeLatest('GET_UUID', getUUID);
- };
+};
+
  
- export default resetPasswordSaga;
+export default resetPasswordSaga;

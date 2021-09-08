@@ -1,178 +1,62 @@
 import React, { useEffect } from 'react';
-import {
-  HashRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-  Link,
-} from 'react-router-dom';
-
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
-
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-
-import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import CreateProfile from '../CreateProfile/CreateProfile';
 import ProfilePage from '../ProfilePage/ProfilePage';
-import InfoPage from '../InfoPage/InfoPage';
-import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage';
-import StemtellCard from '../STEMtellCard/STEMtellCard';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
+import ClassCard from '../ClassCard/ClassCard';
+import STEMtellDetails from '../STEMtellDetails/STEMtellDetails';
+import Homepage from '../Homepage/Homepage';
+import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
+import TeacherReviewList from '../TeacherReviewList/TeacherReviewList';
+import ClassList from '../ClassList/ClassList';
+import ClassDetails from '../ClassDetails/ClassDetails';
 import './App.css';
 
-import Homepage from '../Homepage/Homepage';
-
-import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
-
-
-
 function App() {
-  const dispatch = useDispatch();
-  const user = useSelector(store => store.user);
+   const dispatch = useDispatch();
+   const user = useSelector(store => store.user);
    useEffect(() => {
       dispatch({ type: 'FETCH_USER' });
    }, [dispatch]);
 
+   return (
+      <Router>
+         <div>
+            <Nav />
+            <Switch>
+               <Redirect exact from="/" to="/homepage" />
+               <Redirect exact from="/close" to="/myprofile" />
+               <Route exact path="/forgotpassword" component={ForgotPasswordPage} />
+               <Route path ="/resetpassword/" component={ResetPasswordPage} />
+               <ProtectedRoute exact path="/profile/:id" component={ProfilePage} />
+               <ProtectedRoute exact path="/homepage" component={Homepage} />
+               <ProtectedRoute exact path="/myprofile" component={UserPage} />
+               <ProtectedRoute exact path="/create" component={CreateSTEMtell} />
+               <ProtectedRoute exact path="/create/:id" component={CreateProfile} />
+               <ProtectedRoute exact path="/classlist" component={ClassCard} />
+               <ProtectedRoute exact path="/teacher/review" component={TeacherReviewList} />
+               <ProtectedRoute exact path="/stemtell/:id" component={STEMtellDetails} />
+               <ProtectedRoute exact path="/classlist" component={ClassList} />
+               <ProtectedRoute exact path="/classlist/details/:id" component={ClassDetails} />
+               <Route exact path="/login">{user.id ? <Redirect to="/myprofile" /> : <LoginPage />}</Route>
+               <Route exact path="/registration">{user.id ? <Redirect to="/myprofile" /> : <RegisterPage />}</Route>
+               <Route exact path="/home">{user.id ? <Redirect to="/myprofile" /> : <Homepage />}</Route>
+               <Route><h1>404</h1></Route>
+            </Switch>
+            <Footer />
+         </div>
+      </Router>
+   );
+};
 
-  return (
-    <Router>
-      <div>
-        <Nav />
-        <Switch>
-          {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-          <Redirect exact from="/" to="/home" />
-
-          {/* Visiting localhost:3000/about will show the about page. */}
-          <Route
-            // shows AboutPage at all times (logged in or not)
-            exact
-            path="/about"
-          >
-            <AboutPage />
-            <StemtellCard />
-          </Route>
-          <Route
-            exact
-            path="/forgotpassword"
-          >
-            <ForgotPasswordPage />
-          </Route>
-          <Route
-            path ="/resetpassword/"
-          >
-             <ResetPasswordPage />
-          </Route>
-
-          {/* For protected routes, the view could show one of several things on the same route.
-            Visiting localhost:3000/user will show the UserPage if the user is logged in.
-            If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
-            Even though it seems like they are different pages, the user is always on localhost:3000/user */}
-
-          <ProtectedRoute
-            // logged in shows UserPage else shows LoginPage
-            exact
-            path="/create/:id"
-          >
-            <CreateProfile />
-          </ProtectedRoute>  
-
-          <ProtectedRoute
-            // logged in shows UserPage else shows LoginPage
-            exact
-            path="/profile/:id"
-          >
-            <ProfilePage />
-          </ProtectedRoute>
-
-          <ProtectedRoute
-            // logged in shows UserPage else shows LoginPage
-            exact
-            path="/homepage"
-          >
-            <Homepage />
-          </ProtectedRoute>
-
-          <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
-            exact
-            path="/info"
-          >
-            <InfoPage />
-          </ProtectedRoute>
-          <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
-            exact
-            path="/myprofile"
-          >
-            <UserPage />
-          </ProtectedRoute>
-
-          <ProtectedRoute
-            // logged in shows CreateSTEMtell else shows LoginPage
-            exact
-            path="/create"
-          >
-            <CreateSTEMtell />
-          </ProtectedRoute>
-
-          <Route
-            exact
-            path="/login"
-          >
-            {user.id ?
-              // If the user is already logged in, 
-              // redirect to the /user page
-              <Redirect to="/myprofile" />
-              :
-              // Otherwise, show the login page
-              <LoginPage />
-            }
-          </Route>
-
-          <Route
-            exact
-            path="/registration"
-          >
-            {user.id ?
-              // If the user is already logged in, 
-              // redirect them to the /user page
-              <Redirect to="/myprofile" />
-              :
-              // Otherwise, show the registration page
-              <RegisterPage />
-            }
-          </Route>
-
-          <Route
-            exact
-            path="/home"
-          >
-            {user.id ?
-              // If the user is already logged in, 
-              // redirect them to the /user page
-              <Redirect to="/myprofile" />
-              :
-              // Otherwise, show the Landing page
-              <LandingPage />
-            }
-          </Route>
-
-          {/* If none of the other routes matched, we will show a 404. */}
-          <Route>
-            <h1>404</h1>
-          </Route>
-        </Switch>
-        <Footer />
-      </div>
-    </Router>
-  );
-}
 
 export default App;

@@ -13,7 +13,7 @@ import "./TeacherFeedback.css";
 function TeacherFeedback() {
     const dispatch= useDispatch();
     const feedback = useSelector((store) => store.feedback);
-    console.log(feedback, "THIS IS TEACHER FEEDBACK****");
+   //  console.log(feedback, "THIS IS TEACHER FEEDBACK****");
 
 useEffect(() => {
     dispatch({ type: 'GET_FEEDBACK'});
@@ -89,7 +89,7 @@ useEffect(() => {
               <h5> {fb.username} </h5>
             </span>
             <span className="FeedbackDate">
-              {fb.date_published}
+              {fb.unix}
             </span>
           </div>
 
@@ -98,7 +98,7 @@ useEffect(() => {
       </Card>
     )})}
       </Container>
-   
+
   );
 }
 

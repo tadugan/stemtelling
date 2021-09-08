@@ -1,16 +1,23 @@
+import { takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
-import { put, takeLatest } from 'redux-saga/effects';
 
+
+// function to add a new STEMtell to the database
+// called when a user clicks the "submit" button on the "CreateSTEMtell" page
 function* submitNewStemtell(action) {
-    try {
-        yield axios.post('/api/stemtell', action.payload);
-    } catch (error) {
-        console.log('Error submitting new STEMtell', error);
-    }
-}
+   try {
+      yield axios.post('/api/stemtell', action.payload);
+   }
+   catch (error) {
+      console.log('Error with submitNewStemtell in createSTEMtell.saga.js:', error);
+   };
+};
 
+
+// main export for this file
 function* createStemtellSaga() {
-    yield takeLatest('SUBMIT_NEW_STEMTELL', submitNewStemtell);
-  }
+   yield takeLatest('SUBMIT_NEW_STEMTELL', submitNewStemtell);
+};
+
 
 export default createStemtellSaga;
