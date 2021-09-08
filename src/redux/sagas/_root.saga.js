@@ -15,6 +15,8 @@ import deleteStudentSaga from './deleteStudent.saga';
 // It bundles up all of the other sagas so our project can use them.
 // This is imported in index.js as rootSaga
 import resetPasswordSaga from './resetpassword.saga';
+import newClassSaga from './newClass.saga';
+import addTagsSaga from './newProfile.saga';
 
 // some sagas trigger other sagas, as an example
 // the registration triggers a login
@@ -33,5 +35,7 @@ export default function* rootSaga() {
     feedbackSaga(),
     studentListSaga(),
     deleteStudentSaga(),
+    newClassSaga(),
+    addTagsSaga(),
   ]);
 }

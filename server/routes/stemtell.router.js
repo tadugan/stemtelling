@@ -46,6 +46,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 	  VALUES ($1, $2);
     `;
 
+
     // TODO Modify to use TRANSACTIONS from node-postgres
     // TODO Convert to async/await for clarity of code
     pool.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, newStemtell.media_url])
@@ -70,6 +71,8 @@ router.post('/', rejectUnauthenticated, (req, res) => {
         res.sendStatus(500);
       });
 });
+
+
 
 router.get('/userstemtells', (req, res) => {
    const profilePageID = req.query.profileID;
