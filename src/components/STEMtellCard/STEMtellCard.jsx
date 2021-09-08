@@ -5,9 +5,29 @@ import { useHistory } from "react-router";
 import "./STEMtellCard.css";
 
 function StemtellCard() {
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const stemtells = useSelector((store) => store.stemtells);
+   const history = useHistory();
+   const dispatch = useDispatch();
+   const stemtells = useSelector((store) => store.stemtells);
+
+   useEffect(() => {
+      dispatch({ type: "FETCH_CLASSES"})
+      dispatch({ type: "FETCH_STEMTELLS"});
+   }, []);
+
+   const onUserProfile = (author_id) => {
+      history.push(`/profile/${author_id}`);
+   };
+
+   const toStemtellDetail = (stem_id) => {
+      history.push(`stemtell/${stem_id}`);
+   };
+
+   const unixTimestamp = (timestamp) => {
+      const dateObject = new Date((timestamp * 1000));
+      return (
+         dateObject.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
+      );
+   };
 
   useEffect(() => {
     dispatch({ type: "FETCH_USER_FEED" });
@@ -79,5 +99,7 @@ function StemtellCard() {
     </Grid>
   );
 }
+
+
 
 export default StemtellCard;

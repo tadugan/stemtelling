@@ -2,14 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import './Comment.css';
-import {
-  Container,
-  Card,
-  TextField,
-  Box,
-  Avatar,
-  Button,
-} from '@material-ui/core';
+import {Container, Card, TextField, Box, Avatar, Button} from '@material-ui/core';
 
 function Comment() {
     const params = useParams();
@@ -24,7 +17,7 @@ function Comment() {
     dispatch({ type: 'GET_STEMTELL_COMMENTS', payload: stemtellId});
     }, []);
 
-    const handleSubmit = (event) =>{
+    const handleSubmit = () =>{
         dispatch({type:'ADD_COMMENT', payload: {
           stemtell_id: stemtellId,
           comment: leaveComment ,
@@ -40,15 +33,23 @@ function Comment() {
         setComment(event.target.value);
     }
 
+    const unixTimestamp = (timestamp) => {
+      const dateObject = new Date((timestamp * 1000));
+      return (
+         dateObject.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
+      );
+   };
+
+
     return(
       <Container className='GeneralCommentContainer'>
       <h4 className='CommentCardHeader'> 
           Comments 
       </h4> 
-      <Box id='GeneralCommentInput'>
+      <Box className='GeneralCommentInputBox'>
         <form>
-      <TextField
-      name= 'addComment' 
+       <TextField
+       className='GeneralCommentInput'
       placeholder='Comment...'
       multiline
       rows={3}
@@ -81,7 +82,7 @@ function Comment() {
                   <h5 id="commenterName"> {comment.username} </h5>
                 </span>
                 <span className="CommentDate">
-                  <p> {comment.unix} </p>
+                  <p> {unixTimestamp(comment.unix)} </p>
                 </span>
               </article>
 

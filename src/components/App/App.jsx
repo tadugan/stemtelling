@@ -28,9 +28,9 @@ import ClassCard from '../ClassCard/ClassCard';
 import StemtellDetails from '../StemtellDetails/Stemtelldetails';
 import './App.css';
 import Homepage from '../Homepage/Homepage';
-
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
-
+import ClassList from '../ClassList/ClassList';
+import ClassDetails from '../ClassDetails/ClassDetails';
 
 function App() {
   const dispatch = useDispatch();
@@ -129,6 +129,23 @@ function App() {
           >
             <StemtellDetails />
 
+          </ProtectedRoute>
+
+            
+          <ProtectedRoute
+            // logged in shows Class List page
+            exact
+            path="/classlist"
+          >
+            <ClassList />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows Class List page
+            exact
+            path="/classlist/details/:id"
+          >
+            <ClassDetails />
           </ProtectedRoute>
 
           <Route
