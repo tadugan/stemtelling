@@ -93,7 +93,7 @@ function Nav() {
               <MenuItem onClick={() => handleHistoryPush('create')}>
                   Create STEMtell
               </MenuItem>
-              <MenuItem onClick={() => handleHistoryPush('review')}>
+              <MenuItem onClick={() => handleHistoryPush('teacher/review')}>
                   Review STEMtells
               </MenuItem>
               <MenuItem onClick={() => handleHistoryPush('classlist')}>

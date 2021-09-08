@@ -9,6 +9,11 @@ const {
  * GET all STEMtells that have not been approved, filtered to only show stemtells for the user/teacher's classes
  */
 router.get('/', rejectUnauthenticated, (req, res) => {
+
+    if (req.user.authority !== 'teacher') {
+        return;
+    }
+
     const teacherId = req.user.id;
     
     const queryText = `
