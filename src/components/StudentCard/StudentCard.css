@@ -1,36 +1,32 @@
-.StudentCardContainer{
-    display: flex;   
+.StudentCardContainer {
+   display: flex;
 }
 
-.StudentDetailsCard{
-    display: block;
-    margin: 5px;
-    
+.StudentDetailsCard {
+   display: block;
+   margin: 5px;
 }
 
-.StudentCardDeleteBtn{
-    float: right;
-
+.StudentCardDeleteBtn {
+   float: right;
 }
 
-.StudentProfilePicAndName{
+.StudentProfilePicAndName {
  float: left;
  display: inline-flex;
  margin: 5px;
 }
 
-
-#StudentDetailsName{
-     color: #727272;
-    margin: 10px 5px 0px;
+#StudentDetailsName {
+   color: #727272;
+   margin: 10px 5px 0px;
 }
 
-#StudentListHeader{
-    color: #727272;
+#StudentListHeader {
+   color: #727272;
 }
 
-#StudentDeleteBtnContainer{
-    margin: 10px 0px 0px;
-    margin-right: 5px;
+#StudentDeleteBtnContainer {
+   margin: 10px 0px 0px;
+   margin-right: 5px;
 }
-

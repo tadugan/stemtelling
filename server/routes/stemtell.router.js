@@ -7,7 +7,7 @@ const { response } = require("express");
 
 // GET /api/stemtell
 // Handles getting all STEMtells from database
-router.get('/', (req, res) => {
+router.get('/', rejectUnauthenticated, (req, res) => {
    const query = `SELECT "user".name AS username, "user".id AS author_id, "stemtell".id AS stem_id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".unix, "class".name AS class_name
                   FROM "stemtell"
                   JOIN "user" ON "stemtell".user_id = "user".id
@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
 
 // GET /api/stemtell/homefeed
 // Handles getting all STEMtells for the users homepage
-router.get('/homefeed', (req, res) => {
+router.get('/homefeed', rejectUnauthenticated, (req, res) => {
    const query = `SELECT "user".name AS username, "user".id AS author_id, "stemtell".id AS stem_id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".unix, "class".name AS class_name
                   FROM "stemtell"
                   JOIN "user" ON "stemtell".user_id = "user".id
@@ -127,7 +127,7 @@ router.put('/save', rejectUnauthenticated, (req, res) => {
 
 // GET /api/stemtell/userstemtells
 // Handles getting all stemtells associated with a specific user ID
-router.get('/userstemtells', (req, res) => {
+router.get('/userstemtells', rejectUnauthenticated, (req, res) => {
    const profilePageID = req.query.profileID;
    const qText = `SELECT * FROM "stemtell" WHERE "user_id" = $1`;
    pool.query(qText, [profilePageID])
@@ -142,7 +142,7 @@ router.get('/userstemtells', (req, res) => {
 
 // GET /api/stemtell/getstemtell
 // Handles getting a specific STEMtell from a specific user
-router.get('/getstemtell', (req, res) => {
+router.get('/getstemtell', rejectUnauthenticated, (req, res) => {
    const stemtellID = req.query.stemtellID;
    const user = req.user.id;
    const query = `SELECT * FROM "stemtell" WHERE "id" = $1 AND "user_id" = $2`;
@@ -158,7 +158,7 @@ router.get('/getstemtell', (req, res) => {
 
 // GET /api/stemtell/details/:id
 // Handles getting all details associated with a specific STEMtell
-router.get('/details/:id', (req, res) => {
+router.get('/details/:id', rejectUnauthenticated, (req, res) => {
    const stemtellId = req.params.id;
    const query = `SELECT "user".name , "user".id as author_id, "stemtell".id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".unix, "class".name AS class_name
                   FROM "stemtell"
