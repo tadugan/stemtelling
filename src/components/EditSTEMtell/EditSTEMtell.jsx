@@ -7,130 +7,111 @@ import "./EditSTEMtell.css";
 import { useHistory } from 'react-router';
 
 function EditSTEMtell(stemtell) {
-    const user = useSelector((store) => store.user);
-    const dispatch = useDispatch();
-    const history = useHistory();
-    const [ classId, setClassId ] = useState(0);
-    const [ title, setTitle ] = useState('');
-    const [ imageUrl, setImageUrl] = useState('');
-    const [ description, setDescription ] = useState('');
-    const [ alertMessage, setAlertMessage ] = useState('');
+   const user = useSelector((store) => store.user);
+   const dispatch = useDispatch();
+   const history = useHistory();
+   const [ classId, setClassId ] = useState(0);
+   const [ title, setTitle ] = useState('');
+   const [ imageUrl, setImageUrl] = useState('');
+   const [ description, setDescription ] = useState('');
+   const [ alertMessage, setAlertMessage ] = useState('');
+   const selectedTags = useSelector(store => store.selectedTags);
+   const classList = useSelector(store => store.classes);
+   const handleCancel = () => {history.push('/myprofile')};
+   const getClassList = () => {dispatch({ type: 'FETCH_CLASSES'})};
+   const getExistingTags = (stemtellId) => {dispatch({ type: 'GET_EXISTING_TAGS', payload: stemtellId })};
 
-    const selectedTags = useSelector(store => store.selectedTags);
-    const classList = useSelector(store => store.classes);
-
-    const handleSave = () => {
-        event.preventDefault();
-
-        // validate class input
-        if (invalidInputs()) {
-            return;
-        }
-
-        // array to store tag ids
-        const tagIds = [];
-
-        // add ids to tagIds array
-        for (const tag of selectedTags) {
-            tagIds.push(tag.id);
-        }
-
-        // Dispatch captured inputs to SAGA
-        dispatch({ type: 'SAVE_EDITED_STEMTELL', payload: {
+   const handleSave = () => {
+      const tagIds = [];
+      event.preventDefault();
+      if (invalidInputs()) {
+         return;
+      };
+      for (const tag of selectedTags) {
+         tagIds.push(tag.id);
+      };
+      dispatch({
+         type: 'SAVE_EDITED_STEMTELL', 
+         payload: {
             id: stemtell.stemtell.id,
             title: title,
             body_text: description,
             media_url: imageUrl,
             class_id: classId,
             tag_ids: tagIds
-            }
-        });
-
-        // Clear Input Fields
-        setClassId(0);
-        setTitle('');
-        setImageUrl('');
-        setDescription('');
-        dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
-        dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
-        history.push('/myprofile');
-    }
-
-    const handleCancel = () => {
+         }
+      });
+      setClassId(0);
+      setTitle('');
+      setImageUrl('');
+      setDescription('');
+      dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
+      dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
       history.push('/myprofile');
-    }
+   };
 
-    const getClassList = () => {
-        dispatch({ type: 'FETCH_CLASSES'});
-    }
+   const invalidInputs = () => {
+      if (classId === 0) {
+         setAlertMessage('class');
+         return true;
+      } 
+      else if (title === '') {
+         setAlertMessage('title');
+         return true;
+      }
+      else if (description === '') {
+         setAlertMessage('description');
+         return true;
+      }
+      else if (selectedTags.length === 0) {
+         setAlertMessage('tag');
+         return true;
+      }
+      else {
+         setAlertMessage('');
+         return false;
+      };
+   };
 
-    const getExistingTags = (stemtellId) => {
-        dispatch({ type: 'GET_EXISTING_TAGS', payload: stemtellId });
-    }
-
-    const invalidInputs = () => {
-        if (classId === 0) {
-            setAlertMessage('class');
-            return true;
-        } 
-        else if (title === '') {
-            setAlertMessage('title');
-            return true;
-        }
-        else if (description === '') {
-            setAlertMessage('description');
-            return true;
-        }
-        else if (selectedTags.length === 0) {
-            setAlertMessage('tag');
-            return true;
-        }
-        else {
-            setAlertMessage('');
-            return false;
-        }
-    }
-
-    const conditionalInputAlert = (alertType) => {
-        switch (alertType) {
-            case 'class':
-                return (
-                    <Grid item xs={12}>
-                        <h4 className="edit-stemtell-input-alert" >*Please Select a Class to your STEMtell</h4>
-                    </Grid>
-                );
-            case 'title':
-                return (
-                    <Grid item xs={12}>
-                        <h4 className="edit-stemtell-input-alert" >*Please Add a Title to your STEMtell</h4>
-                    </Grid>
-                );
-            case 'description':
+   const conditionalInputAlert = (alertType) => {
+      switch (alertType) {
+         case 'class':
+            return (
+               <Grid item xs={12}>
+                  <h4 className="edit-stemtell-input-alert" >*Please Select a Class to your STEMtell</h4>
+               </Grid>
+            );
+         case 'title':
+            return (
+               <Grid item xs={12}>
+                  <h4 className="edit-stemtell-input-alert" >*Please Add a Title to your STEMtell</h4>
+               </Grid>
+            );
+         case 'description':
             return (
                 <Grid item xs={12}>
                     <h4 className="edit-stemtell-input-alert" >*Please add text to your STEMtell</h4>
                 </Grid>
             );
-            case 'tag':
-                return (
-                    <Grid item xs={12}>
-                        <h4 className="edit-stemtell-input-alert" >*Please some tags to your STEMtell</h4>
-                    </Grid>
-                );
-            default:
-                return;
-        }
-    }
+         case 'tag':
+            return (
+               <Grid item xs={12}>
+                  <h4 className="edit-stemtell-input-alert" >*Please some tags to your STEMtell</h4>
+               </Grid>
+            );
+         default:
+            return;
+        };
+    };
 
-    useEffect(() => {
-        getClassList();
-        setDescription(stemtell.stemtell.body_text);
-        setTitle(stemtell.stemtell.title);
-        setImageUrl(stemtell.stemtell.media_url);
-        setClassId(stemtell.stemtell.class_id);
-        getExistingTags(stemtell.stemtell.id);
-        // dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
-    }, []);
+   useEffect(() => {
+      getClassList();
+      setDescription(stemtell.stemtell.body_text);
+      setTitle(stemtell.stemtell.title);
+      setImageUrl(stemtell.stemtell.media_url);
+      setClassId(stemtell.stemtell.class_id);
+      getExistingTags(stemtell.stemtell.id);
+   }, []);
 
   return (
     <div className="edit-stemtell-body">
@@ -275,5 +256,6 @@ function EditSTEMtell(stemtell) {
     </div>
   );
 };
+
 
 export default EditSTEMtell;
