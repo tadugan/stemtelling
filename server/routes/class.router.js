@@ -6,7 +6,7 @@ const rejectUnauthenticated = require('../modules/authentication-middleware').re
 
 // GET api/class/
 // Returns an array of class object: { class object model }
-router.get('/', (req, res) => {
+router.get('/', rejectUnauthenticated, (req, res) => {
    const query = `SELECT * FROM "class"
                   JOIN "user_class" ON "user_class".class_id = "class".id
                   WHERE "user_class".user_id = $1`

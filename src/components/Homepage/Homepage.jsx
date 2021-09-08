@@ -4,7 +4,6 @@ import './Homepage.css'
 
 
 function Homepage(){
-
    return (
       <Grid container direction="row" justifyContent="center" alignItems="flex-start">
          <h1 id="HomepageTitle">My STEMtell Feed </h1>

@@ -1,31 +1,31 @@
 .edit-stemtell-body {
-    width: 90%;
-    max-width: 400px;
-    height: 600px;
-    background-color: white;
+   width: 90%;
+   max-width: 400px;
+   height: 600px;
+   background-color: white;
 }
 
-.edit-stemtell-class{
+.edit-stemtell-class {
    width: 200px;
 }
 
-.edit-stemtell-title{
+.edit-stemtell-title {
    width: 90%;
 }
 
-.edit-stemtell-image-url{
+.edit-stemtell-image-url {
    width: 90%;
 }
 
-.edit-stemtell-description{
+.edit-stemtell-description {
    width: 90%;
 }
 
 .edit-stemtell-input-alert {
-    color: red;
-    text-align: center;
+   color: red;
+   text-align: center;
 }
 
-.MuiTextField-root{
+.MuiTextField-root {
    width: 100%;
 }

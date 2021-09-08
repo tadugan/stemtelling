@@ -98,7 +98,7 @@ useEffect(() => {
       </Card>
     )})}
       </Container>
-   
+
   );
 }
 

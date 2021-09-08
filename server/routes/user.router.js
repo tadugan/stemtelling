@@ -15,7 +15,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
 // GET /api/user/all
 // Handles GET request for getting all user IDs
-router.get('/all', (req, res) => {
+router.get('/all', rejectUnauthenticated, (req, res) => {
    const qText = `SELECT "id" FROM "user"`;
    pool.query(qText)
    .then(results => {
@@ -29,7 +29,7 @@ router.get('/all', (req, res) => {
 
 // GET /api/user/profile
 // Handles GET request for getting the current profile page via user ID
-router.get('/profile', (req, res) => {
+router.get('/profile', rejectUnauthenticated, (req, res) => {
    const profileID = req.query.profileID;
    const qText = `SELECT * FROM "user" WHERE "id" = $1`;
    pool.query(qText, [profileID])
