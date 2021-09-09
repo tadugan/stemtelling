@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import "./STEMtellCard.css";
 
-const useStyles = makeStyles(() => ({
+const useCardStyles = makeStyles(() => ({
    root: {
   
       alignItems: "center",
@@ -49,7 +49,7 @@ const useStyles = makeStyles(() => ({
  }));
 
 function StemtellCard() {
-   const cardStyles = useStyles();
+   const cardStyles = useCardStyles();
    const history = useHistory();
    const dispatch = useDispatch();
    const stemtells = useSelector((store) => store.stemtells);
@@ -79,16 +79,14 @@ function StemtellCard() {
             return (
                <Grid item key={stemtell.stem_id}aria-labelledby="homepage stemtell item">
                   <Card className={cardStyles.root}>
-                     <div className={cardStyles.cardheader}>
                         <h6 className={cardStyles.stemdate}>{unixTimestamp(stemtell.unix)}</h6>
-                        <Avatar className={cardStyles.avatar} src={stemtell.profile_picture_url} />
+                        <Avatar className={cardStyles.avatar} src={stemtell.profile_picture_url} onClick={() => onUserProfile(stemtell.author_id)}/>
                         <section className={cardStyles.username} onClick={() => onUserProfile(stemtell.author_id)}>
                            {stemtell.username}
                         </section>
                         <div className={cardStyles.username} id="userClass">
                            {stemtell.class_name}
                         </div>
-                     </div>
                      <h3 className={cardStyles.stemtitle} onClick={() => toStemtellDetail(stemtell.stem_id)}>
                         {" "}{stemtell.title}
                      </h3>
