@@ -29,6 +29,8 @@ const useCardStyles = makeStyles(() => ({
    },
    username: {
       paddingTop: "5px",
+      fontSize: '18px',
+      fontWeight: 'bold',
       textAlign: "left",
       marginLeft: "60px",
       display: "flex",
@@ -37,13 +39,15 @@ const useCardStyles = makeStyles(() => ({
    },
    stemdate: {
       float: "right",
-      fontSize: '14px',
+      fontSize: '12px',
+      paddingTop: "7px",
       paddingRight: "5px",
    },
    stemtitle: {
+      width: "200px",
       display: "flex",
       alignItems: "center",
-      marginLeft: "40%",
+      paddingLeft: "16.5%",
       justifyContent: "center",
    },
  }));
@@ -77,8 +81,8 @@ function StemtellCard() {
       <>
          {stemtells.map((stemtell) => {
             return (
-               <Grid item key={stemtell.stem_id}aria-labelledby="homepage stemtell item">
-                  <Card className={cardStyles.root}>
+               <Grid item key={stemtell.stem_id}>
+                  <Card className={cardStyles.root} >
                         <h6 className={cardStyles.stemdate}>{unixTimestamp(stemtell.unix)}</h6>
                         <Avatar className={cardStyles.avatar} src={stemtell.profile_picture_url} onClick={() => onUserProfile(stemtell.author_id)}/>
                         <section className={cardStyles.username} onClick={() => onUserProfile(stemtell.author_id)}>
@@ -90,7 +94,6 @@ function StemtellCard() {
                      <h3 className={cardStyles.stemtitle} onClick={() => toStemtellDetail(stemtell.stem_id)}>
                         {" "}{stemtell.title}
                      </h3>
-                     
                      <img id="stemtellImage" src={stemtell.media_url} onClick={() => toStemtellDetail(stemtell.stem_id)} />
                      <section id="cardReactions">
                         {stemtell.reaction_name}
