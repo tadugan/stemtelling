@@ -22,6 +22,7 @@ import TeacherFeedback from '../TeacherFeedback/TeacherFeedback';
 import './App.css';
 
 
+
 function App() {
    const dispatch = useDispatch();
    const user = useSelector(store => store.user);
@@ -53,7 +54,6 @@ function App() {
                <Route exact path="/home">{user.id ? <Redirect to="/myprofile" /> : <Homepage />}</Route>
                <Route><h1>404</h1></Route>
             </Switch>
-            <Footer />
          </div>
       </Router>
    );

@@ -82,9 +82,6 @@ function Nav() {
                <MenuItem onClick={() => handleHistoryPush('registration')}>
                   Register
                </MenuItem>
-               <MenuItem onClick={() => handleHistoryPush('about')}>
-                  About STEMtelling
-               </MenuItem>
             </Menu>
          );
       };
