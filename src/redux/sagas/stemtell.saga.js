@@ -52,6 +52,17 @@ function* fetchAllStemTells() {
    };
 };
 
+// function for deleting a specific STEMtell
+// called on "UserPage"
+function* deleteStemtell(action) {
+   try {
+      const response = yield axios.delete(`/api/stemtell/delete/${action.payload.id}`)
+   }
+   catch (error) {
+      console.log("Error with deleteStemtell in stemtell.saga.js:", error);
+   };
+};
+
 
 // main export for this file
 function* stemtellSaga() {
@@ -59,6 +70,7 @@ function* stemtellSaga() {
    yield takeEvery("FETCH_USER_STEMTELLS", fetchUserStemTells);
    yield takeEvery("GET_STEMTELL", getStemtell);
    yield takeEvery("FETCH_STEMTELL_DETAILS", getStemDetails);
+   yield takeEvery("DELETE_STEMTELL", deleteStemtell);
 };
 
 
