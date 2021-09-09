@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./ClassCard.css";
 import { useHistory } from "react-router-dom";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import EditIcon from "@material-ui/icons/Edit";
 
 function ClassCard() {
   const dispatch = useDispatch();
@@ -24,20 +24,27 @@ function ClassCard() {
   const toClassDetail = (class_id) => {
     history.push(`classlist/details/${class_id}`);
   };
-
+   const [classTitle, setClassTitle] = useState("");
+   const [editClassID, setEditClassID] = useState("");
+   const [anchorEl, setAnchorEl] = useState(null);
+   const [open, setOpen] = useState(false);
+   
   //Start of handling menu and dialog views
-  const handleClick = (event) => {
+  const handleClick = (classList) => {
     setAnchorEl(event.currentTarget);
+    setClassTitle(classList.name);
+    setEditClassID(classList.class_id);
+    handleEditOpen();
+    
   };
   const handleClose = () => {
     setAnchorEl(null);
+    handleEditClose();
   };
 
-  const handleEditOpen = (classList) => {
-    console.log("this is the card id:", classList.id);
+  const handleEditOpen = () => {
     setOpen(true);
-    setClassTitle(classList.name);
-    setEditClassID(classList.id);
+    
   };
 
   const handleEditClose = () => {
@@ -45,17 +52,14 @@ function ClassCard() {
     setClassTitle("");
     setEditClassID("");
   };
-  //End
+//   End
 
-  const [classTitle, setClassTitle] = useState("");
-  const [editClassID, setEditClassID] = useState("");
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [open, setOpen] = useState(false);
+ 
 
-  // const handleEdit= (classTitle) => {
-  //    setClassTitle(classTitle.name);
-  //    setEditClassID(editClassID.id);
-  // }
+  const handleEdit= (classTitle) => {
+     setClassTitle(classTitle.name);
+     setEditClassID(editClassID.id);
+  }
 
   const handleSave = () => {
     event.preventDefault();
@@ -68,6 +72,7 @@ function ClassCard() {
     });
     setClassTitle("");
     setEditClassID("");
+    handleClose();
   };
 
   useEffect(() => {
@@ -80,8 +85,8 @@ function ClassCard() {
         if (classList.archived === false) {
           return (
             <Card className="classCard" key={classList.id}>
-              <MoreVertIcon id="editClassCard" onClick={handleClick} />
-              <Menu
+              <EditIcon id="editClassCard" onClick={() => handleClick(classList)} />
+              {/* <Menu
                 id="editClass-menu"
                 anchorEl={anchorEl}
                 keepMounted
@@ -89,7 +94,7 @@ function ClassCard() {
                 onClose={handleClose}>
                 <MenuItem onClick={() => handleEditOpen(classList)}>
                   Edit
-                </MenuItem>
+                </MenuItem> */}
                 <Dialog
                   open={open}
                   onClose={handleEditClose}
@@ -120,8 +125,8 @@ function ClassCard() {
                     </Button>
                   </DialogActions>
                 </Dialog>
-                <MenuItem onClick={handleClose}> Archive</MenuItem>
-              </Menu>
+                {/* <MenuItem onClick={handleClose}> Archive</MenuItem>
+              </Menu> */}
               <h2 id="classCardTitle" onClick={() => toClassDetail(classList.class_id)}>
                 {classList.name}
               </h2>
