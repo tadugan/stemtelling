@@ -4,12 +4,59 @@ import { useSelector, useDispatch } from "react-redux";
 import { Card, Avatar, Grid } from "@material-ui/core";
 import Comment from "../Comment/Comment";
 import BackBtn from "../BackBtn/BackBtn";
+import { makeStyles } from '@material-ui/core/styles';
 import './STEMtellDetails.css';
 import Reactions from "../Reactions/Reactions";
 import AddReaction from "../AddReactions/AddReactions";
+const useCardStyles = makeStyles(() => ({
+   root: {
+      alignItems: "center",
+      border: "2px solid #1E1F20",
+      borderRadius: "15px",
+      justifyContent: "center",
+      flexGrow: "1px",
+      width: "50%",
+      minWidth: "350px",
+      height: "100%",
+      textAlign: "center",
+      color: "grey",
+   },
+   avatar: {
+      textAlign: "left",
+      borderStyle: "solid",
+      float: "left",
+      display: "flex",
+      flexDirection: "row",
+      height: "50px",
+      width: "50px",
+   },
+   username: {
+      paddingTop: "5px",
+      fontSize: '18px',
+      fontWeight: 'bold',
+      textAlign: "left",
+      marginLeft: "60px",
+      display: "flex",
+      flexDirection: "row",
+      color: "#727272",
+   },
+   stemdate: {
+      float: "right",
+      fontSize: '12px',
+      paddingTop: "7px",
+      paddingRight: "5px",
+   },
+   stemtitle: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      textAlign:"center"
+   },
+ }));
 
 
 function STEMtellDetails() {
+   const cardStyles = useCardStyles();
    const params = useParams();
    const history = useHistory();
    const stemtellId = params.id;
@@ -36,17 +83,18 @@ function STEMtellDetails() {
          <BackBtn />
             <center>
                <Grid item key={stemtell.id}>
-                  <Card className="StemDetailsCard">
-                     <h6 id="stemDate">{unixTimestamp(stemtell.unix)}</h6>
-                     <Avatar className="Avatar" src={stemtell.profile_picture_url}/>
-                     <section className="UserName" onClick={() => onUserProfile(stemtell.author_id)}>
+                  <Card className={cardStyles.root}>
+                     <h6 className={cardStyles.stemdate}>{unixTimestamp(stemtell.unix)}</h6>
+                     <Avatar className={cardStyles.avatar} src={stemtell.profile_picture_url}/>
+                     <section className={cardStyles.username} onClick={() => onUserProfile(stemtell.author_id)}>
                         {stemtell.name}
                      </section>
-                     <div className="UserName" id="userClass">
+                     <div className={cardStyles.username} id="userClass">
                         {stemtell.class_name}
                      </div>
-                     <h3 id="stemTitle">{stemtell.title}</h3>
+                     <br /><br />
                      <img id="StemDetailsImage" src={stemtell.media_url} />
+                     <h3 className={cardStyles.stemtitle}>{stemtell.title}</h3>
                      <section id="cardReactions">{stemtell.reaction_name}</section>
                      <section id="StemDetailsDescription">{stemtell.body_text}</section>
                      <AddReaction stemtellId={stemtell.id}/>

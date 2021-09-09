@@ -9,7 +9,8 @@ const rejectUnauthenticated = require('../modules/authentication-middleware').re
 router.get('/', rejectUnauthenticated, (req, res) => {
    const query = `SELECT * FROM "class"
                   JOIN "user_class" ON "user_class".class_id = "class".id
-                  WHERE "user_class".user_id = $1`
+                  WHERE "user_class".user_id = $1
+                  ORDER BY "archived", "name" ASC;`
    pool.query(query, [req.user.id])
    .then(results => {
       res.send(results.rows);
@@ -24,7 +25,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // Gets list of students in a particular class
 router.get('/details/:id', rejectUnauthenticated, (req, res) => {
    const classId= req.params.id;
-   const query= `SELECT "user".name AS username, "user".profile_picture_url, "user_class".user_id
+   const query= `SELECT "user".name AS username, "user".profile_picture_url
                  FROM "user"
                  JOIN "user_class" ON "user".id = "user_class".user_id
                  JOIN "class" on "class".id = "user_class".class_id
@@ -43,6 +44,7 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 
 
 // TODO: Setup class creation! 
+
 // POST route to INSERT STUDENT INTO EXISTING CLASS. May need another for teacher to create class.
 /**
  * POST route template
@@ -92,7 +94,27 @@ router.post('/class', (req, res) => {
   })().catch(e => console.error(e.stack))
 });
 
-// TODO: Setup class edit? PUT
+//PUT for updating class information such as title
+router.put("/update", rejectUnauthenticated, (req,res) => {
+   console.log(`What is being UPDATED:`, req.body.id);
+   const query = `UPDATE "class" 
+                  SET "name"= $1, "archived" = $2
+                  WHERE "id"= $3;`;
+   pool
+     .query(query, [
+       req.body.name,
+       req.body.archived,
+       req.body.id,
+     ])
+     .then((result) => {
+       console.log("successfully updated class:", result);
+       res.sendStatus(201);
+     })
+     .catch((error) => {
+       console.log("error updating class", error);
+       res.sendStatus(500);
+     });
+})
 
 // DELETE /api/class/details/:id
 // Removes students from a class

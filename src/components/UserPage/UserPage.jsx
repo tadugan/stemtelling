@@ -21,6 +21,18 @@ const useCardStyles = makeStyles(() => ({
       textAlign: "center",
       color: "grey",
    },
+   unapproved: {
+      paddingBottom: "15px",
+      alignItems: "center",
+      border: "5px solid #DD2E44",
+      borderRadius: "15px",
+      justifyContent: "center",
+      flexGrow: "1px",
+      width: "300px",
+      height: "410px",
+      textAlign: "center",
+      color: "grey",
+   },
    avatar: {
       textAlign: "left",
       borderStyle: "solid",
@@ -68,6 +80,23 @@ const StyledButton = styled(Button)`
    }
 `;
 
+const StyledRedButton = styled(Button)`
+   display: inline-block;
+   padding: 10px 20px;
+   border-color: #014041;
+   border-width: 1px 1px 3px;
+   border-radius: 4px;
+   background-color: #DD2E44;
+   color: #f8f8f8;   
+   font-size: 1.1rem;
+   outline: 0;
+   cursor: pointer;
+   &:hover {
+      background-color: rgba(221, 46, 68, 0.6);
+      text-decoration: none;
+   }
+`;
+
 const useStyles = makeStyles((theme) => ({
    root: {
       flexGrow: 1,
@@ -111,9 +140,18 @@ function UserPage() {
       setOpen(true); 
       setStemtellData(stemtell);
    };
+
+   const handleDelete = (stemtell) => {
+      dispatch({
+         type: "DELETE_STEMTELL",
+         payload: stemtell
+      });
+      dispatch({ type: "FETCH_MY_STEMTELLS", payload: user.id });
+      history.push('/close');
+   };
    
    useEffect(() => {
-      dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
+      dispatch({ type: "FETCH_MY_STEMTELLS", payload: user.id });
     }, []);
 
    return (
@@ -133,7 +171,7 @@ function UserPage() {
                      {stemtells.map((stemtell) => {
                         return (
                            <Grid item key={stemtell.id}>
-                              <Card className={cardStyles.root}>
+                              <Card className={(stemtell.approved === true) ? cardStyles.root : cardStyles.unapproved}>
                                  <section className={cardStyles.username}>{stemtell.username}</section>
                                  <div className={cardStyles.username} id="userClass">
                                     {stemtell.class_name}
@@ -142,10 +180,15 @@ function UserPage() {
                                  <img id="stemtellImage" src={stemtell.media_url}  onClick={() => toStemtellDetail(stemtell.id)} />
                                  <section id="cardReactions">{stemtell.reaction_name}</section>
                                  <section id="userStemtellDescription">{stemtell.body_text}</section>
+                                 <StyledRedButton onClick={() => {handleDelete(stemtell)}}>
+                                    Delete
+                                 </StyledRedButton> 
+                                 
                                  <StyledButton onClick={() => {handleOpen(stemtell)}}>
                                     Edit
                                  </StyledButton>
                               </Card>
+                              {(stemtell.approved === true) ? <></> : <h3><center>NEEDS REVISION</center></h3>}
                            </Grid>
                         )
                      })}

@@ -34,7 +34,8 @@ router.get('/homefeed', rejectUnauthenticated, (req, res) => {
                   WHERE "stemtell".class_id IN (
                   SELECT "class_id"
                   FROM "user_class"
-                  WHERE "user_class".user_id = $1 )
+                  WHERE "user_class".user_id = $1
+                  AND "stemtell".approved IS TRUE )
                   ORDER BY "stemtell".unix DESC;`;
    pool.query(query, [req.user.id])
    .then(results => {
@@ -141,6 +142,19 @@ router.put('/save', rejectUnauthenticated, (req, res) => {
 // Handles getting all stemtells associated with a specific user ID
 router.get('/userstemtells', rejectUnauthenticated, (req, res) => {
    const profilePageID = req.query.profileID;
+   const qText = `SELECT * FROM "stemtell" WHERE "user_id" = $1 AND "approved" IS TRUE`;
+   pool.query(qText, [profilePageID])
+   .then(results => {
+      res.send(results.rows);
+   })
+   .catch(error => {
+      console.log("Error getting user STEMtells:", error);
+      res.sendStatus(500);
+   });
+});
+
+router.get('/mystemtells', rejectUnauthenticated, (req, res) => {
+   const profilePageID = req.query.profileID;
    const qText = `SELECT * FROM "stemtell" WHERE "user_id" = $1`;
    pool.query(qText, [profilePageID])
    .then(results => {
@@ -188,7 +202,7 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 });
 
 // PUT /api/stemtell/status
-//update the status of a STEMtell with Teacher Feedback Form
+// Handles updating the status of a STEMtell with Teacher Feedback Form
 router.put('/status', rejectUnauthenticated, (req, res) => {
   const status = req.body;
   console.log(req.body, "in router put stemtell~*~*~*~*~");
@@ -204,6 +218,26 @@ router.put('/status', rejectUnauthenticated, (req, res) => {
     .catch((err) => {
       console.log("error updating STEMtell status", err);
     })
+});
+
+// DELETE /api/stemtell/delete/:id
+// Handles deleting a specific STEMtell
+router.delete('/delete/:id', rejectUnauthenticated, async (req, res) => {
+   const stemID = req.params.id;
+   const userID = req.user.id;
+   const tagQuery = `DELETE FROM "stemtell_tag" WHERE "stemtell_id" = $1`;
+   const reactionQuery = `DELETE FROM "reaction_stemtell" WHERE "stemtell_id" = $1`;
+   const stemtellQuery = `DELETE FROM "stemtell" WHERE "id" = $1 AND "user_id" = $2`;
+   await pool.query(tagQuery, [stemID]);
+   await pool.query(reactionQuery, [stemID]);
+   pool.query(stemtellQuery, [stemID, userID])
+   .then(() => {
+      res.sendStatus(200);
+   })
+   .catch(error => {
+      console.log("Error deleting STEMtell:", error);
+      res.sendStatus(500);
+   });
 });
 
 module.exports = router;

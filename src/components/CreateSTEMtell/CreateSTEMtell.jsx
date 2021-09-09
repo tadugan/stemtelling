@@ -44,6 +44,7 @@ const StyledRedButton = styled(Button)`
 `;
 
 
+
 function CreateSTEMtell() {
    const dispatch = useDispatch();
    const history = useHistory();
@@ -54,7 +55,8 @@ function CreateSTEMtell() {
    const selectedTags = useSelector(store => store.selectedTags);
    const classList = useSelector(store => store.classes);
    const imageData = useSelector(store => store.image);
-   const handleCancel = () => {history.goBack()};
+   const user = useSelector(store => store.user);
+   const handleCancel = () => {history.push('/close');};
    const getClassList = () => {dispatch({ type: 'FETCH_CLASSES'})};
 
    const handleSubmit = () => {
@@ -83,6 +85,8 @@ function CreateSTEMtell() {
       setTitle('');
       setDescription('');
       dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
+      dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
+      history.push('/close');
    };
 
 
@@ -176,9 +180,6 @@ function CreateSTEMtell() {
                   <TextField label="Title" variant="outlined" value={title} onChange={(event) => setTitle(event.target.value)} className="create-stemtell-title"/>
                </Grid>
                <Grid item>
-                  <ImageUploader />
-               </Grid>
-               <Grid item>
                   <TextField aria-label="STEMtell textarea" placeholder="Add text" minRows={3} maxRows={3} variant="outlined" multiline value={description} onChange={(event) => setDescription(event.target.value)} className="create-stemtell-description"/>
                </Grid>
                <Grid item container spacing={2} direction="row" justifyContent="center" alignItems="center">
@@ -189,6 +190,10 @@ function CreateSTEMtell() {
                         </Grid>
                      );
                   })}
+               </Grid>
+               <br />
+               <Grid item>
+                  <ImageUploader />
                </Grid>
                <Grid item>
                   <AddTagDialog />
