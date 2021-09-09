@@ -3,6 +3,17 @@
 import { takeEvery, put } from "redux-saga/effects";
 import axios from "axios";
 
+
+function* getAllReactions(){
+    try {
+        const response = yield axios.get(`/api/reaction`);
+        yield put({ type: 'SET_REACTIONS', payload: response.data});
+     }
+     catch (error) {
+        console.log('Error with getAllReactions in reactions.saga.js:', error);
+     };
+}
+
 // called when loading a STEMtell
 function* getStemReactions(action) {
     console.log('this is action.payload in reaction saga:', action.payload);
@@ -17,5 +28,6 @@ function* getStemReactions(action) {
  
  function* reactionSaga(){
     yield takeEvery('GET_STEMTELL_REACTIONS', getStemReactions);
+    yield takeEvery('GET_REACTIONS', getAllReactions);
  };
  export default reactionSaga;

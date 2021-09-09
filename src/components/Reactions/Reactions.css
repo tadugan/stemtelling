@@ -1,9 +1,3 @@
-.reaction-img{
-   width: 10%;
-
-
-}
-
 #reactions{
     display: inline-flex;
     justify-content: space-around;

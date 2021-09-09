@@ -3,6 +3,22 @@ const pool = require('../modules/pool');
 const router = express.Router();
 const { rejectUnauthenticated } = require("../modules/authentication-middleware");
 
+// GET /api/reaction
+// Handles getting all reactions 
+router.get("/", (req, res) => {
+  const query = `SELECT *
+                 FROM "reaction"
+                 `;
+  pool.query(query)
+  .then(results => {
+     res.send(results.rows);
+  })
+  .catch(error => {
+     console.log("Error getting stemReactions:", error);
+     res.sendStatus(500);
+  });
+});
+
 // GET /api/reaction/:id
 // Handles getting reactions for a specific STEMtell
 router.get("/:id", (req, res) => {

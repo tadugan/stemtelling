@@ -1,3 +1,15 @@
+import { combineReducers } from "redux";
+
+const reactions = (state = [], action) => {
+    switch(action.type){
+        case 'SET_REACTIONS':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
+
 const stemtellReactions = (state = [], action) => {
     switch (action.type) {
        case 'SET_STEMTELL_REACTIONS':
@@ -6,8 +18,12 @@ const stemtellReactions = (state = [], action) => {
           return state;
     };
  };
+
  
  
  // reducer for handling the comments of a specific STEMtell
  // called on the "StemtellDetails" page
- export default stemtellReactions;
+ export default combineReducers({
+    stemtellReactions,
+    reactions
+  });
