@@ -26,6 +26,7 @@ function ClassCard() {
     };
 
     const handleEditOpen = (classTitle) => {
+       console.log('this is the card id:', classes.class_id )
       setOpen(true);
       setClassTitle(classTitle.name);
       setEditClassID(editClassID.id);
@@ -33,6 +34,8 @@ function ClassCard() {
   
     const handleEditClose = () => {
       setOpen(false);
+      setClassTitle('');
+      setEditClassID('');
     };
     //End 
    
@@ -47,6 +50,7 @@ function ClassCard() {
    // }
 
    const handleSave = () => {
+      event.preventDefault();
       dispatch({
         type: "EDIT_CLASS",
         payload: {
@@ -89,6 +93,7 @@ function ClassCard() {
                         label="Class Title"
                         type="text"
                         fullWidth
+                        onChange = {(event) => setClassTitle(event.target.value)}
                         />
                   </DialogContent>
                   <DialogActions>
@@ -98,6 +103,7 @@ function ClassCard() {
                   </Dialog>
                   <MenuItem onClick={handleClose}> Archive</MenuItem>
                    </Menu>
+
                   <h2 id='classCardTitle' onClick= {() => toClassDetail(classList.class_id)}>{classList.name}</h2>
                   <section className="classDetail" id='classStatus'> Status: Active </section>
                   <section className="classDetail" id='classCode'> Code: {classList.code}</section>
