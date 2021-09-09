@@ -49,7 +49,7 @@ function App() {
                <ProtectedRoute exact path="/classlist" component={ClassList} />
                <ProtectedRoute exact path="/classlist/details/:id" component={ClassDetails} />
                <ProtectedRoute exact path="/comment/feedback/:id" component={TeacherFeedback}/>
-               <Route exact path="/login">{user.id ? <Redirect to="/myprofile" /> : <LoginPage />}</Route>
+               <Route exact path="/login">{user.id ? <Redirect to="/myprofile" /> : <LoginPage />  }</Route>
                <Route exact path="/registration">{user.id ? <Redirect to="/myprofile" /> : <RegisterPage />}</Route>
                <Route exact path="/home">{user.id ? <Redirect to="/myprofile" /> : <Homepage />}</Route>
                <Route><h1>404</h1></Route>
