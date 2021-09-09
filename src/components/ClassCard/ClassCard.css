@@ -14,6 +14,10 @@
    margin: 20px;
 }
 
+.toggle-class-status {
+   
+}
+
 #classCardTitle{
    margin: auto;
    width: 50%;
@@ -22,7 +26,7 @@
    color: #727272;
 }
 
-#editClassCard {
+#editIconClassCard {
    float: right;
    margin: 6px;
 }
