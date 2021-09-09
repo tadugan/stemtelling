@@ -15,7 +15,7 @@ function GenericSTEMtellCard({ stemtell, reviewMode }) {
     };
 
     const handleReviewClick = () => {
-        history.push(`/teacher/feedback/${stemtell.stem_id}`);
+        history.push(`/comment/feedback/${stemtell.stem_id}`);
     }
 
     const conditionalReviewButton = () => {

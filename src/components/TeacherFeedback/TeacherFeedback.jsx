@@ -5,42 +5,140 @@ import {
   Button,
   Box,
   Container,
+  Grid,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
 } from "@material-ui/core";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import "./TeacherFeedback.css";
+import { useState } from "react";
+import BackBtn from "../BackBtn/BackBtn";
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
+
+  
 
 function TeacherFeedback() {
     const dispatch= useDispatch();
     const feedback = useSelector((store) => store.feedback);
-   //  console.log(feedback, "THIS IS TEACHER FEEDBACK****");
 
+    const params = useParams();
+    const stemtellId = params.id;
+
+    const [leaveFeedback, setFeedback]= useState('');
+    const stemtell = useSelector((store) => store.stemtellDetails);
+    const classes = useStyles();
+    const [status, setStatus] = useState('');
+  
+    const handleChange = (event) => {
+      setStatus(event.target.value);
+    };
 useEffect(() => {
-    dispatch({ type: 'GET_FEEDBACK'});
+  dispatch({ type: "FETCH_STEMTELL_DETAILS", payload: stemtellId });
+  dispatch({ type: 'GET_FEEDBACK', payload: stemtellId});
 }, []);
+
+const handleSubmit = () => {
+  dispatch({ type: 'ADD_COMMENT', payload: {
+    stemtell_id: stemtellId,
+    comment: leaveFeedback,
+    teacher_feedback: true
+  }}),
+  dispatch({ type: 'UPDATE_STATUS', payload: {
+    status: status,
+    id: stemtellId
+  }}),
+  dispatch({ type: 'GET_FEEDBACK', payload: stemtellId})
+
+
+setFeedback('');
+}
+
+
+const handleFeedback = (event) => {
+  event.preventDefault();
+  setFeedback(event.target.value);
+}
+
+const unixTimestamp = (timestamp) => {
+  const dateObject = new Date((timestamp * 1000));
   return (
-    
+    dateObject.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
+  )
+}
+  return (
+    <>
+    <BackBtn />
+    <center>
+       <Grid item key={stemtell.id}>
+          <Card className="StemDetailsCard">
+             <h6 id="stemDate">{unixTimestamp(stemtell.unix)}</h6>
+             <Avatar className="Avatar" src={stemtell.profile_picture_url} />
+             <section className="UserName" onClick={() => onUserProfile(stemtell.user_id)}>
+                {stemtell.name}
+             </section>
+             <div className="UserName" id="userClass">
+                {stemtell.class_name}
+             </div>
+             <h3 id="stemTitle">{stemtell.title}</h3>
+             <img id="StemDetailsImage" src={stemtell.media_url} />
+             <section id="cardReactions">{stemtell.reaction_name}</section>
+             <section id="StemDetailsDescription">{stemtell.body_text}</section>
+          </Card>
+       </Grid>
+    </center>
+   
       <Container className="TeacherFeedbackContainer">
         <Box id="TeacherFeedbackInput">
           <label id="feedbackLabel">
             <div className="feedbackLabel">Teacher Feedback</div>
             <div className="feedbackLabel">
+              <form>
               <TextField
                 id="feedbackText"
                 placeholder="Feedback..."
                 multiline
                 rows={3}
+                value={leaveFeedback}
+                onChange={handleFeedback}
               >
             </TextField>
-               <div id="feedbackBtns">
-                  <Button>Cancel</Button>
-                  <Button>Submit</Button>
-                  </div>
+            </form>
               
             </div>
           </label>
         </Box>
-     
+
+        <FormControl className={classes.formControl}>
+        <InputLabel id="Approved">Status</InputLabel>
+        <Select
+          labelId="stemtell-status"
+          id="stemtell-status"
+          value={status}
+          onChange={handleChange}
+        >
+          <MenuItem value={true}>Approved</MenuItem>
+          <MenuItem value={false}>Needs Review</MenuItem>
+        </Select>
+      </FormControl>
+      <div id="feedbackBtns">
+                  <Button>Cancel</Button>
+                  <Button onClick={handleSubmit}>Submit</Button>
+                  </div>
+              
     {feedback.map((fb) => {
         return(
       <Card 
@@ -79,7 +177,7 @@ useEffect(() => {
             </mask>
             <g mask="url(#mask0)"></g>
           </svg>
-          Teacher Feedback
+          Teacher 
         </h6>
 
         <section className="FeedbackSection">
@@ -89,7 +187,7 @@ useEffect(() => {
               <h5> {fb.username} </h5>
             </span>
             <span className="FeedbackDate">
-              {fb.unix}
+              {unixTimestamp(fb.unix)}
             </span>
           </div>
 
@@ -98,7 +196,8 @@ useEffect(() => {
       </Card>
     )})}
       </Container>
-
+      </>
+   
   );
 }
 
