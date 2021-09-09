@@ -31,7 +31,7 @@ function App() {
 
    return (
       <Router>
-         <div>
+         <div id="main">
             <Nav />
             <Switch>
                <Redirect exact from="/" to="/homepage" />

@@ -2,6 +2,7 @@ import { Avatar, Card, Grid } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
+import Reactions from "../Reactions/Reactions";
 import "./STEMtellCard.css";
 
 
@@ -53,6 +54,7 @@ function StemtellCard() {
                      <section id="stemDescription" onClick={() => toStemtellDetail(stemtell.stem_id)}>
                         {stemtell.body_text}
                      </section>
+                     <Reactions />
                   </Card>
                </Grid>
             );

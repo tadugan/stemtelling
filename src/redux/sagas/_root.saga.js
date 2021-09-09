@@ -15,6 +15,7 @@ import teacherReviewListSaga from './teacherReviewList.saga';
 import resetPasswordSaga from './resetpassword.saga';
 import newClassSaga from './newClass.saga';
 import addTagsSaga from './newProfile.saga';
+import reactionSaga from './reactions.saga';
 
 
 export default function* rootSaga() {
@@ -35,5 +36,6 @@ export default function* rootSaga() {
       teacherReviewListSaga(),
       newClassSaga(),
       addTagsSaga(),
+      reactionSaga(),
    ]);
 };

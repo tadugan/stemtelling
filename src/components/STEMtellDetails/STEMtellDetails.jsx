@@ -5,6 +5,7 @@ import { Card, Avatar, Grid } from "@material-ui/core";
 import Comment from "../Comment/Comment";
 import BackBtn from "../BackBtn/BackBtn";
 import './STEMtellDetails.css';
+import Reactions from "../Reactions/Reactions";
 
 
 function STEMtellDetails() {
@@ -45,12 +46,15 @@ function STEMtellDetails() {
                      </div>
                      <h3 id="stemTitle">{stemtell.title}</h3>
                      <img id="StemDetailsImage" src={stemtell.media_url} />
+                     <Reactions />
                      <section id="cardReactions">{stemtell.reaction_name}</section>
                      <section id="StemDetailsDescription">{stemtell.body_text}</section>
                   </Card>
                </Grid>
             </center>
+            
          <Comment />
+       
         
       </>
    );
