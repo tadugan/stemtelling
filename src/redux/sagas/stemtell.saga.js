@@ -15,6 +15,17 @@ function* fetchUserStemTells(action) {
    };
 };
 
+function* fetchMyStemTells(action) {
+   try {
+      const profileID = action.payload;
+      const stemtells = yield axios.get("/api/stemtell/mystemtells", { params: { profileID } });
+      yield put({type: "SET_USER_STEMTELLS", payload: stemtells.data});
+   }
+   catch (error) {
+      console.log("Error with fetchUserStemTells in stemtell.saga.js:", error);
+   };
+};
+
 // function for getting a specific STEMtell
 // called for when a user clicks the "Edit" button on a STEMtell on their profile page
 function* getStemtell(action) {
@@ -68,6 +79,7 @@ function* deleteStemtell(action) {
 function* stemtellSaga() {
    yield takeEvery("FETCH_STEMTELLS", fetchAllStemTells);
    yield takeEvery("FETCH_USER_STEMTELLS", fetchUserStemTells);
+   yield takeEvery("FETCH_MY_STEMTELLS", fetchMyStemTells);
    yield takeEvery("GET_STEMTELL", getStemtell);
    yield takeEvery("FETCH_STEMTELL_DETAILS", getStemDetails);
    yield takeEvery("DELETE_STEMTELL", deleteStemtell);

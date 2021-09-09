@@ -7,7 +7,6 @@ import "./STEMtellCard.css";
 
 const useCardStyles = makeStyles(() => ({
    root: {
-  
       alignItems: "center",
       border: "2px solid #1E1F20",
       borderRadius: "15px",

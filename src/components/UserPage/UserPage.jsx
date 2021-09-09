@@ -134,12 +134,12 @@ function UserPage() {
          type: "DELETE_STEMTELL",
          payload: stemtell
       });
-      dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
+      dispatch({ type: "FETCH_MY_STEMTELLS", payload: user.id });
       history.push('/close');
    };
    
    useEffect(() => {
-      dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
+      dispatch({ type: "FETCH_MY_STEMTELLS", payload: user.id });
     }, []);
 
    return (
