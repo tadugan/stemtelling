@@ -16,7 +16,7 @@ const StyledBlueButton = styled(Button)`
    outline: 0;
    cursor: pointer;
    &:hover {
-      background-color: rgba(121, 208, 241   , 0.6);
+      background-color: rgba(121, 208, 241, 0.6);
       text-decoration: none;
    }
 `;
