@@ -25,11 +25,11 @@ function ClassCard() {
       setAnchorEl(null);
     };
 
-    const handleEditOpen = (classTitle) => {
-       console.log('this is the card id:', classes.class_id )
+    const handleEditOpen = (classInfo) => {
+       console.log('this is the card id:', classInfo.class_id )
       setOpen(true);
-      setClassTitle(classTitle.name);
-      setEditClassID(editClassID.id);
+      setClassTitle(classInfo.name);
+      setEditClassID(classInfo.class_id);
     };
   
     const handleEditClose = () => {
@@ -38,7 +38,7 @@ function ClassCard() {
       setEditClassID('');
     };
     //End 
-   
+   const [classInfo, setClassInfo] = useState("");
    const [classTitle, setClassTitle] = useState("");
    const [editClassID, setEditClassID] = useState("");
    const [anchorEl, setAnchorEl] = useState(null);
@@ -58,7 +58,8 @@ function ClassCard() {
           id: editClassID, 
         },
       });
-     
+      setClassTitle('');
+      setEditClassID('');
     };
  
     useEffect(() => {
