@@ -6,7 +6,9 @@ import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 function BackBtn() {
    const history= useHistory();
    return (
-      <ArrowBackRoundedIcon onClick={()=> history.goBack()} />
+      <ArrowBackRoundedIcon 
+      fontSize= 'large'
+      onClick={()=> history.goBack()} />
    );
 };
 

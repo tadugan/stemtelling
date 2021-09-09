@@ -12,7 +12,6 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
-import ClassCard from '../ClassCard/ClassCard';
 import STEMtellDetails from '../STEMtellDetails/STEMtellDetails';
 import Homepage from '../Homepage/Homepage';
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
