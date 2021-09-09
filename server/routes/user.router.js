@@ -47,21 +47,36 @@ router.get('/profile', rejectUnauthenticated, (req, res) => {
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
 router.post('/register', (req, res, next) => {
+   const teacherCode = req.body.teacherCode;
    const email = req.body.email.toLowerCase();
    const password = encryptLib.encryptPassword(req.body.password);
    const name = req.body.name;
    const authority = req.body.authority;
    const profilePictureURL = req.body.profilePictureURL;
-   const queryText = `INSERT INTO "user" (email, password, name, authority, profile_picture_url)
+   const studentQuery = `INSERT INTO "user" (email, password, name, authority, profile_picture_url)
                       VALUES ($1, $2, $3, $4, $5) RETURNING id`;
-   pool.query(queryText, [email, password, name, authority, profilePictureURL])
-   .then(() => {
-      res.sendStatus(201);
-   })
-   .catch(error => {
-      console.log('User registration failed:', error);
-      res.sendStatus(500);
-   });
+   const teacherQuery = `INSERT INTO "user" (email, password, name, authority, profile_picture_url)
+                      VALUES ($1, $2, $3, $4, $5) RETURNING id`;
+   if (teacherCode == process.env.TEACHER_CODE) {
+      pool.query(teacherQuery, [email, password, name, authority, profilePictureURL])
+      .then(() => {
+         res.sendStatus(201);
+      })
+      .catch(error => {
+         console.log('User registration failed:', error);
+         res.sendStatus(500);
+      });
+   }
+   else {
+      pool.query(studentQuery, [email, password, name, "student", profilePictureURL])
+      .then(() => {
+         res.sendStatus(201);
+      })
+      .catch(error => {
+         console.log('User registration failed:', error);
+         res.sendStatus(500);
+      });
+   };
 });
 
 // POST /api/user/login
