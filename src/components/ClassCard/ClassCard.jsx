@@ -10,6 +10,8 @@ import {
   DialogContentText,
   DialogTitle,
   Button,
+  Select,
+  NativeSelect
 } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,6 +28,7 @@ function ClassCard() {
   };
   const [classTitle, setClassTitle] = useState("");
   const [editClassID, setEditClassID] = useState("");
+  const [classStatus, setClassStatus] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
 
@@ -57,6 +60,7 @@ function ClassCard() {
       type: "EDIT_CLASS",
       payload: {
         name: classTitle,
+        archived: classStatus,
         id: editClassID,
       },
     });
@@ -77,7 +81,7 @@ function ClassCard() {
           return (
             <Card className="classCard" key={classList.id}>
               <EditIcon
-                id="editClassCard"
+                id="editIconClassCard"
                 onClick={() => handleClick(classList)}
               />
               <h2
@@ -97,16 +101,10 @@ function ClassCard() {
         } else if (classList.archived === true) {
           return (
             <Card className="classCard" key={classList.id}>
-              <MoreVertIcon id="editClassCard" />
-              <Menu
-                id="editClass-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}> Restore </MenuItem>
-              </Menu>
+               <EditIcon
+                id="editIconClassCard"
+                onClick={() => handleClick(classList)}
+              />
               <h2
                 id="classCardTitle"
                 onClick={() => toClassDetail(classList.class_id)}
@@ -140,6 +138,10 @@ function ClassCard() {
             fullWidth
             onChange={(event) => setClassTitle(event.target.value)}
           />
+          <NativeSelect>
+             <option value={false} > Active </option>
+             <option value={true}> Archive </option>
+          </NativeSelect>
         </DialogContent>
         <DialogActions>
           <Button id="edit-cancel-btn" onClick={handleEditClose}>
