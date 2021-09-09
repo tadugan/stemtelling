@@ -94,7 +94,7 @@ router.post('/class', (req, res) => {
   })().catch(e => console.error(e.stack))
 });
 
-// TODO: Setup class edit? PUT
+//PUT for updating class information such as title
 router.put("/update", rejectUnauthenticated, (req,res) => {
    console.log(`What is being UPDATED:`, req.body.id);
    const query = `UPDATE "class" 
