@@ -10,7 +10,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
    const query = `SELECT * FROM "class"
                   JOIN "user_class" ON "user_class".class_id = "class".id
                   WHERE "user_class".user_id = $1
-                  ORDER BY "name" ASC;`
+                  ORDER BY "archived", "name" ASC;`
    pool.query(query, [req.user.id])
    .then(results => {
       res.send(results.rows);
@@ -98,11 +98,12 @@ router.post('/class', (req, res) => {
 router.put("/update", rejectUnauthenticated, (req,res) => {
    console.log(`What is being UPDATED:`, req.body.id);
    const query = `UPDATE "class" 
-                  SET "name"=$1 
-                  WHERE "id"=$2;`;
+                  SET "name"=$1 , "archived" =$2
+                  WHERE "id"=$3;`;
    pool
      .query(query, [
        req.body.name,
+       req.body.archived ,
        req.body.id,
      ])
      .then((result) => {
