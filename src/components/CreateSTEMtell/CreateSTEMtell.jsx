@@ -14,7 +14,6 @@ function CreateSTEMtell() {
    const history = useHistory();
    const [ classId, setClassId ] = useState('');
    const [ title, setTitle ] = useState('');
-   const [ imageUrl, setImageUrl] = useState('');
    const [ description, setDescription ] = useState('');
    const [ alertMessage, setAlertMessage ] = useState('');
    const selectedTags = useSelector(store => store.selectedTags);
@@ -118,7 +117,7 @@ function CreateSTEMtell() {
       <BackBtn />
       <div className="create-stemtell-body">
          <form>
-            <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
+            <Grid container spacing={1} direction="column" justifyContent="center" alignItems="center">
                <Grid item>
                   <h2>Create a STEMtell</h2>
                </Grid>
