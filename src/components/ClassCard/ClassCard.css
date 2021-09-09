@@ -21,3 +21,8 @@
    margin: 2px;
    color: #727272;
 }
+
+#editClassCard {
+   float: right;
+   margin: 6px;
+}

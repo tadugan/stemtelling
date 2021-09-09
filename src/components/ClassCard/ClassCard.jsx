@@ -2,7 +2,7 @@ import { Card, Container,
     Menu, MenuItem, 
     TextField, Dialog, 
     DialogActions, DialogContent, 
-    DialogueContentText, DialogTitle } from "@material-ui/core";
+    DialogContentText, DialogTitle, Button } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./ClassCard.css";
@@ -12,7 +12,12 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 
 function ClassCard() {
-   const [anchorEl, setAnchorEl] = useState(null);
+   const dispatch = useDispatch();
+   const history= useHistory();
+   const classes = useSelector((store) => store.classes);
+   const toClassDetail = (class_id) => {history.push(`classlist/details/${class_id}`)};
+   
+   //Start of handling menu and dialog views
    const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
     };
@@ -20,13 +25,37 @@ function ClassCard() {
       setAnchorEl(null);
     };
 
-    
-   const dispatch = useDispatch();
-   const history= useHistory();
-   const classes = useSelector((store) => store.classes);
-   const toClassDetail = (class_id) => {history.push(`classlist/details/${class_id}`)};
+    const handleEditOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleEditClose = () => {
+      setOpen(false);
+    };
+    //End 
    
-   useEffect(() => {
+   const [classTitle, setClassTitle] = useState("");
+   const [editClassID, setEditClassID] = useState("");
+   const [anchorEl, setAnchorEl] = useState(null);
+   const [open, setOpen] = useState(false);
+   
+   const handleEdit= (classTitle) => {
+      setClassTitle(classTitle.name);
+      setEditClassID(editClassID.id);
+   }
+
+   const handleSave = () => {
+      dispatch({
+        type: "EDIT_CLASS",
+        payload: {
+          name: classTitle,
+          id: editClassID, 
+        },
+      });
+     
+    };
+ 
+    useEffect(() => {
       dispatch({ type: 'FETCH_CLASSES'});
    }, []);
 
@@ -44,8 +73,28 @@ function ClassCard() {
                   keepMounted
                   open={Boolean(anchorEl)}
                   onClose={handleClose} >
-                  <MenuItem onClick={handleClose}>Edit</MenuItem>
-                  <MenuItem onClick={handleClose}>Archive</MenuItem>
+                  <MenuItem onClick={handleEditOpen}>Edit</MenuItem>
+                  <Dialog open={open} onClose={handleEditClose} aria-labelledby="form-dialog-edit-class">
+                  <DialogTitle id="form-dialog-title"> Edit Class Information</DialogTitle>
+                  <DialogContent>
+                     <DialogContentText>
+                     Update Class Information below.
+                     </DialogContentText>
+                        <TextField
+                        autoFocus
+                        margin="dense"
+                        className="class-edit-form"
+                        label="Class Title"
+                        type="text"
+                        fullWidth
+                        />
+                  </DialogContent>
+                  <DialogActions>
+                     <Button id="edit-cancel-btn" onClick={handleEditClose}> Cancel </Button>
+                     <Button id="edit-save-btn" > Save </Button>
+                  </DialogActions>
+                  </Dialog>
+                  <MenuItem onClick={handleClose}> Archive</MenuItem>
                    </Menu>
                   <h2 id='classCardTitle' onClick= {() => toClassDetail(classList.class_id)}>{classList.name}</h2>
                   <section className="classDetail" id='classStatus'> Status: Active </section>
@@ -62,8 +111,7 @@ function ClassCard() {
                   keepMounted
                   open={Boolean(anchorEl)}
                   onClose={handleClose} >
-                  <MenuItem onClick={handleClose}>Edit</MenuItem>
-                  <MenuItem onClick={handleClose}>Archive</MenuItem>
+                  <MenuItem onClick={handleClose}> Restore </MenuItem>
                    </Menu>
                   <h2 id='classCardTitle' onClick= {() => toClassDetail(classList.class_id)}>{classList.name}</h2>
                   <section className="classDetail" id='classStatus'> Status: Archived </section>
