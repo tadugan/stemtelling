@@ -5,14 +5,16 @@ const router = express.Router();
 const {cloudinary} = require('../modules/cloudinary');
 
 /**
- * GET route template
+ * GET
  */
 router.get('/', (req, res) => {
-  // GET route code here
+  // GET
 });
 
 /**
- * POST route template
+ * POST
+ * POST a new image to Cloudinary
+ * Returns array holding image url
  */
 router.post('/', rejectUnauthenticated, async (req, res) => {
     try {
@@ -20,10 +22,10 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
         const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
             upload_preset: 'stemtell-content-image'
         })
-        console.log(uploadedResponse);
-        res.json({msg: "Uploaded and image"});
+        console.log('uploadedResponse on the image router', uploadedResponse); // TODO:
+        res.send(uploadedResponse.url);
     } catch (error) {
-        console.log('error:', error);
+        console.log('error in image router:', error);
         res.sendStatus(500);
     }
 });

@@ -12,6 +12,7 @@ import studentList from './studentList.reducer';
 import stemtellDetails from './stemtellDetails.reducer';
 import stemtellComments from './stemtellComments.reducer';
 import teacherReviewList from './teacherReviewList.reducer';
+import image from './image.reducer';
 
 
 const rootReducer = combineReducers({
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   stemtellDetails,
   stemtellComments,
   teacherReviewList, // contains an array of STEMtell objects that have not yet been approved
+  image,
 });
 
 

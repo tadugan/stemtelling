@@ -3,6 +3,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 const { response } = require("express");
+const {cloudinary} = require('../modules/cloudinary');
 
 
 // GET /api/stemtell
@@ -66,16 +67,24 @@ router.get('/tags/:id', rejectUnauthenticated, (req, res) => {
 // POST /api/stemtell/
 // Handles posting a new STEMtell and its associated tags
 router.post('/', rejectUnauthenticated, (req, res) => {
-   const newStemtell = req.body;
+   const newStemtell = req.body.details;
+   const imageData = req.body.image_data;
+   console.log('req.body.details', req.body.details); // TODO:
+   // console.log('imageData', imageData); // TODO:
    const user = req.user;
    (async () => {
       const client = await pool.connect();
       try {
+         const imageResponse = await cloudinary.uploader.upload(imageData, {
+            upload_preset: 'stemtell-content-image'
+         })
+         console.log('imageResponse.url:', imageResponse.url);
+
          await client.query("BEGIN");
          const queryTextAddStemtell = `INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "unix")
                                        VALUES ($1, $2, $3, $4, $5, extract(epoch from now()))
                                        RETURNING id`;
-         const response = await client.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, newStemtell.media_url]);
+         const response = await client.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, imageResponse.url]);
          const stemtellId = response.rows[0].id;
          const queryTextAddTag = `INSERT INTO stemtell_tag ("tag_id", "stemtell_id")
                                   VALUES ($1, $2) `;
