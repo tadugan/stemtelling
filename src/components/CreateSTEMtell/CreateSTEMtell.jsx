@@ -6,6 +6,41 @@ import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
 import BackBtn from '../BackBtn/BackBtn';
 import "./CreateSTEMtell.css";
 import { useHistory } from 'react-router';
+import styled from 'styled-components';
+
+const StyledButton = styled(Button)`
+   display: inline-block;
+   padding: 10px 20px;
+   border-color: #014041;
+   border-width: 1px 1px 3px;
+   border-radius: 4px;
+   background-color: #979797;
+   color: #f8f8f8;
+   font-size: 1.1rem;
+   outline: 0;
+   cursor: pointer;
+   &:hover {
+      background-color: rgba(151, 151, 151, 0.6);
+      text-decoration: none;
+   }
+`;
+
+const StyledRedButton = styled(Button)`
+   display: inline-block;
+   padding: 10px 20px;
+   border-color: #014041;
+   border-width: 1px 1px 3px;
+   border-radius: 4px;
+   background-color: #DD2E44;
+   color: #f8f8f8;
+   font-size: 1.1rem;
+   outline: 0;
+   cursor: pointer;
+   &:hover {
+      background-color: rgba(221, 46, 68, 0.6);
+      text-decoration: none;
+   }
+`;
 
 
 function CreateSTEMtell() {
@@ -156,14 +191,14 @@ function CreateSTEMtell() {
                </Grid>
                <Grid item container spacing={2} xs={12} direction="row" justifyContent="center" alignItems="center">
                   <Grid item>
-                     <Button variant="contained" color="secondary" onClick={handleCancel}>
+                     <StyledRedButton onClick={handleCancel}>
                         Cancel
-                     </Button>
+                     </StyledRedButton>
                   </Grid>
                   <Grid item>
-                     <Button variant="contained" color="primary" onClick={handleSubmit} type="submit">
+                     <StyledButton onClick={handleSubmit} type="submit">
                         Submit
-                     </Button>
+                     </StyledButton>
                   </Grid>
                   {conditionalInputAlert(alertMessage)}
                </Grid>
