@@ -69,8 +69,6 @@ router.get('/tags/:id', rejectUnauthenticated, (req, res) => {
 router.post('/', rejectUnauthenticated, (req, res) => {
    const newStemtell = req.body.details;
    const imageData = req.body.image_data;
-   console.log('req.body.details', req.body.details); // TODO:
-   // console.log('imageData', imageData); // TODO:
    const user = req.user;
    (async () => {
       const client = await pool.connect();

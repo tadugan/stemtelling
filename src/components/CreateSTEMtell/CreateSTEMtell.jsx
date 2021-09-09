@@ -39,19 +39,17 @@ function CreateSTEMtell() {
             details: {
                title: title,
                body_text: description,
-               media_url: imageUrl,
                class_id: classId,
                tag_ids: tagIds
             },
-            image_data: imageData
+            image_data: imageData,
+            history: history
          }
       });
       setClassId(0);
       setTitle('');
-      setImageUrl('');
       setDescription('');
       dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
-      // history.goBack();
    };
 
 
@@ -143,9 +141,6 @@ function CreateSTEMtell() {
                </Grid>
                <Grid item>
                   <TextField label="Title" variant="outlined" value={title} onChange={(event) => setTitle(event.target.value)} className="create-stemtell-title"/>
-               </Grid>
-               <Grid item>
-                  <TextField label="Image URL" variant="outlined" value={imageUrl} onChange={(event) => setImageUrl(event.target.value)} className="create-stemtell-image-url"/>
                </Grid>
                <Grid item>
                   <ImageUploader />

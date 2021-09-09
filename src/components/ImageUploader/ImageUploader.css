@@ -1,3 +1,17 @@
+.image-uploader-body {
+
+}
+
 .image-uploader-preview {
-    height: 200px;
+    height: 104px;
+}
+
+.image-uploader-preview-window {
+    height: 104px;
+    width: 104px;
+    text-align: center;
+}
+
+.image-uploader-button {
+
 }

@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './ImageUploader.css';
@@ -26,11 +26,27 @@ function ImageUploader() {
    }
 
    return (
-      <div>
-            <input type="file" name="image" onChange={handleFileInputChange} value={fileInputState} className="image-uploader-form-input" />
-         {previewSource && (
-            <img src={previewSource} alt="upload" className="image-uploader-preview" />
-         )}
+      <div className="image-uploader-body">
+            <Grid
+               container 
+               spacing={2} 
+               direction="row" 
+               justifyContent="center" 
+               alignItems="center"
+            >
+               <Grid item xs={8}>
+                  <Button variant="outlined" color="primary" component="label" className="image-uploader-button">
+                     Add an Image
+                     <input hidden type="file" name="image" onChange={handleFileInputChange} value={fileInputState} className="image-uploader-form-input" />
+                  </Button>
+               </Grid>
+               <Grid item xs={4}>
+                  <div className="image-uploader-preview-window">
+                     {previewSource &&
+                     (<img src={previewSource} alt="upload" className="image-uploader-preview" />)}
+                  </div>
+               </Grid>
+            </Grid>
       </div>
    );
 };
