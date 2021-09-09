@@ -5,6 +5,59 @@ import AddTagDialog from '../AddTagDialog/AddTagDialog';
 import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
 import "./EditSTEMtell.css";
 import { useHistory } from 'react-router';
+import styled from 'styled-components';
+import ImageUploader from '../ImageUploader/ImageUploader';
+
+const StyledButton = styled(Button)`
+   display: inline-block;
+   padding: 10px 20px;
+   border-color: #014041;
+   border-width: 1px 1px 3px;
+   border-radius: 4px;
+   background-color: #979797;
+   color: #f8f8f8;
+   font-size: 1.1rem;
+   outline: 0;
+   cursor: pointer;
+   &:hover {
+      background-color: rgba(151, 151, 151, 0.6);
+      text-decoration: none;
+   }
+`;
+
+const StyledRedButton = styled(Button)`
+   display: inline-block;
+   padding: 10px 20px;
+   border-color: #014041;
+   border-width: 1px 1px 3px;
+   border-radius: 4px;
+   background-color: #DD2E44;
+   color: #f8f8f8;   
+   font-size: 1.1rem;
+   outline: 0;
+   cursor: pointer;
+   &:hover {
+      background-color: rgba(221, 46, 68, 0.6);
+      text-decoration: none;
+   }
+`;
+
+const StyledBlueButton = styled(Button)`
+   display: inline-block;
+   padding: 10px 20px;
+   border-color: #014041;
+   border-width: 1px 1px 3px;
+   border-radius: 4px;
+   background-color: #79D0F1;
+   color: #f8f8f8;   
+   font-size: 1.1rem;
+   outline: 0;
+   cursor: pointer;
+   &:hover {
+      background-color: rgba(221, 46, 68, 0.6);
+      text-decoration: none;
+   }
+`;
 
 
 function EditSTEMtell(stemtell) {
@@ -18,6 +71,7 @@ function EditSTEMtell(stemtell) {
    const [ alertMessage, setAlertMessage ] = useState('');
    const selectedTags = useSelector(store => store.selectedTags);
    const classList = useSelector(store => store.classes);
+   const imageData = useSelector(store => store.image);
    const handleCancel = () => {history.push('/close')};
    const getClassList = () => {dispatch({ type: 'FETCH_CLASSES'})};
    const getExistingTags = (stemtellId) => {dispatch({ type: 'GET_EXISTING_TAGS', payload: stemtellId })};
@@ -34,12 +88,15 @@ function EditSTEMtell(stemtell) {
       dispatch({
          type: 'SAVE_EDITED_STEMTELL', 
          payload: {
-            id: stemtell.stemtell.id,
-            title: title,
-            body_text: description,
-            media_url: imageUrl,
-            class_id: classId,
-            tag_ids: tagIds
+            details: {
+               id: stemtell.stemtell.id,
+               title: title,
+               body_text: description,
+               // media_url: imageUrl,
+               class_id: classId,
+               tag_ids: tagIds
+            },
+            image_data: imageData
          }
       });
       setClassId(0);
@@ -141,8 +198,11 @@ function EditSTEMtell(stemtell) {
             <Grid item className="edit-stemtell-title">
                <TextField label="Title" variant="outlined" value={title} onChange={(event) => setTitle(event.target.value)}/>
             </Grid>
-            <Grid item className="edit-stemtell-image-url">
+            {/* <Grid item className="edit-stemtell-image-url">
                <TextField label="Image URL" variant="outlined" value={imageUrl} onChange={(event) => setImageUrl(event.target.value)}/>
+            </Grid> */}
+            <Grid item>
+               <ImageUploader />
             </Grid>
             <Grid item className="edit-stemtell-description">
                <TextField aria-label="STEMtell textarea" placeholder="Add text" minRows={3} maxRows={3} variant="outlined" multiline value={description} onChange={(event) => setDescription(event.target.value)}/>
@@ -161,14 +221,14 @@ function EditSTEMtell(stemtell) {
             </Grid>
             <Grid item container spacing={2} xs={12} direction="row" justifyContent="center" alignItems="center">
                <Grid item>
-                  <Button className="edit-page-button" variant="contained" color="secondary" onClick={handleCancel}>
+                  <StyledRedButton className="edit-page-button" variant="contained" color="secondary" onClick={handleCancel}>
                      Cancel
-                  </Button>
+                  </StyledRedButton>
                </Grid>
                <Grid item>
-                  <Button className="edit-page-button" variant="contained" color="primary" onClick={handleSave} type="submit">
+                  <StyledButton className="edit-page-button" variant="contained" color="primary" onClick={handleSave} type="submit">
                      Save
-                  </Button>
+                  </StyledButton>
                </Grid>
                {conditionalInputAlert(alertMessage)}
                </Grid>

@@ -23,7 +23,7 @@ router.get("/", (req, res) => {
 // Handles getting reactions for a specific STEMtell
 router.get("/:id", (req, res) => {
   const stemtellId= req.params.id;
-  const query = `SELECT *, "reaction".name
+  const query = `SELECT *
                  FROM "reaction_stemtell"
                  JOIN "reaction" ON "reaction_stemtell".reaction_id = "reaction".id
                  WHERE "reaction_stemtell".stemtell_id = $1;

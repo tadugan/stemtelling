@@ -5,6 +5,50 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
+import Container from '@material-ui/core/Container';
+
+const useCardStyles = makeStyles(() => ({
+   root: {
+      paddingBottom: "15px",
+      alignItems: "center",
+      border: "2px solid #1E1F20",
+      borderRadius: "15px",
+      justifyContent: "center",
+      flexGrow: "1px",
+      width: "300px",
+      height: "410px",
+      textAlign: "center",
+      color: "grey",
+   },
+   avatar: {
+      textAlign: "left",
+      borderStyle: "solid",
+      float: "left",
+      display: "flex",
+      flexDirection: "row",
+      height: "50px",
+      width: "50px",
+   },
+   username: {
+      paddingTop: "5px",
+      textAlign: "left",
+      marginLeft: "60px",
+      display: "flex",
+      flexDirection: "row",
+      color: "#727272",
+   },
+   stemdate: {
+      float: "right",
+      fontSize: '14px',
+      paddingRight: "5px",
+   },
+   stemtitle: {
+      display: "flex",
+      alignItems: "center",
+      marginLeft: "40%",
+      justifyContent: "center",
+   },
+ }));
 
 const useStyles = makeStyles((theme) => ({
    root: {
@@ -19,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 function ProfilePage() {
+   const cardStyles = useCardStyles();
    const classes = useStyles();
    const history = useHistory();
    const profile = useSelector((store) => store.profile);
@@ -43,13 +88,14 @@ function ProfilePage() {
             </Grid>
             <Grid item xs={12} sm={9}>
                <Paper className={classes.paper}>{profile.name}'s STEMtells</Paper>
-               <Grid container>
+               <Container maxWidth="xxl">
+               <Grid container direction="row" justifyContent="center" alignItems="flex-start" spacing={3}>
                   {stemtells.map((stemtell) => {
                      return (
                         <Grid item key={stemtell.id}>
-                           <Card className="StemCard" onClick={() => toStemtellDetail(stemtell.id)} >
-                                 <section className="UserName">{stemtell.username}</section>
-                                 <div className="UserName" id="userClass">
+                           <Card className={cardStyles.root} onClick={() => toStemtellDetail(stemtell.id)} >
+                                 <section className={cardStyles.username}>{stemtell.username}</section>
+                                 <div className={cardStyles.username} id="userClass">
                                     {stemtell.class_name}
                                  </div>
                                  <h3>{stemtell.title}</h3>
@@ -61,6 +107,7 @@ function ProfilePage() {
                      )
                   })}
                </Grid>
+               </Container>
             </Grid>
          </Grid>
       </div>
