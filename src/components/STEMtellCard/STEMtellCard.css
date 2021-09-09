@@ -7,6 +7,7 @@
    padding: 16px;
    align-items: center;
    justify-content: center;
+   border: none;
    flex-grow: 1px;
    width: 300px;
    height: 410px;
