@@ -177,7 +177,7 @@ const unixTimestamp = (timestamp) => {
             </mask>
             <g mask="url(#mask0)"></g>
           </svg>
-          Teacher Feedback
+          Teacher 
         </h6>
 
         <section className="FeedbackSection">
