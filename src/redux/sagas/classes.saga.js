@@ -1,4 +1,4 @@
-import { put, takeEvery } from "redux-saga/effects";
+import { put, takeEvery, call } from "redux-saga/effects";
 import axios from "axios";
 
 
@@ -26,10 +26,22 @@ function* fetchClassStemTells() {
    };
 };
 
+//function for updating a class
+function* editClass(action) {
+   console.log(action);
+   try {
+     yield call(axios.put, `/api/class/update`, action.payload);
+     console.log(`What is in the PUT payload for CLASS`, action.payload);
+   } catch (error) {
+     console.log(`problem editing class SAGA:`, error);
+   }
+ }
+ 
 
 function* classesSaga(){
     yield takeEvery('FETCH_CLASSES', fetchClasses);
     yield takeEvery('FETCH_USER_FEED', fetchClassStemTells);
+    yield takeEvery("EDIT_CLASS", editClass);
 };
 
 
