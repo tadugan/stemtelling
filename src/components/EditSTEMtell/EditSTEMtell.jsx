@@ -6,6 +6,7 @@ import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
 import "./EditSTEMtell.css";
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
+import ImageUploader from '../ImageUploader/ImageUploader';
 
 const StyledButton = styled(Button)`
    display: inline-block;
@@ -70,6 +71,7 @@ function EditSTEMtell(stemtell) {
    const [ alertMessage, setAlertMessage ] = useState('');
    const selectedTags = useSelector(store => store.selectedTags);
    const classList = useSelector(store => store.classes);
+   const imageData = useSelector(store => store.image);
    const handleCancel = () => {history.push('/close')};
    const getClassList = () => {dispatch({ type: 'FETCH_CLASSES'})};
    const getExistingTags = (stemtellId) => {dispatch({ type: 'GET_EXISTING_TAGS', payload: stemtellId })};
@@ -86,12 +88,15 @@ function EditSTEMtell(stemtell) {
       dispatch({
          type: 'SAVE_EDITED_STEMTELL', 
          payload: {
-            id: stemtell.stemtell.id,
-            title: title,
-            body_text: description,
-            media_url: imageUrl,
-            class_id: classId,
-            tag_ids: tagIds
+            details: {
+               id: stemtell.stemtell.id,
+               title: title,
+               body_text: description,
+               // media_url: imageUrl,
+               class_id: classId,
+               tag_ids: tagIds
+            },
+            image_data: imageData
          }
       });
       setClassId(0);
@@ -193,8 +198,11 @@ function EditSTEMtell(stemtell) {
             <Grid item className="edit-stemtell-title">
                <TextField label="Title" variant="outlined" value={title} onChange={(event) => setTitle(event.target.value)}/>
             </Grid>
-            <Grid item className="edit-stemtell-image-url">
+            {/* <Grid item className="edit-stemtell-image-url">
                <TextField label="Image URL" variant="outlined" value={imageUrl} onChange={(event) => setImageUrl(event.target.value)}/>
+            </Grid> */}
+            <Grid item>
+               <ImageUploader />
             </Grid>
             <Grid item className="edit-stemtell-description">
                <TextField aria-label="STEMtell textarea" placeholder="Add text" minRows={3} maxRows={3} variant="outlined" multiline value={description} onChange={(event) => setDescription(event.target.value)}/>

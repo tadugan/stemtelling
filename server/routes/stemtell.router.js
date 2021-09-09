@@ -76,7 +76,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
          const imageResponse = await cloudinary.uploader.upload(imageData, {
             upload_preset: 'stemtell-content-image'
          })
-         console.log('imageResponse.url:', imageResponse.url);
+         // console.log('imageResponse.url:', imageResponse.url); // TODO:
 
          await client.query("BEGIN");
          const queryTextAddStemtell = `INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "unix")
@@ -104,15 +104,20 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 // PUT /api/stemtell/save
 // Handles updating information for a specific STEMtell that has been edited
 router.put('/save', rejectUnauthenticated, (req, res) => {
-   const newStemtell = req.body;
+   const newStemtell = req.body.details;
    const user = req.user;
-   const stemtellId = req.body.id;
+   const imageData = req.body.image_data;
+   const stemtellId = req.body.details.id;
    (async () => {
       const client = await pool.connect();
       try {
+         const imageResponse = await cloudinary.uploader.upload(imageData, {
+            upload_preset: 'stemtell-content-image'
+         })
+         console.log('PUT update imageResponse', imageResponse);
          await client.query("BEGIN");
          const queryTextAddStemtell = `UPDATE "stemtell" SET "class_id" = $1, "user_id" = $2, "title" = $3, "body_text" = $4, "media_url" = $5 WHERE "id" = $6`;
-         const response = await client.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, newStemtell.media_url, stemtellId,]);
+         const response = await client.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, imageResponse.url, stemtellId,]);
          const queryTextDeleteExistingTags = `DELETE FROM "stemtell_tag" WHERE stemtell_id = $1;`;
          await client.query(queryTextDeleteExistingTags, [stemtellId]);
          const queryTextAddTag = `INSERT INTO stemtell_tag ("tag_id", "stemtell_id")

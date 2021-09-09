@@ -66,7 +66,6 @@ function CreateSTEMtell() {
       for (const tag of selectedTags) {
          tagIds.push(tag.id);
       };
-      // console.log('this is imageData in client', imageData); // TODO:
       dispatch({
          type: 'SUBMIT_NEW_STEMTELL',
          payload: {
