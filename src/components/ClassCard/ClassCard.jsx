@@ -25,8 +25,10 @@ function ClassCard() {
       setAnchorEl(null);
     };
 
-    const handleEditOpen = () => {
+    const handleEditOpen = (classTitle) => {
       setOpen(true);
+      setClassTitle(classTitle.name);
+      setEditClassID(editClassID.id);
     };
   
     const handleEditClose = () => {
@@ -39,10 +41,10 @@ function ClassCard() {
    const [anchorEl, setAnchorEl] = useState(null);
    const [open, setOpen] = useState(false);
    
-   const handleEdit= (classTitle) => {
-      setClassTitle(classTitle.name);
-      setEditClassID(editClassID.id);
-   }
+   // const handleEdit= (classTitle) => {
+   //    setClassTitle(classTitle.name);
+   //    setEditClassID(editClassID.id);
+   // }
 
    const handleSave = () => {
       dispatch({
@@ -73,7 +75,7 @@ function ClassCard() {
                   keepMounted
                   open={Boolean(anchorEl)}
                   onClose={handleClose} >
-                  <MenuItem onClick={handleEditOpen}>Edit</MenuItem>
+                  <MenuItem onClick={()=> handleEditOpen(classList)}>Edit</MenuItem>
                   <Dialog open={open} onClose={handleEditClose} aria-labelledby="form-dialog-edit-class">
                   <DialogTitle id="form-dialog-title"> Edit Class Information</DialogTitle>
                   <DialogContent>
@@ -91,7 +93,7 @@ function ClassCard() {
                   </DialogContent>
                   <DialogActions>
                      <Button id="edit-cancel-btn" onClick={handleEditClose}> Cancel </Button>
-                     <Button id="edit-save-btn" > Save </Button>
+                     <Button id="edit-save-btn" onClick={handleSave}> Save </Button>
                   </DialogActions>
                   </Dialog>
                   <MenuItem onClick={handleClose}> Archive</MenuItem>
