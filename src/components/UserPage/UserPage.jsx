@@ -21,6 +21,18 @@ const useCardStyles = makeStyles(() => ({
       textAlign: "center",
       color: "grey",
    },
+   unapproved: {
+      paddingBottom: "15px",
+      alignItems: "center",
+      border: "5px solid #DD2E44",
+      borderRadius: "15px",
+      justifyContent: "center",
+      flexGrow: "1px",
+      width: "300px",
+      height: "410px",
+      textAlign: "center",
+      color: "grey",
+   },
    avatar: {
       textAlign: "left",
       borderStyle: "solid",
@@ -134,12 +146,12 @@ function UserPage() {
          type: "DELETE_STEMTELL",
          payload: stemtell
       });
-      dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
+      dispatch({ type: "FETCH_MY_STEMTELLS", payload: user.id });
       history.push('/close');
    };
    
    useEffect(() => {
-      dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
+      dispatch({ type: "FETCH_MY_STEMTELLS", payload: user.id });
     }, []);
 
    return (
@@ -159,7 +171,7 @@ function UserPage() {
                      {stemtells.map((stemtell) => {
                         return (
                            <Grid item key={stemtell.id}>
-                              <Card className={cardStyles.root}>
+                              <Card className={(stemtell.approved === true) ? cardStyles.root : cardStyles.unapproved}>
                                  <section className={cardStyles.username}>{stemtell.username}</section>
                                  <div className={cardStyles.username} id="userClass">
                                     {stemtell.class_name}
@@ -176,6 +188,7 @@ function UserPage() {
                                     Edit
                                  </StyledButton>
                               </Card>
+                              {(stemtell.approved === true) ? <></> : <h3><center>NEEDS REVISION</center></h3>}
                            </Grid>
                         )
                      })}

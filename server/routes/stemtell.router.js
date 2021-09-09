@@ -34,7 +34,8 @@ router.get('/homefeed', rejectUnauthenticated, (req, res) => {
                   WHERE "stemtell".class_id IN (
                   SELECT "class_id"
                   FROM "user_class"
-                  WHERE "user_class".user_id = $1 )
+                  WHERE "user_class".user_id = $1
+                  AND "stemtell".approved IS TRUE )
                   ORDER BY "stemtell".unix DESC;`;
    pool.query(query, [req.user.id])
    .then(results => {
@@ -140,6 +141,19 @@ router.put('/save', rejectUnauthenticated, (req, res) => {
 // GET /api/stemtell/userstemtells
 // Handles getting all stemtells associated with a specific user ID
 router.get('/userstemtells', rejectUnauthenticated, (req, res) => {
+   const profilePageID = req.query.profileID;
+   const qText = `SELECT * FROM "stemtell" WHERE "user_id" = $1 AND "approved" IS TRUE`;
+   pool.query(qText, [profilePageID])
+   .then(results => {
+      res.send(results.rows);
+   })
+   .catch(error => {
+      console.log("Error getting user STEMtells:", error);
+      res.sendStatus(500);
+   });
+});
+
+router.get('/mystemtells', rejectUnauthenticated, (req, res) => {
    const profilePageID = req.query.profileID;
    const qText = `SELECT * FROM "stemtell" WHERE "user_id" = $1`;
    pool.query(qText, [profilePageID])
