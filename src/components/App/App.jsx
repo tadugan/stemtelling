@@ -6,6 +6,7 @@ import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import UserPage from '../UserPage/UserPage';
+import CreateProfile from '../CreateProfile/CreateProfile';
 import ProfilePage from '../ProfilePage/ProfilePage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
@@ -15,6 +16,7 @@ import ClassCard from '../ClassCard/ClassCard';
 import STEMtellDetails from '../STEMtellDetails/STEMtellDetails';
 import Homepage from '../Homepage/Homepage';
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
+import TeacherReviewList from '../TeacherReviewList/TeacherReviewList';
 import ClassList from '../ClassList/ClassList';
 import ClassDetails from '../ClassDetails/ClassDetails';
 import TeacherFeedback from '../TeacherFeedback/TeacherFeedback';
@@ -40,11 +42,13 @@ function App() {
                <ProtectedRoute exact path="/homepage" component={Homepage} />
                <ProtectedRoute exact path="/myprofile" component={UserPage} />
                <ProtectedRoute exact path="/create" component={CreateSTEMtell} />
+               <ProtectedRoute exact path="/create/:id" component={CreateProfile} />
                <ProtectedRoute exact path="/classlist" component={ClassCard} />
+               <ProtectedRoute exact path="/teacher/review" component={TeacherReviewList} />
                <ProtectedRoute exact path="/stemtell/:id" component={STEMtellDetails} />
                <ProtectedRoute exact path="/classlist" component={ClassList} />
                <ProtectedRoute exact path="/classlist/details/:id" component={ClassDetails} />
-               <ProtectedRoute exact path="/teacher/feedback/:id" component={TeacherFeedback}/>
+               <ProtectedRoute exact path="/comment/feedback/:id" component={TeacherFeedback}/>
                <Route exact path="/login">{user.id ? <Redirect to="/myprofile" /> : <LoginPage />}</Route>
                <Route exact path="/registration">{user.id ? <Redirect to="/myprofile" /> : <RegisterPage />}</Route>
                <Route exact path="/home">{user.id ? <Redirect to="/myprofile" /> : <Homepage />}</Route>

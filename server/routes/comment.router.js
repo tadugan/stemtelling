@@ -41,13 +41,14 @@ router.get("/stemcomments/:id", rejectUnauthenticated, (req, res) => {
 
 // GET /api/comment/feedback
 // Handles getting teacher feedback for a specific STEMtell
-router.get("/feedback", rejectUnauthenticated, (req, res) => {
+router.get("/feedback/:id", rejectUnauthenticated, (req, res) => {
+  stemtellId = req.params.id;
    const query = `SELECT "user".name AS username, "stemtell".id, "user".profile_picture_url, "comment".comment, "comment".unix, "comment".id, "user".authority
                   FROM "comment"
                   JOIN "user" ON "comment".user_id = "user".id
                   JOIN "stemtell" ON "stemtell".id = "comment".stemtell_id
-                  WHERE "comment".stemtell_id = 2 AND "comment".teacher_feedback=TRUE;`;
-   pool.query(query)
+                  WHERE "comment".stemtell_id = $1 AND "comment".teacher_feedback=TRUE;`;
+   pool.query(query, [stemtellId])
    .then(results => {
       res.send(results.rows);
    })

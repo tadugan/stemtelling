@@ -175,5 +175,23 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
    });
 });
 
+// PUT /api/stemtell/status
+//update the status of a STEMtell with Teacher Feedback Form
+router.put('/status', rejectUnauthenticated, (req, res) => {
+  const status = req.body;
+  console.log(req.body, "in router put stemtell~*~*~*~*~");
+  const query = `
+  UPDATE "stemtell"
+  SET "approved" = $1
+  WHERE "id" = $2;`;
+  pool
+    .query(query, [status.status, status.id]) //FIGURE THIS OUT
+    .then((res) => {
+      res.data
+    })
+    .catch((err) => {
+      console.log("error updating STEMtell status", err);
+    })
+});
 
 module.exports = router;

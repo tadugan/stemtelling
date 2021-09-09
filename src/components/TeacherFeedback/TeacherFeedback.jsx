@@ -5,7 +5,11 @@ import {
   Button,
   Box,
   Container,
-  Grid
+  Grid,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
 } from "@material-ui/core";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,7 +17,19 @@ import { useParams } from "react-router-dom";
 import "./TeacherFeedback.css";
 import { useState } from "react";
 import BackBtn from "../BackBtn/BackBtn";
+import { makeStyles } from "@material-ui/core";
 
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
+
+  
 
 function TeacherFeedback() {
     const dispatch= useDispatch();
@@ -24,11 +40,15 @@ function TeacherFeedback() {
 
     const [leaveFeedback, setFeedback]= useState('');
     const stemtell = useSelector((store) => store.stemtellDetails);
-
+    const classes = useStyles();
+    const [status, setStatus] = useState('');
+  
+    const handleChange = (event) => {
+      setStatus(event.target.value);
+    };
 useEffect(() => {
   dispatch({ type: "FETCH_STEMTELL_DETAILS", payload: stemtellId });
-
-    dispatch({ type: 'GET_FEEDBACK'});
+  dispatch({ type: 'GET_FEEDBACK', payload: stemtellId});
 }, []);
 
 const handleSubmit = () => {
@@ -36,10 +56,17 @@ const handleSubmit = () => {
     stemtell_id: stemtellId,
     comment: leaveFeedback,
     teacher_feedback: true
-  }
-});
+  }}),
+  dispatch({ type: 'UPDATE_STATUS', payload: {
+    status: status,
+    id: stemtellId
+  }}),
+  dispatch({ type: 'GET_FEEDBACK', payload: stemtellId})
+
+
 setFeedback('');
 }
+
 
 const handleFeedback = (event) => {
   event.preventDefault();
@@ -90,15 +117,28 @@ const unixTimestamp = (timestamp) => {
               >
             </TextField>
             </form>
-               <div id="feedbackBtns">
-                  <Button>Cancel</Button>
-                  <Button onClick={handleSubmit}>Submit</Button>
-                  </div>
               
             </div>
           </label>
         </Box>
-     
+
+        <FormControl className={classes.formControl}>
+        <InputLabel id="Approved">Status</InputLabel>
+        <Select
+          labelId="stemtell-status"
+          id="stemtell-status"
+          value={status}
+          onChange={handleChange}
+        >
+          <MenuItem value={true}>Approved</MenuItem>
+          <MenuItem value={false}>Needs Review</MenuItem>
+        </Select>
+      </FormControl>
+      <div id="feedbackBtns">
+                  <Button>Cancel</Button>
+                  <Button onClick={handleSubmit}>Submit</Button>
+                  </div>
+              
     {feedback.map((fb) => {
         return(
       <Card 
