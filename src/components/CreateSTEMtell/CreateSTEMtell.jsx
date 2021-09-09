@@ -6,6 +6,7 @@ import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
 import BackBtn from '../BackBtn/BackBtn';
 import "./CreateSTEMtell.css";
 import { useHistory } from 'react-router';
+import ImageUploader from '../ImageUploader/ImageUploader';
 import styled from 'styled-components';
 
 const StyledButton = styled(Button)`
@@ -48,11 +49,11 @@ function CreateSTEMtell() {
    const history = useHistory();
    const [ classId, setClassId ] = useState('');
    const [ title, setTitle ] = useState('');
-   const [ imageUrl, setImageUrl] = useState('');
    const [ description, setDescription ] = useState('');
    const [ alertMessage, setAlertMessage ] = useState('');
    const selectedTags = useSelector(store => store.selectedTags);
    const classList = useSelector(store => store.classes);
+   const imageData = useSelector(store => store.image);
    const handleCancel = () => {history.goBack()};
    const getClassList = () => {dispatch({ type: 'FETCH_CLASSES'})};
 
@@ -68,20 +69,23 @@ function CreateSTEMtell() {
       dispatch({
          type: 'SUBMIT_NEW_STEMTELL',
          payload: {
-            title: title,
-            body_text: description,
-            media_url: imageUrl,
-            class_id: classId,
-            tag_ids: tagIds
+            details: {
+               title: title,
+               body_text: description,
+               class_id: classId,
+               tag_ids: tagIds
+            },
+            image_data: imageData,
+            history: history
          }
       });
       setClassId(0);
       setTitle('');
-      setImageUrl('');
       setDescription('');
       dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
-      history.goBack();
    };
+
+
 
    const invalidInputs = () => {
       if (classId === 0) {
@@ -147,7 +151,7 @@ function CreateSTEMtell() {
       <BackBtn />
       <div className="create-stemtell-body">
          <form>
-            <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
+            <Grid container spacing={1} direction="column" justifyContent="center" alignItems="center">
                <Grid item>
                   <h2>Create a STEMtell</h2>
                </Grid>
@@ -172,7 +176,7 @@ function CreateSTEMtell() {
                   <TextField label="Title" variant="outlined" value={title} onChange={(event) => setTitle(event.target.value)} className="create-stemtell-title"/>
                </Grid>
                <Grid item>
-                  <TextField label="Image URL" variant="outlined" alue={imageUrl} onChange={(event) => setImageUrl(event.target.value)} className="create-stemtell-image-url"/>
+                  <ImageUploader />
                </Grid>
                <Grid item>
                   <TextField aria-label="STEMtell textarea" placeholder="Add text" minRows={3} maxRows={3} variant="outlined" multiline value={description} onChange={(event) => setDescription(event.target.value)} className="create-stemtell-description"/>

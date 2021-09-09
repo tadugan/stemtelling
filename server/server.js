@@ -18,11 +18,12 @@ const resetPasswordRouter = require('./routes/resetpassword.router');
 const notificationRouter = require('./routes/notification.router');
 const tagRouter = require('./routes/tag.router');
 const reviewRouter = require('./routes/review.router');
+const imageRouter = require('./routes/image.router');
 
 
 // Body parser middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '50mb' })); // limit for image upload
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); // limit for image upload
 
 
 // Passport Session Configuration //
@@ -46,6 +47,7 @@ app.use('/api/resetpassword', resetPasswordRouter);
 app.use('/api/notification', notificationRouter);
 app.use('/api/tag', tagRouter);
 app.use('/api/review', reviewRouter);
+app.use('/api/upload', imageRouter);
 
 
 // Serve static files
