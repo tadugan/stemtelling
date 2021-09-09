@@ -19,6 +19,7 @@ import TeacherReviewList from '../TeacherReviewList/TeacherReviewList';
 import ClassList from '../ClassList/ClassList';
 import ClassDetails from '../ClassDetails/ClassDetails';
 import TeacherFeedback from '../TeacherFeedback/TeacherFeedback';
+import './App.css';
 
 
 function App() {
