@@ -55,6 +55,7 @@ function CreateSTEMtell() {
    const selectedTags = useSelector(store => store.selectedTags);
    const classList = useSelector(store => store.classes);
    const imageData = useSelector(store => store.image);
+   const user = useSelector(store => store.user);
    const handleCancel = () => {history.push('/close');};
    const getClassList = () => {dispatch({ type: 'FETCH_CLASSES'})};
 
@@ -84,6 +85,7 @@ function CreateSTEMtell() {
       setTitle('');
       setDescription('');
       dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
+      dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
       history.push('/close');
    };
 

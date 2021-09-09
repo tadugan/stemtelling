@@ -68,6 +68,23 @@ const StyledButton = styled(Button)`
    }
 `;
 
+const StyledRedButton = styled(Button)`
+   display: inline-block;
+   padding: 10px 20px;
+   border-color: #014041;
+   border-width: 1px 1px 3px;
+   border-radius: 4px;
+   background-color: #DD2E44;
+   color: #f8f8f8;   
+   font-size: 1.1rem;
+   outline: 0;
+   cursor: pointer;
+   &:hover {
+      background-color: rgba(221, 46, 68, 0.6);
+      text-decoration: none;
+   }
+`;
+
 const useStyles = makeStyles((theme) => ({
    root: {
       flexGrow: 1,
@@ -111,6 +128,15 @@ function UserPage() {
       setOpen(true); 
       setStemtellData(stemtell);
    };
+
+   const handleDelete = (stemtell) => {
+      dispatch({
+         type: "DELETE_STEMTELL",
+         payload: stemtell
+      });
+      dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
+      history.push('/close');
+   };
    
    useEffect(() => {
       dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
@@ -142,6 +168,10 @@ function UserPage() {
                                  <img id="stemtellImage" src={stemtell.media_url}  onClick={() => toStemtellDetail(stemtell.id)} />
                                  <section id="cardReactions">{stemtell.reaction_name}</section>
                                  <section id="userStemtellDescription">{stemtell.body_text}</section>
+                                 <StyledRedButton onClick={() => {handleDelete(stemtell)}}>
+                                    Delete
+                                 </StyledRedButton> 
+                                 
                                  <StyledButton onClick={() => {handleOpen(stemtell)}}>
                                     Edit
                                  </StyledButton>
