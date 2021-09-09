@@ -337,8 +337,42 @@ INSERT INTO "user_tag" ("user_id", "tag_id")
 
 -- Step 9: run the following queries to add reactions to the reaction table
 INSERT INTO "reaction" ("media_url", "name")
-	VALUES ('https://www.nicepng.com/png/detail/376-3762215_how-to-set-use-blue-thumbs-up-icon.png', 'like'),
-	('https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png', 'love');
+	VALUES ('https://svgshare.com/i/a1t.svg', 'art'),
+	('https://svgshare.com/i/a1K.svg', 'basketball'),
+	('https://svgshare.com/i/a1L.svg', 'beaker'),
+	('https://svgshare.com/i/a2W.svg', 'camera'),
+	('https://svgshare.com/i/a2h.svg', 'car'),
+	('https://svgshare.com/i/a2i.svg', 'cog'),
+	('https://svgshare.com/i/a2X.svg', 'compass'),
+	('https://svgshare.com/i/a22.svg', 'computer'),
+	('https://svgshare.com/i/a23.svg', 'cool'),
+	('https://svgshare.com/i/a2u.svg', 'crane'),
+	('https://svgshare.com/i/a2Y.svg', 'dinnerplate'),
+	('https://svgshare.com/i/a19.svg', 'DNA'),
+	('https://svgshare.com/i/a10.svg', 'drama'),
+	('https://svgshare.com/i/a1u.svg', 'heart'),
+	('https://svgshare.com/i/a1v.svg', 'leaf'),
+	('https://svgshare.com/i/a32.svg', 'lightbulb'),
+	('https://svgshare.com/i/a3D.svg', 'lipstick'),
+	('https://svgshare.com/i/a24.svg', 'lungs'),
+	('https://svgshare.com/i/a3E.svg', 'math'),
+	('https://svgshare.com/i/a3F.svg', 'microscope'),
+	('https://svgshare.com/i/a3Q.svg', 'music'),
+	('https://svgshare.com/i/a2A.svg', 'neucleus'),
+	('https://svgshare.com/i/a3R.svg', 'openbook'),
+	('https://svgshare.com/i/a2v.svg', 'pawprint'),
+	('https://svgshare.com/i/a1A.svg', 'people'),
+	('https://svgshare.com/i/a33.svg', 'projector'),
+	('https://svgshare.com/i/a2j.svg', 'recycle'),
+	('https://svgshare.com/i/a2B.svg', 'robot'),
+	('https://svgshare.com/i/a3T.svg', 'shoppingcart'),
+	('https://svgshare.com/i/a1V.svg', 'smile'),
+	('https://svgshare.com/i/a2Z.svg', 'stars'),
+	('https://svgshare.com/i/a2m.svg', 'tech'),
+	('https://svgshare.com/i/a2_.svg', 'telescope'),
+	('https://svgshare.com/i/a2N.svg', 'thumbsup'),
+	('https://svgshare.com/i/a34.svg', 'videogames'),
+	('https://svgshare.com/i/a1B.svg', 'worldmap');
 
 
 -- Step 10: run the following queries to add comments to the comment table
