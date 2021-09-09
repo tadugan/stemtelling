@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {Container, TextField, Button} from '@material-ui/core';
+import {Container, TextField, Button, Box} from '@material-ui/core';
 import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
+import './AddClass.css';
 
 function AddClass() {
-    // const btnRef= React.useRef(null);
-    // const onHoverAdd = () =>{
-
-    // }
-    const handleAddClass = () => {
-
-
-    }
+    
 
 
     return(
+        <>
         <Container className='AddClassContainer'>
 
         <form className='AddClassForm'>
@@ -27,8 +22,18 @@ function AddClass() {
         </TextField>
         </form>
 
-        <span> <AddCircleOutlineRoundedIcon onMouseLeave/> </span>
+        <span> 
+        <Box className='AddClassBtnBox'>
+        <AddCircleOutlineRoundedIcon
+        id='AddClassBtn'
+        color='primary'
+        fontSize='large'
+         /> 
+         </Box>
+         </span>        
+
         </Container>
+        </>
     )
 
 }

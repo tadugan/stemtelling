@@ -1,0 +1,8 @@
+.ClassListHeader {
+    margin: auto;
+    padding-bottom: 10px;
+}
+
+.ClassListHeaderContainer{
+    display: grid;
+}

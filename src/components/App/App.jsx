@@ -12,7 +12,6 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
-import ClassCard from '../ClassCard/ClassCard';
 import STEMtellDetails from '../STEMtellDetails/STEMtellDetails';
 import Homepage from '../Homepage/Homepage';
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
@@ -42,7 +41,6 @@ function App() {
                <ProtectedRoute exact path="/myprofile" component={UserPage} />
                <ProtectedRoute exact path="/create" component={CreateSTEMtell} />
                <ProtectedRoute exact path="/createprofile/:id" component={CreateProfile} />
-               <ProtectedRoute exact path="/classlist" component={ClassCard} />
                <ProtectedRoute exact path="/teacher/review" component={TeacherReviewList} />
                <ProtectedRoute exact path="/stemtell/:id" component={STEMtellDetails} />
                <ProtectedRoute exact path="/classlist" component={ClassList} />

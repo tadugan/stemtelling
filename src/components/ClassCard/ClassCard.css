@@ -1,7 +1,5 @@
-#ClassCardHeader{
-   color: #727272;
-   padding: 8px;
-   float: left;
+.classCardContainer{
+   margin-top: 50px;
 }
 
 .classDetail{
@@ -12,7 +10,7 @@
 }
 
 .classCard{
-   width: 300px;
+   width: auto;
    margin: 20px;
 }
 
@@ -20,5 +18,6 @@
    margin: auto;
    width: 50%;
    padding: 10px;
-   margin:2px
+   margin: 2px;
+   color: #727272;
 }
