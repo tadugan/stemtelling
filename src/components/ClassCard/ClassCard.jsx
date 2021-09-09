@@ -24,18 +24,17 @@ function ClassCard() {
   const toClassDetail = (class_id) => {
     history.push(`classlist/details/${class_id}`);
   };
-   const [classTitle, setClassTitle] = useState("");
-   const [editClassID, setEditClassID] = useState("");
-   const [anchorEl, setAnchorEl] = useState(null);
-   const [open, setOpen] = useState(false);
-   
+  const [classTitle, setClassTitle] = useState("");
+  const [editClassID, setEditClassID] = useState("");
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [open, setOpen] = useState(false);
+
   //Start of handling menu and dialog views
   const handleClick = (classList) => {
     setAnchorEl(event.currentTarget);
     setClassTitle(classList.name);
     setEditClassID(classList.class_id);
     handleEditOpen();
-    
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -44,7 +43,6 @@ function ClassCard() {
 
   const handleEditOpen = () => {
     setOpen(true);
-    
   };
 
   const handleEditClose = () => {
@@ -52,17 +50,9 @@ function ClassCard() {
     setClassTitle("");
     setEditClassID("");
   };
-//   End
-
- 
-
-  const handleEdit= (classTitle) => {
-     setClassTitle(classTitle.name);
-     setEditClassID(editClassID.id);
-  }
+  //   End
 
   const handleSave = () => {
-    event.preventDefault();
     dispatch({
       type: "EDIT_CLASS",
       payload: {
@@ -73,6 +63,7 @@ function ClassCard() {
     setClassTitle("");
     setEditClassID("");
     handleClose();
+    dispatch({ type: "FETCH_CLASSES" });
   };
 
   useEffect(() => {
@@ -85,49 +76,14 @@ function ClassCard() {
         if (classList.archived === false) {
           return (
             <Card className="classCard" key={classList.id}>
-              <EditIcon id="editClassCard" onClick={() => handleClick(classList)} />
-              {/* <Menu
-                id="editClass-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}>
-                <MenuItem onClick={() => handleEditOpen(classList)}>
-                  Edit
-                </MenuItem> */}
-                <Dialog
-                  open={open}
-                  onClose={handleEditClose}
-                  aria-labelledby="form-dialog-edit-class">
-                  <DialogTitle id="form-dialog-title">
-                    Edit Class Information
-                  </DialogTitle>
-                  <DialogContent>
-                    <DialogContentText>
-                      Update Class Information below.
-                    </DialogContentText>
-                    <TextField
-                      autoFocus
-                      margin="dense"
-                      className="class-edit-form"
-                      label="Class Title"
-                      type="text"
-                      fullWidth
-                      onChange={(event) => setClassTitle(event.target.value)}
-                    />
-                  </DialogContent>
-                  <DialogActions>
-                    <Button id="edit-cancel-btn" onClick={handleEditClose}>
-                      Cancel
-                    </Button>
-                    <Button id="edit-save-btn" onClick={handleSave}>
-                      Save
-                    </Button>
-                  </DialogActions>
-                </Dialog>
-                {/* <MenuItem onClick={handleClose}> Archive</MenuItem>
-              </Menu> */}
-              <h2 id="classCardTitle" onClick={() => toClassDetail(classList.class_id)}>
+              <EditIcon
+                id="editClassCard"
+                onClick={() => handleClick(classList)}
+              />
+              <h2
+                id="classCardTitle"
+                onClick={() => toClassDetail(classList.class_id)}
+              >
                 {classList.name}
               </h2>
               <section className="classDetail" id="classStatus">
@@ -147,10 +103,14 @@ function ClassCard() {
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
-                onClose={handleClose}>
+                onClose={handleClose}
+              >
                 <MenuItem onClick={handleClose}> Restore </MenuItem>
               </Menu>
-              <h2 id="classCardTitle" onClick={() => toClassDetail(classList.class_id)}>
+              <h2
+                id="classCardTitle"
+                onClick={() => toClassDetail(classList.class_id)}
+              >
                 {classList.name}
               </h2>
               <section className="classDetail" id="classStatus">
@@ -163,6 +123,33 @@ function ClassCard() {
           );
         }
       })}
+      <Dialog
+        open={open}
+        onClose={handleEditClose}
+        aria-labelledby="form-dialog-edit-class"
+      >
+        <DialogTitle id="form-dialog-title">Edit Class Information</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Update Class Information below.</DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            className="class-edit-form"
+            label="Class Title"
+            type="text"
+            fullWidth
+            onChange={(event) => setClassTitle(event.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button id="edit-cancel-btn" onClick={handleEditClose}>
+            Cancel
+          </Button>
+          <Button id="edit-save-btn" onClick={handleSave}>
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }
