@@ -19,6 +19,7 @@ import TeacherReviewList from '../TeacherReviewList/TeacherReviewList';
 import ClassList from '../ClassList/ClassList';
 import ClassDetails from '../ClassDetails/ClassDetails';
 import './App.css';
+import ImageUploader from '../ImageUploader/ImageUploader';
 
 function App() {
    const dispatch = useDispatch();
@@ -45,6 +46,7 @@ function App() {
                <ProtectedRoute exact path="/stemtell/:id" component={STEMtellDetails} />
                <ProtectedRoute exact path="/classlist" component={ClassList} />
                <ProtectedRoute exact path="/classlist/details/:id" component={ClassDetails} />
+               <ProtectedRoute exact path="/imageuploader" component={ImageUploader} />
                <Route exact path="/login">{user.id ? <Redirect to="/myprofile" /> : <LoginPage />}</Route>
                <Route exact path="/registration">{user.id ? <Redirect to="/myprofile" /> : <RegisterPage />}</Route>
                <Route exact path="/home">{user.id ? <Redirect to="/myprofile" /> : <Homepage />}</Route>
