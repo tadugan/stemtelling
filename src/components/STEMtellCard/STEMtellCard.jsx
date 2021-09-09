@@ -7,7 +7,7 @@ import "./STEMtellCard.css";
 
 const useStyles = makeStyles(() => ({
    root: {
-      margin: "20px",
+  
       alignItems: "center",
       border: "2px solid #1E1F20",
       borderRadius: "15px",
@@ -38,9 +38,13 @@ const useStyles = makeStyles(() => ({
    stemdate: {
       float: "right",
       fontSize: '14px',
+      paddingRight: "5px",
    },
-   content: {
-     padding: 24,
+   stemtitle: {
+      display: "flex",
+      alignItems: "center",
+      marginLeft: "40%",
+      justifyContent: "center",
    },
  }));
 
@@ -85,7 +89,7 @@ function StemtellCard() {
                            {stemtell.class_name}
                         </div>
                      </div>
-                     <h3 id="stemTitle" onClick={() => toStemtellDetail(stemtell.stem_id)}>
+                     <h3 className={cardStyles.stemtitle} onClick={() => toStemtellDetail(stemtell.stem_id)}>
                         {" "}{stemtell.title}
                      </h3>
                      
