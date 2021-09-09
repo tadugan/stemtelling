@@ -1,3 +1,8 @@
+.add-tag-dialog-body {
+   width: 200px;
+   margin: 5px auto;
+}
+
 .image-uploader-preview {
     height: 104px;
 }
