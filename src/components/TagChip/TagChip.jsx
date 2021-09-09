@@ -4,7 +4,7 @@ import {useDispatch } from 'react-redux';
 
 const useStyles = makeStyles({
     selected: {
-        backgroundColor: "green",
+        backgroundColor: "#1E1F20",
         color: "white",
     },
     unselected: {

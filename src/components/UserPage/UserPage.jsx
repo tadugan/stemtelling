@@ -3,9 +3,27 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Avatar, Card, Paper, Modal, Backdrop, Fade, TextField } from '@material-ui/core';
+import { Grid, Avatar, Card, Paper, Modal, Backdrop, Fade, TextField, Button } from '@material-ui/core';
 import EditSTEMtell from "../EditSTEMtell/EditSTEMtell";
 import './UserPage.css';
+import styled from 'styled-components';
+
+const StyledButton = styled(Button)`
+   display: inline-block;
+   padding: 10px 20px;
+   border-color: #014041;
+   border-width: 1px 1px 3px;
+   border-radius: 4px;
+   background-color: #979797;
+   color: #f8f8f8;
+   font-size: 1.1rem;
+   outline: 0;
+   cursor: pointer;
+   &:hover {
+      background-color: rgba(151, 151, 151, 0.6);
+      text-decoration: none;
+   }
+`;
 
 const useStyles = makeStyles((theme) => ({
    root: {
@@ -79,9 +97,9 @@ function UserPage() {
                               <img id="stemtellImage" src={stemtell.media_url}  onClick={() => toStemtellDetail(stemtell.id)} />
                               <section id="cardReactions">{stemtell.reaction_name}</section>
                               <section id="userStemtellDescription">{stemtell.body_text}</section>
-                              <button className="btn" onClick={() => {handleOpen(stemtell)}}>
+                              <StyledButton onClick={() => {handleOpen(stemtell)}}>
                                  Edit
-                              </button>
+                              </StyledButton>
                            </Card>
                         </Grid>
                      )

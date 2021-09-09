@@ -15,16 +15,27 @@ function ClassCard() {
       dispatch({ type: 'FETCH_CLASSES'});
    }, []);
 
+
    return (
-      <Container>
+      <Container className='classCardContainer'>
          {classes.map((classList) => {
+            if (classList.archived === false){
             return(
-               <Card className="classCard">
-                  <h2 onClick= {() => toClassDetail(classList.class_id)}>{classList.name}</h2>
-                  <section className="classDetail"> status: Active {classList.archived}</section>
+               <Card className="classCard" key={classList.id}>
+                  <h2 id='classCardTitle' onClick= {() => toClassDetail(classList.class_id)}>{classList.name}</h2>
+                  <section className="classDetail"> status: Active </section>
                   <section className="classDetail">code: {classList.code}</section>
                </Card>
             )
+         } else if (classList.archived === true) {
+            return(
+               <Card className="classCard" key={classList.id}>
+                  <h2 id='classCardTitle' onClick= {() => toClassDetail(classList.class_id)}>{classList.name}</h2>
+                  <section className="classDetail"> status: Archived </section>
+                  <section className="classDetail">code: {classList.code}</section>
+               </Card>
+            )
+         }
          })}
       </Container>
    );

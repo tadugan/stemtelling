@@ -22,7 +22,7 @@ img {
    border-color: #014041;
    border-width: 1px 1px 3px;
    border-radius: 4px;
-   background-color: #00acb0;
+   background-color: #979797;
    color: #f8f8f8;
    font-size: 1.1rem;
    outline: 0;
@@ -90,4 +90,30 @@ img {
 input {
    margin: 5px;
    margin-bottom: 10px;
+}
+
+.LoginForm {
+   box-sizing: border-box;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   margin-right: -50%;
+   transform: translate(-50%, -50%);
+   width: 400px;
+   max-width: 100%;
+   padding: 25px;
+   margin: 0 auto 20px;
+   background-color: #efefef;
+   border-radius: 3px;
+   box-shadow: 0 1px 2px rgb(0, 0, 0, 0.4);
+}
+
+.LoginPage{
+   background-image: url('../images/spacex.jpg');
+   background-size: auto;
+   background-repeat: no-repeat;
+}
+
+.AuthoritySelect {
+   width: 50%;
 }

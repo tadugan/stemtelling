@@ -4,6 +4,22 @@ import { useDispatch } from 'react-redux';
 import CloseIcon from '@material-ui/icons/Close';
 import './AddTagDialog.css';
 import GeneralTagMap from '../GeneralTagMap/GeneralTagMap';
+import styled from 'styled-components';
+
+const StyledBlueButton = styled(Button)`
+   display: inline-block;
+   padding: 10px 20px;
+   border-radius: 4px;
+   background-color: #79D0F1;
+   color: #f8f8f8;   
+   font-size: 1.1rem;
+   outline: 0;
+   cursor: pointer;
+   &:hover {
+      background-color: rgba(121, 208, 241   , 0.6);
+      text-decoration: none;
+   }
+`;
 
 
 function AddTagDialog() {
@@ -49,9 +65,9 @@ function AddTagDialog() {
 
    return (
       <div className="add-tag-dialog-body">
-         <Button variant="outlined" color="primary" onClick={handleClickOpen} className="add-tag-dialog-button">
+         <StyledBlueButton variant="outlined" color="primary" onClick={handleClickOpen} className="add-tag-dialog-button">
             Add Tags
-         </Button>
+         </StyledBlueButton>
          <Dialog fullScreen open={open} onClose={handleClose}>
             <AppBar className="add-tag-dialog-appbar">
                <Toolbar>
@@ -71,8 +87,8 @@ function AddTagDialog() {
                   <Grid item container spacing={1} direction="column" justifyContent="center" alignItems="center">
                      <Grid item xs={12}>
                         <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-                           <Button onClick={() => changeTagDisplay('stem')}>STEM</Button>
-                           <Button onClick={() => changeTagDisplay('general')}>General</Button>
+                           <StyledBlueButton onClick={() => changeTagDisplay('stem')}>STEM</StyledBlueButton>
+                           <StyledBlueButton onClick={() => changeTagDisplay('general')}>General</StyledBlueButton>
                         </ButtonGroup>
                      </Grid>
                   </Grid>
