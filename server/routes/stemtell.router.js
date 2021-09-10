@@ -90,6 +90,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
                await client.query(queryTextAddTag, [id, stemtellId]);
             };
             await client.query("COMMIT");
+            res.sendStatus(201);
          }
          catch (error) {
             await client.query("ROLLBACK");
@@ -120,6 +121,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
                await client.query(queryTextAddTag, [id, stemtellId]);
             };
             await client.query("COMMIT");
+            res.sendStatus(201);
          }
          catch (error) {
             await client.query("ROLLBACK");

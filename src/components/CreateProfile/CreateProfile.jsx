@@ -111,11 +111,11 @@ function CreateProfile() {
          payload: {
                name: name,
                email: email,
-               picture: profilePic
+               picture: profilePic,
+               history: history
          }
       });
       dispatch({type: 'FETCH_USER'});
-      history.push('/close');
    }
 
     const saveChanges = () => {

@@ -86,7 +86,6 @@ function CreateSTEMtell() {
       setDescription('');
       dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
       dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
-      history.push('/close');
    };
 
 
