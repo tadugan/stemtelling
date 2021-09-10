@@ -32,10 +32,10 @@ function* fetchProfile(action) {
 };
 
 function* updateUser(action) {
-   console.log(action.payload);
-   const userInfo = action.payload;
+   console.log('update user action.payload', action.payload);
    try {
-      const response = yield axios.post('/api/user/update', { userInfo: userInfo });
+      yield axios.post('/api/user/update', action.payload );
+      action.payload.history.push('/myprofile');
    }
    catch (error) {
       console.log("Error with updateUser in user.saga.js:", error);
