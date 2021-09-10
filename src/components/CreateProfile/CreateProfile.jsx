@@ -1,20 +1,4 @@
-import {
-    AppBar,
-    Button,
-    ButtonGroup,
-    Backdrop,
-    Dialog,
-    Grid,
-    IconButton,
-    Toolbar,
-    Typography,
-    Avatar,
-    Card,
-    Paper,
-    Modal,
-    Fade,
-    TextField,
-  } from '@material-ui/core';
+import { AppBar, Button, ButtonGroup, Backdrop, Dialog, Grid, IconButton, Toolbar, Typography, Avatar, Card, Paper, Modal, Fade, TextField } from '@material-ui/core';
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from 'react';
@@ -24,7 +8,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import PublishIcon from '@material-ui/icons/Publish';
 import AddTagDialog from '../AddTagDialog/AddTagDialog';
 import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
-
+import './CreateProfile.css'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
   },
 }));
-
 
 const useModalStyles = makeStyles((theme) => ({
     modal: {
@@ -50,9 +33,8 @@ const useModalStyles = makeStyles((theme) => ({
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
     },
-  }));
+}));
 
-import './CreateProfile.css'
 
 function CreateProfile() {
     const dispatch = useDispatch();
@@ -61,6 +43,7 @@ function CreateProfile() {
     const modalClasses = useModalStyles();
     const classes = useStyles();
     const profile = useSelector((store) => store.profile);
+    const user = useSelector(store => store.user);
     const newClass = useSelector((store) => store.classes);
     const tags = useSelector((store) => store.tag);
     const [classOpen, setClassOpen] = React.useState(false);
@@ -73,12 +56,14 @@ function CreateProfile() {
     const [ imageUrl, setImageUrl] = useState('');
     const [ description, setDescription ] = useState('');
     const [ authority, setAuthority ] = useState('');
-
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
     
-
     // Uploads user info on load of page
     useEffect(() => {
         dispatch({type: 'GET_USER', payload: {userId: params}})
+        setEmail(user.email);
+        setName(user.name);
     }, []);
 
     const saveChanges = () => {
@@ -127,117 +112,72 @@ function CreateProfile() {
         // TODO:
     }
 
-    const handleCancel = () => {
-        console.log('CANCEL');
-    };
+   const handleCancel = () => {
+      history.goBack();
+   };
 
-
-    //May need to change a few things here to work with everything. Also need to see where we want to push after submitted
-    // const handleSubmit = () => {
-    // };
-
-    return(
-        <div>
-            <Grid item xs={12} sm={3} direction="row"
-                    justifyContent="center"
-                    alignItems="center"> 
-                <Paper className={classes.paper}>
-                    <img src={profile.profile_picture_url}></img>
-                    <h2>Name</h2>
-                    <h3>{profile.name}</h3> 
-                </Paper>
+   return (
+      <div>
+         <center>
+         <Grid item xs={12} sm={3} direction="row" justifyContent="center" alignItems="center"> 
+            <Paper className={classes.paper}>
+               <img src={profile.profile_picture_url} />
+               <h2>Name</h2>
+               <TextField type="text" label="Name" variant="outlined" value={name} onChange={(event) => setName(event.target.value)}/>
+            </Paper>
+         </Grid>
+         <Grid item xs={12} sm={3} direction="row" justifyContent="center" alignItems="center">
+            <Paper className={classes.paper}>
+               <h2>Email</h2>
+               <TextField type="email" label="Email" variant="outlined" value={email} onChange={(event) => setEmail(event.target.value)}/>
+            </Paper>
+         </Grid>
+         <Grid item xs={12} sm={3} direction="row" justifyContent="center" alignItems="center">
+            <Paper className={classes.paper}>
+               <h2>Classes</h2>
+               <Button variant="contained" onClick={handleClassOpen}>Add New Class</Button>
+               {/* WILL SHOW CLASS LIST HERE */}
+               <h3>{newClass.name}</h3>
+            </Paper>
+         </Grid>
+         <Modal aria-labelledby="Add CLass Modal" align="center" aria-describedby="Upload a class" className={modalClasses.modal} open={classOpen} onClose={handleClassClose} closeAfterTransition BackdropComponent={Backdrop} BackdropProps={{timeout: 500}}>
+            <Fade in={classOpen}>
+               <div className={modalClasses.paper} style={{width: '550px'}}>
+                  <TextField id="ClassCode" label="Class" variant="outlined" style={{width: "100%"}} value={addClassCode} onChange={(event) => setAddClassCode(event.target.value)}/><br /><br />
+                  <Button variant="contained" color="primary" startIcon={<CloseIcon />} onClick={handleClassClose}>Close</Button>
+                  &nbsp;
+                  <Button variant="contained" color="primary" endIcon={<PublishIcon />} onClick={saveChanges}>Save Class</Button> 
+               </div>
+            </Fade>
+         </Modal>
+         <br />
+         <Grid item container spacing={2} direction="row" justifyContent="center" alignItems="center" >
+            {selectedTags.map((tag) => {
+               return (
+                  <Grid item key={tag.id}>
+                     <TagChipDeletable tagInfo={tag}/>
+                  </Grid>
+               );
+            })}
+         </Grid>
+         <Grid item>
+            <AddTagDialog />
+         </Grid>
+         <Grid item container spacing={2} xs={12} direction="row" justifyContent="center" alignItems="center">
+            <Grid item>
+               <Button variant="contained" color="secondary" onClick={handleCancel}>
+                  Cancel
+               </Button>
             </Grid>
-            <Grid item xs={12} sm={3} direction="row"
-                    justifyContent="center"
-                    alignItems="center">
-                <Paper className={classes.paper}>
-                    <h2>Email</h2>
-                    <h3>{profile.email}</h3>
-                </Paper>
+            <Grid item>
+               <Button variant="contained" color="primary" onClick={handleSubmit} type="submit">
+                  Save Tags
+               </Button>
             </Grid>
-            <Grid item xs={12} sm={3} direction="row"
-                    justifyContent="center"
-                    alignItems="center">
-                <Paper className={classes.paper}>
-                    <h2>Class</h2>
-                    <Button variant="contained" onClick={handleClassOpen}>Add New Class</Button>
-                    {/* WILL SHOW CLASS LIST HERE */}
-                    <h3>{newClass.name}</h3>
-                </Paper>
-            </Grid>
-            <Modal aria-labelledby="Add CLass Modal" align="center" aria-describedby="Upload a class" className={modalClasses.modal} open={classOpen} onClose={handleClassClose} closeAfterTransition BackdropComponent={Backdrop} BackdropProps={{timeout: 500}}>
-                <Fade in={classOpen}>
-                    <div className={modalClasses.paper} style={{width: '550px'}}>
-                        <TextField id="ClassCode" label="Class" variant="outlined" style={{width: "100%"}} value={addClassCode} onChange={(event) => setAddClassCode(event.target.value)}/><br /><br />
-                        <Button variant="contained" color="primary" startIcon={<CloseIcon />} onClick={handleClassClose}>Close</Button>
-                        &nbsp;
-                        <Button variant="contained" color="primary" endIcon={<PublishIcon />} onClick={saveChanges}>Save Class</Button> 
-                    </div>
-                </Fade>
-            </Modal>
-            <Grid
-                    item
-                    container
-                    spacing={2}
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center"
-                >
-                    {selectedTags.map((tag) => {
-                        return (
-                            <Grid
-                                item
-                                key={tag.id}
-                            >
-                                <TagChipDeletable tagInfo={tag}/>
-                            </Grid>
-                        );
-                    })}
-                </Grid>
-                <Grid
-                    item
-                >
-                    <AddTagDialog />
-                </Grid>
-                <Grid
-                    item
-                >
-                </Grid>
-                <Grid
-                    item
-                    container
-                    spacing={2}
-                    xs={12}
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center"
-                >
-                    <Grid
-                        item
-                    >
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            onClick={handleCancel}
-                        >
-                            Cancel
-                        </Button>
-                    </Grid>
-                    <Grid
-                        item
-                    >
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={handleSubmit}
-                            type="submit"
-                        >
-                            Save Tags
-                        </Button>
-                    </Grid>
-                </Grid>
-        </div>
-    )
+         </Grid>
+         </center>
+      </div>
+   )
 }
 
 export default CreateProfile;

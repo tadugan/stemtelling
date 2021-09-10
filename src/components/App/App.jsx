@@ -43,7 +43,7 @@ function App() {
                <ProtectedRoute exact path="/homepage" component={Homepage} />
                <ProtectedRoute exact path="/myprofile" component={UserPage} />
                <ProtectedRoute exact path="/create" component={CreateSTEMtell} />
-               <ProtectedRoute exact path="/createprofile/:id" component={CreateProfile} />
+               <ProtectedRoute exact path="/editprofile" component={CreateProfile} />
                <ProtectedRoute exact path="/teacher/review" component={TeacherReviewList} />
                <ProtectedRoute exact path="/stemtell/:id" component={STEMtellDetails} />
                <ProtectedRoute exact path="/classlist" component={ClassList} />

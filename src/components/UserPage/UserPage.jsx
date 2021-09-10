@@ -165,7 +165,10 @@ function UserPage() {
                <Paper className={classes.paper}>
                   <img src={user.profile_picture_url}></img>
                   <h2>{user.name}</h2> 
-                  <LogOutButton className="btn" />
+                  <LogOutButton />
+                  <StyledButton onClick={() => {history.push(`/editprofile`)}}>
+                     Edit Profile
+                  </StyledButton>
                </Paper>
             </Grid>
             <Grid item xs={12} sm={9}>
