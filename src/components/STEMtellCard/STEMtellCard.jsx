@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
+import TagChip from '../TagChip/TagChip';
+import GeneralTagMap from "../GeneralTagMap/GeneralTagMap";
 import "./STEMtellCard.css";
 
 const useCardStyles = makeStyles(() => ({
@@ -57,6 +59,8 @@ function StemtellCard() {
    const history = useHistory();
    const dispatch = useDispatch();
    const stemtells = useSelector((store) => store.stemtells);
+   const selectedTags = useSelector(store => store.selectedTags);
+   const getExistingTags = (stemtellId) => {dispatch({ type: 'GET_EXISTING_TAGS', payload: stemtellId })};
 
    useEffect(() => {
       dispatch({ type: "FETCH_USER_FEED"});
@@ -82,6 +86,7 @@ function StemtellCard() {
          {stemtells.map((stemtell) => {
             return (
                <Grid item key={stemtell.stem_id}>
+        
                   <Card className={cardStyles.root}>
                         <h6 className={cardStyles.stemdate}>{unixTimestamp(stemtell.unix)}</h6>
                         <Avatar className={cardStyles.avatar} src={stemtell.profile_picture_url} onClick={() => onUserProfile(stemtell.author_id)}/>
@@ -95,6 +100,7 @@ function StemtellCard() {
                         {" "}{stemtell.title}
                      </h3>
                      <img id="stemtellImage" src={stemtell.media_url} onClick={() => toStemtellDetail(stemtell.stem_id)} />
+                     <GeneralTagMap />
                      <section id="cardReactions">
                         {stemtell.reaction_name}
                      </section>
