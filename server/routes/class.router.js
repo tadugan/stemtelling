@@ -123,11 +123,12 @@ router.post('/', rejectUnauthenticated, (req, res) => {
          const newClassCode = await client.query(
             `INSERT INTO "class" ("code", "name")
             VALUES (CONCAT(random_between(1000,10000))::INT, $1)
-            
+            RETURNING code
             `, [name]
          );
          // await client.query(newClassCode, [classCode, name]);
-
+         await client.query(`INSERT INTO "user_class" ("user_id", "role", "class_code")
+                             VALUES ($1, $2, $3)`, [req.user.id, req.user.authority, newClassCode.rows[0].code])
          await client.query('COMMIT');
          res.send(newClassCode);
      } catch (err) {
