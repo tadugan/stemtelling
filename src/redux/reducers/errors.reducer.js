@@ -52,6 +52,21 @@ const resetMessage = (state = '', action) => {
    };
 };
 
+// joinClassMessage holds the string that will display
+// on the edit profile screen if there's an error joining a class
+const joinClassMessage = (state = '', action) => {
+   switch (action.type) {
+      case 'CLEAR_CLASS_ERROR':
+         return '';
+      case 'INVALID_CODE':
+         return 'Invalid Code';
+      case 'ALREADY_IN_CLASS':
+         return 'You are already in this class!';
+      default:
+         return state;
+   };
+};
+
 
 // make one object that has keys loginMessage, registrationMessage
 // these will be on the redux state at:
@@ -60,4 +75,5 @@ export default combineReducers({
   loginMessage,
   registrationMessage,
   resetMessage,
+  joinClassMessage,
 });
