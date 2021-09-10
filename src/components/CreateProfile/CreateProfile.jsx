@@ -82,6 +82,7 @@ function CreateProfile() {
    const handleClassClose = () => { setClassOpen(false) };
    const [addClassCode, setAddClassCode] = useState('');
    const [ classCode, setClassCode ] = useState(1);
+   const profilePic = useSelector(store => store.profileImage);
    const [ authority, setAuthority ] = useState('');
    const errors = useSelector((store) => store.errors);
    const [email, setEmail] = useState('');
@@ -90,6 +91,7 @@ function CreateProfile() {
    useEffect(() => {
       dispatch({type: 'GET_USER', payload: {userId: params}});
       dispatch({type: 'GET_USER_CLASSES', payload: user.id});
+      dispatch({type: 'SET_PROFILE_IMAGE_REDUCER', payload: user.profile_picture_url});
       setEmail(user.email);
       setName(user.name);
    }, []);
@@ -100,6 +102,8 @@ function CreateProfile() {
          payload: {
             name: name,
             email: email,
+            picture: profilePic,
+            history: history,
          }
       });
       dispatch({type: 'FETCH_USER'});
@@ -143,16 +147,16 @@ function CreateProfile() {
                <h2>Profile Picture</h2>
                <img src={user.profile_picture_url} />
                <br />
+               {profilePic ? <img src={profilePic} /> : <img src={user.profile_picture_url} />}
                <StyledButton variant="contained" component="label">
-                  Upload File
-                  <input type="file" hidden/>
                </StyledButton>
+               <ImageUploader mode={"profile"} />
             </Paper>
          </Grid>
          <Grid item xs={12} sm={3} direction="row" justifyContent="center" alignItems="center"> 
             <Paper className={classes.paper}>
                <h2>Name</h2>
-               <TextField type="text" label="Name" variant="outlined" value={name} onChange={(event) => setName(event.target.value)}/>
+               <TextField type   ="text" label="Name" variant="outlined" value={name} onChange={(event) => setName(event.target.value)}/>
             </Paper>
          </Grid>
          <Grid item xs={12} sm={3} direction="row" justifyContent="center" alignItems="center">
@@ -178,6 +182,7 @@ function CreateProfile() {
                      </div>
                   );
                })}
+               
             </Paper>
          </Grid>
          <Modal aria-labelledby="Add CLass Modal" align="center" aria-describedby="Upload a class" className={modalClasses.modal} open={classOpen} onClose={handleClassClose} closeAfterTransition BackdropComponent={Backdrop} BackdropProps={{timeout: 500}}>
