@@ -2,6 +2,7 @@ import { Button } from "@material-ui/core";
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import './AddReaction.css'
 
 
@@ -9,6 +10,11 @@ function AddReaction({stemtellId}){
     console.log("stemtell ID in addReactions:", stemtellId)
 
     const dispatch = useDispatch();
+    const [ beakerCount, setBeakerCount ] = useState(0);
+    const [ heartCount, setHeartCount ] = useState(0);
+    const [ smileCount, setSmileCount ] = useState(0);
+    const [ coolCount, setCoolCount ] = useState(0);
+    const user = useSelector((store) => store.user)
 
     useEffect(()=> {
         dispatch({type:'GET_STEMTELL_REACTIONS', payload: stemtellId })
@@ -21,17 +27,61 @@ let coolReactions= [];
 let heartReactions = [];
 let smileReactions = [];
 
-   
+
+    const handleBeaker = () => {
+      for (let item of reactions){
+            if(item.user_id==user.id){
+                return(
+              console.log('this user already reacted')
+                )
+                 
+        }}
+            dispatch({type: 'ADD_REACTION', payload: {
+            stemtell_id: stemtellId,
+            reaction_id: 1
+        }})}
+        
+
+
+    const handleCool = () => {
+        for (let item of reactions){
+              if(item.user_id==user.id){
+                  return(
+                console.log('this user already reacted')
+                  )
+                   
+          }}
+              dispatch({type: 'ADD_REACTION', payload: {
+              stemtell_id: stemtellId,
+              reaction_id: 2
+          }})}
+    const handleHeart = () => {
+        for (let item of reactions){
+              if(item.user_id==user.id){
+                  return(
+                console.log('this user already reacted')
+                  )
+                   
+          }}
+              dispatch({type: 'ADD_REACTION', payload: {
+              stemtell_id: stemtellId,
+              reaction_id: 3
+          }})}
+    const handleSmile = () => {
+        for (let item of reactions){
+              if(item.user_id==user.id){
+                  return(
+                console.log('this user already reacted')
+                  )
+                   
+          }}
+              dispatch({type: 'ADD_REACTION', payload: {
+              stemtell_id: stemtellId,
+              reaction_id: 4
+          }})}
     return(
         <>
       
-       {/* <Button><p>1</p><img className="reaction-img" src="https://svgshare.com/i/a2N.svg"/></Button> */}
-
-
-        {/* {reactions.map((reaction)=> )} */}
-        {/* <img src={stemtellId.media_url}></img><p></p> */}
-        {/* <section>{stemtellId}</section>
-        <Button>add reaction<AddCircleIcon/></Button> */}
         <p>
         {reactions.map((reaction)=> {
        
@@ -52,10 +102,10 @@ let smileReactions = [];
 
    })}
    </p>
-   <Button><p>{beakerReactions.length}</p><img className="reaction-img" src="https://svgshare.com/i/a1L.svg"/></Button> 
-       <Button><p>{coolReactions.length}</p><img className="reaction-img" src="https://svgshare.com/i/a23.svg"/></Button>
-       <Button><p>{heartReactions.length}</p> <img className="reaction-img" src="https://svgshare.com/i/a1u.svg"/></Button>
-       <Button><p>{smileReactions.length}</p><img className="reaction-img" src="https://svgshare.com/i/a1V.svg"/></Button>
+   <Button onClick={handleBeaker}><p>{beakerReactions.length}</p><img className="reaction-img" src="https://svgshare.com/i/a1L.svg"/></Button> 
+       <Button onClick={handleCool}><p>{coolReactions.length}</p><img className="reaction-img" src="https://svgshare.com/i/a23.svg"/></Button>
+       <Button onClick={handleHeart}><p>{heartReactions.length}</p> <img className="reaction-img" src="https://svgshare.com/i/a1u.svg"/></Button>
+       <Button onClick={handleSmile}><p>{smileReactions.length}</p><img className="reaction-img" src="https://svgshare.com/i/a1V.svg"/></Button>
 
         </>
     )

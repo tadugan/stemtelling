@@ -45,6 +45,28 @@ router.get("/:id", (req, res) => {
  */
 router.post('/', (req, res) => {
   // POST route code here
+  const query = `INSERT INTO "reaction_stemtell" ("stemtell_id", "user_id", "reaction_id")
+                  VALUES ($1, $2, $3)`
+   pool.query(query, [req.body.stemtell_id, req.user.id, req.body.reaction_id])
+   .then(() => {
+      res.sendStatus(201);
+   })
+   .catch(error => {
+      console.log("error posting reaction", error);
+      res.sendStatus(500);
+   });
 });
 
+//DELETE user's reaction to stemtell
+router.delete("/reaction/:id", (req,res) => {
+   const query = `DELETE FROM "reaction_stemtell" WHERE "user_id" = $1 AND "stemtell_id" = $2`
+   pool.query(query, [req.user.id, req.params.id])
+   .then(() => {
+      res.sendStatus(201);
+   })
+   .catch(error => {
+      console.log('error deleting user reaction', error);
+      res.sendStatus(500);
+   })
+})
 module.exports = router;

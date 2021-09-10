@@ -28,8 +28,26 @@ function* getStemReactions(action) {
     };
  };
  
+ //add reaction
+function* addReaction(action) {
+   try{
+      yield axios.post('/api/reaction', action.payload);
+      yield put({type: 'GET_STEMTELL_REACTIONS', payload: action.payload.stemtell_id});
+   }
+   catch (error) {
+      console.log('error with addReaction in reaction.saga.js:', error);
+   }
+};
+
+function* deleteReaction(action){
+   yield axios.delete(`/api/reaction/${action.payload}`);
+   yield put({type: 'GET_STEMTELL_REACTIONS', payload: action.payload.stemtell_id});
+}
+
  function* reactionSaga(){
     yield takeEvery('GET_STEMTELL_REACTIONS', getStemReactions);
+    yield takeEvery('ADD_REACTION', addReaction);
+    yield takeEvery('DELETE_REACTION', deleteReaction);
    //  yield takeEvery('GET_REACTIONS', getAllReactions);
  };
  export default reactionSaga;
