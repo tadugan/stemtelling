@@ -44,7 +44,7 @@ function CreateProfile() {
     const classes = useStyles();
     const profile = useSelector((store) => store.profile);
     const user = useSelector(store => store.user);
-    const newClass = useSelector((store) => store.classes);
+    const myClasses = useSelector((store) => store.classes);
     const tags = useSelector((store) => store.tag);
     const [classOpen, setClassOpen] = React.useState(false);
     const handleClassOpen = () => { setClassOpen(true) };
@@ -61,7 +61,8 @@ function CreateProfile() {
     
     // Uploads user info on load of page
     useEffect(() => {
-        dispatch({type: 'GET_USER', payload: {userId: params}})
+        dispatch({type: 'GET_USER', payload: {userId: params}});
+        dispatch({type: 'GET_USER_CLASSES', payload: user.id});
         setEmail(user.email);
         setName(user.name);
     }, []);
@@ -137,7 +138,12 @@ function CreateProfile() {
                <h2>Classes</h2>
                <Button variant="contained" onClick={handleClassOpen}>Add New Class</Button>
                {/* WILL SHOW CLASS LIST HERE */}
-               <h3>{newClass.name}</h3>
+               {myClasses.map((userClass) => {
+                  return (
+                     <div>{userClass.name}</div>
+                  );
+               })}
+               <h3>{myClasses.name}</h3>
             </Paper>
          </Grid>
          <Modal aria-labelledby="Add CLass Modal" align="center" aria-describedby="Upload a class" className={modalClasses.modal} open={classOpen} onClose={handleClassClose} closeAfterTransition BackdropComponent={Backdrop} BackdropProps={{timeout: 500}}>

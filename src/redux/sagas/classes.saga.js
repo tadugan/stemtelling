@@ -14,6 +14,18 @@ function* fetchClasses() {
    };
 };
 
+function* getUserClasses(action) {
+   const user = action.payload;
+   try {
+      const response = yield axios.get('/api/class/userclasses', {params: { user } });
+      console.log(response.data);
+      yield put({type: 'SET_USER_CLASSES', payload: response.data});
+   }
+   catch (error) {
+      console.log("Error with getUserClasses in classes.saga.js:", error);
+   };
+};
+
 // function for getting all STEMtells associated with a specific class
 // called on the user homepage in order to only display STEMtells that are from classes the user is in
 function* fetchClassStemTells() {
@@ -42,6 +54,7 @@ function* classesSaga(){
     yield takeEvery('FETCH_CLASSES', fetchClasses);
     yield takeEvery('FETCH_USER_FEED', fetchClassStemTells);
     yield takeEvery("EDIT_CLASS", editClass);
+    yield takeEvery("GET_USER_CLASSES", getUserClasses);
 };
 
 
