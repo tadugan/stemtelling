@@ -132,16 +132,17 @@ const unixTimestamp = (timestamp) => {
     <center>
        <Grid item key={stemtell.id}>
           <Card className={cardStyles.root}>
-             <h6 id="stemDate">{unixTimestamp(stemtell.unix)}</h6>
-             <Avatar className="Avatar" src={stemtell.profile_picture_url} />
-             <section className="UserName" onClick={() => onUserProfile(stemtell.user_id)}>
+             <h6 className={cardStyles.stemdate}>{unixTimestamp(stemtell.unix)}</h6>
+             <Avatar className={cardStyles.avatar} src={stemtell.profile_picture_url} />
+             <section className={cardStyles.username} onClick={() => onUserProfile(stemtell.user_id)}>
                 {stemtell.name}
              </section>
-             <div className="UserName" id="userClass">
+             <div className={cardStyles.username} id="userClass">
                 {stemtell.class_name}
              </div>
-             <h3 id="stemTitle">{stemtell.title}</h3>
              <img id="StemDetailsImage" src={stemtell.media_url} />
+             <h3 className={cardStyles.stemtitle}>{stemtell.title}</h3>
+             
              <section id="cardReactions">{stemtell.reaction_name}</section>
              <section id="StemDetailsDescription">{stemtell.body_text}</section>
           </Card>
