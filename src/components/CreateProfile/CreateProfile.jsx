@@ -6,8 +6,6 @@ import { useHistory, useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import PublishIcon from '@material-ui/icons/Publish';
-import AddTagDialog from '../AddTagDialog/AddTagDialog';
-import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
 import styled from 'styled-components';
 import './CreateProfile.css'
 
@@ -46,92 +44,95 @@ const StyledRedButton = styled(Button)`
 `;
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
+   root: {
+      flexGrow: 1,
+   },
+   paper: {
+      padding: theme.spacing(2),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+   },
 }));
 
 const useModalStyles = makeStyles((theme) => ({
-    modal: {
+   modal: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-    },
-    paper: {
+   },
+   paper: {
       backgroundColor: theme.palette.background.paper,
       border: '2px solid #000',
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
-    },
+   },
 }));
 
 
 function CreateProfile() {
-    const dispatch = useDispatch();
-    const history = useHistory();
-    const params = useParams();
-    const modalClasses = useModalStyles();
-    const classes = useStyles(); 
-    const user = useSelector(store => store.user);
-    const myClasses = useSelector((store) => store.classes);
-    const [classOpen, setClassOpen] = React.useState(false);
-    const handleClassOpen = () => { setClassOpen(true) };
-    const handleClassClose = () => { setClassOpen(false) };
-    const [addClassCode, setAddClassCode] = useState('');
-    const [ classId, setClassId ] = useState(1);
-    const [ authority, setAuthority ] = useState('');
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
-    
-    useEffect(() => {
-        dispatch({type: 'GET_USER', payload: {userId: params}});
-        dispatch({type: 'GET_USER_CLASSES', payload: user.id});
-        setEmail(user.email);
-        setName(user.name);
-    }, []);
+   const dispatch = useDispatch();
+   const history = useHistory();
+   const params = useParams();
+   const modalClasses = useModalStyles();
+   const classes = useStyles(); 
+   const user = useSelector(store => store.user);
+   const myClasses = useSelector((store) => store.classes);
+   const [classOpen, setClassOpen] = React.useState(false);
+   const handleClassOpen = () => { setClassOpen(true) };
+   const handleClassClose = () => { setClassOpen(false) };
+   const [addClassCode, setAddClassCode] = useState('');
+   const [ classCode, setClassCode ] = useState(1);
+   const [ authority, setAuthority ] = useState('');
+   const [email, setEmail] = useState('');
+   const [name, setName] = useState('');
+   
+   useEffect(() => {
+      dispatch({type: 'GET_USER', payload: {userId: params}});
+      dispatch({type: 'GET_USER_CLASSES', payload: user.id});
+      setEmail(user.email);
+      setName(user.name);
+   }, []);
 
    const saveUserInfo = () => {
       dispatch({
          type: "UPDATE_USER",
          payload: {
-               name: name,
-               email: email,
+            name: name,
+            email: email,
          }
       });
       dispatch({type: 'FETCH_USER'});
       history.push('/close');
-   }
+   };
 
-    const saveChanges = () => {
-        if (addClassCode == "") {
-            alert('Please provide class code.');
-            return false;
-        };  
-        dispatch({
-            type:"JOIN_CLASS",
-            payload: {authority: authority, class_id: classId}
-        });
-        setAddClassCode('');
-        dispatch({type: 'GET_USER_CLASSES', payload: user.id});
-        handleClassClose();
-    };
+   const joinClass = () => {
+      if (addClassCode == "") {
+         alert('Please provide class code.');
+         return false;
+      };
+      dispatch({
+         type:"JOIN_CLASS",
+         payload: {
+            authority: authority,
+            class_code: addClassCode,
+            user_id: user.id,
+         }
+      });
+      setAddClassCode('');
+      dispatch({type: 'GET_USER_CLASSES', payload: user.id});
+      handleClassClose();
+   };
 
-    const leaveClass = (classInfo) => {
+   const leaveClass = (classInfo) => {
       if (confirm(`Are you sure you want to leave ${classInfo.name}?`) === false) {
          return false;
       };
-       dispatch({
-          type: "LEAVE_CLASS",
-          payload: classInfo
-       });
-       dispatch({type: 'GET_USER_CLASSES', payload: user.id});
-    }
-
+      dispatch({
+         type: "LEAVE_CLASS",
+         payload: classInfo
+      });
+      dispatch({type: 'GET_USER_CLASSES', payload: user.id});
+   };
 
    return (
       <div>
@@ -175,10 +176,11 @@ function CreateProfile() {
          <Modal aria-labelledby="Add CLass Modal" align="center" aria-describedby="Upload a class" className={modalClasses.modal} open={classOpen} onClose={handleClassClose} closeAfterTransition BackdropComponent={Backdrop} BackdropProps={{timeout: 500}}>
             <Fade in={classOpen}>
                <div className={modalClasses.paper} style={{width: '550px'}}>
-                  <TextField id="ClassCode" label="Class" variant="outlined" style={{width: "100%"}} value={addClassCode} onChange={(event) => setAddClassCode(event.target.value)}/><br /><br />
+                  <TextField type="number" id="ClassCode" label="Class Code" variant="outlined" style={{width: "100%"}} value={addClassCode} onChange={(event) => setAddClassCode(event.target.value)}/>
+                  <br /><br />
                   <Button variant="contained" color="primary" startIcon={<CloseIcon />} onClick={handleClassClose}>Close</Button>
                   &nbsp;
-                  <Button variant="contained" color="primary" endIcon={<PublishIcon />} onClick={saveChanges}>Save Class</Button> 
+                  <Button variant="contained" color="primary" endIcon={<PublishIcon />} onClick={joinClass}>Join Class</Button> 
                </div>
             </Fade>
          </Modal>
@@ -191,7 +193,8 @@ function CreateProfile() {
          </StyledButton>
          </center>
       </div>
-   )
-}
+   );
+};
+
 
 export default CreateProfile;

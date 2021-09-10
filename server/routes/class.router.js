@@ -21,6 +21,21 @@ router.get('/', rejectUnauthenticated, (req, res) => {
    });
 });
 
+
+// GET /api/class/allclasses
+// Used to check if the class a user is trying to join is valid in the database
+router.get('/allclasses', rejectUnauthenticated, (req, res) => {
+   const query = `SELECT * FROM "class"`;
+   pool.query(query)
+   .then(results => {
+      res.send(results.rows);
+   })
+   .catch(error => {
+      console.log("Error getting all classes:", error);
+      res.sendStatus(500);
+   });
+});
+
 // GET /api/class/details/:id
 // Gets list of students in a particular class
 router.get('/details/:id', rejectUnauthenticated, (req, res) => {
@@ -88,30 +103,24 @@ router.post('/class', (req, res) => {
 /**
  * POST for adding to new student to class
  */
- router.post('/profile', rejectUnauthenticated, (req, res) => {
-  const userId = req.user.id;
-  const userRole = req.user.authority;
-
-  (async () => {
-    const client = await pool.connect();
-    try {
-        await client.query('BEGIN');
-        const queryTextJoinClass = `
-        INSERT INTO "user_class" ("user_id", "role", "class_id")
-        VALUES ($1, $2, $3)
-        `;
-
-            await client.query(queryTextJoinClass, [userId, userRole, req.body.class_id]);
-
-        await client.query('COMMIT');
-        
-    } catch (err) {
-        await client.query('ROLLBACK');
-        throw err;
-    } finally {
+router.post('/joinclass', rejectUnauthenticated, async (req, res) => {
+   const userId = req.user.id;
+   const userRole = req.user.authority;
+   const client = await pool.connect();
+   try {
+      await client.query('BEGIN');
+      const queryTextJoinClass = `INSERT INTO "user_class" ("user_id", "role", "class_id")
+                                  VALUES ($1, $2, $3)`;
+      await client.query(queryTextJoinClass, [userId, userRole, req.body.class_id]);
+      await client.query('COMMIT');
+   }
+   catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+   }
+   finally {
       client.release();
-    }
-  })().catch(e => console.error(e.stack))
+   };
 });
 
 //PUT for updating class information such as title

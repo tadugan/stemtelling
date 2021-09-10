@@ -14,6 +14,8 @@ function* fetchClasses() {
    };
 };
 
+// function for getting all classes associated with a specific user
+// called on the edit profile page
 function* getUserClasses(action) {
    const user = action.payload;
    try {
@@ -40,31 +42,68 @@ function* fetchClassStemTells() {
 //function for updating a class
 function* editClass(action) {
    try {
-     yield call(axios.put, `/api/class/update`, action.payload);
-   //   console.log(`What is in the PUT payload for CLASS`, action.payload); // TODO:
+      yield call(axios.put, `/api/class/update`, action.payload);
    }
    catch (error) {
       console.log('Error with editClass in classes.saga.js:', error);
-   }
- }
+   };
+};
 
- function* leaveClass(action) {
-    const classInfo = action.payload.id;
-    try {
+// function for leaving a specific class
+// called on the edit profile page
+function* leaveClass(action) {
+   const classInfo = action.payload.id;
+   try {
       yield axios.delete('/api/class/leaveclass', {params: {classInfo} });
-    }
-    catch (error) {
+   }
+   catch (error) {
       console.log('Error with leaveClass in classes.saga.js:', error);
-    }
- }
+   };
+};
+
+function* joinClass(action) {
+   let classCodesArray = [];
+   const user = action.payload.user_id;
+   const classToJoin = action.payload.class_code;
+   try {
+      const response = yield axios.get('/api/class/userclasses', {params: { user } });
+      for (let x of response.data) {classCodesArray.push(x.code)};
+      for (let y = 0; y < classCodesArray.length; y++) {
+         console.log(classCodesArray[y]);
+         if (classCodesArray[y] == classToJoin) {
+            alert ("You are already in this class");
+            return false;
+         }
+         else if (classCodesArray[y] != classToJoin) {
+            console.log('invalid class');
+            const check = yield axios.get('/api/class/allclasses');
+            console.log(check.data);
+            for (let z = 0; z < check.data.length; z++) {
+               console.log(check.data[z].code);
+               if (check.data[z] == classToJoin) {
+                  console.log('invalid');
+               }
+            }
+         }
+         else {
+            alert("Unknown error");
+            return false;
+         };
+      };
+   }
+   catch (error) {
+      console.log('Error with joinClass in classes.saga.js:', error);
+   };
+};
  
 
 function* classesSaga(){
-    yield takeEvery('FETCH_CLASSES', fetchClasses);
-    yield takeEvery('FETCH_USER_FEED', fetchClassStemTells);
-    yield takeEvery("EDIT_CLASS", editClass);
-    yield takeEvery("GET_USER_CLASSES", getUserClasses);
-    yield takeEvery("LEAVE_CLASS", leaveClass)
+   yield takeEvery('FETCH_CLASSES', fetchClasses);
+   yield takeEvery('FETCH_USER_FEED', fetchClassStemTells);
+   yield takeEvery("EDIT_CLASS", editClass);
+   yield takeEvery("GET_USER_CLASSES", getUserClasses);
+   yield takeEvery("LEAVE_CLASS", leaveClass);
+   yield takeEvery('JOIN_CLASS', joinClass);
 };
 
 

@@ -13,7 +13,6 @@ import deleteStudentSaga from './deleteStudent.saga';
 import editStemtellSaga from './editSTEMtell.saga';
 import teacherReviewListSaga from './teacherReviewList.saga';
 import resetPasswordSaga from './resetpassword.saga';
-import newClassSaga from './newClass.saga';
 import addTagsSaga from './newProfile.saga';
 
 
@@ -33,7 +32,6 @@ export default function* rootSaga() {
       deleteStudentSaga(),
       editStemtellSaga(),
       teacherReviewListSaga(),
-      newClassSaga(),
       addTagsSaga(),
    ]);
 };
