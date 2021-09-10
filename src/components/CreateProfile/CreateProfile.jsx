@@ -8,6 +8,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import PublishIcon from '@material-ui/icons/Publish';
 import styled from 'styled-components';
 import './CreateProfile.css'
+import ImageUploader from '../ImageUploader/ImageUploader';
 
 const StyledButton = styled(Button)`
    display: inline-block;
@@ -96,7 +97,8 @@ function CreateProfile() {
       setName(user.name);
    }, []);
 
-   const saveUserInfo = () => {
+
+    const saveUserInfo = () => {
       dispatch({
          type: "UPDATE_USER",
          payload: {
@@ -145,7 +147,7 @@ function CreateProfile() {
          <Grid item xs={12} sm={3} direction="row" justifyContent="center" alignItems="center"> 
             <Paper className={classes.paper}>
                <h2>Profile Picture</h2>
-               <img src={user.profile_picture_url} />
+               {profilePic ? <img src={profilePic} /> : <img src={user.profile_picture_url} />}
                <br />
                {profilePic ? <img src={profilePic} /> : <img src={user.profile_picture_url} />}
                <StyledButton variant="contained" component="label">
