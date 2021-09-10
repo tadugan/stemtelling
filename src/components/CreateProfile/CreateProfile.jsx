@@ -1,4 +1,4 @@
-import { AppBar, Button, ButtonGroup, Backdrop, Dialog, Grid, IconButton, Toolbar, Typography, Avatar, Card, Paper, Modal, Fade, TextField } from '@material-ui/core';
+import { AppBar, Button, ButtonGroup, Backdrop, Dialog, Grid, IconButton, Toolbar, Typography, Avatar, Card, Paper, Modal, Fade, TextField, Chip } from '@material-ui/core';
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from 'react';
@@ -76,24 +76,18 @@ function CreateProfile() {
     const history = useHistory();
     const params = useParams();
     const modalClasses = useModalStyles();
-    const classes = useStyles();
+    const classes = useStyles(); 
     const user = useSelector(store => store.user);
     const myClasses = useSelector((store) => store.classes);
-    const tags = useSelector((store) => store.tag);
     const [classOpen, setClassOpen] = React.useState(false);
     const handleClassOpen = () => { setClassOpen(true) };
     const handleClassClose = () => { setClassOpen(false) };
     const [addClassCode, setAddClassCode] = useState('');
-    const selectedTags = useSelector(store => store.selectedTags);
     const [ classId, setClassId ] = useState(1);
-    const [ title, setTitle ] = useState('');
-    const [ imageUrl, setImageUrl] = useState('');
-    const [ description, setDescription ] = useState('');
     const [ authority, setAuthority ] = useState('');
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     
-    // Uploads user info on load of page
     useEffect(() => {
         dispatch({type: 'GET_USER', payload: {userId: params}});
         dispatch({type: 'GET_USER_CLASSES', payload: user.id});
@@ -123,45 +117,21 @@ function CreateProfile() {
             payload: {authority: authority, class_id: classId}
         });
         setAddClassCode('');
-
+        dispatch({type: 'GET_USER_CLASSES', payload: user.id});
         handleClassClose();
     };
 
-    const handleSubmit = () => {
-        event.preventDefault();
-
-        // array to store tag ids
-        const tagIds = [];
-
-        // add ids to tagIds array
-        for (const tag of selectedTags) {
-            tagIds.push(tag.id);
-        }
-
-        // Dispatch captured inputs to SAGA
-        dispatch({ type: 'SUBMIT_NEW_PROFILE_TAGS', payload: {
-            title: title,
-            body_text: description,
-            media_url: imageUrl,
-            class_id: classId,
-            tag_ids: tagIds
-            }
-        });
-
-        // Clear Input Fields
-        setClassId(1);
-        setTitle('');
-        setImageUrl('');
-        setDescription('');
-        dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
-
-        // Return user to previous view
-        // TODO:
+    const leaveClass = (classInfo) => {
+      if (confirm(`Are you sure you want to leave ${classInfo.name}?`) === false) {
+         return false;
+      };
+       dispatch({
+          type: "LEAVE_CLASS",
+          payload: classInfo
+       });
+       dispatch({type: 'GET_USER_CLASSES', payload: user.id});
     }
 
-   const handleCancel = () => {
-      history.goBack();
-   };
 
    return (
       <div>
@@ -195,7 +165,9 @@ function CreateProfile() {
                <Button variant="contained" onClick={handleClassOpen}>Add New Class</Button>
                {myClasses.map((userClass) => {
                   return (
-                     <div>{userClass.name}</div>
+                     <div>
+                        <Chip label={userClass.name} onDelete={() => {leaveClass(userClass)}} />
+                     </div>
                   );
                })}
             </Paper>
@@ -210,31 +182,6 @@ function CreateProfile() {
                </div>
             </Fade>
          </Modal>
-         <br />
-         <Grid item container spacing={2} direction="row" justifyContent="center" alignItems="center" >
-            {selectedTags.map((tag) => {
-               return (
-                  <Grid item key={tag.id}>
-                     <TagChipDeletable tagInfo={tag}/>
-                  </Grid>
-               );
-            })}
-         </Grid>
-         <Grid item>
-            <AddTagDialog />
-         </Grid>
-         <Grid item container spacing={2} xs={12} direction="row" justifyContent="center" alignItems="center">
-            <Grid item>
-               <Button variant="contained" color="secondary" onClick={handleCancel}>
-                  Cancel
-               </Button>
-            </Grid>
-            <Grid item>
-               <Button variant="contained" color="primary" onClick={handleSubmit} type="submit">
-                  Save Tags
-               </Button>
-            </Grid>
-         </Grid>
          <br />
          <StyledRedButton onClick={() => {history.goBack()}}>
             Discard Changes

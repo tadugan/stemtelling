@@ -42,9 +42,20 @@ function* editClass(action) {
    try {
      yield call(axios.put, `/api/class/update`, action.payload);
    //   console.log(`What is in the PUT payload for CLASS`, action.payload); // TODO:
-   } catch (error) {
-     console.log(`problem editing class SAGA:`, error);
    }
+   catch (error) {
+      console.log('Error with editClass in classes.saga.js:', error);
+   }
+ }
+
+ function* leaveClass(action) {
+    const classInfo = action.payload.id;
+    try {
+      yield axios.delete('/api/class/leaveclass', {params: {classInfo} });
+    }
+    catch (error) {
+      console.log('Error with leaveClass in classes.saga.js:', error);
+    }
  }
  
 
@@ -53,6 +64,7 @@ function* classesSaga(){
     yield takeEvery('FETCH_USER_FEED', fetchClassStemTells);
     yield takeEvery("EDIT_CLASS", editClass);
     yield takeEvery("GET_USER_CLASSES", getUserClasses);
+    yield takeEvery("LEAVE_CLASS", leaveClass)
 };
 
 

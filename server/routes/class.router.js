@@ -149,5 +149,17 @@ router.delete("/details/:id", rejectUnauthenticated, (req, res) => {
    });
 });
 
+router.delete('/leaveclass', rejectUnauthenticated, (req, res) => {
+   const query = `DELETE FROM "user_class" WHERE "user_id" = $1 AND "class_id" = $2`;
+   pool.query(query, [req.user.id, req.query.classInfo])
+   .then(() => {
+      res.sendStatus(201);
+   })
+   .catch(error => {
+      console.log(`Error deleting student from class:`, error);
+      res.sendStatus(500);
+   });
+});
+
 
 module.exports = router;
