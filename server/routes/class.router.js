@@ -116,7 +116,6 @@ router.post('/class', (req, res) => {
 
 //PUT for updating class information such as title
 router.put("/update", rejectUnauthenticated, (req,res) => {
-   console.log(`What is being UPDATED:`, req.body.id);
    const query = `UPDATE "class" 
                   SET "name"= $1, "archived" = $2
                   WHERE "id"= $3;`;

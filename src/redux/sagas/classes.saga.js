@@ -39,10 +39,9 @@ function* fetchClassStemTells() {
 
 //function for updating a class
 function* editClass(action) {
-   console.log(action);
    try {
      yield call(axios.put, `/api/class/update`, action.payload);
-     console.log(`What is in the PUT payload for CLASS`, action.payload);
+   //   console.log(`What is in the PUT payload for CLASS`, action.payload); // TODO:
    } catch (error) {
      console.log(`problem editing class SAGA:`, error);
    }
