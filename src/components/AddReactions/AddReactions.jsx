@@ -7,7 +7,6 @@ import './AddReaction.css'
 
 
 function AddReaction({stemtellId}){
-
     const dispatch = useDispatch();
     const [ beakerCount, setBeakerCount ] = useState(0);
     const [ heartCount, setHeartCount ] = useState(0);
@@ -83,7 +82,6 @@ let smileReactions = [];
         <p>
         {reactions.map((reaction)=> {
        
-       
        if(reaction.reaction_id == 1){
            beakerReactions.push(reaction)
        }
@@ -96,7 +94,6 @@ let smileReactions = [];
        if(reaction.reaction_id == 4){
            smileReactions.push(reaction)
        }
-       
 
    })}
    </p>
