@@ -22,7 +22,6 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
         const uploadedResponse = await cloudinary.uploader.upload(fileStr, {
             upload_preset: 'stemtell-content-image'
         })
-        console.log('uploadedResponse on the image router', uploadedResponse); // TODO:
         res.send(uploadedResponse.url);
     } catch (error) {
         console.log('error in image router:', error);

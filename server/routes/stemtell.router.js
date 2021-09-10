@@ -107,7 +107,6 @@ router.post('/', rejectUnauthenticated, (req, res) => {
             const imageResponse = await cloudinary.uploader.upload(imageData, {
                upload_preset: 'stemtell-content-image'
             })
-            // console.log('imageResponse.url:', imageResponse.url); // TODO:
    
             await client.query("BEGIN");
             const queryTextAddStemtell = `INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "unix")
@@ -146,7 +145,6 @@ router.put('/save', rejectUnauthenticated, (req, res) => {
          const imageResponse = await cloudinary.uploader.upload(imageData, {
             upload_preset: 'stemtell-content-image'
          })
-         console.log('PUT update imageResponse', imageResponse);
          await client.query("BEGIN");
          const queryTextAddStemtell = `UPDATE "stemtell" SET "class_id" = $1, "user_id" = $2, "title" = $3, "body_text" = $4, "media_url" = $5 WHERE "id" = $6`;
          const response = await client.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, imageResponse.url, stemtellId,]);
@@ -236,7 +234,6 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 // Handles updating the status of a STEMtell with Teacher Feedback Form
 router.put('/status', rejectUnauthenticated, (req, res) => {
   const status = req.body;
-  console.log(req.body, "in router put stemtell~*~*~*~*~");
   const query = `
   UPDATE "stemtell"
   SET "approved" = $1

@@ -43,8 +43,6 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 });
 
 
-// TODO: Setup class creation! 
-
 // POST route to INSERT STUDENT INTO EXISTING CLASS. May need another for teacher to create class.
 /**
  * POST route template
@@ -96,7 +94,6 @@ router.post('/class', (req, res) => {
 
 //PUT for updating class information such as title
 router.put("/update", rejectUnauthenticated, (req,res) => {
-   console.log(`What is being UPDATED:`, req.body.id);
    const query = `UPDATE "class" 
                   SET "name"= $1, "archived" = $2
                   WHERE "id"= $3;`;
