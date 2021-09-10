@@ -6,7 +6,6 @@ import Comment from "../Comment/Comment";
 import BackBtn from "../BackBtn/BackBtn";
 import { makeStyles } from '@material-ui/core/styles';
 import './STEMtellDetails.css';
-import Reactions from "../Reactions/Reactions";
 import AddReaction from "../AddReactions/AddReactions";
 const useCardStyles = makeStyles(() => ({
    root: {
