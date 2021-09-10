@@ -149,9 +149,6 @@ function CreateProfile() {
                <h2>Profile Picture</h2>
                {profilePic ? <img src={profilePic} /> : <img src={user.profile_picture_url} />}
                <br />
-               {profilePic ? <img src={profilePic} /> : <img src={user.profile_picture_url} />}
-               <StyledButton variant="contained" component="label">
-               </StyledButton>
                <ImageUploader mode={"profile"} />
             </Paper>
          </Grid>
