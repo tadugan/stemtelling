@@ -79,6 +79,18 @@ router.post('/register', (req, res, next) => {
    };
 });
 
+router.post('/update', rejectUnauthenticated, (req, res) => {
+   const queryText = `UPDATE "user" SET "name" = $1, "email" = $2 WHERE "id" = $3`;
+   pool.query(queryText, [req.body.userInfo.name, req.body.userInfo.email, req.user.id])
+   .then(() => {
+      res.sendStatus(200);
+   })
+   .catch(error => {
+      console.log(error);
+      res.sendStatus(500);
+   });
+});   
+
 // POST /api/user/login
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route

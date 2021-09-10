@@ -8,7 +8,42 @@ import CloseIcon from '@material-ui/icons/Close';
 import PublishIcon from '@material-ui/icons/Publish';
 import AddTagDialog from '../AddTagDialog/AddTagDialog';
 import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
+import styled from 'styled-components';
 import './CreateProfile.css'
+
+const StyledButton = styled(Button)`
+   display: inline-block;
+   padding: 10px 20px;
+   border-color: #014041;
+   border-width: 1px 1px 3px;
+   border-radius: 4px;
+   background-color: #979797;
+   color: #f8f8f8;
+   font-size: 1.1rem;
+   outline: 0;
+   cursor: pointer;
+   &:hover {
+      background-color: rgba(151, 151, 151, 0.6);
+      text-decoration: none;
+   }
+`;
+
+const StyledRedButton = styled(Button)`
+   display: inline-block;
+   padding: 10px 20px;
+   border-color: #014041;
+   border-width: 1px 1px 3px;
+   border-radius: 4px;
+   background-color: #DD2E44;
+   color: #f8f8f8;   
+   font-size: 1.1rem;
+   outline: 0;
+   cursor: pointer;
+   &:hover {
+      background-color: rgba(221, 46, 68, 0.6);
+      text-decoration: none;
+   }
+`;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,6 +101,18 @@ function CreateProfile() {
         setEmail(user.email);
         setName(user.name);
     }, []);
+
+   const saveUserInfo = () => {
+      dispatch({
+         type: "UPDATE_USER",
+         payload: {
+               name: name,
+               email: email,
+         }
+      });
+      dispatch({type: 'FETCH_USER'});
+      history.push('/close');
+   }
 
     const saveChanges = () => {
         if (addClassCode == "") {
@@ -181,6 +228,13 @@ function CreateProfile() {
                </Button>
             </Grid>
          </Grid>
+         <br />
+         <StyledRedButton onClick={() => {history.goBack()}}>
+            Discard Changes
+         </StyledRedButton>     
+         <StyledButton onClick={() => {saveUserInfo()}}>
+            Save Changes
+         </StyledButton>
          </center>
       </div>
    )

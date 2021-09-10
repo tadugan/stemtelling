@@ -155,6 +155,7 @@ function UserPage() {
    };
    
    useEffect(() => {
+      dispatch({ type: 'FETCH_USER' })
       dispatch({ type: "FETCH_MY_STEMTELLS", payload: user.id });
     }, []);
 
