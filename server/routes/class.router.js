@@ -43,6 +43,28 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 });
 
 
+// GET /api/class/userclasses
+// Gets a list of classes a student is in
+router.get('/userclasses', rejectUnauthenticated, async (req, res) => {
+   try {
+      let sendBackObj = [];
+      const query = `SELECT * FROM "user_class" WHERE "user_id" = $1`;
+      const queryText = `SELECT * FROM "class" WHERE "id" = $1`
+      const myClasses = await pool.query(query, [req.query.user]);
+      for (let x of myClasses.rows) {
+         const classObj = await pool.query(queryText, [x.class_id]);
+         sendBackObj.push(classObj.rows[0]);
+      }
+      res.send(sendBackObj);
+   }
+   catch(error) {
+      console.log(`Error getting user classes`, error);
+      res.sendStatus(500);
+   };
+});
+
+// TODO: Setup class creation! 
+
 // POST route to INSERT STUDENT INTO EXISTING CLASS. May need another for teacher to create class.
 /**
  * POST route template

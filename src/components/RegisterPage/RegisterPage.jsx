@@ -90,12 +90,12 @@ function RegisterPage() {
             <br /><br />
             <TextField type="text" label="Class Code (optional)" variant="outlined" value={classCode} onChange={(event) => setClassCode(event.target.value)}/>
             {(authority == 'teacher') ?
-            <>
-            <br /><br />
-            <TextField type="text" label="Teacher Code" variant="outlined" required value={teacherCode} onChange={(event) => setTeacherCode(event.target.value)}/>
-            </>
+               <>
+                  <br /><br />
+                  <TextField type="text" label="Teacher Code" variant="outlined" required value={teacherCode} onChange={(event) => setTeacherCode(event.target.value)}/>
+                  </>
             :
-            <></>
+               <></>
             }
             <br /><br />
             <TextField type="email" label="Email" variant="outlined" required value={email} onChange={(event) => setEmail(event.target.value)}/>

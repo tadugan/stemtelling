@@ -31,11 +31,23 @@ function* fetchProfile(action) {
    };
 };
 
+function* updateUser(action) {
+   console.log(action.payload);
+   const userInfo = action.payload;
+   try {
+      const response = yield axios.post('/api/user/update', { userInfo: userInfo });
+   }
+   catch (error) {
+      console.log("Error with updateUser in user.saga.js:", error);
+   };
+};
+
 
 // main export for this file
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('FETCH_PROFILE', fetchProfile);
+  yield takeLatest('UPDATE_USER', updateUser);
 };
 
 
