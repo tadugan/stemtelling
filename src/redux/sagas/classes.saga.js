@@ -73,29 +73,22 @@ function* joinClass(action) {
       for (let y of allCodesResponse.data) {allClassCodesArray.push(y.code)};
       console.log(classCodesArray);
       console.log(allClassCodesArray);
-      // for (let y = 0; y < classCodesArray.length; y++) {
-      //    if (classCodesArray[y] == classToJoin) {
-      //       alert ("You are already in this class");
-      //       return false;
-      //    }
-      //    else if (classCodesArray[y] != classToJoin) {
-      //       const check = yield axios.get('/api/class/allclasses');
-      //       for (let z = 0; z < check.data.length; z++) {
-      //          console.log(check.data[z].code);
-      //          if (check.data[z] != classToJoin) {
-      //             console.log("invalid class code");
-      //          }
-      //          else {
-      //             console.log("valid class code");
-      //             return false;
-      //          }
-      //       }
-      //    }
-      //    else {
-      //       alert("Unknown error");
-      //       return false;
-      //    };
-      // };
+      for (let z = 0; z < allClassCodesArray.length; z++) {
+         if (allClassCodesArray[z] !== classToJoin) {
+            console.log('invalid code');
+         }
+         if (allClassCodesArray[z] == classToJoin) {
+            console.log("This is a valid class code");
+            for (let n = 0; n < classCodesArray.length; n++) {
+               if (classCodesArray[n] == classToJoin) {
+                  console.log("You are already in this class");
+               }
+               else if (classCodesArray[n] !== classToJoin) {
+                  yield axios.post('/api/class/joinclass', classToJoin);
+               }
+            }
+         }
+      }
    }
    catch (error) {
       console.log('Error with joinClass in classes.saga.js:', error);
