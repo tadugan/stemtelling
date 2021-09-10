@@ -21,7 +21,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     FROM "stemtell"
     JOIN "user" ON "stemtell".user_id = "user".id
     JOIN "class" ON "stemtell".class_code = "class".code
-    WHERE "stemtell".class_id IN (
+    WHERE "stemtell".class_code IN (
         SELECT class_code
         FROM "user_class"
         WHERE user_id = $1
