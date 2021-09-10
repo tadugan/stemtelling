@@ -85,7 +85,7 @@ function CreateProfile() {
     const handleClassClose = () => { setClassOpen(false) };
     const [addClassCode, setAddClassCode] = useState('');
     const selectedTags = useSelector(store => store.selectedTags);
-    const [ classId, setClassId ] = useState(1);
+    const [ classId, setClassId ] = useState('');
     const [ title, setTitle ] = useState('');
     const [ imageUrl, setImageUrl] = useState('');
     const [ description, setDescription ] = useState('');
@@ -149,7 +149,7 @@ function CreateProfile() {
         });
 
         // Clear Input Fields
-        setClassId(1);
+        setClassId('');
         setTitle('');
         setImageUrl('');
         setDescription('');
