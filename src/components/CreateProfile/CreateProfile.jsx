@@ -77,7 +77,6 @@ function CreateProfile() {
     const params = useParams();
     const modalClasses = useModalStyles();
     const classes = useStyles();
-    const profile = useSelector((store) => store.profile);
     const user = useSelector(store => store.user);
     const myClasses = useSelector((store) => store.classes);
     const tags = useSelector((store) => store.tag);
@@ -169,7 +168,17 @@ function CreateProfile() {
          <center>
          <Grid item xs={12} sm={3} direction="row" justifyContent="center" alignItems="center"> 
             <Paper className={classes.paper}>
-               <img src={profile.profile_picture_url} />
+               <h2>Profile Picture</h2>
+               <img src={user.profile_picture_url} />
+               <br />
+               <StyledButton variant="contained" component="label">
+                  Upload File
+                  <input type="file" hidden/>
+               </StyledButton>
+            </Paper>
+         </Grid>
+         <Grid item xs={12} sm={3} direction="row" justifyContent="center" alignItems="center"> 
+            <Paper className={classes.paper}>
                <h2>Name</h2>
                <TextField type="text" label="Name" variant="outlined" value={name} onChange={(event) => setName(event.target.value)}/>
             </Paper>
@@ -184,13 +193,11 @@ function CreateProfile() {
             <Paper className={classes.paper}>
                <h2>Classes</h2>
                <Button variant="contained" onClick={handleClassOpen}>Add New Class</Button>
-               {/* WILL SHOW CLASS LIST HERE */}
                {myClasses.map((userClass) => {
                   return (
                      <div>{userClass.name}</div>
                   );
                })}
-               <h3>{myClasses.name}</h3>
             </Paper>
          </Grid>
          <Modal aria-labelledby="Add CLass Modal" align="center" aria-describedby="Upload a class" className={modalClasses.modal} open={classOpen} onClose={handleClassClose} closeAfterTransition BackdropComponent={Backdrop} BackdropProps={{timeout: 500}}>
