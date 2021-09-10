@@ -61,10 +61,6 @@ function RegisterPage() {
       });
    };
 
-   // const test = () => { // TODO:
-   //    console.log(`${process.env.TEACHER_CODE}`)
-   // }
-
    return (
       <form className="LoginForm" onSubmit={registerUser}>
          <center>

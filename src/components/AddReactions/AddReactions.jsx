@@ -7,7 +7,6 @@ import './AddReaction.css'
 
 
 function AddReaction({stemtellId}){
-    console.log("stemtell ID in addReactions:", stemtellId)
 
     const dispatch = useDispatch();
     const [ beakerCount, setBeakerCount ] = useState(0);
@@ -20,7 +19,6 @@ function AddReaction({stemtellId}){
         dispatch({type:'GET_STEMTELL_REACTIONS', payload: stemtellId })
     }, []);
 const reactions = useSelector((store) => store.stemtellReactions);
-console.log(reactions, "These are the stemtell reactions")
 //beaker, cool, heart, smile
 let beakerReactions = [];
 let coolReactions= [];
@@ -85,7 +83,7 @@ let smileReactions = [];
         <p>
         {reactions.map((reaction)=> {
        
-       console.log("in count reactions function");
+       
        if(reaction.reaction_id == 1){
            beakerReactions.push(reaction)
        }
@@ -98,7 +96,7 @@ let smileReactions = [];
        if(reaction.reaction_id == 4){
            smileReactions.push(reaction)
        }
-       return console.log("these are the arrays we get hopefully", beakerReactions, coolReactions, heartReactions, smileReactions)
+       
 
    })}
    </p>

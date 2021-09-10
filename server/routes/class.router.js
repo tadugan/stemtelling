@@ -103,7 +103,6 @@ router.get('/userclasses', rejectUnauthenticated, async (req, res) => {
 // });
 
 router.post('/', rejectUnauthenticated, (req, res) => {
-   console.log(req.body);
    (async () => {
      const client = await pool.connect();
      try {
@@ -131,7 +130,6 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 
          await client.query('COMMIT');
          res.send(newClassCode);
-         console.log(newClassCode);    
      } catch (err) {
          await client.query('ROLLBACK');
          throw err;

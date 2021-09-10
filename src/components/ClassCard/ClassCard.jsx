@@ -59,7 +59,7 @@ import {
    
    
    const handleSave = () => {
-      console.log(classStatus);
+   
      dispatch({
        type: "EDIT_CLASS",
        payload: {
