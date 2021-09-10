@@ -87,7 +87,7 @@ function RegisterForm() {
          <div>
             <label htmlFor="profile picture">
                Profile Picture (optional):
-               <input type="file" name="profile picture" accept="image/*" placeholder="optional" onChange={(event) => setProfilePicture(event.target.value)}/>
+               <input type="file" name="profile picture" accept="image/*" placeholder="optional" onChange={(event) => setProfilePictureURL(event.target.value)}/>
             </label>
          </div>
          <div>

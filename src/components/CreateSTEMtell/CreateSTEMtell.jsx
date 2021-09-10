@@ -137,7 +137,7 @@ function CreateSTEMtell() {
                   <TextField label="Title" variant="outlined" value={title} onChange={(event) => setTitle(event.target.value)} className="create-stemtell-title"/>
                </Grid>
                <Grid item>
-                  <TextField label="Image URL" variant="outlined" alue={imageUrl} onChange={(event) => setImageUrl(event.target.value)} className="create-stemtell-image-url"/>
+                  <TextField label="Image URL" variant="outlined" value={imageUrl} onChange={(event) => setImageUrl(event.target.value)} className="create-stemtell-image-url"/>
                </Grid>
                <Grid item>
                   <TextField aria-label="STEMtell textarea" placeholder="Add text" minRows={3} maxRows={3} variant="outlined" multiline value={description} onChange={(event) => setDescription(event.target.value)} className="create-stemtell-description"/>

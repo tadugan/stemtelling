@@ -42,13 +42,13 @@ function App() {
                <ProtectedRoute exact path="/myprofile" component={UserPage} />
                <ProtectedRoute exact path="/create" component={CreateSTEMtell} />
                <ProtectedRoute exact path="/createprofile/:id" component={CreateProfile} />
-               <ProtectedRoute exact path="/classlist" component={ClassCard} />
+               {/* <ProtectedRoute exact path="/classlist" component={ClassCard} /> */}
                <ProtectedRoute exact path="/teacher/review" component={TeacherReviewList} />
                <ProtectedRoute exact path="/stemtell/:id" component={STEMtellDetails} />
                <ProtectedRoute exact path="/classlist" component={ClassList} />
                <ProtectedRoute exact path="/classlist/details/:id" component={ClassDetails} />
                <Route exact path="/login">{user.id ? <Redirect to="/myprofile" /> : <LoginPage />}</Route>
-               <Route exact path="/registration">{user.id ? <Redirect to="/myprofile" /> : <RegisterPage />}</Route>
+               <Route exact path="/registration">{user.id ? <Redirect to="/createprofile/:id" /> : <RegisterPage />}</Route>
                <Route exact path="/home">{user.id ? <Redirect to="/myprofile" /> : <Homepage />}</Route>
                <Route><h1>404</h1></Route>
             </Switch>
