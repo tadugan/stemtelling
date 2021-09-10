@@ -167,7 +167,7 @@ function CreateSTEMtell() {
                         </MenuItem>
                         {classList.map(classItem => {
                            return (
-                              <MenuItem key={classItem.id} value={classItem.class_id}>
+                              <MenuItem key={classItem.id} value={classItem.class_code}>
                                  {classItem.name}
                               </MenuItem>
                            );
