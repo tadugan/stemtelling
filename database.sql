@@ -70,8 +70,8 @@ CREATE TABLE "stemtell" (
 CREATE TABLE "user_class" (
 	"id" SERIAL PRIMARY KEY,
 	"role" TEXT,
-	"class_id" INT REFERENCES "class"("id"),
-	"user_id" INT REFERENCES "user"("id")
+	"user_id" INT REFERENCES "user"("id"),
+	"class_code" INT REFERENCES "class"("code")
 );
 
 
@@ -155,7 +155,8 @@ INSERT INTO "class" ("code", "name")
 	VALUES ('0001', 'DEMOS'), -- id 1
 	('0002', 'CHEM 101'), -- id 2
 	('0003', 'BIO 101'), -- id 3
-	('0004', 'MATH 101'); -- id 4
+	('0004', 'MATH 101'), -- id 4
+	('9622', 'TEST 101'); -- id 5
 
 SELECT * FROM "user";
 -- Step 3: add personal Data
@@ -177,9 +178,9 @@ WHERE "id" = 4;
 
 
 -- Step 4: run the following queries to add the users to user_class table
-INSERT INTO "user_class" ("role", "user_id", "class_id")
+INSERT INTO "user_class" ("role", "user_id", "class_code")
 	VALUES ('student', '1', '1'),
-	('student', '1', '2'),
+	('student', '1','2'),
 	('student', '1', '4'),
 	('student', '2', '1'),
 	('student', '2', '3'),
