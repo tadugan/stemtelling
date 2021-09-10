@@ -4,7 +4,6 @@ import { put, takeEvery } from "redux-saga/effects";
 function* createClass(action) {
     try {
         const response = yield axios.post(`/api/class`, action.payload);
-        console.log(response.data.rows[0].code);
         yield put({type: 'FETCH_CLASSES'});
     }
     catch(error){
