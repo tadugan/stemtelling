@@ -24,6 +24,7 @@ const StyledButton = styled(Button)`
 function RegisterPage() {
    const [password, setPassword] = useState('');
    const [confirmedPassword, setConfirmedPassword] = useState('');
+   const [teacherCode, setTeacherCode] = useState('');
    const [email, setEmail] = useState('');
    const [name, setName] = useState('');
    const [classCode, setClassCode] = useState('');
@@ -52,12 +53,17 @@ function RegisterPage() {
          payload: {
             email: email.toLowerCase(),
             password: password,
+            teacherCode: teacherCode,
             authority: authority,
             name: name,
             profilePictureURL: profilePictureURL,
          },
       });
    };
+
+   // const test = () => { // TODO:
+   //    console.log(`${process.env.TEACHER_CODE}`)
+   // }
 
    return (
       <form className="LoginForm" onSubmit={registerUser}>
@@ -83,6 +89,14 @@ function RegisterPage() {
             <TextField type="text" label="Name" variant="outlined" required value={name} onChange={(event) => setName(event.target.value)}/>
             <br /><br />
             <TextField type="text" label="Class Code (optional)" variant="outlined" value={classCode} onChange={(event) => setClassCode(event.target.value)}/>
+            {(authority == 'teacher') ?
+               <>
+                  <br /><br />
+                  <TextField type="text" label="Teacher Code" variant="outlined" required value={teacherCode} onChange={(event) => setTeacherCode(event.target.value)}/>
+                  </>
+            :
+               <></>
+            }
             <br /><br />
             <TextField type="email" label="Email" variant="outlined" required value={email} onChange={(event) => setEmail(event.target.value)}/>
             <br /><br />
@@ -91,7 +105,7 @@ function RegisterPage() {
             <TextField type="password" label="Confirm Password" variant="outlined" required value={confirmedPassword} onChange={(event) => setConfirmedPassword(event.target.value)}/>
             <br /><br />
             <div>
-               <StyledButton type="submit" name="submit" >Create Account</StyledButton>
+               <StyledButton type="submit" name="submit">Create Account</StyledButton>
             </div>
             <Button onClick={() => {history.push('/login')}}>
                Already Have an Account?

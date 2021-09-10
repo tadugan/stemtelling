@@ -7,7 +7,6 @@ import axios from 'axios';
 function* getFeedback(action) {
    try {
       const response = yield axios.get(`/api/comment/feedback/${action.payload}`);
-      console.log("this is the response from getFeedback:", response.data);
       yield put({ type: 'SET_FEEDBACK', payload: response.data});
    }
    catch (error) {
@@ -16,7 +15,6 @@ function* getFeedback(action) {
 };
 
 function* updateStatus(action) {
-   console.log('in update status with action:', action)
    try {
       yield axios.put(`/api/stemtell/status`, action.payload);
    }

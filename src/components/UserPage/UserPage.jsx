@@ -5,6 +5,7 @@ import { useHistory } from "react-router";
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Avatar, Card, Paper, Modal, Backdrop, Fade, TextField, Button, Container } from '@material-ui/core';
 import EditSTEMtell from "../EditSTEMtell/EditSTEMtell";
+import TeacherFeedback from "../TeacherFeedback/TeacherFeedback";
 import './UserPage.css';
 import styled from 'styled-components';
 
@@ -24,7 +25,7 @@ const useCardStyles = makeStyles(() => ({
    unapproved: {
       paddingBottom: "15px",
       alignItems: "center",
-      border: "5px solid #DD2E44",
+      border: "5px solid #FF4E4E",
       borderRadius: "15px",
       justifyContent: "center",
       flexGrow: "1px",
@@ -142,6 +143,9 @@ function UserPage() {
    };
 
    const handleDelete = (stemtell) => {
+      if (confirm(`Are you sure you want to delete ${stemtell.title}?`) === false) {
+         return false;
+     };
       dispatch({
          type: "DELETE_STEMTELL",
          payload: stemtell
@@ -151,6 +155,7 @@ function UserPage() {
    };
    
    useEffect(() => {
+      dispatch({ type: 'FETCH_USER' })
       dispatch({ type: "FETCH_MY_STEMTELLS", payload: user.id });
     }, []);
 
@@ -161,7 +166,10 @@ function UserPage() {
                <Paper className={classes.paper}>
                   <img src={user.profile_picture_url}></img>
                   <h2>{user.name}</h2> 
-                  <LogOutButton className="btn" />
+                  <LogOutButton />
+                  <StyledButton onClick={() => {history.push(`/editprofile`)}}>
+                     Edit Profile
+                  </StyledButton>
                </Paper>
             </Grid>
             <Grid item xs={12} sm={9}>
@@ -188,7 +196,7 @@ function UserPage() {
                                     Edit
                                  </StyledButton>
                               </Card>
-                              {(stemtell.approved === true) ? <></> : <h3><center>NEEDS REVISION</center></h3>}
+                              {/* {(stemtell.approved === true) ? <></> : <h3><center>NEEDS REVISION</center></h3>} */}
                            </Grid>
                         )
                      })}

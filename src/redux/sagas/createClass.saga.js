@@ -1,9 +1,9 @@
 import axios from "axios";
 import { put, takeEvery } from "redux-saga/effects";
 
-function* addClass(action) {
+function* createClass(action) {
     try {
-        yield axios.post(`/api/class/profile`, action.payload);
+        yield axios.post(`/api/class`, action.payload);
         yield put({type: 'FETCH_CLASSES'});
     }
     catch(error){
@@ -11,8 +11,8 @@ function* addClass(action) {
     }
 }
 
-function* newClassSaga() {
-    yield takeEvery('JOIN_CLASS', addClass);
+function* createClassSaga() {
+    yield takeEvery('CREATE_CLASS', createClass);
   }
 
-export default newClassSaga;
+export default createClassSaga;

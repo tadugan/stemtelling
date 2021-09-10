@@ -43,27 +43,88 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 });
 
 
+// GET /api/class/userclasses
+// Gets a list of classes a student is in
+router.get('/userclasses', rejectUnauthenticated, async (req, res) => {
+   try {
+      let sendBackObj = [];
+      const query = `SELECT * FROM "user_class" WHERE "user_id" = $1`;
+      const queryText = `SELECT * FROM "class" WHERE "id" = $1`
+      const myClasses = await pool.query(query, [req.query.user]);
+      for (let x of myClasses.rows) {
+         const classObj = await pool.query(queryText, [x.class_id]);
+         sendBackObj.push(classObj.rows[0]);
+      }
+      res.send(sendBackObj);
+   }
+   catch(error) {
+      console.log(`Error getting user classes`, error);
+      res.sendStatus(500);
+   };
+});
+
 // TODO: Setup class creation! 
 
 // POST route to INSERT STUDENT INTO EXISTING CLASS. May need another for teacher to create class.
 /**
  * POST route template
  */
-router.post('/class', (req, res) => {
+// router.post('/newclass', rejectUnauthenticated, (req, res) => {
   // POST route code here
-  const query = `
-  INSERT INTO "user_class" ("class_id", "user_id")
-  VALUES ($1, $2);`;
-  pool.query(query)
-  .then((results) => {
-    console.log('ADDed student to class successful');
-    res.sendStatus(201);
-  })
-  .catch((error) => {
-    console.log(`Did not add student to class`, error);
-    res.sendStatus(500);
-  });
-});
+//   console.log(req.body);
+//   const query = `
+//   INERT INTO "class" ("name")
+//   VALUES ($1);
+//   `;
+//   pool.query(query, [req.body.name])
+//   .then((results) => {
+//     console.log('Created new class');
+//     res.sendStatus(201);
+//   })
+//   .catch((error) => {
+//     console.log(`Could not create new class`, error);
+//     res.sendStatus(500);
+//   });
+// });
+
+router.post('/', rejectUnauthenticated, (req, res) => {
+   console.log(req.body);
+   (async () => {
+     const client = await pool.connect();
+     try {
+         await client.query('BEGIN');
+         //Function that generates random number
+         await client.query( `
+         CREATE OR REPLACE FUNCTION random_between(low INT, high INT)
+         RETURNS INT AS
+         $$
+         BEGIN
+         RETURN floor(random()* (high-low +1) + low);
+         END;
+         $$ language 'plpgsql' STRICT;
+         `);
+         
+         // INSERT new value into the class table
+         const name = req.body.name;
+         const newClassCode = await client.query(
+            `INSERT INTO "class" ("code", "name")
+            VALUES (CONCAT(random_between(1000,10000))::INT, $1)
+            
+            `, [name]
+         );
+         // await client.query(newClassCode, [classCode, name]);
+
+         await client.query('COMMIT');
+         res.send(newClassCode);
+         console.log(newClassCode);    
+     } catch (err) {
+         await client.query('ROLLBACK');
+         throw err;
+     } finally {
+       client.release();
+     }
+   })().catch(e => console.error(e.stack))
+ });
 
 /**
  * POST for adding to new student to class
@@ -96,7 +157,6 @@ router.post('/class', (req, res) => {
 
 //PUT for updating class information such as title
 router.put("/update", rejectUnauthenticated, (req,res) => {
-   console.log(`What is being UPDATED:`, req.body.id);
    const query = `UPDATE "class" 
                   SET "name"= $1, "archived" = $2
                   WHERE "id"= $3;`;
