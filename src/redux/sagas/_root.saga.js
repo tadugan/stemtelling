@@ -14,6 +14,8 @@ import editStemtellSaga from './editSTEMtell.saga';
 import teacherReviewListSaga from './teacherReviewList.saga';
 import resetPasswordSaga from './resetpassword.saga';
 import addTagsSaga from './newProfile.saga';
+import createClassSaga from './createClass.saga';
+
 
 
 export default function* rootSaga() {
@@ -33,5 +35,6 @@ export default function* rootSaga() {
       editStemtellSaga(),
       teacherReviewListSaga(),
       addTagsSaga(),
+      createClassSaga(),
    ]);
 };
