@@ -5,23 +5,24 @@ const { rejectUnauthenticated } = require("../modules/authentication-middleware"
 
 // GET /api/reaction
 // Handles getting all reactions 
-router.get("/", (req, res) => {
-  const query = `SELECT *
-                 FROM "reaction"
-                 `;
-  pool.query(query)
-  .then(results => {
-     res.send(results.rows);
-  })
-  .catch(error => {
-     console.log("Error getting stemReactions:", error);
-     res.sendStatus(500);
-  });
-});
+// router.get("/", (req, res) => {
+//   const query = `SELECT *
+//                  FROM "reaction"
+//                  `;
+//   pool.query(query)
+//   .then(results => {
+//      res.send(results.rows);
+//   })
+//   .catch(error => {
+//      console.log("Error getting stemReactions:", error);
+//      res.sendStatus(500);
+//   });
+// });
 
 // GET /api/reaction/:id
 // Handles getting reactions for a specific STEMtell
 router.get("/:id", (req, res) => {
+   console.log("req params in get stem reaction", req.params)
   const stemtellId= req.params.id;
   const query = `SELECT *
                  FROM "reaction_stemtell"
@@ -37,6 +38,8 @@ router.get("/:id", (req, res) => {
      res.sendStatus(500);
   });
 });
+
+
 /**
  * POST route template
  */
