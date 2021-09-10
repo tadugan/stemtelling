@@ -20,9 +20,9 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     SELECT "user".name AS username, "user".id AS author_id, "stemtell".id AS stem_id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".unix, "class".name AS class_name
     FROM "stemtell"
     JOIN "user" ON "stemtell".user_id = "user".id
-    JOIN "class" ON "stemtell".class_id = "class".id
+    JOIN "class" ON "stemtell".class_code = "class".code
     WHERE "stemtell".class_id IN (
-        SELECT class_id
+        SELECT class_code
         FROM "user_class"
         WHERE user_id = $1
     ) 

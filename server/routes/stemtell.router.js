@@ -30,9 +30,9 @@ router.get('/homefeed', rejectUnauthenticated, (req, res) => {
    const query = `SELECT "user".name AS username, "user".id AS author_id, "stemtell".id AS stem_id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".unix, "class".name AS class_name
                   FROM "stemtell"
                   JOIN "user" ON "stemtell".user_id = "user".id
-                  JOIN "class" ON "stemtell".class_id = "class".id
-                  WHERE "stemtell".class_id IN (
-                  SELECT "class_id"
+                  JOIN "class" ON "stemtell".class_code = "class".code
+                  WHERE "stemtell".class_code IN (
+                  SELECT "class_code"
                   FROM "user_class"
                   WHERE "user_class".user_id = $1
                   AND "stemtell".approved IS TRUE )
@@ -148,8 +148,8 @@ router.put('/save', rejectUnauthenticated, (req, res) => {
             upload_preset: 'stemtell-content-image'
          })
          await client.query("BEGIN");
-         const queryTextAddStemtell = `UPDATE "stemtell" SET "class_id" = $1, "user_id" = $2, "title" = $3, "body_text" = $4, "media_url" = $5 WHERE "id" = $6`;
-         const response = await client.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, imageResponse.url, stemtellId,]);
+         const queryTextAddStemtell = `UPDATE "stemtell" SET "class_code" = $1, "user_id" = $2, "title" = $3, "body_text" = $4, "media_url" = $5 WHERE "id" = $6`;
+         const response = await client.query(queryTextAddStemtell, [newStemtell.class_code, user.id, newStemtell.title, newStemtell.body_text, imageResponse.url, stemtellId,]);
          const queryTextDeleteExistingTags = `DELETE FROM "stemtell_tag" WHERE stemtell_id = $1;`;
          await client.query(queryTextDeleteExistingTags, [stemtellId]);
          const queryTextAddTag = `INSERT INTO stemtell_tag ("tag_id", "stemtell_id")
@@ -220,7 +220,7 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
    const query = `SELECT "user".name , "user".id as author_id, "stemtell".id, "stemtell".title, "stemtell".media_url, "stemtell".body_text, "user".profile_picture_url, "stemtell".unix, "class".name AS class_name
                   FROM "stemtell"
                   JOIN "user" ON "stemtell".user_id = "user".id
-                  JOIN "class" ON "stemtell".class_id = "class".id
+                  JOIN "class" ON "stemtell".class_code = "class".code
                   WHERE "stemtell".id = $1`;
    pool.query(query, [stemtellId])
    .then(results => {

@@ -64,7 +64,7 @@ function EditSTEMtell(stemtell) {
    const user = useSelector((store) => store.user);
    const dispatch = useDispatch();
    const history = useHistory();
-   const [ classId, setClassId ] = useState(0);
+   const [ classCode, setClassCode ] = useState(0);
    const [ title, setTitle ] = useState('');
    const [ imageUrl, setImageUrl] = useState('');
    const [ description, setDescription ] = useState('');
@@ -99,13 +99,13 @@ function EditSTEMtell(stemtell) {
                title: title,
                body_text: description,
                // media_url: imageUrl,
-               class_id: classId,
+               class_code: classCode,
                tag_ids: tagIds
             },
             image_data: imageData
          }
       });
-      setClassId(0);
+      setClassCode(0);
       setTitle('');
       setImageUrl('');
       setDescription('');
@@ -115,7 +115,7 @@ function EditSTEMtell(stemtell) {
    };
 
    const invalidInputs = () => {
-      if (classId === 0) {
+      if (classCode === 0) {
          setAlertMessage('class');
          return true;
       } 
@@ -173,7 +173,7 @@ function EditSTEMtell(stemtell) {
       setDescription(stemtell.stemtell.body_text);
       setTitle(stemtell.stemtell.title);
       setImageUrl(stemtell.stemtell.media_url);
-      setClassId(stemtell.stemtell.class_id);
+      setClassCode(stemtell.stemtell.class_id);
       getExistingTags(stemtell.stemtell.id);
       dispatch({ type: 'GET_FEEDBACK', payload: stemtell.stemtell.id});
    }, []);
@@ -191,7 +191,7 @@ function EditSTEMtell(stemtell) {
                      <Grid item>
                         <FormControl variant="outlined" className="edit-stemtell-class">
                            <InputLabel className="demo-simple-select-outlined-label">Class</InputLabel>
-                           <Select variant="outlined" labelId="demo-simple-select-outlined-label" value={classId} onChange={(event) => setClassId(event.target.value)} label="Age" className="edit-stemtell-class-select">
+                           <Select variant="outlined" labelId="demo-simple-select-outlined-label" value={classCode} onChange={(event) => setClassCode(event.target.value)} label="Age" className="edit-stemtell-class-select">
                               <MenuItem value={0}>
                                  <em>Choose a Class</em>
                               </MenuItem>
