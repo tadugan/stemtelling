@@ -29,12 +29,59 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const useCardStyles = makeStyles(() => ({
+   root: {
+      alignItems: "center",
+      border: "2px solid #1E1F20",
+      borderRadius: "15px",
+      justifyContent: "center",
+      flexGrow: "1px",
+      width: "50%",
+      minWidth: "348px",
+      height: "100%",
+      textAlign: "center",
+      color: "grey",
+      padding: "12px",
+   },
+   avatar: {
+      textAlign: "left",
+      borderStyle: "solid",
+      float: "left",
+      display: "flex",
+      flexDirection: "row",
+      height: "50px",
+      width: "50px",
+   },
+   username: {
+      paddingTop: "5px",
+      fontSize: '18px',
+      fontWeight: 'bold',
+      textAlign: "left",
+      marginLeft: "60px",
+      display: "flex",
+      flexDirection: "row",
+      color: "#727272",
+   },
+   stemdate: {
+      float: "right",
+      fontSize: '12px',
+      paddingTop: "7px",
+      paddingRight: "5px",
+   },
+   stemtitle: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      textAlign:"center"
+   },
+ }));
+
   
 
 function TeacherFeedback() {
     const dispatch= useDispatch();
     const feedback = useSelector((store) => store.feedback);
-
+    const cardStyles = useCardStyles();
     const params = useParams();
     const stemtellId = params.id;
 
@@ -84,7 +131,7 @@ const unixTimestamp = (timestamp) => {
     <BackBtn />
     <center>
        <Grid item key={stemtell.id}>
-          <Card className="StemDetailsCard">
+          <Card className={cardStyles.root}>
              <h6 id="stemDate">{unixTimestamp(stemtell.unix)}</h6>
              <Avatar className="Avatar" src={stemtell.profile_picture_url} />
              <section className="UserName" onClick={() => onUserProfile(stemtell.user_id)}>
