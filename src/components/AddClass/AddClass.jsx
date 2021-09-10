@@ -23,8 +23,6 @@ function AddClass() {
         });
         setNewClass('');
     }
-
-
     return(
         <>
         <Container className='AddClassContainer'>
@@ -35,6 +33,8 @@ function AddClass() {
         label= 'Add Class'
         placeholder='Class Title'
         variant= 'filled'
+        value= {newClass}
+        onChange={(event) => setNewClass(event.target.value)}
         >
         </TextField>
         </form>
