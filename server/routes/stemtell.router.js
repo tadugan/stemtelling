@@ -71,35 +71,66 @@ router.post('/', rejectUnauthenticated, (req, res) => {
    const newStemtell = req.body.details;
    const imageData = req.body.image_data;
    const user = req.user;
-   (async () => {
-      const client = await pool.connect();
-      try {
-         const imageResponse = await cloudinary.uploader.upload(imageData, {
-            upload_preset: 'stemtell-content-image'
-         })
-         // console.log('imageResponse.url:', imageResponse.url); // TODO:
-
-         await client.query("BEGIN");
-         const queryTextAddStemtell = `INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "unix")
-                                       VALUES ($1, $2, $3, $4, $5, extract(epoch from now()))
-                                       RETURNING id`;
-         const response = await client.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, imageResponse.url]);
-         const stemtellId = response.rows[0].id;
-         const queryTextAddTag = `INSERT INTO stemtell_tag ("tag_id", "stemtell_id")
-                                  VALUES ($1, $2) `;
-         for (let id of newStemtell.tag_ids) {
-            await client.query(queryTextAddTag, [id, stemtellId]);
-         };
-         await client.query("COMMIT");
-      }
-      catch (error) {
-         await client.query("ROLLBACK");
-         throw error;
-      }
-      finally {
-         client.release();
-      }
-   })().catch(error => console.error(error.stack));
+   if (req.user.authority == 'teacher') {
+      (async () => {
+         const client = await pool.connect();
+         try {
+            const imageResponse = await cloudinary.uploader.upload(imageData, {
+               upload_preset: 'stemtell-content-image'
+            })
+            await client.query("BEGIN");
+            const queryTextAddStemtell = `INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "approved", "unix")
+                                          VALUES ($1, $2, $3, $4, $5, $6, extract(epoch from now()))
+                                          RETURNING id`;
+            const response = await client.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, imageResponse.url, true]);
+            const stemtellId = response.rows[0].id;
+            const queryTextAddTag = `INSERT INTO stemtell_tag ("tag_id", "stemtell_id")
+                                     VALUES ($1, $2) `;
+            for (let id of newStemtell.tag_ids) {
+               await client.query(queryTextAddTag, [id, stemtellId]);
+            };
+            await client.query("COMMIT");
+         }
+         catch (error) {
+            await client.query("ROLLBACK");
+            throw error;
+         }
+         finally {
+            client.release();
+         }
+      })().catch(error => console.error(error.stack));
+   }
+   else {
+      (async () => {
+         const client = await pool.connect();
+         try {
+            const imageResponse = await cloudinary.uploader.upload(imageData, {
+               upload_preset: 'stemtell-content-image'
+            })
+            // console.log('imageResponse.url:', imageResponse.url); // TODO:
+   
+            await client.query("BEGIN");
+            const queryTextAddStemtell = `INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "unix")
+                                          VALUES ($1, $2, $3, $4, $5, extract(epoch from now()))
+                                          RETURNING id`;
+            const response = await client.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, imageResponse.url]);
+            const stemtellId = response.rows[0].id;
+            const queryTextAddTag = `INSERT INTO stemtell_tag ("tag_id", "stemtell_id")
+                                     VALUES ($1, $2) `;
+            for (let id of newStemtell.tag_ids) {
+               await client.query(queryTextAddTag, [id, stemtellId]);
+            };
+            await client.query("COMMIT");
+         }
+         catch (error) {
+            await client.query("ROLLBACK");
+            throw error;
+         }
+         finally {
+            client.release();
+         }
+      })().catch(error => console.error(error.stack));
+   }
 });
 
 // PUT /api/stemtell/save
