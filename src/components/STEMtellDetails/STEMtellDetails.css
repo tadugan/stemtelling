@@ -1,10 +1,9 @@
 .StemDetailsCard {
-   width: 80%;
+   width: 50%;
    height: 100%;
 }
 
 #StemDetailsImage {
-   margin-bottom: 3em;
    max-height: 400px;
 }
 

@@ -1,7 +1,10 @@
 .edit-stemtell-body {
    width: 90%;
-   max-width: 400px;
-   height: 600px;
+   max-width: 1000px;
+   height: auto;
+   max-height: 90%;
+   overflow-y: auto;
+   overflow-x: hidden;
    background-color: white;
 }
 

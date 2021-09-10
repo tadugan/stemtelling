@@ -7,6 +7,7 @@
    padding: 16px;
    align-items: center;
    justify-content: center;
+   border: none;
    flex-grow: 1px;
    width: 300px;
    height: 410px;
@@ -49,9 +50,9 @@
    text-align: center;
    font-size: 18px;
    padding: 4px;
-   width: 100%;
 }
 
 #stemtellImage {
    height: 15em;
+   width: 15em;
 }

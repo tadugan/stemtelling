@@ -2,9 +2,25 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Backdrop, Fade, Modal} from '@material-ui/core';
+import styled from 'styled-components';
+
+const StyledButton = styled(Button)`
+   display: inline-block;
+   padding: 10px 20px;
+   border-color: #014041;
+   border-width: 1px 1px 3px;
+   border-radius: 4px;
+   background-color: #979797;
+   color: #f8f8f8;
+   font-size: 1.1rem;
+   outline: 0;
+   cursor: pointer;
+   &:hover {
+      background-color: rgba(151, 151, 151, 0.6);
+      text-decoration: none;
+   }
+`;
 
 const useStyles = makeStyles((theme) => ({
    modal: {
@@ -47,16 +63,18 @@ function ForgotPasswordPage() {
    }};
 
    return (
-      <div className="formPanel">
-         <div>
-            <label htmlFor="email">
-               Email:
-               <input type="text" name="email" required value={email} onChange={(event) => setEmail(event.target.value)}/>
-            </label>
-         </div>
-         <div>
-            <button className="btn" onClick={resetPassword}>Reset Password</button>
-         </div>
+      <div className="LoginForm">
+         <center>
+            <h2>Forgot Password</h2>
+            <TextField type="email" label="Email" variant="outlined" required value={email} onChange={(event) => setEmail(event.target.value)}/>
+            <br /><br />
+            <div>
+               <StyledButton onClick={resetPassword}>Reset Password</StyledButton>
+            </div>
+            <Button onClick={() => {history.push('/login')}}>
+               Go Back
+            </Button>
+         </center>
          <Modal aria-labelledby="email confirmation modal" aria-describedby="email confirmation modal" className={classes.modal} open={open} onClose={handleClose} closeAfterTransition BackdropComponent={Backdrop} BackdropProps={{timeout: 500}}>
             <Fade in={open}>
                <div className={classes.paper}>

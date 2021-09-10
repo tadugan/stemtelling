@@ -4,9 +4,7 @@ import axios from 'axios';
 
 function* getReviewStemtells() {
    try {
-        console.log('In get review stemtells'); // TODO:
         const reviewStemtells = yield axios.get('/api/review');
-        console.log('reviewStemtells:', reviewStemtells); // TODO:
         yield put({ type: 'SET_TEACHER_REVIEW_LIST', payload: reviewStemtells.data});
    }
    catch (error) {

@@ -12,14 +12,16 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage';
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage';
-import ClassCard from '../ClassCard/ClassCard';
 import STEMtellDetails from '../STEMtellDetails/STEMtellDetails';
 import Homepage from '../Homepage/Homepage';
 import CreateSTEMtell from '../CreateSTEMtell/CreateSTEMtell';
 import TeacherReviewList from '../TeacherReviewList/TeacherReviewList';
 import ClassList from '../ClassList/ClassList';
 import ClassDetails from '../ClassDetails/ClassDetails';
+import TeacherFeedback from '../TeacherFeedback/TeacherFeedback';
 import './App.css';
+
+
 
 function App() {
    const dispatch = useDispatch();
@@ -41,18 +43,17 @@ function App() {
                <ProtectedRoute exact path="/homepage" component={Homepage} />
                <ProtectedRoute exact path="/myprofile" component={UserPage} />
                <ProtectedRoute exact path="/create" component={CreateSTEMtell} />
-               <ProtectedRoute exact path="/createprofile/:id" component={CreateProfile} />
-               {/* <ProtectedRoute exact path="/classlist" component={ClassCard} /> */}
+               <ProtectedRoute exact path="/editprofile" component={CreateProfile} />
                <ProtectedRoute exact path="/teacher/review" component={TeacherReviewList} />
                <ProtectedRoute exact path="/stemtell/:id" component={STEMtellDetails} />
                <ProtectedRoute exact path="/classlist" component={ClassList} />
                <ProtectedRoute exact path="/classlist/details/:id" component={ClassDetails} />
-               <Route exact path="/login">{user.id ? <Redirect to="/myprofile" /> : <LoginPage />}</Route>
-               <Route exact path="/registration">{user.id ? <Redirect to="/createprofile/:id" /> : <RegisterPage />}</Route>
+               <ProtectedRoute exact path="/comment/feedback/:id" component={TeacherFeedback}/>
+               <Route exact path="/login">{user.id ? <Redirect to="/myprofile" /> : <LoginPage />  }</Route>
+               <Route exact path="/registration">{user.id ? <Redirect to="/myprofile" /> : <RegisterPage />}</Route>
                <Route exact path="/home">{user.id ? <Redirect to="/myprofile" /> : <Homepage />}</Route>
                <Route><h1>404</h1></Route>
             </Switch>
-            <Footer />
          </div>
       </Router>
    );

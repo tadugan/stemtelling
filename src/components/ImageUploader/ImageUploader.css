@@ -1,0 +1,14 @@
+.add-tag-dialog-body {
+   width: 200px;
+   margin: 5px auto;
+}
+
+.image-uploader-preview {
+    height: 104px;
+}
+
+.image-uploader-preview-window {
+    height: 104px;
+    width: 104px;
+    text-align: center;
+}

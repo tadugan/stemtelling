@@ -1,4 +1,4 @@
-import { put, takeEvery } from "redux-saga/effects";
+import { put, takeEvery, call } from "redux-saga/effects";
 import axios from "axios";
 
 
@@ -14,6 +14,17 @@ function* fetchClasses() {
    };
 };
 
+function* getUserClasses(action) {
+   const user = action.payload;
+   try {
+      const response = yield axios.get('/api/class/userclasses', {params: { user } });
+      yield put({type: 'SET_USER_CLASSES', payload: response.data});
+   }
+   catch (error) {
+      console.log("Error with getUserClasses in classes.saga.js:", error);
+   };
+};
+
 // function for getting all STEMtells associated with a specific class
 // called on the user homepage in order to only display STEMtells that are from classes the user is in
 function* fetchClassStemTells() {
@@ -26,10 +37,22 @@ function* fetchClassStemTells() {
    };
 };
 
+//function for updating a class
+function* editClass(action) {
+   try {
+     yield call(axios.put, `/api/class/update`, action.payload);
+   //   console.log(`What is in the PUT payload for CLASS`, action.payload); // TODO:
+   } catch (error) {
+     console.log(`problem editing class SAGA:`, error);
+   }
+ }
+ 
 
 function* classesSaga(){
     yield takeEvery('FETCH_CLASSES', fetchClasses);
     yield takeEvery('FETCH_USER_FEED', fetchClassStemTells);
+    yield takeEvery("EDIT_CLASS", editClass);
+    yield takeEvery("GET_USER_CLASSES", getUserClasses);
 };
 
 

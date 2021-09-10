@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {Container, TextField, Button} from '@material-ui/core';
+import {Container, TextField, Button, Box} from '@material-ui/core';
 import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
+import './AddClass.css';
 
 function AddClass() {
     const [ newClass, setNewClass ] = useState('');
@@ -25,6 +26,7 @@ function AddClass() {
 
 
     return(
+        <>
         <Container className='AddClassContainer'>
 
         <form className='AddClassForm'>
@@ -39,8 +41,18 @@ function AddClass() {
         </TextField>
         </form>
 
-        <Button onClick={handleAddClass} type="submit"> <AddCircleOutlineRoundedIcon /> </Button>
+        <span> 
+        <Box className='AddClassBtnBox'>
+        <AddCircleOutlineRoundedIcon
+        id='AddClassBtn'
+        color='primary'
+        fontSize='large'
+         /> 
+         </Box>
+         </span>        
+
         </Container>
+        </>
     )
 
 }

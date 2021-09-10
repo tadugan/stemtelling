@@ -27,7 +27,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- Create "user" Table
 CREATE TABLE "user" (
 	"id" SERIAL PRIMARY KEY,
-   	"email" TEXT UNIQUE NOT NULL,
+   "email" TEXT UNIQUE NOT NULL,
 	"password" TEXT NOT NULL,
 	"name" TEXT,
 	"authority" TEXT NOT NULL,
@@ -37,9 +37,9 @@ CREATE TABLE "user" (
 
 -- this table needs to be periodically cleansed via a cron (e.g. https://github.com/citusdata/pg_cron), ideally at inactive times of day, in order to prevent buildup.
 CREATE TABLE "reset_password" ( 
-	"id" INTEGER PRIMARY KEY UNIQUE,
-	"uuid" uuid NOT NULL DEFAULT uuid_generate_v4(),
-	"email" TEXT UNIQUE NOT NULL
+   "id" INTEGER PRIMARY KEY UNIQUE,
+   "uuid" uuid NOT NULL DEFAULT uuid_generate_v4(),
+   "email" TEXT UNIQUE NOT NULL
 );
 
 
@@ -284,21 +284,21 @@ INSERT INTO "tag" ("type", "name", "stem_field")
 	
 
 -- Step 6: run the following queries to create student stemtells
-INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "unix")
-	VALUES ('2', '1', 'CHEMISTRY STEMTELL', 'I Love Chemistry!!', 'https://www.sciencecompany.com/Assets/ProductImages/nc0071n-lg.jpg', extract(epoch from now())),
+INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "approved", "unix")
+	VALUES ('2', '1', 'CHEMISTRY STEMTELL', 'I Love Chemistry!!', 'https://www.sciencecompany.com/Assets/ProductImages/nc0071n-lg.jpg', true, extract(epoch from now())),
 	('2', '1', 'OCHEM STEMTELL', 'Organic chemistry is the study of the structure, properties, composition, reactions, and preparation of carbon-containing compounds. Most organic compounds contain carbon and hydrogen, but they may also include any number of other elements (e.g., nitrogen, oxygen, halogens, phosphorus, silicon, sulfur).
-		Originally limited to the study of compounds produced by living organisms, organic chemistry has been broadened to include human-made substances (e.g., plastics).', 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Corey_oseltamivir_synthesis.png/390px-Corey_oseltamivir_synthesis.png', extract(epoch from now())),
-	('4', '1', 'GEOMETRY STEMTELL', 'I Love Geometry!!', 'https://i.ytimg.com/vi/302eJ3TzJQU/maxresdefault.jpg', extract(epoch from now())),
-	('4', '1', 'ALGEBRA STEMTELL', 'I Love Algebra!!', 'https://d138zd1ktt9iqe.cloudfront.net/media/seo_landing_files/algebric-expression-image-3-1615010733.png', extract(epoch from now())),
-	('3', '2', 'BIOLOGY STEMTELL', 'I Love Biology!!', 'https://medlineplus.gov/images/Anatomy.jpg', extract(epoch from now())),
-	('3', '2', 'MOLECULAR BIOLOGY STEMTELL', 'The field of molecular biology studies macromolecules and the macromolecular mechanisms found in living things, such as the molecular nature of the gene and its mechanisms of gene replication, mutation, and expression. Given the fundamental importance of these macromolecular mechanisms throughout the history of molecular biology, a philosophical focus on the concept of a mechanism generates the clearest picture of molecular biology’s history, concepts, and case studies utilized by philosophers of science.', 'https://ocw.mit.edu/courses/biology/7-01sc-fundamentals-of-biology-fall-2011/molecular-biology/Molec_Bio_Unit_image.jpg', extract(epoch from now())), 
-	('4', '2', 'STATISTICS STEMTELL', 'I Love Statistics!!', 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Standard_Normal_Distribution.png/290px-Standard_Normal_Distribution.png', extract(epoch from now())),
+		Originally limited to the study of compounds produced by living organisms, organic chemistry has been broadened to include human-made substances (e.g., plastics).', 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Corey_oseltamivir_synthesis.png/390px-Corey_oseltamivir_synthesis.png', false, extract(epoch from now())),
+	('4', '1', 'GEOMETRY STEMTELL', 'I Love Geometry!!', 'https://i.ytimg.com/vi/302eJ3TzJQU/maxresdefault.jpg', false, extract(epoch from now())),
+	('4', '1', 'ALGEBRA STEMTELL', 'I Love Algebra!!', 'https://d138zd1ktt9iqe.cloudfront.net/media/seo_landing_files/algebric-expression-image-3-1615010733.png', false, extract(epoch from now())),
+	('3', '2', 'BIOLOGY STEMTELL', 'I Love Biology!!', 'https://medlineplus.gov/images/Anatomy.jpg', false, extract(epoch from now())),
+	('3', '2', 'MOLECULAR BIOLOGY STEMTELL', 'The field of molecular biology studies macromolecules and the macromolecular mechanisms found in living things, such as the molecular nature of the gene and its mechanisms of gene replication, mutation, and expression. Given the fundamental importance of these macromolecular mechanisms throughout the history of molecular biology, a philosophical focus on the concept of a mechanism generates the clearest picture of molecular biology’s history, concepts, and case studies utilized by philosophers of science.', 'https://ocw.mit.edu/courses/biology/7-01sc-fundamentals-of-biology-fall-2011/molecular-biology/Molec_Bio_Unit_image.jpg', false, extract(epoch from now())), 
+	('4', '2', 'STATISTICS STEMTELL', 'I Love Statistics!!', 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Standard_Normal_Distribution.png/290px-Standard_Normal_Distribution.png', true, extract(epoch from now())),
 	('4', '2', 'CALCULUS STEMTELL', 'Calculus is one of the most important branches of mathematics, that deals with continuous change. Calculus is also referred to as infinitesimal calculus or “the calculus of infinitesimals”. Infinitesimal numbers are the quantities that have value nearly equal to zero, but not exactly zero. Generally, classical calculus is the study of continuous change of functions. The two major concepts that calculus is based on are derivatives and integrals.
-		The derivative of a function is the measure of the rate of change of a function, while integral is the measure of the area under the curve of the function. The derivative gives the explanation of the function at a specific point whereas the integral accumulates the discrete values of a function over a range of values.', 'https://online-learning.harvard.edu/sites/default/files/styles/header/public/course/asset-v1_HarvardX%2BCalcAPL1x%2B2T2017%2Btype%40asset%2Bblock%40TITLE-Calculus-Applied-2120x1192-NO-SPOTLIGHT%202.png?itok=crWwjmVi', extract(epoch from now())),
-	('1', '3', 'SCIENCE STEMTELL', 'I Love Science!!', 'https://image.freepik.com/free-vector/hand-drawn-science-education-background_23-2148499325.jpg', extract(epoch from now())),
-	('1', '3', 'TECHNOLOGY STEMTELL', 'I Love Technology!!', 'https://www.investopedia.com/thmb/ooWnJKzULBikIcMgNqZdiRvHHBY=/2121x1414/filters:fill(auto,1)/GettyImages-964033964-ca3290057ccc4024b57e755423572264.jpg', extract(epoch from now())),
-	('1', '4', 'ENGINEERING STEMTELL', 'I Love Biology!!', 'https://upload.wikimedia.org/wikipedia/commons/3/3d/PIA19664-MarsInSightLander-Assembly-20150430.jpg', extract(epoch from now())),
-	('1', '4', 'MATH STEMTELL', 'I Love Math!!', 'https://miro.medium.com/max/6000/1*L76A5gL6176UbMgn7q4Ybg.jpeg', extract(epoch from now()));
+		The derivative of a function is the measure of the rate of change of a function, while integral is the measure of the area under the curve of the function. The derivative gives the explanation of the function at a specific point whereas the integral accumulates the discrete values of a function over a range of values.', 'https://online-learning.harvard.edu/sites/default/files/styles/header/public/course/asset-v1_HarvardX%2BCalcAPL1x%2B2T2017%2Btype%40asset%2Bblock%40TITLE-Calculus-Applied-2120x1192-NO-SPOTLIGHT%202.png?itok=crWwjmVi', false, extract(epoch from now())),
+	('1', '3', 'SCIENCE STEMTELL', 'I Love Science!!', 'https://image.freepik.com/free-vector/hand-drawn-science-education-background_23-2148499325.jpg', true, extract(epoch from now())),
+	('1', '3', 'TECHNOLOGY STEMTELL', 'I Love Technology!!', 'https://www.investopedia.com/thmb/ooWnJKzULBikIcMgNqZdiRvHHBY=/2121x1414/filters:fill(auto,1)/GettyImages-964033964-ca3290057ccc4024b57e755423572264.jpg', true, extract(epoch from now())),
+	('1', '4', 'ENGINEERING STEMTELL', 'I Love Biology!!', 'https://upload.wikimedia.org/wikipedia/commons/3/3d/PIA19664-MarsInSightLander-Assembly-20150430.jpg', true, extract(epoch from now())),
+	('1', '4', 'MATH STEMTELL', 'I Love Math!!', 'https://miro.medium.com/max/6000/1*L76A5gL6176UbMgn7q4Ybg.jpeg', true, extract(epoch from now()));
 
 	
 -- Step 7: run the following queries to add tags to the stemtells via the stemtell_tag table
@@ -337,8 +337,42 @@ INSERT INTO "user_tag" ("user_id", "tag_id")
 
 -- Step 9: run the following queries to add reactions to the reaction table
 INSERT INTO "reaction" ("media_url", "name")
-	VALUES ('https://www.nicepng.com/png/detail/376-3762215_how-to-set-use-blue-thumbs-up-icon.png', 'like'),
-	('https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678087-heart-512.png', 'love');
+	VALUES ('https://svgshare.com/i/a1t.svg', 'art'),
+	('https://svgshare.com/i/a1K.svg', 'basketball'),
+	('https://svgshare.com/i/a1L.svg', 'beaker'),
+	('https://svgshare.com/i/a2W.svg', 'camera'),
+	('https://svgshare.com/i/a2h.svg', 'car'),
+	('https://svgshare.com/i/a2i.svg', 'cog'),
+	('https://svgshare.com/i/a2X.svg', 'compass'),
+	('https://svgshare.com/i/a22.svg', 'computer'),
+	('https://svgshare.com/i/a23.svg', 'cool'),
+	('https://svgshare.com/i/a2u.svg', 'crane'),
+	('https://svgshare.com/i/a2Y.svg', 'dinnerplate'),
+	('https://svgshare.com/i/a19.svg', 'DNA'),
+	('https://svgshare.com/i/a10.svg', 'drama'),
+	('https://svgshare.com/i/a1u.svg', 'heart'),
+	('https://svgshare.com/i/a1v.svg', 'leaf'),
+	('https://svgshare.com/i/a32.svg', 'lightbulb'),
+	('https://svgshare.com/i/a3D.svg', 'lipstick'),
+	('https://svgshare.com/i/a24.svg', 'lungs'),
+	('https://svgshare.com/i/a3E.svg', 'math'),
+	('https://svgshare.com/i/a3F.svg', 'microscope'),
+	('https://svgshare.com/i/a3Q.svg', 'music'),
+	('https://svgshare.com/i/a2A.svg', 'neucleus'),
+	('https://svgshare.com/i/a3R.svg', 'openbook'),
+	('https://svgshare.com/i/a2v.svg', 'pawprint'),
+	('https://svgshare.com/i/a1A.svg', 'people'),
+	('https://svgshare.com/i/a33.svg', 'projector'),
+	('https://svgshare.com/i/a2j.svg', 'recycle'),
+	('https://svgshare.com/i/a2B.svg', 'robot'),
+	('https://svgshare.com/i/a3T.svg', 'shoppingcart'),
+	('https://svgshare.com/i/a1V.svg', 'smile'),
+	('https://svgshare.com/i/a2Z.svg', 'stars'),
+	('https://svgshare.com/i/a2m.svg', 'tech'),
+	('https://svgshare.com/i/a2_.svg', 'telescope'),
+	('https://svgshare.com/i/a2N.svg', 'thumbsup'),
+	('https://svgshare.com/i/a34.svg', 'videogames'),
+	('https://svgshare.com/i/a1B.svg', 'worldmap');
 
 
 -- Step 10: run the following queries to add comments to the comment table

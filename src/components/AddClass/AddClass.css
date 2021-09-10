@@ -1,0 +1,23 @@
+.AddClassContainer {
+    display: inline-flex;
+    padding-bottom: 15px;
+    
+}
+
+.AddClassForm {
+    width: 90%;
+    padding-left: 30px;
+}
+
+.AddClassInput{
+    float: left;
+
+} 
+
+
+.AddClassBtnBox {
+    float: right;
+    margin-top: 10px;
+    margin-right: 35px;
+}
+

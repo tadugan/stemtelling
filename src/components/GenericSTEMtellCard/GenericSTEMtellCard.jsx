@@ -2,6 +2,22 @@ import { Button, Avatar, Card, Grid } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import './GenericSTEMtellCard.css';
+import styled from 'styled-components';
+
+const StyledBlueButton = styled(Button)`
+   display: inline-block;
+   padding: 10px 20px;
+   border-radius: 4px;
+   background-color: #79D0F1;
+   color: #f8f8f8;   
+   font-size: 1.1rem;
+   outline: 0;
+   cursor: pointer;
+   &:hover {
+      background-color: rgba(121, 208, 241, 0.6);
+      text-decoration: none;
+   }
+`;
 
 function GenericSTEMtellCard({ stemtell, reviewMode }) {
 
@@ -15,19 +31,19 @@ function GenericSTEMtellCard({ stemtell, reviewMode }) {
     };
 
     const handleReviewClick = () => {
-        history.push(`/teacher/feedback/${stemtell.stem_id}`);
+        history.push(`/comment/feedback/${stemtell.stem_id}`);
     }
 
     const conditionalReviewButton = () => {
         if (reviewMode) {
             return (
-                <Button 
+                <StyledBlueButton 
                     variant="contained"
                     color="primary"
                     onClick={handleReviewClick}
                 >
                     Review
-                </Button>
+                </StyledBlueButton>
             );
         }
         else {
