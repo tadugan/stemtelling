@@ -52,9 +52,9 @@ function* editClass(action) {
 // function for leaving a specific class
 // called on the edit profile page
 function* leaveClass(action) {
-   const classInfo = action.payload.id;
+   const class_code = action.payload.code;
    try {
-      yield axios.delete('/api/class/leaveclass', {params: {classInfo} });
+      yield axios.delete('/api/class/leaveclass', {params: {class_code} });
    }
    catch (error) {
       console.log('Error with leaveClass in classes.saga.js:', error);
@@ -64,31 +64,34 @@ function* leaveClass(action) {
 function* joinClass(action) {
    let classCodesArray = [];
    let allClassCodesArray = [];
+   let confirmClassToJoin = 0;
    const user = action.payload.user_id;
-   const classToJoin = action.payload.class_code;
+   const classToJoin = Number(action.payload.class_code);
    try {
+      yield put({ type: 'CLEAR_CLASS_ERROR' });
       const response = yield axios.get('/api/class/userclasses', {params: { user } });
       for (let x of response.data) {classCodesArray.push(x.code)};
       const allCodesResponse = yield axios.get('/api/class/allclasses');
       for (let y of allCodesResponse.data) {allClassCodesArray.push(y.code)};
-      console.log(classCodesArray);
-      console.log(allClassCodesArray);
-      for (let z = 0; z < allClassCodesArray.length; z++) {
-         if (allClassCodesArray[z] !== classToJoin) {
-            console.log('invalid code');
+      for (let z of allClassCodesArray) {
+         if (z !== classToJoin) {
+            yield put({ type: 'INVALID_CODE' });
          }
-         if (allClassCodesArray[z] == classToJoin) {
-            console.log("This is a valid class code");
-            for (let n = 0; n < classCodesArray.length; n++) {
-               if (classCodesArray[n] == classToJoin) {
-                  console.log("You are already in this class");
+         else if (z == classToJoin) {
+            yield put({ type: 'CLEAR_CLASS_ERROR' });
+            for (let n of classCodesArray) {
+               if (n == classToJoin) {
+                  yield put({ type: 'ALREADY_IN_CLASS' });
+                  return false;
                }
-               else if (classCodesArray[n] !== classToJoin) {
-                  yield axios.post('/api/class/joinclass', classToJoin);
-               }
-            }
-         }
-      }
+               else if (n !== classToJoin) {
+                  confirmClassToJoin = classToJoin;
+               };
+            };
+            yield axios.post('/api/class/joinclass', {class_code: confirmClassToJoin});
+            return false;
+         };
+      };
    }
    catch (error) {
       console.log('Error with joinClass in classes.saga.js:', error);

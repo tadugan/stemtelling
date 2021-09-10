@@ -83,6 +83,7 @@ function CreateProfile() {
    const [addClassCode, setAddClassCode] = useState('');
    const [ classCode, setClassCode ] = useState(1);
    const [ authority, setAuthority ] = useState('');
+   const errors = useSelector((store) => store.errors);
    const [email, setEmail] = useState('');
    const [name, setName] = useState('');
    
@@ -119,8 +120,8 @@ function CreateProfile() {
          }
       });
       setAddClassCode('');
-      dispatch({type: 'GET_USER_CLASSES', payload: user.id});
       handleClassClose();
+      dispatch({type: 'GET_USER_CLASSES', payload: user.id});
    };
 
    const leaveClass = (classInfo) => {
@@ -163,7 +164,13 @@ function CreateProfile() {
          <Grid item xs={12} sm={3} direction="row" justifyContent="center" alignItems="center">
             <Paper className={classes.paper}>
                <h2>Classes</h2>
+               {errors.joinClassMessage && (
+                  <h3 className="alert" role="alert">
+                     {errors.joinClassMessage}
+                  </h3>
+               )}
                <Button variant="contained" onClick={handleClassOpen}>Add New Class</Button>
+               <br /><br />
                {myClasses.map((userClass) => {
                   return (
                      <div>

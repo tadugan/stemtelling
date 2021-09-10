@@ -8,7 +8,7 @@ const rejectUnauthenticated = require('../modules/authentication-middleware').re
 // Returns an array of class object: { class object model }
 router.get('/', rejectUnauthenticated, (req, res) => {
    const query = `SELECT * FROM "class"
-                  JOIN "user_class" ON "user_class".class_id = "class".id
+                  JOIN "user_class" ON "user_class".class_code = "class".code
                   WHERE "user_class".user_id = $1
                   ORDER BY "archived", "name" ASC;`
    pool.query(query, [req.user.id])
@@ -64,10 +64,10 @@ router.get('/userclasses', rejectUnauthenticated, async (req, res) => {
    try {
       let sendBackObj = [];
       const query = `SELECT * FROM "user_class" WHERE "user_id" = $1`;
-      const queryText = `SELECT * FROM "class" WHERE "id" = $1`
+      const queryText = `SELECT * FROM "class" WHERE "code" = $1 AND "archived" = $2`
       const myClasses = await pool.query(query, [req.query.user]);
       for (let x of myClasses.rows) {
-         const classObj = await pool.query(queryText, [x.class_id]);
+         const classObj = await pool.query(queryText, [x.class_code, false]);
          sendBackObj.push(classObj.rows[0]);
       }
       res.send(sendBackObj);
@@ -150,9 +150,9 @@ router.post('/joinclass', rejectUnauthenticated, async (req, res) => {
    const client = await pool.connect();
    try {
       await client.query('BEGIN');
-      const queryTextJoinClass = `INSERT INTO "user_class" ("user_id", "role", "class_id")
+      const queryTextJoinClass = `INSERT INTO "user_class" ("user_id", "role", "class_code")
                                   VALUES ($1, $2, $3)`;
-      await client.query(queryTextJoinClass, [userId, userRole, req.body.class_id]);
+      await client.query(queryTextJoinClass, [userId, userRole, req.body.class_code]);
       await client.query('COMMIT');
    }
    catch (error) {
@@ -176,7 +176,6 @@ router.put("/update", rejectUnauthenticated, (req,res) => {
        req.body.id,
      ])
      .then((result) => {
-       console.log("successfully updated class:", result);
        res.sendStatus(201);
      })
      .catch((error) => {
@@ -200,8 +199,8 @@ router.delete("/details/:id", rejectUnauthenticated, (req, res) => {
 });
 
 router.delete('/leaveclass', rejectUnauthenticated, (req, res) => {
-   const query = `DELETE FROM "user_class" WHERE "user_id" = $1 AND "class_id" = $2`;
-   pool.query(query, [req.user.id, req.query.classInfo])
+   const query = `DELETE FROM "user_class" WHERE "user_id" = $1 AND "class_code" = $2`;
+   pool.query(query, [req.user.id, req.query.class_code])
    .then(() => {
       res.sendStatus(201);
    })

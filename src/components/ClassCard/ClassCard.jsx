@@ -59,6 +59,7 @@ import {
    
    
    const handleSave = () => {
+      console.log(classStatus);
      dispatch({
        type: "EDIT_CLASS",
        payload: {
@@ -145,8 +146,8 @@ import {
            <FormControl className='radio-class-status' component="fieldset">
              <FormLabel component="legend">Change Class Status:</FormLabel>
              <RadioGroup aria-label="status" name="status-of-class" value={classStatus} onChange={(event) => setClassStatus(event.target.value)}>
-                <FormControlLabel  value='false' control={<Radio />} label="Active" />
-                <FormControlLabel  value='true' control={<Radio />} label="Archive" />
+                <FormControlLabel value='false' control={<Radio />} label="Active" />
+                <FormControlLabel value='true' control={<Radio />} label="Archive" />
              </RadioGroup>
              </FormControl>
          </DialogContent>
