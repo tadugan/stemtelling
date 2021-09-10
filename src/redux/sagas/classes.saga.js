@@ -63,33 +63,39 @@ function* leaveClass(action) {
 
 function* joinClass(action) {
    let classCodesArray = [];
+   let allClassCodesArray = [];
    const user = action.payload.user_id;
    const classToJoin = action.payload.class_code;
    try {
       const response = yield axios.get('/api/class/userclasses', {params: { user } });
       for (let x of response.data) {classCodesArray.push(x.code)};
-      for (let y = 0; y < classCodesArray.length; y++) {
-         console.log(classCodesArray[y]);
-         if (classCodesArray[y] == classToJoin) {
-            alert ("You are already in this class");
-            return false;
-         }
-         else if (classCodesArray[y] != classToJoin) {
-            console.log('invalid class');
-            const check = yield axios.get('/api/class/allclasses');
-            console.log(check.data);
-            for (let z = 0; z < check.data.length; z++) {
-               console.log(check.data[z].code);
-               if (check.data[z] == classToJoin) {
-                  console.log('invalid');
-               }
-            }
-         }
-         else {
-            alert("Unknown error");
-            return false;
-         };
-      };
+      const allCodesResponse = yield axios.get('/api/class/allclasses');
+      for (let y of allCodesResponse.data) {allClassCodesArray.push(y.code)};
+      console.log(classCodesArray);
+      console.log(allClassCodesArray);
+      // for (let y = 0; y < classCodesArray.length; y++) {
+      //    if (classCodesArray[y] == classToJoin) {
+      //       alert ("You are already in this class");
+      //       return false;
+      //    }
+      //    else if (classCodesArray[y] != classToJoin) {
+      //       const check = yield axios.get('/api/class/allclasses');
+      //       for (let z = 0; z < check.data.length; z++) {
+      //          console.log(check.data[z].code);
+      //          if (check.data[z] != classToJoin) {
+      //             console.log("invalid class code");
+      //          }
+      //          else {
+      //             console.log("valid class code");
+      //             return false;
+      //          }
+      //       }
+      //    }
+      //    else {
+      //       alert("Unknown error");
+      //       return false;
+      //    };
+      // };
    }
    catch (error) {
       console.log('Error with joinClass in classes.saga.js:', error);
