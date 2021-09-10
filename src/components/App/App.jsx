@@ -32,7 +32,7 @@ function App() {
 
    return (
       <Router>
-         <div>
+         <div >
             <Nav />
             <Switch>
                <Redirect exact from="/" to="/homepage" />

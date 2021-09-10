@@ -6,6 +6,8 @@ import Comment from "../Comment/Comment";
 import BackBtn from "../BackBtn/BackBtn";
 import { makeStyles } from '@material-ui/core/styles';
 import './STEMtellDetails.css';
+import Reactions from "../Reactions/Reactions";
+import AddReaction from "../AddReactions/AddReactions";
 const useCardStyles = makeStyles(() => ({
    root: {
       alignItems: "center",
@@ -96,10 +98,12 @@ function STEMtellDetails() {
                      <h3 className={cardStyles.stemtitle}>{stemtell.title}</h3>
                      <section id="cardReactions">{stemtell.reaction_name}</section>
                      <section id="StemDetailsDescription">{stemtell.body_text}</section>
+                     <AddReaction stemtellId={stemtell.id}/>
                   </Card>
                </Grid>
             </center>
          <Comment />
+       
         
       </>
    );
