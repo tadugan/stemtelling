@@ -173,7 +173,7 @@ function EditSTEMtell(stemtell) {
       setDescription(stemtell.stemtell.body_text);
       setTitle(stemtell.stemtell.title);
       setImageUrl(stemtell.stemtell.media_url);
-      setClassCode(stemtell.stemtell.class_id);
+      setClassCode(stemtell.stemtell.class_code);
       getExistingTags(stemtell.stemtell.id);
       dispatch({ type: 'GET_FEEDBACK', payload: stemtell.stemtell.id});
    }, []);
