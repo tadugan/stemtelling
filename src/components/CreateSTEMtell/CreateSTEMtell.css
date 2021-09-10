@@ -1,6 +1,7 @@
 .create-stemtell-body {
-   width: 400px;
+   min-width: 360;
    margin: auto;
+   padding-bottom: 40px;
 }
 
 .create-stemtell-class-select {
