@@ -4,6 +4,7 @@ const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
 const router = express.Router();
+const {cloudinary} = require('../modules/cloudinary');
 
 
 // GET /api/user/
@@ -80,15 +81,42 @@ router.post('/register', (req, res, next) => {
 });
 
 router.post('/update', rejectUnauthenticated, (req, res) => {
-   const queryText = `UPDATE "user" SET "name" = $1, "email" = $2 WHERE "id" = $3`;
-   pool.query(queryText, [req.body.userInfo.name, req.body.userInfo.email, req.user.id])
-   .then(() => {
-      res.sendStatus(200);
-   })
-   .catch(error => {
-      console.log(error);
-      res.sendStatus(500);
-   });
+   // const queryText = `UPDATE "user" SET "name" = $1, "email" = $2 WHERE "id" = $3`;
+   // pool.query(queryText, [req.body.userInfo.name, req.body.userInfo.email, req.user.id])
+   // .then(() => {
+   //    res.sendStatus(200);
+   // })
+   // .catch(error => {
+   //    console.log(error);
+   //    res.sendStatus(500);
+   // });
+   let queryImage = req.user.profile_picture_url;
+   const imageData = req.body.picture;
+
+   (async () => {
+      const client = await pool.connect();
+      try {
+         if (queryImage !== imageData) {
+            const imageResponse = await cloudinary.uploader.upload(imageData, {
+               upload_preset: 'stemtell-content-image'
+            });
+            queryImage = imageResponse.url;
+         }
+         
+         await client.query("BEGIN");
+         const queryText = `UPDATE "user" SET "name" = $1, "email" = $2, "profile_picture_url" = $3 WHERE "id" = $4`;
+         await client.query(queryText, [req.body.name, req.body.email, queryImage, req.user.id]);
+         await client.query("COMMIT");
+         res.sendStatus(204);
+      }
+      catch (error) {
+         await client.query("ROLLBACK");
+         throw error;
+      }
+      finally {
+         client.release();
+      }
+   })().catch(error => console.error(error.stack));
 });   
 
 // POST /api/user/login

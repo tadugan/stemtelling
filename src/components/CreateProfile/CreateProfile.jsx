@@ -10,6 +10,7 @@ import AddTagDialog from '../AddTagDialog/AddTagDialog';
 import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
 import styled from 'styled-components';
 import './CreateProfile.css'
+import ImageUploader from '../ImageUploader/ImageUploader';
 
 const StyledButton = styled(Button)`
    display: inline-block;
@@ -85,6 +86,7 @@ function CreateProfile() {
     const handleClassClose = () => { setClassOpen(false) };
     const [addClassCode, setAddClassCode] = useState('');
     const selectedTags = useSelector(store => store.selectedTags);
+    const profilePic = useSelector(store => store.profileImage);
     const [ classId, setClassId ] = useState(1);
     const [ title, setTitle ] = useState('');
     const [ imageUrl, setImageUrl] = useState('');
@@ -97,16 +99,19 @@ function CreateProfile() {
     useEffect(() => {
         dispatch({type: 'GET_USER', payload: {userId: params}});
         dispatch({type: 'GET_USER_CLASSES', payload: user.id});
+        dispatch({type: 'SET_PROFILE_IMAGE_REDUCER', payload: user.profile_picture_url})
         setEmail(user.email);
         setName(user.name);
     }, []);
 
-   const saveUserInfo = () => {
+
+    const saveUserInfo = () => {
       dispatch({
          type: "UPDATE_USER",
          payload: {
                name: name,
                email: email,
+               picture: profilePic
          }
       });
       dispatch({type: 'FETCH_USER'});
@@ -169,12 +174,13 @@ function CreateProfile() {
          <Grid item xs={12} sm={3} direction="row" justifyContent="center" alignItems="center"> 
             <Paper className={classes.paper}>
                <h2>Profile Picture</h2>
-               <img src={user.profile_picture_url} />
+               {profilePic ? <img src={profilePic} /> : <img src={user.profile_picture_url} />}
                <br />
-               <StyledButton variant="contained" component="label">
+               {/* <StyledButton variant="contained" component="label">
                   Upload File
                   <input type="file" hidden/>
-               </StyledButton>
+               </StyledButton> */}
+               <ImageUploader mode={"profile"} />
             </Paper>
          </Grid>
          <Grid item xs={12} sm={3} direction="row" justifyContent="center" alignItems="center"> 
