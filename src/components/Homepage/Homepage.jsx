@@ -7,7 +7,7 @@ function Homepage(){
    return (
       <Container maxWidth="xxl">
          <Grid container direction="row" justifyContent="center" alignItems="flex-start" spacing={3}>
-            <h1 id="HomepageTitle">My STEMtell Feed </h1>
+            <h1 id="HomepageTitle">My STEMtell Feed</h1>
             <STEMtellCard/>
          </Grid>
       </Container>
