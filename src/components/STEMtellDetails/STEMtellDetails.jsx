@@ -14,10 +14,11 @@ const useCardStyles = makeStyles(() => ({
       justifyContent: "center",
       flexGrow: "1px",
       width: "50%",
-      minWidth: "350px",
+      minWidth: "348px",
       height: "100%",
       textAlign: "center",
       color: "grey",
+      padding: "12px",
    },
    avatar: {
       textAlign: "left",
