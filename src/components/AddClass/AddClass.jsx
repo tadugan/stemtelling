@@ -5,9 +5,24 @@ import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRoun
 import './AddClass.css';
 
 function AddClass() {
-    
+    const [ newClass, setNewClass ] = useState('');
+    const dispatch = useDispatch();
+    // const btnRef= React.useRef(null);
+    // const onHoverAdd = () =>{
 
-
+    // }
+    const handleAddClass = () => {
+        event.preventDefault();
+        if (newClass == "") {
+            alert('Please provide class name.');
+            return false;
+        };  
+        dispatch({
+            type:"CREATE_CLASS",
+            payload: {name: newClass}
+        });
+        setNewClass('');
+    }
     return(
         <>
         <Container className='AddClassContainer'>
@@ -18,6 +33,8 @@ function AddClass() {
         label= 'Add Class'
         placeholder='Class Title'
         variant= 'filled'
+        value= {newClass}
+        onChange={(event) => setNewClass(event.target.value)}
         >
         </TextField>
         </form>
