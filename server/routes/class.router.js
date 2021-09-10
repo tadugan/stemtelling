@@ -43,9 +43,9 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
    const query= `SELECT "user".name AS username, "user".profile_picture_url
                  FROM "user"
                  JOIN "user_class" ON "user".id = "user_class".user_id
-                 JOIN "class" on "class".id = "user_class".class_id
+                 JOIN "class" on "class".id = "user_class".class_code
                  WHERE  "user".authority = 'student'
-                 AND "user_class".class_id = $1
+                 AND "user_class".class_code = $1
                  ORDER BY username ASC;`;
    pool.query(query, [classId])
    .then(results => {
@@ -103,7 +103,6 @@ router.get('/userclasses', rejectUnauthenticated, async (req, res) => {
 // });
 
 router.post('/', rejectUnauthenticated, (req, res) => {
-   console.log(req.body);
    (async () => {
      const client = await pool.connect();
      try {
@@ -124,14 +123,14 @@ router.post('/', rejectUnauthenticated, (req, res) => {
          const newClassCode = await client.query(
             `INSERT INTO "class" ("code", "name")
             VALUES (CONCAT(random_between(1000,10000))::INT, $1)
-            
+            RETURNING code
             `, [name]
          );
          // await client.query(newClassCode, [classCode, name]);
-
+         await client.query(`INSERT INTO "user_class" ("user_id", "role", "class_code")
+                             VALUES ($1, $2, $3)`, [req.user.id, req.user.authority, newClassCode.rows[0].code])
          await client.query('COMMIT');
          res.send(newClassCode);
-         console.log(newClassCode);    
      } catch (err) {
          await client.query('ROLLBACK');
          throw err;

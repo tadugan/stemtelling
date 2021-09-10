@@ -22,7 +22,6 @@ const { rejectUnauthenticated } = require("../modules/authentication-middleware"
 // GET /api/reaction/:id
 // Handles getting reactions for a specific STEMtell
 router.get("/:id", (req, res) => {
-   console.log("req params in get stem reaction", req.params)
   const stemtellId= req.params.id;
   const query = `SELECT *
                  FROM "reaction_stemtell"

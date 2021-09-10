@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core';
+import { Grid, Container } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import GenericSTEMtellCard from '../GenericSTEMtellCard/GenericSTEMtellCard';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,25 +19,18 @@ function TeacherReviewList() {
     }, []);
 
     return (
-        <div>
+        <Container maxWidth="xxl">
             <h3 className="teacher-review-list-header">Teacher STEMtell Review List</h3>
-            <Grid
-                container
-                spacing={2}
-                direction="row"
-                justifyContent="center"
-                alignItems="flex-start"
-            >
+            <Grid container direction="row" justifyContent="center" alignItems="flex-start" spacing={3}>
                 {reviewStemtells.map(stemtell => {
                     return (
-                        <Grid item xs={12} md={4} key={stemtell.stem_id}>
+                        <Grid item key={stemtell.stem_id}>
                             <GenericSTEMtellCard stemtell={stemtell} reviewMode={true}/>
                         </Grid>
                     );
-                })}
-                
+                })} 
             </Grid>
-        </div>
+        </Container>
     );
 }
 

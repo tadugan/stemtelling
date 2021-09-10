@@ -61,10 +61,6 @@ function RegisterPage() {
       });
    };
 
-   // const test = () => { // TODO:
-   //    console.log(`${process.env.TEACHER_CODE}`)
-   // }
-
    return (
       <form className="LoginForm" onSubmit={registerUser}>
          <center>
@@ -87,8 +83,6 @@ function RegisterPage() {
             </Select>
             <br /><br />
             <TextField type="text" label="Name" variant="outlined" required value={name} onChange={(event) => setName(event.target.value)}/>
-            <br /><br />
-            <TextField type="text" label="Class Code (optional)" variant="outlined" value={classCode} onChange={(event) => setClassCode(event.target.value)}/>
             {(authority == 'teacher') ?
                <>
                   <br /><br />

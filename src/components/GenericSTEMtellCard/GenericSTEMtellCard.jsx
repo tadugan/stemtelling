@@ -3,6 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import './GenericSTEMtellCard.css';
 import styled from 'styled-components';
+import { makeStyles } from "@material-ui/core";
 
 const StyledBlueButton = styled(Button)`
    display: inline-block;
@@ -19,8 +20,57 @@ const StyledBlueButton = styled(Button)`
    }
 `;
 
-function GenericSTEMtellCard({ stemtell, reviewMode }) {
 
+const useCardStyles = makeStyles(() => ({
+   root: {
+      alignItems: "center",
+      border: "2px solid #1E1F20",
+      borderRadius: "15px",
+      justifyContent: "center",
+      flexGrow: "1px",
+      width: "50%",
+      minWidth: "348px",
+      height: "100%",
+      textAlign: "center",
+      color: "grey",
+      padding: "12px",
+   },
+   avatar: {
+      textAlign: "left",
+      borderStyle: "solid",
+      float: "left",
+      display: "flex",
+      flexDirection: "row",
+      height: "50px",
+      width: "50px",
+   },
+   username: {
+      paddingTop: "5px",
+      fontSize: '18px',
+      fontWeight: 'bold',
+      textAlign: "left",
+      marginLeft: "60px",
+      display: "flex",
+      flexDirection: "row",
+      color: "#727272",
+   },
+   stemdate: {
+      float: "right",
+      fontSize: '12px',
+      paddingTop: "7px",
+      paddingRight: "5px",
+   },
+   stemtitle: {
+      display: "flex",
+      fontSize: "20px",
+      alignItems: "center",
+      justifyContent: "center",
+      textAlign:"center"
+   },
+ }));
+
+function GenericSTEMtellCard({ stemtell, reviewMode }) {
+   const cardStyles = useCardStyles();
     const history = useHistory();
 
     const unixTimestamp = (timestamp) => {
@@ -52,37 +102,22 @@ function GenericSTEMtellCard({ stemtell, reviewMode }) {
     }
 
     return (
-            <Card className="generic-stemtell-card-body">
-                <h6 className="generic-stemtell-card-date">{unixTimestamp (stemtell.unix)}</h6>
-                <Avatar className="generic-stemtell-card-avatar" src={stemtell.profile_picture_url} />
-                <section
-                    className="generic-stemtell-card-username"
-                >
-                    {stemtell.username}
-                </section>
-                <div className="generic-stemtell-card-username generic-stemtell-card-user-class">
-                    {stemtell.class_name}
-                </div>
-
-                <h3
-                    className="generic-stemtell-card-title"
-                >
-                    {stemtell.title}
-                </h3>
-
-                <img
-                    className="generic-stemtell-card-image"
-                    src={stemtell.media_url}
-                />
-                <section>{stemtell.reaction_name}</section>
-
-                <section
-                    className="generic-stemtell-card-description"
-                >
-                    {stemtell.body_text}
-                </section>
-                {conditionalReviewButton()}
-            </Card>
+         <Card className={cardStyles.root}>
+               <h6 className={cardStyles.stemdate}>{unixTimestamp (stemtell.unix)}</h6>
+               <Avatar className={cardStyles.avatar} src={stemtell.profile_picture_url} />
+               <section className={cardStyles.username}>
+                  {stemtell.username}
+               </section>
+               <div className={cardStyles.username} id="userClass">
+                  {stemtell.class_name}
+               </div>
+               <h5 className={cardStyles.stemtitle}>
+               {" "}{stemtell.title}
+               </h5>
+               <img id="stemtellImage" src={stemtell.media_url} />
+               <section id="cardReactions">{stemtell.reaction_name}</section>
+               {conditionalReviewButton()}
+         </Card>
     );
 }
 

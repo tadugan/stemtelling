@@ -32,7 +32,6 @@ function* fetchProfile(action) {
 };
 
 function* updateUser(action) {
-   console.log('update user action.payload', action.payload);
    try {
       yield axios.post('/api/user/update', action.payload );
       action.payload.history.push('/myprofile');

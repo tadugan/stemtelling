@@ -55,7 +55,7 @@ CREATE TABLE "class" (
 -- Create "stemtell" table
 CREATE TABLE "stemtell" (
 	"id" SERIAL PRIMARY KEY,
-	"class_id" INT REFERENCES "class"("id"),
+	"class_code" INT REFERENCES "class"("code"),
 	"user_id" INT REFERENCES "user"("id"),
 	"title" TEXT NOT NULL,
 	"body_text" TEXT NOT NULL,
@@ -70,8 +70,8 @@ CREATE TABLE "stemtell" (
 CREATE TABLE "user_class" (
 	"id" SERIAL PRIMARY KEY,
 	"role" TEXT,
-	"class_id" INT REFERENCES "class"("id"),
-	"user_id" INT REFERENCES "user"("id")
+	"user_id" INT REFERENCES "user"("id"),
+	"class_code" INT REFERENCES "class"("code")
 );
 
 
@@ -177,9 +177,9 @@ WHERE "id" = 4;
 
 
 -- Step 4: run the following queries to add the users to user_class table
-INSERT INTO "user_class" ("role", "user_id", "class_id")
+INSERT INTO "user_class" ("role", "user_id", "class_code")
 	VALUES ('student', '1', '1'),
-	('student', '1', '2'),
+	('student', '1','2'),
 	('student', '1', '4'),
 	('student', '2', '1'),
 	('student', '2', '3'),
@@ -284,7 +284,7 @@ INSERT INTO "tag" ("type", "name", "stem_field")
 	
 
 -- Step 6: run the following queries to create student stemtells
-INSERT INTO "stemtell" ("class_id", "user_id", "title", "body_text", "media_url", "approved", "unix")
+INSERT INTO "stemtell" ("class_code", "user_id", "title", "body_text", "media_url", "approved", "unix")
 	VALUES ('2', '1', 'CHEMISTRY STEMTELL', 'I Love Chemistry!!', 'https://www.sciencecompany.com/Assets/ProductImages/nc0071n-lg.jpg', true, extract(epoch from now())),
 	('2', '1', 'OCHEM STEMTELL', 'Organic chemistry is the study of the structure, properties, composition, reactions, and preparation of carbon-containing compounds. Most organic compounds contain carbon and hydrogen, but they may also include any number of other elements (e.g., nitrogen, oxygen, halogens, phosphorus, silicon, sulfur).
 		Originally limited to the study of compounds produced by living organisms, organic chemistry has been broadened to include human-made substances (e.g., plastics).', 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Corey_oseltamivir_synthesis.png/390px-Corey_oseltamivir_synthesis.png', false, extract(epoch from now())),
