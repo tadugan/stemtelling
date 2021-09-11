@@ -122,7 +122,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
          const name = req.body.name;
          const newClassCode = await client.query(
             `INSERT INTO "class" ("code", "name")
-            VALUES (CONCAT(random_between(1000,10000))::INT, $1)
+            VALUES (CONCAT(random_between(1,1000000))::INT, $1)
             RETURNING code
             `, [name]
          );
@@ -165,14 +165,15 @@ router.post('/joinclass', rejectUnauthenticated, async (req, res) => {
 
 //PUT for updating class information such as title
 router.put("/update", rejectUnauthenticated, (req,res) => {
+   console.log(req.body);
    const query = `UPDATE "class" 
                   SET "name"= $1, "archived" = $2
-                  WHERE "id"= $3;`;
+                  WHERE "code"= $3;`;
    pool
      .query(query, [
        req.body.name,
        req.body.archived,
-       req.body.id,
+       req.body.code,
      ])
      .then((result) => {
        res.sendStatus(201);
