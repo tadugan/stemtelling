@@ -177,7 +177,7 @@ function CreateProfile() {
                {myClasses.map((userClass) => {
                   return (
                      <div>
-                        <Chip label={userClass.name} onDelete={() => {leaveClass(userClass)}} />
+                        <Chip label={userClass.name} key={userClass.code} onDelete={() => {leaveClass(userClass)}} />
                      </div>
                   );
                })}

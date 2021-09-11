@@ -88,7 +88,8 @@ function ProfilePage() {
             </Grid>
             <Grid item xs={12} sm={9}>
                <Paper className={classes.paper}>{profile.name}'s STEMtells</Paper>
-               <Container maxWidth="xxl">
+               <br />
+               <Container maxWidth="xl">
                <Grid container direction="row" justifyContent="center" alignItems="flex-start" spacing={3}>
                   {stemtells.map((stemtell) => {
                      return (
