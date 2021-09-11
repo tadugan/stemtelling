@@ -5,14 +5,16 @@ import {Container, Card, Box, Avatar, Button} from '@material-ui/core';
 import { useParams } from 'react-router';
 
 function StudentCard() {
-    const params = useParams();
-    const classId= params.id;
-    const dispatch = useDispatch();
-    const students =  useSelector((store) => store.studentList);
+   function getSearchQueryByFullURL(url) {return url.split('/').pop()};
+   const params = useParams();
+   const classCode= getSearchQueryByFullURL(window.location.href);
+   const dispatch = useDispatch();
+   const students =  useSelector((store) => store.studentList);
+    
 
 
     useEffect(() => {
-        dispatch({type: 'GET_STUDENTLIST', payload: classId})
+        dispatch({type: 'GET_STUDENTLIST', payload: classCode})
     }, []);
 
     //deletes student from specific class
