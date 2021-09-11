@@ -10,9 +10,9 @@ function ClassList() {
    return(
       <>
          <BackBtn />
-         <container className='ClassListHeaderContainer'>
-         <h1 className='ClassListHeader'> Your Classes </h1> 
-         </container>
+         <div className='ClassListHeaderContainer'>
+            <h1 className='ClassListHeader'> Your Classes </h1> 
+         </div>
          <AddClass />
          <ClassCard />
      </>

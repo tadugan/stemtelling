@@ -24,12 +24,12 @@ import {
    const dispatch = useDispatch();
    const history = useHistory();
    const classes = useSelector((store) => store.classes);
-   const toClassDetail = (class_id) => {
-     history.push(`classlist/details/${class_id}`);
+   const toClassDetail = (class_code) => {
+     history.push(`classlist/details/${class_code}`);
    };
    const [classTitle, setClassTitle] = useState("");
-   const [editClassID, setEditClassID] = useState("");
-   const [classStatus, setClassStatus] = useState(false);
+   const [editClassCode, setEditClassCode] = useState("");
+   const [classStatus, setClassStatus] = useState('');
    const [anchorEl, setAnchorEl] = useState(null);
    const [open, setOpen] = useState(false);
  
@@ -37,7 +37,7 @@ import {
    const handleClick = (classList) => {
      setAnchorEl(event.currentTarget);
      setClassTitle(classList.name);
-     setEditClassID(classList.class_id);
+     setEditClassCode(classList.class_code);
      setClassStatus(classList.archived)
      handleEditOpen();
    };
@@ -53,23 +53,22 @@ import {
    const handleEditClose = () => {
      setOpen(false);
      setClassTitle("");
-     setEditClassID("");
+     setEditClassCode("");
    };
    //   End
    
    
    const handleSave = () => {
-   
      dispatch({
        type: "EDIT_CLASS",
        payload: {
          name: classTitle,
          archived: classStatus,
-         id: editClassID,
+         code: editClassCode,
        },
      });
      setClassTitle("");
-     setEditClassID("");
+     setEditClassCode("");
      setClassStatus(!classStatus);
      handleClose();
      dispatch({ type: "FETCH_CLASSES" });
@@ -82,7 +81,7 @@ import {
    return (
      <Container className="classCardContainer">
        {classes.map((classList) => {
-         if (classList.archived === false) {
+         if (classList.archived == 'Active') {
            return (
              <Card className="classCard" key={classList.id}>
                <EditIcon
@@ -91,19 +90,19 @@ import {
                />
                <h2
                  id="classCardTitle"
-                 onClick={() => toClassDetail(classList.class_id)}
+                 onClick={() => toClassDetail(classList.class_code)}
                >
                  {classList.name}
                </h2>
                <section className="classDetail" id="classStatus">
-                 Status: Active
+                 Status: {classList.archived}
                </section>
                <section className="classDetail" id="classCode">
                  Code: {classList.code}
                </section>
              </Card>
            );
-         } else if (classList.archived === true) {
+         } else if (classList.archived == 'Archived') {
            return (
              <Card className="classCard" key={classList.id}>
                 <EditIcon
@@ -112,12 +111,12 @@ import {
                />
                <h2
                  id="classCardTitle"
-                 onClick={() => toClassDetail(classList.class_id)}
+                 onClick={() => toClassDetail(classList.class_code)}
                >
                  {classList.name}
                </h2>
                <section className="classDetail" id="classStatus">
-                 Status: Archived
+                 Status: {classList.archived}
                </section>
                <section className="classDetail" id="classCode">
                  Code: {classList.code}
@@ -146,8 +145,8 @@ import {
            <FormControl className='radio-class-status' component="fieldset">
              <FormLabel component="legend">Change Class Status:</FormLabel>
              <RadioGroup aria-label="status" name="status-of-class" value={classStatus} onChange={(event) => setClassStatus(event.target.value)}>
-                <FormControlLabel value='false' control={<Radio />} label="Active" />
-                <FormControlLabel value='true' control={<Radio />} label="Archive" />
+                <FormControlLabel value='Active' control={<Radio />} label="Active" />
+                <FormControlLabel value='Archived' control={<Radio />} label="Archive" />
              </RadioGroup>
              </FormControl>
          </DialogContent>
