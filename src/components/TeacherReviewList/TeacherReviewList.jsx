@@ -19,7 +19,7 @@ function TeacherReviewList() {
     }, []);
 
     return (
-        <Container maxWidth="xl">
+        <Container maxWidth={false}>
             <h3 className="teacher-review-list-header">Teacher STEMtell Review List</h3>
             <Grid container direction="row" justifyContent="center" alignItems="flex-start" spacing={3}>
                 {reviewStemtells.map(stemtell => {

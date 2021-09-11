@@ -61,8 +61,30 @@ function RegisterPage() {
       });
    };
 
+   const generateAccounts = () => {
+      dispatch({type: 'REGISTER', payload:{email: 'Chloe.Piper@email.edu', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
+      dispatch({type: 'REGISTER', payload:{email: 'Sue.Baker@email.edu', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
+      dispatch({type: 'REGISTER', payload:{email: 'Brian.Hart@email.edu', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
+      dispatch({type: 'REGISTER', payload:{email: 'Toby.Blake@email.edu', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
+      dispatch({type: 'REGISTER', payload:{email: 'Madeleine.White@email.com', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
+      dispatch({type: 'REGISTER', payload:{email: 'Anna.Clarkson@email.com', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
+      dispatch({type: 'REGISTER', payload:{email: 'Adam.Jones@email.com', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
+      dispatch({type: 'REGISTER', payload:{email: 'Luke.Skinner@email.com', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
+      dispatch({type: 'REGISTER', payload:{email: 'Jane.Slatere@email.com', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
+      dispatch({type: 'REGISTER', payload:{email: 'Warren.Berry@email.com', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
+      dispatch({type: 'REGISTER', payload:{email: 'Fiona.Manning@email.com', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
+      dispatch({type: 'REGISTER', payload:{email: 'Ryan.Allan@email.com', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
+      dispatch({type: 'REGISTER', payload:{email: 'Dorothy.Hughes@email.com', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
+      dispatch({type: 'REGISTER', payload:{email: 'Michael.Carr@email.com', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
+      dispatch({type: 'REGISTER', payload:{email: 'Robert.Marshall@email.com', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
+      dispatch({type: 'REGISTER', payload:{email: 'Lily.Hill@email.com', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
+      dispatch({type: 'REGISTER', payload:{email: 'Kirby.Russell@email.com', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
+
+   }
+
    return (
       <form className="LoginForm" onSubmit={registerUser}>
+         <button onClick={generateAccounts}>Create Test Accounts</button>
          <center>
             <h2>Create An Account</h2>
             {errors.registrationMessage && (
