@@ -24,8 +24,8 @@ import {
    const dispatch = useDispatch();
    const history = useHistory();
    const classes = useSelector((store) => store.classes);
-   const toClassDetail = (class_code) => {
-     history.push(`classlist/details/${class_code}`);
+   const toClassDetail = (code) => {
+     history.push(`classlist/details/${code}`);
    };
    const [classTitle, setClassTitle] = useState("");
    const [editClassCode, setEditClassCode] = useState("");
@@ -83,7 +83,7 @@ import {
        {classes.map((classList) => {
          if (classList.archived == 'Active') {
            return (
-             <Card className="classCard" key={classList.id}>
+             <Card className="classCard" key={classList.class_code}>
                <EditIcon
                  id="editIconClassCard"
                  onClick={() => handleClick(classList)}
@@ -98,13 +98,13 @@ import {
                  Status: {classList.archived}
                </section>
                <section className="classDetail" id="classCode">
-                 Code: {classList.code}
+                 Code: {classList.class_code}
                </section>
              </Card>
            );
          } else if (classList.archived == 'Archived') {
            return (
-             <Card className="classCard" key={classList.id}>
+             <Card className="classCard" key={classList.class_code}>
                 <EditIcon
                  id="editIconClassCard"
                  onClick={() => handleClick(classList)}
@@ -119,7 +119,7 @@ import {
                  Status: {classList.archived}
                </section>
                <section className="classDetail" id="classCode">
-                 Code: {classList.code}
+                 Code: {classList.class_code}
                </section>
              </Card>
            );

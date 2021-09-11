@@ -43,7 +43,7 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
    const query= `SELECT "user".name AS username, "user".profile_picture_url
                  FROM "user"
                  JOIN "user_class" ON "user".id = "user_class".user_id
-                 JOIN "class" on "class".id = "user_class".class_code
+                 JOIN "class" on "class".code = "user_class".class_code
                  WHERE  "user".authority = 'student'
                  AND "user_class".class_code = $1
                  ORDER BY username ASC;`;
