@@ -5,7 +5,6 @@ import AddClass from "../AddClass/AddClass";
 import './ClassList.css';
 
 
-
 function ClassList() {
    return(
       <>

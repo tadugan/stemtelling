@@ -16,7 +16,6 @@ function TagChip( {tagInfo, selectedTags} ) {
    const classes = useStyles();
    const dispatch = useDispatch();
    const [ isSelected, setIsSelected ] = useState(false);
-
    const conditionalClass = () => {
       if (isSelected) {
          return (
@@ -32,7 +31,7 @@ function TagChip( {tagInfo, selectedTags} ) {
 
    const handleClick = () => {
       if (isSelected) {
-         setIsSelected(false)
+         setIsSelected(false);
          dispatch({
             type: 'REMOVE_TAG_FROM_STEMTELL',
             payload: tagInfo,

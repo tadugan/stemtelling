@@ -20,27 +20,24 @@ const StyledBlueButton = styled(Button)`
 `;
 
 
-
 function ImageUploader( {mode} ) {
-
    const dispatch = useDispatch();
-
    const [ previewSource, setPreviewSource ] = useState();
    const [ fileInputState, setFileInputState ] = useState('');
 
    const handleFileInputChange = (e) => {
-         const file = e.target.files[0];
-         previewFile(file);
-   }
+      const file = e.target.files[0];
+      previewFile(file);
+   };
 
    const previewFile = (file) => {
-         const reader = new FileReader();
-         reader.readAsDataURL(file);
-         reader.onloadend = () => {
-            conditionalDispatch(reader.result)
-            setPreviewSource(reader.result);
-         }
-   }
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+         conditionalDispatch(reader.result)
+         setPreviewSource(reader.result);
+      };
+   };
 
    const conditionalDispatch = (result) => {
       if (mode === 'profile') {
@@ -48,8 +45,8 @@ function ImageUploader( {mode} ) {
       }
       else {
          dispatch({ type: 'SET_IMAGE_REDUCER', payload: result });
-      }
-   }
+      };
+   };
 
    const conditionalPreview = () => {
       if (mode === 'profile') {
@@ -66,12 +63,12 @@ function ImageUploader( {mode} ) {
                </center>
             </Grid>
          );
-      }
-   }
+      };
+   };
 
    useEffect(() => {
       dispatch({ type: 'CLEAR_IMAGE_REDUCER' });
-      dispatch({ type: 'CLEAR_PROFILE_IMAGE_REDUCER' })
+      dispatch({ type: 'CLEAR_PROFILE_IMAGE_REDUCER' });
     }, []);
 
    return (
@@ -84,14 +81,6 @@ function ImageUploader( {mode} ) {
          </Grid>
          <br />
          {conditionalPreview()}
-         {/* <Grid item>
-            <center>
-            <div className="image-uploader-preview-window">
-               {previewSource &&
-               (<img src={previewSource} alt="upload" className="image-uploader-preview" />)}
-            </div>
-            </center>
-         </Grid> */}
       </div>
    );
 };

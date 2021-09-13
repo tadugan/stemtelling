@@ -14,14 +14,16 @@ function Comment() {
    const comments = useSelector((store) => store.stemtellComments);
 
    useEffect(() =>{
-   dispatch({ type: 'GET_STEMTELL_COMMENTS', payload: stemtellId});
+      dispatch({ type: 'GET_STEMTELL_COMMENTS', payload: stemtellId});
    }, []);
 
    const handleSubmit = () =>{
-      dispatch({type:'ADD_COMMENT', payload: {
-         stemtell_id: stemtellId,
-         comment: leaveComment ,
-         teacher_feedback: feedback
+      dispatch({
+         type:'ADD_COMMENT',
+         payload: {
+            stemtell_id: stemtellId,
+            comment: leaveComment ,
+            teacher_feedback: feedback
          }
       });
       setComment('');
@@ -35,9 +37,9 @@ function Comment() {
 
    const unixTimestamp = (timestamp) => {
       const dateObject = new Date((timestamp * 1000));
-         return (
-            dateObject.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
-         );
+      return (
+         dateObject.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
+      );
    };
 
    return(
