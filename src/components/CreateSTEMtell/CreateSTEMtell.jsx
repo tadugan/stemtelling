@@ -47,7 +47,7 @@ const StyledRedButton = styled(Button)`
 function CreateSTEMtell() {
    const dispatch = useDispatch();
    const history = useHistory();
-   const [ classId, setClassId ] = useState('');
+   const [ classCode, setClassCode ] = useState('');
    const [ title, setTitle ] = useState('');
    const [ description, setDescription ] = useState('');
    const [ alertMessage, setAlertMessage ] = useState('');
@@ -57,15 +57,15 @@ function CreateSTEMtell() {
    const user = useSelector(store => store.user);
    const handleCancel = () => {history.push('/close');};
    const getClassList = () => {dispatch({ type: 'FETCH_CLASSES'})};
+   const [tagIds, setTagIds] = useState([]);
 
    const handleSubmit = () => {
-      const tagIds = [];
       event.preventDefault();
       if (invalidInputs()) {
          return;
       };
       for (const tag of selectedTags) {
-         tagIds.push(tag.id);
+         setTagIds.push(tag.id);
       };
       dispatch({
          type: 'SUBMIT_NEW_STEMTELL',
@@ -73,14 +73,14 @@ function CreateSTEMtell() {
             details: {
                title: title,
                body_text: description,
-               class_id: classId,
+               class_code: classCode,
                tag_ids: tagIds
             },
             image_data: imageData,
             history: history
          }
       });
-      setClassId(0);
+      setClassCode(0);
       setTitle('');
       setDescription('');
       dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
@@ -90,7 +90,7 @@ function CreateSTEMtell() {
 
 
    const invalidInputs = () => {
-      if (classId === 0) {
+      if (classCode === 0) {
          setAlertMessage('class');
          return true;
       } 
@@ -110,6 +110,7 @@ function CreateSTEMtell() {
          setAlertMessage('');
          return false;
       };
+      // return false;
    };
 
    const conditionalInputAlert = (alertType) => {
@@ -148,6 +149,7 @@ function CreateSTEMtell() {
       dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL' });
    }, []);
 
+
    return (
       <>
       <BackBtn />
@@ -160,7 +162,7 @@ function CreateSTEMtell() {
                <Grid item>
                   <FormControl variant="outlined">
                      <InputLabel id="demo-simple-select-outlined-label">Class</InputLabel>
-                     <Select variant="outlined" labelId="demo-simple-select-outlined-label" value={classId} onChange={(event) => setClassId(event.target.value)} label="Age" className="create-stemtell-class-select">
+                     <Select variant="outlined" labelId="demo-simple-select-outlined-label" value={classCode} onChange={(event) => setClassCode(event.target.value)} label="Age" className="create-stemtell-class-select">
                         <MenuItem value={0}>
                            <em>Choose a Class</em>
                         </MenuItem>
@@ -175,10 +177,14 @@ function CreateSTEMtell() {
                   </FormControl>
                </Grid>
                <Grid item>
+                  <Button onClick={() => {setTitle('Why breakfast is important')}}></Button>
                   <TextField label="Title" variant="outlined" value={title} onChange={(event) => setTitle(event.target.value)} className="create-stemtell-title"/>
+                  <Button onClick={() => {setTitle('Giant Black holes')}}></Button>
                </Grid>
                <Grid item>
+               <Button onClick={() => {setDescription('The first meal of the day helps kickstart it off!')}}></Button>
                   <TextField aria-label="STEMtell textarea" placeholder="Add text" minRows={3} maxRows={3} variant="outlined" multiline value={description} onChange={(event) => setDescription(event.target.value)} className="create-stemtell-description"/>
+               <Button onClick={() => {setDescription(`Its amazing how we know so little about Black holes and how we don't understand what role they truly play in the Universe. I have always been fascinated with how they are imagined, sucking in any light and matter around them causing them to look like the opposite of a Star which they pretty much are. Its just amazing to look at pictures of it.`)}}></Button>
                </Grid>
                <Grid item container spacing={2} direction="row" justifyContent="center" alignItems="center">
                   {selectedTags.map((tag) => {

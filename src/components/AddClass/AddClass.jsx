@@ -25,6 +25,7 @@ function AddClass() {
       <>
          <Container className='AddClassContainer'>
             <form className='AddClassForm'>
+               <Button onClick = {() => {setNewClass(`AP Chemistry SPRING '22`)}}></Button>
                <Input className='AddClassInput' label='Add Class' placeholder='Class Title' variant="filled" value= {newClass} onChange={(event) => setNewClass(event.target.value)}
                   endAdornment = { <AddCircleOutlineRoundedIcon id='AddClassBtn' color='primary' fontSize='large' onClick={handleAddClass} /> }>
                </Input>

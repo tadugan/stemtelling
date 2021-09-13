@@ -82,7 +82,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
             const queryTextAddStemtell = `INSERT INTO "stemtell" ("class_code", "user_id", "title", "body_text", "media_url", "approved", "unix")
                                           VALUES ($1, $2, $3, $4, $5, $6, extract(epoch from now()))
                                           RETURNING id`;
-            const response = await client.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, imageResponse.url, true]);
+            const response = await client.query(queryTextAddStemtell, [newStemtell.class_code, user.id, newStemtell.title, newStemtell.body_text, imageResponse.url, true]);
             const stemtellId = response.rows[0].id;
             const queryTextAddTag = `INSERT INTO stemtell_tag ("tag_id", "stemtell_id")
                                      VALUES ($1, $2) `;
