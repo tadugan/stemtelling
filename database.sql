@@ -195,16 +195,16 @@ INSERT INTO "class" ("code", "name")
 SELECT * FROM "user";
 -- Step 3: add personal Data
 UPDATE "user"
-	SET "name" = 'Chloe Piper', "profile_picture_url" = 'https://images.unsplash.com/flagged/photo-1574110906643-8311b0ce29d3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2468&q=80', "authority" = 'teacher'
+	SET "name" = 'Ms. Piper', "profile_picture_url" = 'https://images.unsplash.com/flagged/photo-1574110906643-8311b0ce29d3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2468&q=80', "authority" = 'teacher'
 	WHERE "id" = 1;
 UPDATE "user"
-	SET "name" = 'Sue Baker', "profile_picture_url" = 'https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80', "authority" = 'teacher'
+	SET "name" = 'Ms. Baker', "profile_picture_url" = 'https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80', "authority" = 'teacher'
 	WHERE "id" = 2;
 UPDATE "user"
-	SET "name" = 'Brian Hart', "profile_picture_url" = 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80', "authority" = 'teacher'
+	SET "name" = 'Mr. Hart', "profile_picture_url" = 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80', "authority" = 'teacher'
 	WHERE "id" = 3;
 UPDATE "user"
-	SET "name" = 'Tony Blake', "profile_picture_url" = 'https://c8.alamy.com/comp/BJDCA2/high-school-principal-BJDCA2.jpg', "authority" = 'teacher'
+	SET "name" = 'Mr. Blake', "profile_picture_url" = 'https://c8.alamy.com/comp/BJDCA2/high-school-principal-BJDCA2.jpg', "authority" = 'teacher'
 	WHERE "id" = 4;
 UPDATE "user"
 	SET "name" = 'Madeline White', "profile_picture_url" = 'https://images.unsplash.com/photo-1607578477812-e2e2672a1250?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=668&q=80', "authority" = 'student'
@@ -362,7 +362,7 @@ INSERT INTO "tag" ("type", "name", "stem_field")
 -- Step 6: run the following queries to create student stemtells
 INSERT INTO "stemtell" ("class_code", "user_id", "title", "body_text", "media_url", "approved", "unix")
 	VALUES
-	('839464', '5', 'What Is Chemistry?', 'Chemistry is the 	scientific study of the properties and behavior of matter. It is a natural science that covers the elements that make up matter to the compounds composed of atoms, molecules and ions: their composition, structure, properties, behavior and the changes they undergo during a reaction with other substances.  In the scope of its subject, chemistry occupies an intermediate position between physics and biology. It is sometimes called the central science because it provides a foundation for understanding both basic and applied scientific disciplines at a fundamental level.', 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Gnome-applications-science.svg/100px-Gnome-applications-science.svg.png', true, extract(epoch from now())),
+	('839464', '5', 'What Is Chemistry?', 'Chemistry is the scientific study of the properties and behavior of matter. It is a natural science that covers the elements that make up matter to the compounds composed of atoms, molecules and ions: their composition, structure, properties, behavior and the changes they undergo during a reaction with other substances.  In the scope of its subject, chemistry occupies an intermediate position between physics and biology. It is sometimes called the central science because it provides a foundation for understanding both basic and applied scientific disciplines at a fundamental level.', 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Gnome-applications-science.svg/100px-Gnome-applications-science.svg.png', true, extract(epoch from now())),
 	('393019', '5', 'The First AutoCAD', 'AutoCAD has been available on the market since 1982, making it the first CAD system developed for PCs. This means that AutoCAD has been around longer than Adobe Photoshop or even Microsoft Windows! Before AutoCAD, commercial CAD programs in the 70s ran on mainframe computers or minicomputers, with each user working at a separate graphics terminal. If the designer didn’t have access to these, they’d go about drawing using an old-school drafting desk and a t-square. Creating new versions of drawings and performing calculations took days, even weeks. Imagine how much effort it would take to compute technical calculations with calculators and mathematical tables! What’s worse, the process was fraught with opportunities for error.', 'https://www.scan2cad.com/wp-content/uploads/2016/12/early-autocad-workstation-582x480.jpg', true, extract(epoch from now())),
 	('107508', '6', 'Algebra I in Real Life', 'Have you ever wondered how Algebra may be applied to solve real-life problems? We regularly see people using Algebra in many parts of everyday life; for instance, it is utilized in our morning schedule each day to measure the time you will spend in the shower, making breakfast, or driving to work.  The absence of "X" or "Y" does not imply that algebra is not around us; algebra’s actual occurrences are uncountable. This exact and compact numerical language works wonderfully with practically all different subjects and everyday life.', 'https://d138zd1ktt9iqe.cloudfront.net/media/seo_landing_files/file-a1-1603874439.png', true, extract(epoch from now())),
 	('601214', '7', 'What Is Physics?', 'Physics is the natural science that studies matter, its motion and behavior through space and time, and the related entities of energy and force. Physics is one of the most fundamental scientific disciplines, and its main goal is to understand how the universe behaves.', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Stylised_atom_with_three_Bohr_model_orbits_and_stylised_nucleus.png/100px-Stylised_atom_with_three_Bohr_model_orbits_and_stylised_nucleus.png', false, extract(epoch from now())),
@@ -385,6 +385,7 @@ INSERT INTO "stemtell" ("class_code", "user_id", "title", "body_text", "media_ur
 	('601214', '16', 'Isaac Newton: The First Physicist', 'In Principia, Newton formulated the laws of motion and universal gravitation that formed the dominant scientific viewpoint until it was superseded by the theory of relativity. Newton used his mathematical description of gravity to derive Kepler''s laws of planetary motion, account for tides, the trajectories of comets, the precession of the equinoxes and other phenomena, eradicating doubt about the Solar System''s heliocentricity. He demonstrated that the motion of objects on Earth and celestial bodies could be accounted for by the same principles. Newton''s inference that the Earth is an oblate spheroid was later confirmed by the geodetic measurements of Maupertuis, La Condamine, and others, convincing most European scientists of the superiority of Newtonian mechanics over earlier systems.', 'https://web.physics.wustl.edu/alford/general/newton2.gif', false, extract(epoch from now())),
 	('570650', '16', 'Past Precalculus: Calculus', 'Calculus, originally called infinitesimal calculus or "the calculus of infinitesimals", is the mathematical study of continuous change, in the same way that geometry is the study of shape and algebra is the study of generalizations of arithmetic operations. It has two major branches, differential calculus and integral calculus; the former concerns instantaneous rates of change, and the slopes of curves, while integral calculus concerns accumulation of quantities, and areas under or between curves. These two branches are related to each other by the fundamental theorem of calculus, and they make use of the fundamental notions of convergence of infinite sequences and infinite series to a well-defined limit.', 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Parabolic_segment_and_inscribed_triangle.svg/150px-Parabolic_segment_and_inscribed_triangle.svg.png', true, extract(epoch from now()));
 	
+
 ----	CLASSES (code, name)	----
 --	('839464', 'Chemistry'),
 --	('601214', 'Physics'),
@@ -456,10 +457,10 @@ INSERT INTO "reaction" ("media_url", "name")
 
 -- Step 10: run the following queries to add comments to the comment table
 INSERT INTO "comment" ("user_id", "stemtell_id", "comment", "unix", "teacher_feedback")
-	VALUES ('2', '1', 'This is a great Chemistry STEMtell!', extract(epoch from now()), 'false'),
-	('1', '2', 'This is a great Biology STEMtell!', extract(epoch from now()), 'false'),	
-	('3', '1', 'Needs more Chemistry stuff', extract(epoch from now()), 'true'),
-	('4', '2', 'Needs more Biology stuff', extract(epoch from now()), 'true');
+	VALUES
+	('10', '1', 'This is a super technical explanation, but super awesome! Great job Maddy!', extract(epoch from now()), 'false'), ('13', '1', 'Wow, I always thought chemistry was just mixing stuff.', extract(epoch from now()), 'false'),
+	('7', '2', '1982!? I didn''t even know computer existed back then...', extract(epoch from now()), 'false'), ('10', '2', 'Oh my gosh, it really is that old??? That''s crazy, it''s almost older than my parents!', extract(epoch from now()), 'false'), ('14', '2', 'I think it''s awesome how people went to do the same thing a simple piece of software does today.', extract(epoch from now()), 'false');
+
 
 
 -- Step 11: existing stemtell reactions
