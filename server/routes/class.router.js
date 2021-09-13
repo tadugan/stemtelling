@@ -144,7 +144,6 @@ router.post('/', rejectUnauthenticated, (req, res) => {
  * POST for adding to new student to class
  */
 router.post('/joinclass', rejectUnauthenticated, async (req, res) => {
-   console.log(req.body);
    const userId = req.user.id;
    const userRole = req.user.authority;
    const client = await pool.connect();
@@ -166,7 +165,6 @@ router.post('/joinclass', rejectUnauthenticated, async (req, res) => {
 
 //PUT for updating class information such as title
 router.put("/update", rejectUnauthenticated, (req,res) => {
-   console.log(req.body);
    const query = `UPDATE "class" 
                   SET "name"= $1, "archived" = $2
                   WHERE "code"= $3;`;

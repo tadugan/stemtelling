@@ -3,7 +3,7 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Avatar, Card, Paper, Modal, Backdrop, Fade, TextField, Button, Container } from '@material-ui/core';
+import { Grid, Avatar, Card, Paper, Modal, Backdrop, Fade, TextField, Button, Container, Chip } from '@material-ui/core';
 import EditSTEMtell from "../EditSTEMtell/EditSTEMtell";
 import TeacherFeedback from "../TeacherFeedback/TeacherFeedback";
 import './UserPage.css';
@@ -136,6 +136,7 @@ function UserPage() {
    const [open, setOpen] = React.useState(false);
    const handleClose = () => {setOpen(false)};
    const toStemtellDetail = (stem_id) => {history.push(`stemtell/${stem_id}`)};
+   const myClasses = useSelector((store) => store.classes);
 
    const handleOpen = (stemtell) => {
       setOpen(true); 
@@ -155,6 +156,7 @@ function UserPage() {
    };
    
    useEffect(() => {
+      dispatch({type: 'GET_USER_CLASSES', payload: user.id});
       dispatch({ type: 'FETCH_USER' })
       dispatch({ type: "FETCH_MY_STEMTELLS", payload: user.id });
     }, []);
@@ -165,7 +167,13 @@ function UserPage() {
             <Grid item xs={12} sm={3}> 
                <Paper className={classes.paper}>
                   <img src={user.profile_picture_url}></img>
-                  <h2>{user.name}</h2> 
+                  <h2>{user.name}</h2>
+                  {myClasses.map((userClass) => {
+                  return (
+                     <Chip label={userClass.name} key={userClass.code}/>
+                  );
+               })}
+               <br /><br />
                   <LogOutButton />
                   <StyledButton onClick={() => {history.push(`/editprofile`)}}>
                      Edit Profile

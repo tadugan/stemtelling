@@ -62,10 +62,8 @@ function* leaveClass(action) {
 };
 
 function* joinClass(action) {
-   console.log(action.payload);
    let classCodesArray = [];
    let allClassCodesArray = [];
-   let confirmClassToJoin = 0;
    const user = action.payload.user_id;
    const classToJoin = Number(action.payload.class_code);
    try {
