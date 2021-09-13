@@ -100,7 +100,7 @@ function ClassCard() {
             <DialogTitle id="form-dialog-title">Edit Class Information</DialogTitle>
             <DialogContent>
                <DialogContentText>Update Class Information below.</DialogContentText>
-               <TextField autoFocus margin="dense" className="class-edit-form" label="Class Title" type="text" fullWidth onChange={(event) => setClassTitle(event.target.value)}/>
+               <TextField autoFocus margin="dense" className="class-edit-form" label="Class Title" type="text" value={classTitle} fullWidth onChange={(event) => setClassTitle(event.target.value)}/>
                <FormControl className='radio-class-status' component="fieldset">
                   <FormLabel component="legend">Change Class Status:</FormLabel>
                   <RadioGroup aria-label="status" name="status-of-class" value={classStatus} onChange={(event) => setClassStatus(event.target.value)}>

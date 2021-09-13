@@ -36,15 +36,27 @@ router.get('/allclasses', rejectUnauthenticated, (req, res) => {
    });
 });
 
+router.get('/:id', rejectUnauthenticated, (req, res) => {
+   const query = `SELECT * FROM "class" WHERE "code" = $1`;
+   pool.query(query, [req.query.classCode])
+   .then(results => {
+      res.send(results.rows);
+   })
+   .catch(error => {
+      console.log("Error getting all classes:", error);
+      res.sendStatus(500);
+   });
+})
+
 // GET /api/class/details/:id
 // Gets list of students in a particular class
 router.get('/details/:id', rejectUnauthenticated, (req, res) => {
    const classId= req.params.id;
-   const query= `SELECT "user".name AS username, "user".profile_picture_url
+   const query= `SELECT "user".name AS username, "user".profile_picture_url, "user".id
                  FROM "user"
                  JOIN "user_class" ON "user".id = "user_class".user_id
                  JOIN "class" on "class".code = "user_class".class_code
-                 WHERE  "user".authority = 'student'
+                 WHERE "user".authority = 'student'
                  AND "user_class".class_code = $1
                  ORDER BY username ASC;`;
    pool.query(query, [classId])
@@ -186,8 +198,8 @@ router.put("/update", rejectUnauthenticated, (req,res) => {
 // DELETE /api/class/details/:id
 // Removes students from a class
 router.delete("/details/:id", rejectUnauthenticated, (req, res) => {
-   const query = `DELETE FROM user_class WHERE "user_id" = $1;`;  
-   pool.query(query, [req.params.id])
+   const query = `DELETE FROM "user_class" WHERE "user_id" = $1 AND "class_code" = $2`;  
+   pool.query(query, [req.params.id, req.query.classCode])
    .then(() => {
       res.sendStatus(201);
    })

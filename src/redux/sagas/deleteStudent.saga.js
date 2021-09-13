@@ -6,8 +6,8 @@ import axios from 'axios';
 // called when
 function* deleteStudent(action) {
    try {
-      yield call(axios.delete, `/api/class/details/${action.payload.deleteStudent}`);
-      yield put({ type: "GET_STUDENTLIST", payload: action.payload.classId});
+      yield call(axios.delete, `/api/class/details/${action.payload.deleteStudent}`, {params: {classCode: action.payload.classCode}});
+      yield put({ type: "GET_STUDENTLIST", payload: action.payload.classCode});
    }
    catch (error) {
       console.log('Error with deleteStudent in deleteStudent.saga.js:', error);
