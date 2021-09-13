@@ -113,6 +113,7 @@ function CreateProfile() {
    };
 
    const joinClass = () => {
+      console.log(addClassCode)
       if (addClassCode == "") {
          alert('Please provide class code.');
          return false;

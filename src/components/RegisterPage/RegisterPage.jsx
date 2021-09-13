@@ -61,6 +61,13 @@ function RegisterPage() {
       });
    };
 
+   const studentLogin = () => {
+      setEmail('Pouapheng.yang@email.com');
+      setName('Pouapheng Yang');
+      setPassword('password');
+      setConfirmedPassword('password');
+   }
+
    const generateAccounts = () => {
       dispatch({type: 'REGISTER', payload:{email: 'Chloe.Piper@email.edu', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
       dispatch({type: 'REGISTER', payload:{email: 'Sue.Baker@email.edu', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
@@ -103,6 +110,7 @@ function RegisterPage() {
                </MenuItem>
             </Select>
             <br /><br />
+            <Button onClick = {studentLogin}/>
             <TextField type="text" label="Name" variant="outlined" required value={name} onChange={(event) => setName(event.target.value)}/>
             {(authority == 'teacher') ?
                <>
