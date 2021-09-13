@@ -62,6 +62,7 @@ function* leaveClass(action) {
 };
 
 function* joinClass(action) {
+   console.log(action.payload);
    let classCodesArray = [];
    let allClassCodesArray = [];
    let confirmClassToJoin = 0;
@@ -88,7 +89,7 @@ function* joinClass(action) {
                   confirmClassToJoin = classToJoin;
                };
             };
-            yield axios.post('/api/class/joinclass', {class_code: confirmClassToJoin});
+            yield axios.post('/api/class/joinclass', {class_code: classToJoin});
             return false;
          };
       };

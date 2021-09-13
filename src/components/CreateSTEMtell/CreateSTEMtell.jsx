@@ -178,7 +178,6 @@ function CreateSTEMtell() {
                   </FormControl>
                </Grid>
                <Grid item>
-                  
                   <TextField label="Title" variant="outlined" value={title} onChange={(event) => setTitle(event.target.value)} className="create-stemtell-title"/>
                   <br />
                   <Button onClick={() => {setTitle('Why breakfast is important')}}></Button>

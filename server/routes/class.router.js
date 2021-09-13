@@ -67,7 +67,7 @@ router.get('/userclasses', rejectUnauthenticated, async (req, res) => {
       const queryText = `SELECT * FROM "class" WHERE "code" = $1 AND "archived" = $2`
       const myClasses = await pool.query(query, [req.query.user]);
       for (let x of myClasses.rows) {
-         const classObj = await pool.query(queryText, [x.class_code, false]);
+         const classObj = await pool.query(queryText, [x.class_code, "Active"]);
          sendBackObj.push(classObj.rows[0]);
       }
       res.send(sendBackObj);
@@ -144,6 +144,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
  * POST for adding to new student to class
  */
 router.post('/joinclass', rejectUnauthenticated, async (req, res) => {
+   console.log(req.body);
    const userId = req.user.id;
    const userRole = req.user.authority;
    const client = await pool.connect();
