@@ -5,7 +5,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
+import Chip from '@material-ui/core/Chip';
 import Container from '@material-ui/core/Container';
+import './ProfilePage.css';
 
 const useCardStyles = makeStyles(() => ({
    root: {
@@ -65,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
 function ProfilePage() {
    const cardStyles = useCardStyles();
    const classes = useStyles();
+   const myClasses = useSelector((store) => store.classes);
    const history = useHistory();
    const profile = useSelector((store) => store.profile);
    const dispatch = useDispatch();
@@ -75,6 +78,7 @@ function ProfilePage() {
    useEffect(() => {
       dispatch({ type: "FETCH_USER_STEMTELLS", payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1])});
       dispatch({ type: 'FETCH_PROFILE', payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1])});
+      dispatch({ type: 'GET_USER_CLASSES', payload: (getSearchQueryByFullURL(window.location.href)[getSearchQueryByFullURL(window.location.href).length-1]) });
     }, []);
 
    return (
@@ -83,7 +87,12 @@ function ProfilePage() {
             <Grid item xs={12} sm={3}> 
                <Paper className={classes.paper}>
                   <img src={profile.profile_picture_url}></img>
-                  <h2>{profile.name}</h2> 
+                  <h2>{profile.name}</h2>
+                  {myClasses.map((userClass) => {
+                  return (
+                     <Chip label={userClass.name} key={userClass.code}/>
+                  );
+               })}
                </Paper>
             </Grid>
             <Grid item xs={12} sm={9}>
@@ -100,7 +109,7 @@ function ProfilePage() {
                                     {stemtell.class_name}
                                  </div>
                                  <h3>{stemtell.title}</h3>
-                                 <img src={stemtell.media_url} />
+                                 <img id="stemtellImage" src={stemtell.media_url} />
                                  <section id="cardReactions">{stemtell.reaction_name}</section>
                                  <section id="stemDescription">{stemtell.body_text}</section>
                            </Card>
