@@ -7,10 +7,7 @@ import './AddClass.css';
 function AddClass() {
    const [ newClass, setNewClass ] = useState('');
    const dispatch = useDispatch();
-   // const btnRef= React.useRef(null);
-   // const onHoverAdd = () =>{
 
-   // }
    const handleAddClass = () => {
       event.preventDefault();
       if (newClass == "") {
@@ -22,7 +19,7 @@ function AddClass() {
          payload: {name: newClass}
       });
       setNewClass('');
-   }
+   };
 
    return(
       <>

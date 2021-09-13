@@ -7,12 +7,7 @@ import { Button } from '@material-ui/core';
 function BackBtn() {
    const history= useHistory();
    return (
-      <Button
-         size='large'
-         onClick={()=> history.goBack()}
-         className="back-btn-body"
-         startIcon={<ArrowBackRoundedIcon />}
-      >
+      <Button size='large' onClick={()=> history.goBack()} className="back-btn-body" startIcon={<ArrowBackRoundedIcon />}>
          back
       </Button>
    );

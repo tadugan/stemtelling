@@ -44,7 +44,6 @@ const StyledRedButton = styled(Button)`
 `;
 
 
-
 function CreateSTEMtell() {
    const dispatch = useDispatch();
    const history = useHistory();

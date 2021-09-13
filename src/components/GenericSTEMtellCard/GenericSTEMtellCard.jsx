@@ -71,54 +71,51 @@ const useCardStyles = makeStyles(() => ({
 
 function GenericSTEMtellCard({ stemtell, reviewMode }) {
    const cardStyles = useCardStyles();
-    const history = useHistory();
+   const history = useHistory();
 
-    const unixTimestamp = (timestamp) => {
-        const dateObject = new Date((timestamp * 1000));
-        return (
-           dateObject.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
-        );
-    };
+   const unixTimestamp = (timestamp) => {
+      const dateObject = new Date((timestamp * 1000));
+      return (
+         dateObject.toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
+      );
+   };
 
-    const handleReviewClick = () => {
-        history.push(`/comment/feedback/${stemtell.stem_id}`);
-    }
+   const handleReviewClick = () => {
+      history.push(`/comment/feedback/${stemtell.stem_id}`);
+   };
 
-    const conditionalReviewButton = () => {
-        if (reviewMode) {
-            return (
-                <StyledBlueButton 
-                    variant="contained"
-                    color="primary"
-                    onClick={handleReviewClick}
-                >
-                    Review
-                </StyledBlueButton>
-            );
-        }
-        else {
-            return;
-        }
-    }
+   const conditionalReviewButton = () => {
+      if (reviewMode) {
+         return (
+            <StyledBlueButton variant="contained" color="primary" onClick={handleReviewClick}>
+               Review
+            </StyledBlueButton>
+         );
+      }
+      else {
+         return;
+      };
+   };
 
-    return (
-         <Card className={cardStyles.root}>
-               <h6 className={cardStyles.stemdate}>{unixTimestamp (stemtell.unix)}</h6>
-               <Avatar className={cardStyles.avatar} src={stemtell.profile_picture_url} />
-               <section className={cardStyles.username}>
-                  {stemtell.username}
-               </section>
-               <div className={cardStyles.username} id="userClass">
-                  {stemtell.class_name}
-               </div>
-               <h5 className={cardStyles.stemtitle}>
-               {" "}{stemtell.title}
-               </h5>
-               <img id="stemtellImage" src={stemtell.media_url} />
-               <section id="cardReactions">{stemtell.reaction_name}</section>
-               {conditionalReviewButton()}
-         </Card>
-    );
-}
+   return (
+      <Card className={cardStyles.root}>
+         <h6 className={cardStyles.stemdate}>{unixTimestamp (stemtell.unix)}</h6>
+         <Avatar className={cardStyles.avatar} src={stemtell.profile_picture_url} />
+         <section className={cardStyles.username}>
+            {stemtell.username}
+         </section>
+         <div className={cardStyles.username} id="userClass">
+            {stemtell.class_name}
+         </div>
+         <h5 className={cardStyles.stemtitle}>
+            {" "}{stemtell.title}
+         </h5>
+         <img id="stemtellImage" src={stemtell.media_url} />
+         <section id="cardReactions">{stemtell.reaction_name}</section>
+         {conditionalReviewButton()}
+      </Card>
+   );
+};
+
 
 export default GenericSTEMtellCard;

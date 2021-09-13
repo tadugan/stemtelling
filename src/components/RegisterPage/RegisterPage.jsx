@@ -79,8 +79,7 @@ function RegisterPage() {
       dispatch({type: 'REGISTER', payload:{email: 'Robert.Marshall@email.com', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
       dispatch({type: 'REGISTER', payload:{email: 'Lily.Hill@email.com', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
       dispatch({type: 'REGISTER', payload:{email: 'Kirby.Russell@email.com', password: 'password', teacherCode: teacherCode, authority: authority, name: 'noname', profilePictureURL: profilePictureURL}});
-
-   }
+   };
 
    return (
       <form className="LoginForm" onSubmit={registerUser}>
