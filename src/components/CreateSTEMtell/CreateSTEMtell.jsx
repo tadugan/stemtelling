@@ -178,13 +178,13 @@ function CreateSTEMtell() {
                   <TextField label="Title" variant="outlined" value={title} onChange={(event) => setTitle(event.target.value)} className="create-stemtell-title"/>
                   <br />
                   <Button onClick={() => {setTitle('Why breakfast is important')}}></Button>
-                  <Button onClick={() => {setTitle('Giant Black holes')}}></Button>
+                  <Button onClick={() => {setTitle('Eyes heal fast')}}></Button>
                </Grid>
                <Grid item>
                   <TextField aria-label="STEMtell textarea" placeholder="Add text" minRows={3} maxRows={3} variant="outlined" multiline value={description} onChange={(event) => setDescription(event.target.value)} className="create-stemtell-description"/>
                   <br />
                   <Button onClick={() => {setDescription('The first meal of the day helps kickstart it off!')}}></Button>
-                  <Button onClick={() => {setDescription(`Its amazing how we know so little about Black holes and how we don't understand what role they truly play in the Universe. I have always been fascinated with how they are imagined, sucking in any light and matter around them causing them to look like the opposite of a Star which they pretty much are. Its just amazing to look at pictures of it.`)}}></Button>
+                  <Button onClick={() => {setDescription(`I learned that the Human eyes are the fastest healing part of your body when I accidentally scratched my one of my eyes when I rubbed my eyes with dirty hands. Being one of the most important parts of the body it makes sense for the need to heal quickly.`)}}></Button>
                </Grid>
                <Grid item container spacing={2} direction="row" justifyContent="center" alignItems="center">
                   {selectedTags.map((tag) => {
