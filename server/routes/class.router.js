@@ -72,12 +72,12 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 
 // GET /api/class/userclasses
 // Gets a list of classes a student is in
-router.get('/userclasses', rejectUnauthenticated, async (req, res) => {
+router.get('/userclasses/:id', rejectUnauthenticated, async (req, res) => {
    try {
       let sendBackObj = [];
       const query = `SELECT * FROM "user_class" WHERE "user_id" = $1`;
       const queryText = `SELECT * FROM "class" WHERE "code" = $1 AND "archived" = $2`
-      const myClasses = await pool.query(query, [req.query.user]);
+      const myClasses = await pool.query(query, [req.params.id]);
       for (let x of myClasses.rows) {
          const classObj = await pool.query(queryText, [x.class_code, "Active"]);
          sendBackObj.push(classObj.rows[0]);

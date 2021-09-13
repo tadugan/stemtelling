@@ -156,7 +156,7 @@ function UserPage() {
    };
    
    useEffect(() => {
-      dispatch({type: 'GET_USER_CLASSES', payload: user.id});
+      dispatch({ type: 'GET_USER_CLASSES', payload: user.id });
       dispatch({ type: 'FETCH_USER' })
       dispatch({ type: "FETCH_MY_STEMTELLS", payload: user.id });
     }, []);

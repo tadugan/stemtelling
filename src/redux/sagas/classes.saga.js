@@ -19,7 +19,7 @@ function* fetchClasses() {
 function* getUserClasses(action) {
    const user = action.payload;
    try {
-      const response = yield axios.get('/api/class/userclasses', {params: { user } });
+      const response = yield axios.get(`/api/class/userclasses/${user}`);
       yield put({type: 'SET_USER_CLASSES', payload: response.data});
    }
    catch (error) {
