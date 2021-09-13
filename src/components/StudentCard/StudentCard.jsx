@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch} from 'react-redux';
 import './StudentCard.css';
 import {Container, Card, Box, Avatar, Button} from '@material-ui/core';
-import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom'
 
 
@@ -21,8 +20,7 @@ function StudentCard() {
    const onUserProfile = (author_id) => {
       history.push(`/profile/${author_id}`);
    };
-
-   //deletes student from specific class
+   
    const handleDelete = (deleteStudent) => {
       if (confirm(`Are you sure you want to remove ${deleteStudent.username}?`) === false) {
          return false;
@@ -45,8 +43,8 @@ function StudentCard() {
                <Card className='StudentDetailsCard' variant='outlined' key={student.id}>
                   <Box className='StudentProfilePicAndName'>
                      <Avatar id='StudentCardAvatar' src={student.profile_picture_url} onClick={() => onUserProfile(student.id)}/>
-                        <span> 
-                           <h4 id='StudentDetailsName'> {student.username}</h4>
+                        <span    onClick={() => onUserProfile(student.id)}> 
+                           <h4 id='StudentDetailsName' > {student.username}</h4>
                         </span>
                   </Box>
                   <section id='StudentDeleteBtnContainer'>
