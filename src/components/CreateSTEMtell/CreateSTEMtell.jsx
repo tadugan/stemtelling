@@ -57,15 +57,16 @@ function CreateSTEMtell() {
    const user = useSelector(store => store.user);
    const handleCancel = () => {history.push('/close');};
    const getClassList = () => {dispatch({ type: 'FETCH_CLASSES'})};
-   const [tagIds, setTagIds] = useState([]);
+
 
    const handleSubmit = () => {
+      const tagIds = [];
       event.preventDefault();
       if (invalidInputs()) {
          return;
       };
       for (const tag of selectedTags) {
-         setTagIds.push(tag.id);
+         tagIds.push(tag.id);
       };
       dispatch({
          type: 'SUBMIT_NEW_STEMTELL',
@@ -177,14 +178,17 @@ function CreateSTEMtell() {
                   </FormControl>
                </Grid>
                <Grid item>
-                  <Button onClick={() => {setTitle('Why breakfast is important')}}></Button>
+                  
                   <TextField label="Title" variant="outlined" value={title} onChange={(event) => setTitle(event.target.value)} className="create-stemtell-title"/>
+                  <br />
+                  <Button onClick={() => {setTitle('Why breakfast is important')}}></Button>
                   <Button onClick={() => {setTitle('Giant Black holes')}}></Button>
                </Grid>
                <Grid item>
-               <Button onClick={() => {setDescription('The first meal of the day helps kickstart it off!')}}></Button>
                   <TextField aria-label="STEMtell textarea" placeholder="Add text" minRows={3} maxRows={3} variant="outlined" multiline value={description} onChange={(event) => setDescription(event.target.value)} className="create-stemtell-description"/>
-               <Button onClick={() => {setDescription(`Its amazing how we know so little about Black holes and how we don't understand what role they truly play in the Universe. I have always been fascinated with how they are imagined, sucking in any light and matter around them causing them to look like the opposite of a Star which they pretty much are. Its just amazing to look at pictures of it.`)}}></Button>
+                  <br />
+                  <Button onClick={() => {setDescription('The first meal of the day helps kickstart it off!')}}></Button>
+                  <Button onClick={() => {setDescription(`Its amazing how we know so little about Black holes and how we don't understand what role they truly play in the Universe. I have always been fascinated with how they are imagined, sucking in any light and matter around them causing them to look like the opposite of a Star which they pretty much are. Its just amazing to look at pictures of it.`)}}></Button>
                </Grid>
                <Grid item container spacing={2} direction="row" justifyContent="center" alignItems="center">
                   {selectedTags.map((tag) => {
