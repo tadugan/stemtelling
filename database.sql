@@ -204,7 +204,7 @@ UPDATE "user"
 	SET "name" = 'Mr. Hart', "profile_picture_url" = 'https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80', "authority" = 'teacher'
 	WHERE "id" = 3;
 UPDATE "user"
-	SET "name" = 'Mr. Blake', "profile_picture_url" = 'https://c8.alamy.com/comp/BJDCA2/high-school-principal-BJDCA2.jpg', "authority" = 'teacher'
+	SET "name" = 'Mr. Blake', "profile_picture_url" = 'https://www.brookhill.org/wp-content/uploads/2018/10/KeglerLM-1-525x350.jpg', "authority" = 'teacher'
 	WHERE "id" = 4;
 UPDATE "user"
 	SET "name" = 'Madeline White', "profile_picture_url" = 'https://images.unsplash.com/photo-1607578477812-e2e2672a1250?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=668&q=80', "authority" = 'student'
