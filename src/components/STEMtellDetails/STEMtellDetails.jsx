@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Card, Avatar, Grid } from "@material-ui/core";
+import { Card, Avatar, Grid, Chip } from "@material-ui/core";
 import Comment from "../Comment/Comment";
 import BackBtn from "../BackBtn/BackBtn";
 import { makeStyles } from '@material-ui/core/styles';
@@ -62,9 +62,12 @@ function STEMtellDetails() {
    const stemtellId = params.id;
    const dispatch = useDispatch();
    const stemtell = useSelector((store) => store.stemtellDetails);
+   const selectedTags = useSelector(store => store.selectedTags);
+   const getExistingTags = (stemtellId) => {dispatch({ type: 'GET_EXISTING_TAGS', payload: stemtellId })};
   
    useEffect(() => {
       dispatch({ type: "FETCH_STEMTELL_DETAILS", payload: stemtellId });
+      getExistingTags(stemtellId);
    }, []);
 
    const onUserProfile = (author_id) => {
@@ -97,6 +100,13 @@ function STEMtellDetails() {
                      <h3 className={cardStyles.stemtitle}>{stemtell.title}</h3>
                      <section id="cardReactions">{stemtell.reaction_name}</section>
                      <section id="StemDetailsDescription">{stemtell.body_text}</section>
+                     <div>
+                        {selectedTags.map((tag) => {
+                           return (
+                              <Chip label={tag.name}/>
+                           );
+                        })}
+                     </div>
                      <AddReaction stemtellId={stemtell.id}/>
                   </Card>
                </Grid>

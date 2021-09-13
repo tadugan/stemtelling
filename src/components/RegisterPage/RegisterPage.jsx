@@ -90,7 +90,6 @@ function RegisterPage() {
 
    return (
       <form className="LoginForm" onSubmit={registerUser}>
-         <button onClick={generateAccounts}>Create Test Accounts</button>
          <center>
             <h2>Create An Account</h2>
             {errors.registrationMessage && (
@@ -135,6 +134,8 @@ function RegisterPage() {
                <br />
                Log In
             </Button>
+            <br />
+            <Button onClick={generateAccounts}></Button>
          </center>
       </form>
    );

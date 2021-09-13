@@ -88,8 +88,6 @@ function CreateSTEMtell() {
       dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
    };
 
-
-
    const invalidInputs = () => {
       if (classCode === 0) {
          setAlertMessage('class');
@@ -111,7 +109,6 @@ function CreateSTEMtell() {
          setAlertMessage('');
          return false;
       };
-      // return false;
    };
 
    const conditionalInputAlert = (alertType) => {

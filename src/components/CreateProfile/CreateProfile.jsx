@@ -182,7 +182,6 @@ function CreateProfile() {
                      </div>
                   );
                })}
-               
             </Paper>
          </Grid>
          <Modal aria-labelledby="Add CLass Modal" align="center" aria-describedby="Upload a class" className={modalClasses.modal} open={classOpen} onClose={handleClassClose} closeAfterTransition BackdropComponent={Backdrop} BackdropProps={{timeout: 500}}>
