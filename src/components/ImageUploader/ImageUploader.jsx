@@ -1,4 +1,4 @@
-import { Button, Grid, Container } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './ImageUploader.css';

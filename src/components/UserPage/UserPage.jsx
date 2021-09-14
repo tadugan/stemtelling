@@ -205,7 +205,6 @@ function UserPage() {
                                     Edit
                                  </StyledButton>
                               </Card>
-                              {/* {(stemtell.approved === true) ? <></> : <h3><center>NEEDS REVISION</center></h3>} */}
                            </Grid>
                         )
                      })}

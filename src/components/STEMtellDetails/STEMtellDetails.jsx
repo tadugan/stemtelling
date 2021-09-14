@@ -112,8 +112,6 @@ function STEMtellDetails() {
                </Grid>
             </center>
          <Comment />
-       
-        
       </>
    );
 };

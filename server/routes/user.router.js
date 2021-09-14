@@ -14,6 +14,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
    res.send(req.user);
 });
 
+
 // GET /api/user/all
 // Handles GET request for getting all user IDs
 router.get('/all', rejectUnauthenticated, (req, res) => {
@@ -27,6 +28,7 @@ router.get('/all', rejectUnauthenticated, (req, res) => {
       res.sendStatus(500);
    });
 });
+
 
 // GET /api/user/profile
 // Handles GET request for getting the current profile page via user ID
@@ -42,6 +44,7 @@ router.get('/profile', rejectUnauthenticated, (req, res) => {
       res.sendStatus(500);
    });
 });
+
 
 // POST /api/user/register
 // Handles POST request with new user data
@@ -80,44 +83,35 @@ router.post('/register', (req, res, next) => {
    };
 });
 
-router.post('/update', rejectUnauthenticated, (req, res) => {
-   // const queryText = `UPDATE "user" SET "name" = $1, "email" = $2 WHERE "id" = $3`;
-   // pool.query(queryText, [req.body.userInfo.name, req.body.userInfo.email, req.user.id])
-   // .then(() => {
-   //    res.sendStatus(200);
-   // })
-   // .catch(error => {
-   //    console.log(error);
-   //    res.sendStatus(500);
-   // });
+
+// POST /api/user/update
+// Used to update a user profile
+router.post('/update', rejectUnauthenticated, async (req, res) => {
+   const client = await pool.connect();
    let queryImage = req.user.profile_picture_url;
    const imageData = req.body.picture;
-
-   (async () => {
-      const client = await pool.connect();
-      try {
-         if (queryImage !== imageData) {
-            const imageResponse = await cloudinary.uploader.upload(imageData, {
-               upload_preset: 'stemtell-content-image'
-            });
-            queryImage = imageResponse.url;
-         }
-         
-         await client.query("BEGIN");
-         const queryText = `UPDATE "user" SET "name" = $1, "email" = $2, "profile_picture_url" = $3 WHERE "id" = $4`;
-         await client.query(queryText, [req.body.name, req.body.email, queryImage, req.user.id]);
-         await client.query("COMMIT");
-         res.sendStatus(204);
-      }
-      catch (error) {
-         await client.query("ROLLBACK");
-         throw error;
-      }
-      finally {
-         client.release();
-      }
-   })().catch(error => console.error(error.stack));
+   try {
+      if (queryImage !== imageData) {
+         const imageResponse = await cloudinary.uploader.upload(imageData, {
+            upload_preset: 'stemtell-content-image'
+         });
+         queryImage = imageResponse.url;
+      };
+      await client.query("BEGIN");
+      const queryText = `UPDATE "user" SET "name" = $1, "email" = $2, "profile_picture_url" = $3 WHERE "id" = $4`;
+      await client.query(queryText, [req.body.name, req.body.email, queryImage, req.user.id]);
+      await client.query("COMMIT");
+      res.sendStatus(201);
+   }
+   catch (error) {
+      await client.query("ROLLBACK");
+      throw error;
+   }
+   finally {
+      client.release();
+   };
 });   
+
 
 // POST /api/user/login
 // Handles login form authenticate/login POST
@@ -127,6 +121,7 @@ router.post('/update', rejectUnauthenticated, (req, res) => {
 router.post('/login', userStrategy.authenticate('local'), (req, res) => {
    res.sendStatus(200);
 });
+
 
 // POST /api/user/logout
 // clear all server session information about this user

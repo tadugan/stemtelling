@@ -14,6 +14,7 @@ function* getComments() {
    };
 };
 
+
 // function to add a comment
 // called when a user clicks on the "comment" button while on a STEMtell's detailed view
 function* addComment(action) {
@@ -25,6 +26,7 @@ function* addComment(action) {
       console.log('Error with addComment in comment.saga.js:   ', error);
    };
 };
+
 
 // function to get all comments associated with a specific STEMtell.
 // called when loading a STEMtell's detailed view
@@ -39,7 +41,6 @@ function* getStemComments(action) {
 };
 
 
-// main export for this file
 function* commentSaga(){
    yield takeEvery('GET_COMMENTLIST', getComments);
    yield takeEvery('ADD_COMMENT', addComment); 

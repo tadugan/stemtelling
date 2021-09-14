@@ -1,12 +1,10 @@
-import { Avatar, Card, Grid, Chip } from "@material-ui/core";
+import { Avatar, Card, Grid } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import TagChip from '../TagChip/TagChip';
 import GeneralTagMap from "../GeneralTagMap/GeneralTagMap";
 import "./STEMtellCard.css";
-import TagChipDeletable from './../TagChipDeletable/TagChipDeletable';
 
 const useCardStyles = makeStyles(() => ({
    root: {

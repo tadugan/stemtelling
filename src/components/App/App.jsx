@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Nav from '../Nav/Nav';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import UserPage from '../UserPage/UserPage';
-import CreateProfile from '../CreateProfile/CreateProfile';
+import EditProfile from '../EditProfile/EditProfile';
 import ProfilePage from '../ProfilePage/ProfilePage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
@@ -21,7 +21,6 @@ import TeacherFeedback from '../TeacherFeedback/TeacherFeedback';
 import './App.css';
 
 
-
 function App() {
    const dispatch = useDispatch();
    const user = useSelector(store => store.user);
@@ -31,7 +30,7 @@ function App() {
 
    return (
       <Router>
-         <div >
+         <div>
             <Nav />
             <Switch>
                <Redirect exact from="/" to="/homepage" />
@@ -42,7 +41,7 @@ function App() {
                <ProtectedRoute exact path="/homepage" component={Homepage} />
                <ProtectedRoute exact path="/myprofile" component={UserPage} />
                <ProtectedRoute exact path="/create" component={CreateSTEMtell} />
-               <ProtectedRoute exact path="/editprofile" component={CreateProfile} />
+               <ProtectedRoute exact path="/editprofile" component={EditProfile} />
                <ProtectedRoute exact path="/teacher/review" component={TeacherReviewList} />
                <ProtectedRoute exact path="/stemtell/:id" component={STEMtellDetails} />
                <ProtectedRoute exact path="/classlist" component={ClassList} />

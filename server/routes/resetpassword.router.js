@@ -27,14 +27,16 @@ router.delete('/removerequest', (req, res) => {
       res.sendStatus(201);
    })
    .catch(error => {
-      console.log("Error removing previous reset request:", error);
+      console.log("Error removing previous reset request in resetpassword.router.js:", error);
       res.sendStatus(500);
    });
 });
 
+
 // POST /api/resetpassword/sendresetemail
 // Handles POST request for sending an email to the entered email
 router.post('/sendresetemail', async (req, res) => {
+   const client = await pool.connect();
    try {
       const userEmail = req.body.email.toLowerCase();
       const getUserIDQuery = `SELECT * FROM "user" WHERE "email" = $1`;
@@ -62,11 +64,12 @@ router.post('/sendresetemail', async (req, res) => {
       });
       res.sendStatus(200); 
    }
-   catch (error) {
-      console.log('Error in sending password reset email:', error);
+   catch(error) {
+      console.log('Error in sending password reset email in resetpassword.router.js:', error);
       res.sendStatus(500);
    };
 });
+
 
 // GET /api/resetpassword/getuuid
 // checks for a valid uuid in the reset_password table
@@ -82,11 +85,13 @@ router.get('/getuuid', (req, res) => {
    });
 });
 
+
 // POST /api/resetpassword/changepassword
 // Handles POST request for resetting/updating the user password
 // This is only called after an email has been entered, confirmed, and a new password has been selected by the user
 // follows code similar to regular registration
 router.post('/changepassword', async (req, res, next) => {
+   const client = await pool.connect();
    try {
       const password = encryptLib.encryptPassword(req.body.newPassword);
       const uuid = req.body.uuid;
@@ -99,10 +104,10 @@ router.post('/changepassword', async (req, res, next) => {
       const clearResetTableQuery = `DELETE FROM "reset_password" WHERE "uuid" = $1`; 
       await pool.query(clearResetTableQuery, [uuid]);
    }
-    catch (error) {
-      console.log('Change password failed:', error);
+   catch(error) {
+      console.log('Change password failed in resetpassword.router.js:', error);
       res.sendStatus(500);
-    };
+   };
 });
 
 

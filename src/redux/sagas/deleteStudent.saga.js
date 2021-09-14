@@ -17,7 +17,7 @@ function* deleteStudent(action) {
 
 // main export for this file
 function* deleteStudentSaga() {
-    yield takeEvery('DELETE_STUDENT', deleteStudent);
+   yield takeEvery('DELETE_STUDENT', deleteStudent);
 };
 
 

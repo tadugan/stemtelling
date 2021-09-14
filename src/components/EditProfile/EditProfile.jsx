@@ -1,4 +1,4 @@
-import { AppBar, Button, ButtonGroup, Backdrop, Dialog, Grid, IconButton, Toolbar, Typography, Avatar, Card, Paper, Modal, Fade, TextField, Chip } from '@material-ui/core';
+import { Button, Backdrop, Grid, Paper, Modal, Fade, TextField, Chip } from '@material-ui/core';
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from 'react';
@@ -7,7 +7,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import PublishIcon from '@material-ui/icons/Publish';
 import styled from 'styled-components';
-import './CreateProfile.css'
 import ImageUploader from '../ImageUploader/ImageUploader';
 
 const StyledButton = styled(Button)`
@@ -70,7 +69,7 @@ const useModalStyles = makeStyles((theme) => ({
 }));
 
 
-function CreateProfile() {
+function EditProfile() {
    const dispatch = useDispatch();
    const history = useHistory();
    const params = useParams();
@@ -208,4 +207,4 @@ function CreateProfile() {
 };
 
 
-export default CreateProfile;
+export default EditProfile;

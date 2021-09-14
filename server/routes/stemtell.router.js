@@ -19,10 +19,11 @@ router.get('/', rejectUnauthenticated, (req, res) => {
       res.send(results.rows);
    })
    .catch(error => {
-      console.log("Error getting all STEMtells:", error);
+      console.log("Error getting all STEMtells in stemtell.router.js:", error);
       res.sendStatus(500);
    });
 });
+
 
 // GET /api/stemtell/homefeed
 // Handles getting all STEMtells for the users homepage
@@ -42,10 +43,11 @@ router.get('/homefeed', rejectUnauthenticated, (req, res) => {
       res.send(results.rows);
    })
    .catch(error => {
-      console.log("Error getting user's class stemtells:", error);
+      console.log("Error getting user's class stemtells in stemtell.router.js:", error);
       res.sendStatus(500);
    });
 });
+
 
 //  GET api/stemtell/tags/:id
 //  Handles getting all tags for one STEMtell
@@ -60,93 +62,88 @@ router.get('/tags/:id', rejectUnauthenticated, (req, res) => {
       res.send(results.rows);
    })
    .catch(error => {
-      console.log("Error getting existing tags:", error);
+      console.log("Error getting existing tags in stemtell.router.js:", error);
       res.sendStatus(500);
    });
 });
 
+
 // POST /api/stemtell/
 // Handles posting a new STEMtell and its associated tags
-router.post('/', rejectUnauthenticated, (req, res) => {
+router.post('/', rejectUnauthenticated, async (req, res) => {
+   const client = await pool.connect();
    const newStemtell = req.body.details;
    const imageData = req.body.image_data;
    const user = req.user;
    if (req.user.authority == 'teacher') {
-      (async () => {
-         const client = await pool.connect();
-         try {
-            const imageResponse = await cloudinary.uploader.upload(imageData, {
-               upload_preset: 'stemtell-content-image'
-            })
-            await client.query("BEGIN");
-            const queryTextAddStemtell = `INSERT INTO "stemtell" ("class_code", "user_id", "title", "body_text", "media_url", "approved", "unix")
-                                          VALUES ($1, $2, $3, $4, $5, $6, extract(epoch from now()))
-                                          RETURNING id`;
-            const response = await client.query(queryTextAddStemtell, [newStemtell.class_code, user.id, newStemtell.title, newStemtell.body_text, imageResponse.url, true]);
-            const stemtellId = response.rows[0].id;
-            const queryTextAddTag = `INSERT INTO stemtell_tag ("tag_id", "stemtell_id")
-                                     VALUES ($1, $2) `;
-            for (let id of newStemtell.tag_ids) {
-               await client.query(queryTextAddTag, [id, stemtellId]);
-            };
-            await client.query("COMMIT");
-            res.sendStatus(201);
-         }
-         catch (error) {
-            await client.query("ROLLBACK");
-            throw error;
-         }
-         finally {
-            client.release();
-         }
-      })().catch(error => console.error(error.stack));
+      try {
+         const imageResponse = await cloudinary.uploader.upload(imageData, {
+            upload_preset: 'stemtell-content-image'
+         });
+         await client.query("BEGIN");
+         const queryTextAddStemtell = `INSERT INTO "stemtell" ("class_code", "user_id", "title", "body_text", "media_url", "approved", "unix")
+                                       VALUES ($1, $2, $3, $4, $5, $6, extract(epoch from now()))
+                                       RETURNING id`;
+         const response = await client.query(queryTextAddStemtell, [newStemtell.class_code, user.id, newStemtell.title, newStemtell.body_text, imageResponse.url, true]);
+         const stemtellId = response.rows[0].id;
+         const queryTextAddTag = `INSERT INTO stemtell_tag ("tag_id", "stemtell_id")
+                                  VALUES ($1, $2) `;
+         for (let id of newStemtell.tag_ids) {
+            await client.query(queryTextAddTag, [id, stemtellId]);
+         };
+         await client.query("COMMIT");
+         res.sendStatus(201);
+      }
+      catch (error) {
+         await client.query("ROLLBACK");
+         throw error;
+      }
+      finally {
+         client.release();
+      };
    }
    else {
-      (async () => {
-         const client = await pool.connect();
-         try {
-            const imageResponse = await cloudinary.uploader.upload(imageData, {
-               upload_preset: 'stemtell-content-image'
-            })
-   
-            await client.query("BEGIN");
-            const queryTextAddStemtell = `INSERT INTO "stemtell" ("class_code", "user_id", "title", "body_text", "media_url", "unix")
-                                          VALUES ($1, $2, $3, $4, $5, extract(epoch from now()))
-                                          RETURNING id`;
-            const response = await client.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, imageResponse.url]);
-            const stemtellId = response.rows[0].id;
-            const queryTextAddTag = `INSERT INTO stemtell_tag ("tag_id", "stemtell_id")
-                                     VALUES ($1, $2) `;
-            for (let id of newStemtell.tag_ids) {
-               await client.query(queryTextAddTag, [id, stemtellId]);
-            };
-            await client.query("COMMIT");
-            res.sendStatus(201);
-         }
-         catch (error) {
-            await client.query("ROLLBACK");
-            throw error;
-         }
-         finally {
-            client.release();
-         }
-      })().catch(error => console.error(error.stack));
-   }
+      try {
+         const imageResponse = await cloudinary.uploader.upload(imageData, {
+            upload_preset: 'stemtell-content-image'
+         });
+         await client.query("BEGIN");
+         const queryTextAddStemtell = `INSERT INTO "stemtell" ("class_code", "user_id", "title", "body_text", "media_url", "unix")
+                                       VALUES ($1, $2, $3, $4, $5, extract(epoch from now()))
+                                       RETURNING id`;
+         const response = await client.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, imageResponse.url]);
+         const stemtellId = response.rows[0].id;
+         const queryTextAddTag = `INSERT INTO stemtell_tag ("tag_id", "stemtell_id")
+                                  VALUES ($1, $2) `;
+         for (let id of newStemtell.tag_ids) {
+            await client.query(queryTextAddTag, [id, stemtellId]);
+         };
+         await client.query("COMMIT");
+         res.sendStatus(201);
+      }
+      catch (error) {
+         await client.query("ROLLBACK");
+         throw error;
+      }
+      finally {
+         client.release();
+      };
+   };
 });
+
 
 // PUT /api/stemtell/save
 // Handles updating information for a specific STEMtell that has been edited
-router.put('/save', rejectUnauthenticated, (req, res) => {
+router.put('/save', rejectUnauthenticated, async (req, res) => {
    const newStemtell = req.body.details;
    const user = req.user;
    const imageData = req.body.image_data;
    const stemtellId = req.body.details.id;
-   (async () => {
-      const client = await pool.connect();
+   const client = await pool.connect();
       try {
          const imageResponse = await cloudinary.uploader.upload(imageData, {
             upload_preset: 'stemtell-content-image'
-         })
+         });
          await client.query("BEGIN");
          const queryTextAddStemtell = `UPDATE "stemtell" SET "class_code" = $1, "user_id" = $2, "title" = $3, "body_text" = $4, "media_url" = $5 WHERE "id" = $6`;
          const response = await client.query(queryTextAddStemtell, [newStemtell.class_code, user.id, newStemtell.title, newStemtell.body_text, imageResponse.url, stemtellId,]);
@@ -165,9 +162,9 @@ router.put('/save', rejectUnauthenticated, (req, res) => {
       }
       finally {
          client.release();
-      }
-   })().catch(error => console.error(error.stack));
+   };
 });
+
 
 // GET /api/stemtell/userstemtells
 // Handles getting all stemtells associated with a specific user ID
@@ -179,23 +176,27 @@ router.get('/userstemtells', rejectUnauthenticated, (req, res) => {
       res.send(results.rows);
    })
    .catch(error => {
-      console.log("Error getting user STEMtells:", error);
+      console.log("Error getting user STEMtells in stemtell.router.js:", error);
       res.sendStatus(500);
    });
 });
 
+
+// GET /api/mystemtells
+// Used to get a specific user's STEMtells
 router.get('/mystemtells', rejectUnauthenticated, (req, res) => {
    const profilePageID = req.query.profileID;
-   const qText = `SELECT * FROM "stemtell" WHERE "user_id" = $1`;
-   pool.query(qText, [profilePageID])
+   const query = `SELECT * FROM "stemtell" WHERE "user_id" = $1`;
+   pool.query(query, [profilePageID])
    .then(results => {
       res.send(results.rows);
    })
    .catch(error => {
-      console.log("Error getting user STEMtells:", error);
+      console.log("Error getting user STEMtells in stemtell.router.js:", error);
       res.sendStatus(500);
    });
 });
+
 
 // GET /api/stemtell/getstemtell
 // Handles getting a specific STEMtell from a specific user
@@ -208,10 +209,11 @@ router.get('/getstemtell', rejectUnauthenticated, (req, res) => {
       res.send(results.rows);
    })
    .catch(error => {
-      console.log("Error getting STEMtell to edit:", error);
+      console.log("Error getting STEMtell to edit in stemtell.router.js:", error);
       res.sendStatus(500);
    });
 });
+
 
 // GET /api/stemtell/details/:id
 // Handles getting all details associated with a specific STEMtell
@@ -227,32 +229,31 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
       res.send(results.rows);
    })
    .catch(error => {
-      console.log("Error getting all STEMdetails:", error);
+      console.log("Error getting all STEMdetails in stemtell.router.js:", error);
       res.sendStatus(500);
    });
 });
 
+
 // PUT /api/stemtell/status
 // Handles updating the status of a STEMtell with Teacher Feedback Form
 router.put('/status', rejectUnauthenticated, (req, res) => {
-  const status = req.body;
-  const query = `
-  UPDATE "stemtell"
-  SET "approved" = $1
-  WHERE "id" = $2;`;
-  pool
-    .query(query, [status.status, status.id]) //FIGURE THIS OUT
-    .then((res) => {
-      res.data
-    })
-    .catch((err) => {
-      console.log("error updating STEMtell status", err);
-    })
+   const status = req.body;
+   const query = `UPDATE "stemtell" SET "approved" = $1 WHERE "id" = $2;`;
+   pool.query(query, [status.status, status.id]) //FIGURE THIS OUT
+   .then(res => {
+      res.data;
+   })
+   .catch(error => {
+      console.log("Error updating STEMtell status in stemtell.router.js:", error);
+   });
 });
+
 
 // DELETE /api/stemtell/delete/:id
 // Handles deleting a specific STEMtell
 router.delete('/delete/:id', rejectUnauthenticated, async (req, res) => {
+   const client = await pool.connect();
    const stemID = req.params.id;
    const userID = req.user.id;
    const tagQuery = `DELETE FROM "stemtell_tag" WHERE "stemtell_id" = $1`;
@@ -262,12 +263,13 @@ router.delete('/delete/:id', rejectUnauthenticated, async (req, res) => {
    await pool.query(reactionQuery, [stemID]);
    pool.query(stemtellQuery, [stemID, userID])
    .then(() => {
-      res.sendStatus(200);
+      res.sendStatus(201);
    })
    .catch(error => {
-      console.log("Error deleting STEMtell:", error);
+      console.log("Error deleting STEMtell in stemtell.router.js:", error);
       res.sendStatus(500);
    });
 });
+
 
 module.exports = router;

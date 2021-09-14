@@ -1,4 +1,4 @@
-import { Button, Avatar, Card, Grid } from '@material-ui/core';
+import { Button, Avatar, Card } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import './GenericSTEMtellCard.css';

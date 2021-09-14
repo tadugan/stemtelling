@@ -15,6 +15,7 @@ function* forgotPassword(action) {
    };
 };
 
+
 // function for getting the UUID associated with a password reset link
 // called on page load for "ResetPasswordPage"
 function* getUUID(action) {
@@ -29,6 +30,7 @@ function* getUUID(action) {
       console.log('Error with getUUID in resetpassword.saga.js:', error);
    };
 };
+
 
 // function for handling the change of a user password
 // called after a user has clicked the "Save Password" button on the "ResetPassword" page

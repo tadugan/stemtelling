@@ -42,23 +42,6 @@ const StyledRedButton = styled(Button)`
    }
 `;
 
-const StyledBlueButton = styled(Button)`
-   display: inline-block;
-   padding: 10px 20px;
-   border-color: #014041;
-   border-width: 1px 1px 3px;
-   border-radius: 4px;
-   background-color: #79D0F1;
-   color: #f8f8f8;   
-   font-size: 1.1rem;
-   outline: 0;
-   cursor: pointer;
-   &:hover {
-      background-color: rgba(221, 46, 68, 0.6);
-      text-decoration: none;
-   }
-`;
-
 
 function EditSTEMtell(stemtell) {
    const user = useSelector((store) => store.user);
