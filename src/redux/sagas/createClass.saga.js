@@ -2,6 +2,8 @@ import axios from "axios";
 import { put, takeEvery } from "redux-saga/effects";
 
 
+// function to create a class
+// called on a class list page
 function* createClass(action) {
    try {
       const response = yield axios.post(`/api/class`, action.payload);

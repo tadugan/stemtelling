@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 // function to get all classes that the current logged in user is in
-// called when 
+// called a profile page
 function* fetchClasses() {
    try {
       const response = yield axios.get('/api/class');
@@ -67,6 +67,8 @@ function* leaveClass(action) {
 };
 
 
+// function for joining a class
+// called on an edit profile page
 function* joinClass(action) {
    let classCodesArray = [];
    let allClassCodesArray = [];

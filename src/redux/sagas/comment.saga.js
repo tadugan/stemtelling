@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 // function to get comments
-// called when
+// called on a STEMtell details page
 function* getComments() {
    try {
       const response = yield axios.get(`/api/comments`);

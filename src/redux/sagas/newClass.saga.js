@@ -2,6 +2,8 @@ import axios from "axios";
 import { put, takeEvery } from "redux-saga/effects";
 
 
+// function for adding a class to the database
+// called on a class list page
 function* addClass(action) {
    try {
       yield axios.post(`/api/class/profile`, action.payload);

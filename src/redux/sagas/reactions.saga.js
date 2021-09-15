@@ -2,6 +2,7 @@ import { takeEvery, put } from "redux-saga/effects";
 import axios from "axios";
 
 
+// function for getting a specific STEMtell's reactions
 // called when loading a STEMtell
 function* getStemReactions(action) {
    try {
@@ -14,7 +15,8 @@ function* getStemReactions(action) {
 };
  
 
-//add reaction
+// function for adding a reaction to a specific STEMtell
+// called on a STEMtell details page
 function* addReaction(action) {
    try{
       yield axios.post('/api/reaction', action.payload);
@@ -26,6 +28,8 @@ function* addReaction(action) {
 };
 
 
+// function for deleting a reaction from a specific STEMtell
+// not called
 function* deleteReaction(action){
    yield axios.delete(`/api/reaction/${action.payload}`);
    yield put({type: 'GET_STEMTELL_REACTIONS', payload: action.payload.stemtell_id});

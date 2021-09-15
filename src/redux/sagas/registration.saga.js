@@ -25,6 +25,8 @@ function* registerUser(action) {
 };
 
 
+// function for checking for mismatched passwords
+// called on a register page
 function* mismatchedPasswords() {
    try {
       yield put({ type: 'REGISTRATION_PASSWORD_MATCH_ERROR' });

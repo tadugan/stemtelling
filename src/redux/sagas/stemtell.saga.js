@@ -16,6 +16,8 @@ function* fetchUserStemTells(action) {
 };
 
 
+// function for getting user STEMtells
+// called on a profile page
 function* fetchMyStemTells(action) {
    try {
       const profileID = action.payload;

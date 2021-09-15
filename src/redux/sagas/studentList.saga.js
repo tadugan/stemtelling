@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 // function for getting all students associated with a specific class
-// called when
+// called on a class details page
 function* getStudents(action) {
    try {
       const response = yield axios.get(`/api/class/details/${action.payload}`);

@@ -2,6 +2,8 @@ import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
 
+// function for getting STEMtells that need to be reviewed
+// called on a review STEMtells page
 function* getReviewStemtells() {
    try {
       const reviewStemtells = yield axios.get('/api/review');
