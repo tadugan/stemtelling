@@ -6,6 +6,8 @@ STEMtelling is a Full Stack high school classroom learning application. STEMtell
 
 
 ### System Requirements
+![Screen Shot]()
+
 
 Make sure you have the following software installed on your computer or server:
 
