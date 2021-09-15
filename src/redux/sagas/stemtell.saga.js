@@ -15,6 +15,9 @@ function* fetchUserStemTells(action) {
    };
 };
 
+
+// function for getting user STEMtells
+// called on a profile page
 function* fetchMyStemTells(action) {
    try {
       const profileID = action.payload;
@@ -25,6 +28,7 @@ function* fetchMyStemTells(action) {
       console.log("Error with fetchUserStemTells in stemtell.saga.js:", error);
    };
 };
+
 
 // function for getting a specific STEMtell
 // called for when a user clicks the "Edit" button on a STEMtell on their profile page
@@ -39,6 +43,7 @@ function* getStemtell(action) {
    };
 };
 
+
 // function for getting information associated with a specific STEMtell
 // called when a user clicks on a STEMtell on their homepage
 function* getStemDetails(action) {
@@ -51,6 +56,7 @@ function* getStemDetails(action) {
    };
 };
 
+
 // function for getting all STEMtells currently in the database
 // called on Homepage load
 function* fetchAllStemTells() {
@@ -62,6 +68,7 @@ function* fetchAllStemTells() {
       console.log("Error with fetchAllStemTells in stemtell.saga.js:", error);
    };
 };
+
 
 // function for deleting a specific STEMtell
 // called on "UserPage"

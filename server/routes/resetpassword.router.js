@@ -18,7 +18,8 @@ const transporter = nodemailer.createTransport({
 
 // DELETE /api/resetpassword/removerequest
 // Handles DELETE request for removing any existing password reset requests
-// called when a user enters their email to reset their password
+// Called when a user enters their email to reset their password
+// Returns a 201 status
 router.delete('/removerequest', (req, res) => {
    const userEmail = req.query.email.toLowerCase();
    const deleteUserRequests = `DELETE FROM "reset_password" WHERE "email" = $1`;
@@ -27,14 +28,18 @@ router.delete('/removerequest', (req, res) => {
       res.sendStatus(201);
    })
    .catch(error => {
-      console.log("Error removing previous reset request:", error);
+      console.log("Error removing previous reset request in resetpassword.router.js:", error);
       res.sendStatus(500);
    });
 });
 
+
 // POST /api/resetpassword/sendresetemail
 // Handles POST request for sending an email to the entered email
+// Called on a reset password page
+// Returns a 200 status
 router.post('/sendresetemail', async (req, res) => {
+   const client = await pool.connect();
    try {
       const userEmail = req.body.email.toLowerCase();
       const getUserIDQuery = `SELECT * FROM "user" WHERE "email" = $1`;
@@ -62,19 +67,23 @@ router.post('/sendresetemail', async (req, res) => {
       });
       res.sendStatus(200); 
    }
-   catch (error) {
-      console.log('Error in sending password reset email:', error);
+   catch(error) {
+      console.log('Error in sending password reset email in resetpassword.router.js:', error);
       res.sendStatus(500);
    };
 });
 
+
 // GET /api/resetpassword/getuuid
 // checks for a valid uuid in the reset_password table
+// Called on a reset password page
+// Returns a user object: { id, uuid, email }
 router.get('/getuuid', (req, res) => {
    const uuid = req.query.uuid;
    const qText = `SELECT * FROM "reset_password" WHERE "uuid" = $1`;
    pool.query(qText, [uuid])
    .then(results => {
+      console.log(results.rows);
       res.send(results.rows); 
    })
    .catch(error => {
@@ -82,11 +91,14 @@ router.get('/getuuid', (req, res) => {
    });
 });
 
+
 // POST /api/resetpassword/changepassword
 // Handles POST request for resetting/updating the user password
 // This is only called after an email has been entered, confirmed, and a new password has been selected by the user
 // follows code similar to regular registration
+// Returns nothing
 router.post('/changepassword', async (req, res, next) => {
+   const client = await pool.connect();
    try {
       const password = encryptLib.encryptPassword(req.body.newPassword);
       const uuid = req.body.uuid;
@@ -99,10 +111,10 @@ router.post('/changepassword', async (req, res, next) => {
       const clearResetTableQuery = `DELETE FROM "reset_password" WHERE "uuid" = $1`; 
       await pool.query(clearResetTableQuery, [uuid]);
    }
-    catch (error) {
-      console.log('Change password failed:', error);
+   catch(error) {
+      console.log('Change password failed in resetpassword.router.js:', error);
       res.sendStatus(500);
-    };
+   };
 });
 
 

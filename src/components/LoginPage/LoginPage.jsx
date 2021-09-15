@@ -47,15 +47,6 @@ function LoginPage() {
       };
    };
 
-   const teacherLogin = () => {
-      setEmail('chloe.piper@email.edu');
-      setPassword('password');
-   }
-   const adminLogin = () => {
-      setEmail('toby.blake@email.edu');
-      setPassword('password');
-   }
-
    return (
       <form className="LoginForm" onSubmit={login}>
          <center>
@@ -65,7 +56,6 @@ function LoginPage() {
                   {errors.loginMessage}
                </h3>
             )}
-            <Button onClick = {teacherLogin}/><Button onClick = {adminLogin}/>
             <TextField type="email" label="Email" variant="outlined" required value={email} onChange={(event) => setEmail(event.target.value)}/>
             <br /><br />
             <TextField type="password" label="Password" variant="outlined" required value={password} onChange={(event) => setPassword(event.target.value)}/>

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 // function to delete a student from a class
-// called when
+// called on a class details page
 function* deleteStudent(action) {
    try {
       yield call(axios.delete, `/api/class/details/${action.payload.deleteStudent}`, {params: {classCode: action.payload.classCode}});
@@ -17,7 +17,7 @@ function* deleteStudent(action) {
 
 // main export for this file
 function* deleteStudentSaga() {
-    yield takeEvery('DELETE_STUDENT', deleteStudent);
+   yield takeEvery('DELETE_STUDENT', deleteStudent);
 };
 
 

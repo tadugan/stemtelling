@@ -1,6 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
+
 // worker Saga: will be fired on "REGISTER" actions
 function* registerUser(action) {
   try {
@@ -23,6 +24,9 @@ function* registerUser(action) {
   };
 };
 
+
+// function for checking for mismatched passwords
+// called on a register page
 function* mismatchedPasswords() {
    try {
       yield put({ type: 'REGISTRATION_PASSWORD_MATCH_ERROR' });
@@ -32,9 +36,11 @@ function* mismatchedPasswords() {
    };
 };
 
+
 function* registrationSaga() {
-  yield takeLatest('REGISTER', registerUser);
-  yield takeLatest('MISMATCHED_PASSWORDS', mismatchedPasswords);
-}
+   yield takeLatest('REGISTER', registerUser);
+   yield takeLatest('MISMATCHED_PASSWORDS', mismatchedPasswords);
+};
+
 
 export default registrationSaga;

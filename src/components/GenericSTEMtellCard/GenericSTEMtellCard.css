@@ -1,53 +1,52 @@
 .generic-stemtell-card-body {
-margin: auto;
-padding: 16px;
-align-items: center;
-justify-content: center;
-flex-grow: 1px;
-width: 300px;
-text-align: center;
-color: grey;
+   margin: auto;
+   padding: 16px;
+   align-items: center;
+   justify-content: center;
+   flex-grow: 1px;
+   width: 300px;
+   text-align: center;
+   color: grey;
 }
 
 .generic-stemtell-card-username {
-margin-top: 2px;
-text-align: left;
-margin-left: 50px;
-display: flex;
-flex-direction: row;
-color: #727272;
+   margin-top: 2px;
+   text-align: left;
+   margin-left: 50px;
+   display: flex;
+   flex-direction: row;
+   color: #727272;
 }
 
 .generic-stemtell-card-avatar {
-text-align: left;
-float: left;
-display: flex;
-flex-direction: row;
+   text-align: left;
+   float: left;
+   display: flex;
+   flex-direction: row;
 }
 
 .generic-stemtell-card-user-class {
-font-size: smaller;
-display: inline-flexbox;
+   font-size: smaller;
+   display: inline-flexbox;
 }
 
 .generic-stemtell-card-description {
-padding: 8px;
-color: #727272;
+   padding: 8px;
+   color: #727272;
 }
 
 .generic-stemtell-card-date {
-float: right;
+   float: right;
 }
 
 .generic-stemtell-card-title {
-
-display: inline-block;
-text-align: center;
-font-size: 18px;
-padding: 4px;
-width: 100%;
+   display: inline-block;
+   text-align: center;
+   font-size: 18px;
+   padding: 4px;
+   width: 100%;
 }
 
 .generic-stemtell-card-image {
-    height: 15em;
+   height: 15em;
 }

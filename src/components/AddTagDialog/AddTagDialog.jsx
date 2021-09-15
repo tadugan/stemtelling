@@ -2,9 +2,9 @@ import { AppBar, Button, ButtonGroup, Dialog, Grid, IconButton, Toolbar, Typogra
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import CloseIcon from '@material-ui/icons/Close';
-import './AddTagDialog.css';
 import GeneralTagMap from '../GeneralTagMap/GeneralTagMap';
 import styled from 'styled-components';
+import './AddTagDialog.css';
 
 const StyledBlueButton = styled(Button)`
    display: inline-block;

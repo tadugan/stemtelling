@@ -3,16 +3,17 @@ import axios from 'axios';
 
 
 // function for getting all students associated with a specific class
-// called when
+// called on a class details page
 function* getStudents(action) {
    try {
       const response = yield axios.get(`/api/class/details/${action.payload}`);
       yield put({ type: 'SET_STUDENTLIST', payload: response.data});
       
    } catch (error) {
-      console.log('Error GETting student details list', error);
+      console.log('Error with getStudents in studentList.saga.js:', error);
    };
 };
+
 
 // main export for this file
 function* studentListSaga() {

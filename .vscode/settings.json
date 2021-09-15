@@ -17,12 +17,13 @@
   },
   "peacock.color": "#215732",
   "cSpell.words": [
-    "Btnsfor",
-    "COMMENTLIST",
-    "forgotpassword",
-    "myprofile",
-    "resetpassword",
-    "STEMTELL",
-    "stemtells"
-  ]
+   "Btnsfor",
+   "COMMENTLIST",
+   "forgotpassword",
+   "myprofile",
+   "resetpassword",
+   "stemdate",
+   "STEMTELL",
+   "stemtells"
+]
 }

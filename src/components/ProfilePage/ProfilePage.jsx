@@ -1,12 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import Chip from '@material-ui/core/Chip';
-import Container from '@material-ui/core/Container';
+import { Paper, Grid, Card, Chip, Container, makeStyles } from '@material-ui/core';
 import './ProfilePage.css';
 
 const useCardStyles = makeStyles(() => ({

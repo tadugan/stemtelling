@@ -14,14 +14,16 @@ function* getFeedback(action) {
    };
 };
 
+
 function* updateStatus(action) {
    try {
       yield axios.put(`/api/stemtell/status`, action.payload);
    }
    catch (error) {
-      console.log('Error updating STEMtell status in feedback.saga', error);
+      console.log('Error with updateStatus in feedback.saga.js:', error);
    };
 };
+
 
 // main export for this function
 function* feedbackSaga() {

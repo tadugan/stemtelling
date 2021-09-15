@@ -6,6 +6,8 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 
 // GET /api/tag/
 // Handles GET request for getting all tags
+// Called on a create STEMtell or edit STEMtell page
+// Returns an array of tag objects: { id, name, type, stem_field }
 router.get('/', rejectUnauthenticated, (req, res) => {
    const queryText = `SELECT * FROM "tag";`;
    pool.query(queryText)
@@ -18,35 +20,31 @@ router.get('/', rejectUnauthenticated, (req, res) => {
    });
 });
 
-/**
- * POST for adding tags to new user
- */
- router.post('/profile', rejectUnauthenticated, (req, res) => {
-  const tagIdArray = req.body.tag_ids;
-  const userId = req.user.id;
 
-  (async () => {
-    const client = await pool.connect();
-    try {
-        await client.query('BEGIN');
-        const queryTextAddTag = `
-        INSERT INTO "user_tag" ("user_id", "tag_id")
-        VALUES ($1, $2)
-        `;
-
-        for (let id of tagIdArray) {
-            await client.query(queryTextAddTag, [userId, id]);
-        }
-
-        await client.query('COMMIT');
-        
-    } catch (err) {
-        await client.query('ROLLBACK');
-        throw err;
-    } finally {
+// POST /api/tag/profile
+// Used to add tags to a profile
+// Not called
+router.post('/profile', rejectUnauthenticated, async (req, res) => {
+   const tagIdArray = req.body.tag_ids;
+   const userId = req.user.id;
+   const client = await pool.connect();
+   try {
+      await client.query('BEGIN');
+      const queryTextAddTag = `INSERT INTO "user_tag" ("user_id", "tag_id")
+                               VALUES ($1, $2)`;
+      for (let id of tagIdArray) {
+         await client.query(queryTextAddTag, [userId, id]);
+      }
+      await client.query('COMMIT');
+      res.sendStatus(201);
+   }
+   catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+   }
+   finally {
       client.release();
-    }
-  })().catch(e => console.error(e.stack))
+   };
 });
 
 

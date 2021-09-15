@@ -1,14 +1,10 @@
 import React from 'react';
-import './Nav.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
-import { AppBar, Grid, Toolbar } from '@material-ui/core';
+import { AppBar, Grid, Toolbar, Menu, MenuItem, IconButton } from '@material-ui/core';
 import Logo from './LogoDark.svg';
-
+import './Nav.css';
 const ITEM_HEIGHT = 48;
 
 

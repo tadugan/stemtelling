@@ -18,6 +18,7 @@ function* fetchUser() {
    };
 };
 
+
 // function for fetching a user profile
 // called on load when a user is visiting a "ProfilePage"
 function* fetchProfile(action) {
@@ -31,6 +32,9 @@ function* fetchProfile(action) {
    };
 };
 
+
+// function for updating user info
+// called on an edit profile page
 function* updateUser(action) {
    try {
       yield axios.post('/api/user/update', action.payload );

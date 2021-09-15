@@ -18,7 +18,6 @@ import reactionSaga from './reactions.saga';
 import createClassSaga from './createClass.saga';
 
 
-
 export default function* rootSaga() {
    yield all([
       loginSaga(),

@@ -3,16 +3,17 @@ import axios from "axios";
 
 
 // function to get all classes that the current logged in user is in
-// called when 
+// called a profile page
 function* fetchClasses() {
    try {
       const response = yield axios.get('/api/class');
       yield put({ type: 'SET_CLASSES', payload: response.data});
    }
-    catch (error) {
+   catch (error) {
       console.log('Error with fetchClasses in classes.saga.js:', error);
    };
 };
+
 
 // function for getting all classes associated with a specific user
 // called on the edit profile page
@@ -27,6 +28,7 @@ function* getUserClasses(action) {
    };
 };
 
+
 // function for getting all STEMtells associated with a specific class
 // called on the user homepage in order to only display STEMtells that are from classes the user is in
 function* fetchClassStemTells() {
@@ -39,7 +41,9 @@ function* fetchClassStemTells() {
    };
 };
 
-//function for updating a class
+
+// function for updating a class
+// called on class list page
 function* editClass(action) {
    try {
       yield call(axios.put, `/api/class/update`, action.payload);
@@ -48,6 +52,7 @@ function* editClass(action) {
       console.log('Error with editClass in classes.saga.js:', error);
    };
 };
+
 
 // function for leaving a specific class
 // called on the edit profile page
@@ -61,6 +66,9 @@ function* leaveClass(action) {
    };
 };
 
+
+// function for joining a class
+// called on an edit profile page
 function* joinClass(action) {
    let classCodesArray = [];
    let allClassCodesArray = [];

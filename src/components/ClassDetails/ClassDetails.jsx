@@ -4,7 +4,7 @@ import StudentCard from '../StudentCard/StudentCard';
 
 
 function ClassDetails() {
-   return(
+   return (
       <>
          <BackBtn />
          <StudentCard />

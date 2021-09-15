@@ -3,7 +3,6 @@ const classes = (state = [], action) => {
       case "SET_CLASSES":
          return action.payload;
       case "SET_USER_CLASSES":
-         console.log(action.payload);
          return action.payload;
       default:
          return state;

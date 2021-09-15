@@ -8,17 +8,18 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
+
 // Handles passport login security
 passport.deserializeUser((id, done) => {
    pool.query('SELECT * FROM "user" WHERE id = $1', [id])
    .then(results => {
       const user = results && results.rows && results.rows[0];
       if (user) {
-        delete user.password;
-        done(null, user);
+         delete user.password;
+         done(null, user);
       }
       else {
-        done(null, null);
+         done(null, null);
       }
    })
    .catch(error => {
@@ -26,6 +27,7 @@ passport.deserializeUser((id, done) => {
       done(error, null);
    });
 });
+
 
 // Does actual work of logging in
 passport.use('local', new LocalStrategy({usernameField: 'email', passwordField: 'password'}, (username, password, done) => {
