@@ -1,6 +1,6 @@
 import { Chip } from '@material-ui/core';
 import React from 'react';
-import {useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 
 function TagChipDeletable( {tagInfo} ) {

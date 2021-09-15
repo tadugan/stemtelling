@@ -1,5 +1,4 @@
-import { Avatar, Card, Grid } from "@material-ui/core";
-import { makeStyles } from '@material-ui/core/styles';
+import { Avatar, Card, Grid, makeStyles } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";

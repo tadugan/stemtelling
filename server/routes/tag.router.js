@@ -6,6 +6,8 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 
 // GET /api/tag/
 // Handles GET request for getting all tags
+// Called on a create STEMtell or edit STEMtell page
+// Returns an array of tag objects: { id, name, type, stem_field }
 router.get('/', rejectUnauthenticated, (req, res) => {
    const queryText = `SELECT * FROM "tag";`;
    pool.query(queryText)
@@ -21,6 +23,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
 // POST /api/tag/profile
 // Used to add tags to a profile
+// Not called
 router.post('/profile', rejectUnauthenticated, async (req, res) => {
    const tagIdArray = req.body.tag_ids;
    const userId = req.user.id;
@@ -33,6 +36,7 @@ router.post('/profile', rejectUnauthenticated, async (req, res) => {
          await client.query(queryTextAddTag, [userId, id]);
       }
       await client.query('COMMIT');
+      res.sendStatus(201);
    }
    catch (error) {
       await client.query('ROLLBACK');

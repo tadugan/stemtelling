@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import LoginPage from '../LoginPage/LoginPage';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
 // Wrapper for components that should require being logged in to view

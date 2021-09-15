@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AddTagDialog from '../AddTagDialog/AddTagDialog';
 import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
-import "./EditSTEMtell.css";
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import ImageUploader from '../ImageUploader/ImageUploader';
+import "./EditSTEMtell.css";
 
 const StyledButton = styled(Button)`
    display: inline-block;

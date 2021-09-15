@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Card, Avatar, Grid, Chip } from "@material-ui/core";
+import { Card, Avatar, Grid, Chip, makeStyles } from "@material-ui/core";
 import Comment from "../Comment/Comment";
 import BackBtn from "../BackBtn/BackBtn";
-import { makeStyles } from '@material-ui/core/styles';
-import './STEMtellDetails.css';
 import AddReaction from "../AddReactions/AddReactions";
+import './STEMtellDetails.css';
+
 const useCardStyles = makeStyles(() => ({
    root: {
       alignItems: "center",

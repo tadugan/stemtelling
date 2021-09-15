@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import AddTagDialog from '../AddTagDialog/AddTagDialog';
 import TagChipDeletable from '../TagChipDeletable/TagChipDeletable';
 import BackBtn from '../BackBtn/BackBtn';
-import "./CreateSTEMtell.css";
 import { useHistory } from 'react-router';
 import ImageUploader from '../ImageUploader/ImageUploader';
 import styled from 'styled-components';
+import "./CreateSTEMtell.css";
 
 const StyledButton = styled(Button)`
    display: inline-block;

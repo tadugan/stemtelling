@@ -1,8 +1,8 @@
 import { Button, Grid } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import './ImageUploader.css';
 import styled from 'styled-components';
+import './ImageUploader.css';
 
 const StyledBlueButton = styled(Button)`
    display: inline-block;

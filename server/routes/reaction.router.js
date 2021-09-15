@@ -6,6 +6,8 @@ const { rejectUnauthenticated } = require("../modules/authentication-middleware"
 
 // GET /api/reaction/:id
 // Handles getting reactions for a specific STEMtell
+// Called on a STEMtell details page
+// Returns an array of reaction items: { id, stemtell_id, user_id, reaction_id, media_url, name }
 router.get("/:id", rejectUnauthenticated, (req, res) => {
    const stemtellId= Number(req.params.id);
    const query = `SELECT * FROM "reaction_stemtell"
@@ -25,6 +27,8 @@ router.get("/:id", rejectUnauthenticated, (req, res) => {
 
 // POST /api/reaction
 // Used to add a reaction to a STEMtell
+// Called on a STEMtell details page
+// Returns a 201 status
 router.post('/', (req, res) => {
    const query = `INSERT INTO "reaction_stemtell" ("stemtell_id", "user_id", "reaction_id")
                   VALUES ($1, $2, $3)`
@@ -41,6 +45,8 @@ router.post('/', (req, res) => {
 
 // DELETE /api/reaction/reaction/:id
 // Used to delete a user's reaction to STEMtell
+// Called on a STEMtell details page
+// Returns a 201 status
 router.delete("/reaction/:id", (req,res) => {
    const query = `DELETE FROM "reaction_stemtell" WHERE "user_id" = $1 AND "stemtell_id" = $2`;
    pool.query(query, [req.user.id, req.params.id])

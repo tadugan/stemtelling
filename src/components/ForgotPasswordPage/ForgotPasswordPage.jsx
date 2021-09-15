@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import { Button, TextField, Backdrop, Fade, Modal} from '@material-ui/core';
+import { Button, TextField, Backdrop, Fade, Modal, makeStyles } from '@material-ui/core';
 import styled from 'styled-components';
 
 const StyledButton = styled(Button)`

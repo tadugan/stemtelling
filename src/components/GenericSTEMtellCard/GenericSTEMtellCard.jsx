@@ -1,9 +1,8 @@
-import { Button, Avatar, Card } from '@material-ui/core';
+import { Button, Avatar, Card, makeStyles } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import './GenericSTEMtellCard.css';
 import styled from 'styled-components';
-import { makeStyles } from "@material-ui/core";
+import './GenericSTEMtellCard.css';
 
 const StyledBlueButton = styled(Button)`
    display: inline-block;
@@ -19,7 +18,6 @@ const StyledBlueButton = styled(Button)`
       text-decoration: none;
    }
 `;
-
 
 const useCardStyles = makeStyles(() => ({
    root: {

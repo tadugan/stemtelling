@@ -1,6 +1,5 @@
 import { Button } from "@material-ui/core";
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import './AddReaction.css'
 
@@ -15,13 +14,13 @@ function AddReaction({stemtellId}){
    const reactions = useSelector((store) => store.stemtellReactions);
 
    useEffect(()=> {
-      dispatch({type:'GET_STEMTELL_REACTIONS', payload: stemtellId })
+      dispatch({type:'GET_STEMTELL_REACTIONS', payload: stemtellId });
    }, []);
 
    const handleBeaker = () => {
       for (let item of reactions) {
          if (item.user_id == user.id) {
-            return (console.log('this user already reacted'));
+            return;
          };
       };
       dispatch({
@@ -36,7 +35,7 @@ function AddReaction({stemtellId}){
    const handleCool = () => {
       for (let item of reactions){
          if (item.user_id == user.id) {
-            return (console.log('this user already reacted'));
+            return;
          };
       };
       dispatch({
@@ -51,7 +50,7 @@ function AddReaction({stemtellId}){
    const handleHeart = () => {
       for (let item of reactions) {
          if (item.user_id == user.id) {
-            return (console.log('this user already reacted'));
+            return;
          };
       };
       dispatch({
@@ -66,7 +65,7 @@ function AddReaction({stemtellId}){
    const handleSmile = () => {
       for (let item of reactions){
          if (item.user_id == user.id) {
-            return (console.log('this user already reacted'));  
+            return;  
          };
       };
       dispatch({

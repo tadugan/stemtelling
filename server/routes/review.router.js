@@ -6,6 +6,8 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 
 // GET /api/review
 // Used to get STEMtells that have not been approved
+// Called on a review STEMtells page
+// Returns a STEMtell object: { username, author_id, stem_id, title, media_url, body_text, profile_picture_url, unix, class_name }
 router.get('/', rejectUnauthenticated, (req, res) => {
    if (req.user.authority !== 'teacher') {
       return;

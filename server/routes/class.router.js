@@ -4,8 +4,10 @@ const router = express.Router();
 const rejectUnauthenticated = require('../modules/authentication-middleware').rejectUnauthenticated;
 
 
-// GET api/class/
-// Returns an array of class object: { class object model }
+// GET api/class
+// Used to get a list of teacher classes
+// Called on a class list page
+// Returns an array of class objects: { id, code, name, archived, role, user_id, class_code }
 router.get('/', rejectUnauthenticated, (req, res) => {
    const query = `SELECT * FROM "class"
                   JOIN "user_class" ON "user_class".class_code = "class".code
@@ -24,6 +26,8 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
 // GET /api/class/allclasses
 // Used to check if the class a user is trying to join is valid in the database
+// Called on an edit profile => add class page
+// Returns an array of all current classes in DB: { id, code, name, archived }
 router.get('/allclasses', rejectUnauthenticated, (req, res) => {
    const query = `SELECT * FROM "class"`;
    pool.query(query)
@@ -38,6 +42,8 @@ router.get('/allclasses', rejectUnauthenticated, (req, res) => {
 
 // GET /api/class/:id
 // Used to get a specific class by its code
+// Called on a
+// Returns
 router.get('/:id', rejectUnauthenticated, (req, res) => {
    const query = `SELECT * FROM "class" WHERE "code" = $1`;
    pool.query(query, [req.query.classCode])
@@ -53,6 +59,8 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 
 // GET /api/class/details/:id
 // Gets list of students in a particular class
+// Called on a class list => class details page
+// Returns an array of student objects: { username, profile_picture_url, id }
 router.get('/details/:id', rejectUnauthenticated, (req, res) => {
    const classId = req.params.id;
    const query = `SELECT "user".name AS username, "user".profile_picture_url, "user".id
@@ -75,6 +83,8 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 
 // GET /api/class/userclasses
 // Gets a list of classes a student is in
+// Called on a profile page
+// Returns an array of class objects: { id, code, name, archived }
 router.get('/userclasses/:id', rejectUnauthenticated, async (req, res) => {
    const client = await pool.connect();
    try {
@@ -96,7 +106,9 @@ router.get('/userclasses/:id', rejectUnauthenticated, async (req, res) => {
 
 
 // POST /api/class
-// Used to add a class
+// Used to add a class to the database
+// Called on a class list page
+// Returns the newly generated code for the class
 router.post('/', rejectUnauthenticated, async (req, res) => {
    const client = await pool.connect();
    try {
@@ -128,6 +140,8 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
 
 // POST /api/class/joinclass
 // Used to join a class on the edit profile page
+// Called on edit profile => join class
+// Returns nothing
 router.post('/joinclass', rejectUnauthenticated, async (req, res) => {
    const userId = req.user.id;
    const userRole = req.user.authority;
@@ -138,6 +152,7 @@ router.post('/joinclass', rejectUnauthenticated, async (req, res) => {
                                   VALUES ($1, $2, $3)`;
       await client.query(queryTextJoinClass, [userId, userRole, req.body.class_code]);
       await client.query('COMMIT');
+      res.sendStatus(201);
    }
    catch(error) {
       await client.query('ROLLBACK');
@@ -151,6 +166,8 @@ router.post('/joinclass', rejectUnauthenticated, async (req, res) => {
 
 // PUT /api/class/update
 // Used to update class info
+// Called on a class list page
+// Returns a 201 status
 router.put("/update", rejectUnauthenticated, (req,res) => {
    const query = `UPDATE "class" 
                   SET "name"= $1, "archived" = $2
@@ -168,6 +185,8 @@ router.put("/update", rejectUnauthenticated, (req,res) => {
 
 // DELETE /api/class/details/:id
 // Removes students from a class
+// Called on a class list => class details page
+// Returns a 201 status
 router.delete("/details/:id", rejectUnauthenticated, (req, res) => {
    const query = `DELETE FROM "user_class" WHERE "user_id" = $1 AND "class_code" = $2`;  
    pool.query(query, [req.params.id, req.query.classCode])
@@ -183,6 +202,8 @@ router.delete("/details/:id", rejectUnauthenticated, (req, res) => {
 
 // DELETE /api/class/leaveclass
 // Used on edit profile page for manually leaving a class
+// Called on an edit profile page
+// Returns a 201 status
 router.delete('/leaveclass', rejectUnauthenticated, (req, res) => {
    const query = `DELETE FROM "user_class" WHERE "user_id" = $1 AND "class_code" = $2`;
    pool.query(query, [req.user.id, req.query.class_code])

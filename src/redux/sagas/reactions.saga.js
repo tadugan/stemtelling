@@ -5,7 +5,6 @@ import axios from "axios";
 // called when loading a STEMtell
 function* getStemReactions(action) {
    try {
-      console.log(action.payload);
       const response = yield axios.get(`/api/reaction/${action.payload}`);
       yield put({ type: 'SET_STEMTELL_REACTIONS', payload: response.data});
    }

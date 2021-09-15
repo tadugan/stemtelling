@@ -6,7 +6,7 @@ import './ClassList.css';
 
 
 function ClassList() {
-   return(
+   return (
       <>
          <BackBtn />
          <div className='ClassListHeaderContainer'>

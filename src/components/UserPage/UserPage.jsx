@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import LogOutButton from '../LogOutButton/LogOutButton';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Avatar, Card, Paper, Modal, Backdrop, Fade, TextField, Button, Container, Chip } from '@material-ui/core';
+import { Grid, Card, Paper, Modal, Backdrop, Fade, Button, Container, Chip, makeStyles } from '@material-ui/core';
 import EditSTEMtell from "../EditSTEMtell/EditSTEMtell";
-import TeacherFeedback from "../TeacherFeedback/TeacherFeedback";
-import './UserPage.css';
 import styled from 'styled-components';
+import './UserPage.css';
 
 const useCardStyles = makeStyles(() => ({
    root: {

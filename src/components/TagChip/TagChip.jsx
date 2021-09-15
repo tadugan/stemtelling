@@ -1,6 +1,6 @@
 import { Chip, makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import {useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const useStyles = makeStyles({
     selected: {
