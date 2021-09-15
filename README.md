@@ -28,6 +28,10 @@ SQL code for the tables is in <database.sql>;
   SERVER_SESSION_SECRET=superDuperSecret
   NODEMAILER_USER=GmailLogin
   NODEMAILER_PASS=GmailPassword
+  CLOUDINARY_NAME=stemtelling
+  CLOUDINARY_API_KEY=773161645471824
+  CLOUDINARY_API_SECRET=isRkBv2rO_wyjy93sX1Lq0b0PTc
+  TEACHER_CODE=IAmATeacher
   ```
   In the `.env` file, replace `superDuperSecret` with a long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep the application secure. You can generate a string from [passwordsgenerator.net](https://passwordsgenerator.net/).
   `NODEMAILER_USER` and `NODEMAILER_PASS` are fields for an email username as password. This is where user password reset emails will come from
