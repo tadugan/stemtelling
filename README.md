@@ -1,5 +1,5 @@
 ## About
-STEMtelling is a Full Stack high school classroom learning application. STEMtelling shows students the relevance of STEM in their lives and helps them share stories called “STEMtells” that connect their STEM interests with their unique backgrounds. 
+STEMtelling is a Full Stack high school classroom learning application. STEMtelling shows students the relevance of STEM in their lives and helps them share stories called “STEMtells” that connect their STEM interests with their unique backgrounds. STEMtell promotes students to be more active and participate with teachers and classmates. STEMtell can help a teacher develop particular cirriculum to suit a student's needs depending on how they veiw the class subject.  
 
 ### System Requirements
 
@@ -33,3 +33,13 @@ SQL code for the tables is in <database.sql>;
 - Run `npm run server`
 - Run `npm run client`
 - Navigate to `localhost:3000`
+
+### Technologies Used
+- React
+- Redux
+- Redux-Saga
+- Node.js
+- Express
+- PostgreSQL
+- Postico
+- Material-UI
