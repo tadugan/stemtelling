@@ -79,6 +79,7 @@ router.get('/tags/:id', rejectUnauthenticated, (req, res) => {
 router.post('/', rejectUnauthenticated, async (req, res) => {
    const client = await pool.connect();
    const newStemtell = req.body.details;
+   console.log('This is newStemtell:', newStemtell);
    const imageData = req.body.image_data;
    const user = req.user;
    if (req.user.authority == 'teacher') {
@@ -117,7 +118,7 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
          const queryTextAddStemtell = `INSERT INTO "stemtell" ("class_code", "user_id", "title", "body_text", "media_url", "unix")
                                        VALUES ($1, $2, $3, $4, $5, extract(epoch from now()))
                                        RETURNING id`;
-         const response = await client.query(queryTextAddStemtell, [newStemtell.class_id, user.id, newStemtell.title, newStemtell.body_text, imageResponse.url]);
+         const response = await client.query(queryTextAddStemtell, [newStemtell.class_code, user.id, newStemtell.title, newStemtell.body_text, imageResponse.url]);
          const stemtellId = response.rows[0].id;
          const queryTextAddTag = `INSERT INTO stemtell_tag ("tag_id", "stemtell_id")
                                   VALUES ($1, $2) `;
