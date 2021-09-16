@@ -166,9 +166,9 @@ function UserPage() {
                <Paper className={classes.paper}>
                   <img src={user.profile_picture_url}></img>
                   <h2>{user.name}</h2>
-                  {myClasses.map((userClass) => {
+                  {myClasses.map((userClass, index) => {
                   return (
-                     <Chip label={userClass.name} key={userClass.code}/>
+                     <Chip label={userClass.name} key={index}/>
                   );
                })}
                <br /><br />
