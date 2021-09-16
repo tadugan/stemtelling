@@ -1,5 +1,5 @@
 ## About
-STEMtelling is a Full Stack high school classroom learning application. STEMtelling shows students the relevance of STEM in their lives and helps them share stories called “STEMtells” that connect their STEM interests with their unique backgrounds. STEMtell promotes students to be more active and participate with teachers and classmates. STEMtell can help a teacher develop particular cirriculum to suit a student's needs depending on how they veiw the class subject.  
+STEMtelling is a Full Stack, high school classroom learning application. STEMtelling shows students the relevance of STEM in their lives and helps them share stories called “STEMtells” that connect their STEM interests with their unique backgrounds. STEMtelling encourages students to be more active in class and build connections with their teachers and fellow classmates. STEMtelling helps teachers adjust their curriculum to make it more relevant and appealing to their students.
 
 
 ### Screen Shot
