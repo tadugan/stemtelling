@@ -81,11 +81,11 @@ function EditSTEMtell(stemtell) {
                id: stemtell.stemtell.id,
                title: title,
                body_text: description,
-               // media_url: imageUrl,
                class_code: classCode,
                tag_ids: tagIds
             },
-            image_data: imageData
+            image_data: imageData,
+            history: history
          }
       });
       setClassCode(0);
@@ -94,7 +94,6 @@ function EditSTEMtell(stemtell) {
       setDescription('');
       dispatch({ type: 'CLEAR_TAGS_FROM_STEMTELL'});
       dispatch({ type: "FETCH_USER_STEMTELLS", payload: user.id });
-      history.push('/close');
    };
 
    const invalidInputs = () => {

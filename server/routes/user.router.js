@@ -48,8 +48,6 @@ router.get('/profile', rejectUnauthenticated, (req, res) => {
 
 // POST /api/user/register
 // Handles POST request with new user data
-// The only thing different from this and every other post we've seen
-// is that the password gets encrypted before being inserted
 router.post('/register', (req, res, next) => {
    const teacherCode = req.body.teacherCode;
    const email = req.body.email.toLowerCase();
@@ -61,26 +59,34 @@ router.post('/register', (req, res, next) => {
                       VALUES ($1, $2, $3, $4, $5) RETURNING id`;
    const teacherQuery = `INSERT INTO "user" (email, password, name, authority, profile_picture_url)
                       VALUES ($1, $2, $3, $4, $5) RETURNING id`;
-   if (teacherCode == process.env.TEACHER_CODE) {
-      pool.query(teacherQuery, [email, password, name, authority, profilePictureURL])
-      .then(() => {
-         res.sendStatus(201);
-      })
-      .catch(error => {
-         console.log('User registration failed:', error);
+      if (authority == 'student') {
+         pool.query(studentQuery, [email, password, name, authority, profilePictureURL])
+            .then(() => {
+               res.sendStatus(201);
+            })
+            .catch(error => {
+               console.log('User registration failed:', error);
+               res.sendStatus(500);
+            });
+      }
+      else if (teacherCode == process.env.TEACHER_CODE) {
+         pool.query(teacherQuery, [email, password, name, authority, profilePictureURL])
+            .then(() => {
+               res.sendStatus(201);
+            })
+            .catch(error => {
+               console.log('User registration failed:', error);
+               res.sendStatus(500);
+            });
+      }
+      else if (teacherCode != process.env.TEACHER_CODE) {
+         console.log('ERROR. Invalid Teacher Code.');
          res.sendStatus(500);
-      });
-   }
-   else {
-      pool.query(studentQuery, [email, password, name, "student", profilePictureURL])
-      .then(() => {
-         res.sendStatus(201);
-      })
-      .catch(error => {
-         console.log('User registration failed:', error);
+      }
+      else {
          res.sendStatus(500);
-      });
-   };
+      }
+   
 });
 
 

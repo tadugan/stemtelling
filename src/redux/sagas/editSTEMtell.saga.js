@@ -7,6 +7,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 function* saveEditedStemtell(action) {
    try {
       yield axios.put('/api/stemtell/save', action.payload);
+      action.payload.history.push('/close');
    }
    catch (error) {
       console.log('Error with saveEditedStemtell in editSTEMtell.saga.js:', error);

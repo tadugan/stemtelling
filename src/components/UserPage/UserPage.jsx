@@ -166,9 +166,9 @@ function UserPage() {
                <Paper className={classes.paper}>
                   <img src={user.profile_picture_url}></img>
                   <h2>{user.name}</h2>
-                  {myClasses.map((userClass) => {
+                  {myClasses.map((userClass, index) => {
                   return (
-                     <Chip label={userClass.name} key={userClass.code}/>
+                     <Chip label={userClass.name} key={index}/>
                   );
                })}
                <br /><br />
@@ -183,9 +183,9 @@ function UserPage() {
                <br />
                <Container maxWidth="xl">
                   <Grid container direction="row" justifyContent="center" alignItems="flex-start" spacing={3}>
-                     {stemtells.map((stemtell) => {
+                     {stemtells.map((stemtell, index) => {
                         return (
-                           <Grid item key={stemtell.id}>
+                           <Grid item key={index}>
                               <Card className={(stemtell.approved === true) ? cardStyles.root : cardStyles.unapproved}>
                                  <section className={cardStyles.username}>{stemtell.username}</section>
                                  <div className={cardStyles.username} id="userClass">

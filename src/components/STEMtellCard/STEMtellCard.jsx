@@ -79,9 +79,9 @@ function StemtellCard() {
 
    return (
       <>
-         {stemtells.map((stemtell) => {
+         {stemtells.map((stemtell, index) => {
             return (
-               <Grid item key={stemtell.stem_id}>
+               <Grid item key={index}>
                   <Card className={cardStyles.root}>
                         <h6 className={cardStyles.stemdate}>{unixTimestamp(stemtell.unix)}</h6>
                         <Avatar className={cardStyles.avatar} src={stemtell.profile_picture_url} onClick={() => onUserProfile(stemtell.author_id)}/>
