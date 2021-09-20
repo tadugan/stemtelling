@@ -1,6 +1,8 @@
 ## About
 STEMtelling is a Full Stack, high school classroom learning application. STEMtelling shows students the relevance of STEM in their lives and helps them share stories called “STEMtells” that connect their STEM interests with their unique backgrounds. STEMtelling encourages students to be more active in class and build connections with their teachers and fellow classmates. STEMtelling helps teachers adjust their curriculum to make it more relevant and appealing to their students.
 
+STEMtelling was developed by a team of engineers consisting of Tim Dugan, Tate Feige, Kash Moua, Meghan Cleland, and Poua Yang, for our client Jenny Tilsen.
+
 
 ### Screen Shot
 ![Screen Shot](documentation/images/STEMtell-example.gif)
